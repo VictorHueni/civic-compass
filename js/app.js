@@ -3,7 +3,7 @@
   var NS = "http://www.w3.org/2000/svg";
   var niveau = "federal";      // "federal" ou "canton"
   var canton = "GE";           // dernier canton choisi
-  var index = 0, requete = "";
+  var index = 0, requete = "", page = "votation";
   var $ = function (id) { return document.getElementById(id); };
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function norm(s) { return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); }
@@ -20,63 +20,78 @@
   function courant() { return niveau === "federal" ? D.federal : D.cantons[canton]; }
   function codeNiveau() { return niveau === "federal" ? "CH" : canton; }
 
-  /* ---------- Niveau : Fédéral | Canton ▾ (sélecteur collant, mémorisé, partageable par #adresse) ---------- */
+  /* ---------- Territoire (Toute la Suisse ou un canton), choisi sur la carte ---------- */
+  var PAGES = ["votation", "partis", "aides", "etat"];
   function lire(h) {
-    h = (h || "").replace("#", "").toLowerCase();
-    if (h === "federal") return { n: "federal" };
-    if (h && couvert(h.toUpperCase())) return { n: "canton", c: h.toUpperCase() };
-    return null;
+    h = (h || "").replace(/^#\/?/, "").toLowerCase().split("/");
+    var p = h[0], s = h[1], r = {};
+    if (PAGES.indexOf(p) > -1) { r.p = p; } else if (p === "federal" || (p && couvert(p.toUpperCase()))) { r.p = "votation"; s = p; }
+    if (s === "federal") { r.n = "federal"; } else if (s && couvert(s.toUpperCase())) { r.n = "canton"; r.c = s.toUpperCase(); }
+    return r;
   }
-  function etatInitial() {
-    var d = lire(location.hash);
-    if (d) return d;
-    try { var m = lire(localStorage.getItem("boussole-niveau")); if (m) return m; } catch (e) {}
-    return { n: "federal" };
-  }
-  function majSelecteur() {
-    var seg = $("seg");
-    seg.setAttribute("data-niveau", niveau);
-    $("seg-canton").innerHTML = esc(nomCanton(canton)) + ' <span aria-hidden="true">▾</span>';
-    Array.prototype.forEach.call(seg.querySelectorAll(".seg__btn"), function (b) {
-      var on = b.getAttribute("data-niveau") === niveau;
-      b.setAttribute("aria-checked", String(on));
-      b.tabIndex = on ? 0 : -1;
+  function cleScope() { return niveau === "federal" ? "federal" : canton.toLowerCase(); }
+  function majAdresse() { if (history.replaceState) { try { history.replaceState(null, "", "#" + page + "/" + cleScope()); } catch (e) {} } }
+  function memoriser() { try { localStorage.setItem("boussole-niveau", cleScope()); localStorage.setItem("boussole-canton", canton); } catch (e) {} }
+  function majBarre() {
+    $("scope-val").textContent = niveau === "federal" ? "Toute la Suisse" : nomCanton(canton);
+    Array.prototype.forEach.call(document.querySelectorAll("#menu a"), function (l) {
+      if (l.getAttribute("data-page") === page) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
     });
+    PAGES.forEach(function (p) { $("page-" + p).hidden = p !== page; });
   }
-  function appliquer(n, c, majAdresse) {
-    niveau = n; if (c) canton = c; index = 0;
-    var cle = n === "federal" ? "federal" : canton.toLowerCase();
-    try { localStorage.setItem("boussole-niveau", cle); localStorage.setItem("boussole-canton", canton); } catch (e) {}
-    if (majAdresse && history.replaceState) { try { history.replaceState(null, "", "#" + cle); } catch (e) {} }
-    majSelecteur(); renderTout();
+  function appliquer(n, c) { niveau = n; if (c) canton = c; index = 0; memoriser(); majAdresse(); majBarre(); renderTout(); }
+  function allerPage(p) {
+    page = p; majAdresse(); majBarre(); fermerMenu(); renderTout(); window.scrollTo(0, 0);
   }
-  function renderTout() { renderTitre(); renderHemicycle(); renderDetail(); renderLiens(); try { document.dispatchEvent(new CustomEvent("boussole:maj")); } catch (e) {} }
-  window.Boussole = { etat: function () { return { niveau: niveau, canton: canton }; }, aller: function (n, c) { appliquer(n, c, true); }, picker: function () { ouvrirPicker(); }, nomCanton: nomCanton, esc: esc, hote: hote };
+  function renderTout() {
+    if (page === "partis") { renderTitre(); renderHemicycle(); renderDetail(); }
+    if (page === "etat") renderLiens();
+    if (page === "aides") renderAides();
+    try { document.dispatchEvent(new CustomEvent("boussole:maj")); } catch (e) {}
+  }
 
-  /* ---------- Sélecteur de canton (feuille qui monte du bas) ---------- */
+  /* ---------- Menu (hamburger sur téléphone, déplié sur ordinateur) ---------- */
+  function fermerMenu() { document.body.classList.remove("menu-ouvert"); $("menu-btn").setAttribute("aria-expanded", "false"); }
+  $("menu-btn").addEventListener("click", function () {
+    var ouvert = document.body.classList.toggle("menu-ouvert");
+    $("menu-btn").setAttribute("aria-expanded", String(ouvert));
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") fermerMenu(); });
+  window.addEventListener("hashchange", function () {
+    var d = lire(location.hash);
+    if (d.p && d.p !== page) page = d.p;
+    if (d.n && (d.n !== niveau || (d.c && d.c !== canton))) { niveau = d.n; if (d.c) canton = d.c; memoriser(); }
+    majBarre(); renderTout();
+  });
+  $("menu").addEventListener("click", function (e) { if (e.target.closest && e.target.closest("a")) { fermerMenu(); window.scrollTo(0, 0); } });
+
+  /* ---------- Carte des cantons (feuille qui monte du bas) ---------- */
+  var GRILLE = { SH: [4, 0], TG: [5, 0], BS: [1, 1], BL: [2, 1], AG: [3, 1], ZH: [4, 1], SG: [5, 1], AR: [6, 1], AI: [7, 1],
+    JU: [0, 2], SO: [1, 2], LU: [2, 2], ZG: [3, 2], SZ: [4, 2], GL: [5, 2], NE: [0, 3], BE: [1, 3], OW: [2, 3], NW: [3, 3], UR: [4, 3], GR: [5, 3],
+    VD: [0, 4], FR: [1, 4], GE: [0, 5], VS: [2, 5], TI: [4, 5] };
   var retourFocus = null;
-  function ouvrirPicker() {
-    retourFocus = $("seg-canton");
-    $("picker").hidden = false; $("picker-q").value = ""; renderPicker("");
-    document.body.style.overflow = "hidden";
-    $("picker-q").focus();
-  }
-  function fermerPicker() {
-    $("picker").hidden = true; document.body.style.overflow = "";
-    if (retourFocus) retourFocus.focus();
-  }
-  function renderPicker(q) {
-    var nq = norm(q);
-    var tous = D.tousCantons.filter(function (c) { return !nq || norm(c[1] + " " + c[0]).indexOf(nq) > -1; });
-    var a = tous.filter(function (c) { return couvert(c[0]); }), b = tous.filter(function (c) { return !couvert(c[0]); });
-    var html = "";
-    a.concat(b).forEach(function (c) {
-      var ok = couvert(c[0]);
-      html += '<li><button type="button" class="picker__item" data-code="' + c[0] + '"' + (ok ? "" : " disabled") + (c[0] === canton && niveau === "canton" ? ' aria-current="true"' : "") + '>' +
-        '<span class="picker__code">' + c[0] + '</span><span>' + esc(c[1]) + '</span><span class="picker__etat">' + (ok ? "" : "bientôt") + '</span></button></li>';
+  function renderTuiles() {
+    var V = window.VOTATIONS || { cantons: {} }, h = "";
+    Object.keys(GRILLE).forEach(function (k) {
+      var ok = couvert(k), g = GRILLE[k], on = niveau === "canton" && canton === k, vot = V.cantons[k] && V.cantons[k].objets.length;
+      h += '<button type="button" class="tuile' + (ok ? " ok" : "") + (on ? " is-on" : "") + '" style="grid-column:' + (g[0] + 1) + ';grid-row:' + (g[1] + 1) + '" data-c="' + k + '"' + (ok ? "" : " disabled") +
+        ' aria-label="' + esc(nomCanton(k)) + (ok ? "" : ", bientôt") + (vot ? ", objet cantonal en votation" : "") + '">' + k + (vot ? '<i aria-hidden="true"></i>' : "") + '</button>';
     });
-    $("picker-liste").innerHTML = html || '<li class="vide">Aucun canton trouvé.</li>';
+    $("tuiles").innerHTML = h;
+    $("scope-ch").className = "scope-tout" + (niveau === "federal" ? " is-on" : "");
   }
+  function ouvrirPicker() { retourFocus = $("scope-btn"); renderTuiles(); $("picker").hidden = false; document.body.style.overflow = "hidden"; $("scope-ch").focus(); }
+  function fermerPicker() { $("picker").hidden = true; document.body.style.overflow = ""; if (retourFocus) retourFocus.focus(); }
+  $("scope-btn").addEventListener("click", ouvrirPicker);
+  $("picker-fond").addEventListener("click", fermerPicker);
+  $("picker-x").addEventListener("click", fermerPicker);
+  $("scope-ch").addEventListener("click", function () { fermerPicker(); appliquer("federal", null); });
+  $("tuiles").addEventListener("click", function (e) {
+    var b = e.target.closest ? e.target.closest(".tuile") : null;
+    if (!b || b.disabled) return;
+    fermerPicker(); appliquer("canton", b.getAttribute("data-c"));
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("picker").hidden) fermerPicker(); });
 
   /* ---------- Hémicycle ---------- */
   var CX = 180, CY = 178, R = 172, r = 88, GAP = 1.6;
@@ -144,62 +159,40 @@
     index = ni; renderHemicycle(); renderDetail();
   }
 
-  /* ---------- Outils et sites de l'État ---------- */
   function carte(nom, note, url, badge) {
     return '<li><a class="carte" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
       '<span class="carte__tete"><span class="carte__nom">' + esc(nom) + '</span><span class="badge badge--gray">' + esc(badge) + '</span></span>' +
       '<span class="carte__note">' + esc(note) + '</span><span class="host">' + esc(hote(url)) + '</span></a></li>';
   }
-  function renderLiens() {
-    var nq = norm(requete), html = "", total = 0;
-    var outils = D.outils.filter(function (o) { return !nq || norm(o[0] + " " + o[1] + " " + o[2]).indexOf(nq) > -1; });
-    if (outils.length) {
-      total += outils.length;
-      html += '<section class="bloc"><h2>Aider à décider</h2><p class="bloc__desc">Comparer les positions et comprendre les objets de votation.</p><ul class="cartes">' +
-        outils.map(function (o) { return carte(o[0], o[1], o[2], "CH"); }).join("") + '</ul></section>';
-    }
-    var etat = courant().etat.filter(function (l) { return !nq || norm(l[1] + " " + l[2] + " " + l[3]).indexOf(nq) > -1; });
-    if (etat.length) {
-      total += etat.length;
-      html += '<section class="bloc"><h2>Sites de l\'État</h2><p class="bloc__desc">Sources officielles : ' + (niveau === "federal" ? "Confédération" : "canton " + esc(deCanton(canton))) + '.</p><ul class="cartes">' +
-        etat.map(function (l) { return carte(l[1], l[2], l[3], codeNiveau()); }).join("") + '</ul></section>';
-    }
-    $("liens").innerHTML = total ? html : '<p class="vide">Aucun résultat. Essayez un autre mot.</p>';
+
+  /* ---------- Aides à décider : comprendre, comparer, décider ---------- */
+  function renderAides() {
+    var cant = (window.VOTATIONS && window.VOTATIONS.cantons[canton]) || null;
+    var groupes = [
+      ["Comprendre", "Saisir l'objet avant de voter.", ["easyvote", "Vimentis", "Année politique suisse"]],
+      ["Comparer", "Se situer face aux partis et aux élus.", ["smartvote", "smartmonitor", "PolitPro", "Swissvotes"]]
+    ];
+    var h = '<h2 id="t-aides">Aides à décider</h2><p class="bloc__desc">Trois étapes pour se faire une opinion.</p>';
+    groupes.forEach(function (g, i) {
+      var items = D.outils.filter(function (o) { return g[2].indexOf(o[0]) > -1; });
+      h += '<section class="bloc"><h3 class="etape-titre"><span>' + (i + 1) + '</span> ' + g[0] + '</h3><p class="bloc__desc">' + g[1] + '</p><ul class="cartes">' +
+        items.map(function (o) { return carte(o[0], o[1], o[2], "CH"); }).join("") + '</ul></section>';
+    });
+    var cantLien = niveau === "canton" && cant ? cant.lien : "https://www.ch.ch";
+    var cantNom = niveau === "canton" ? "Votations du canton " + nomCanton(canton) : "ch.ch, droits politiques";
+    h += '<section class="bloc"><h3 class="etape-titre"><span>3</span> Décider</h3><p class="bloc__desc">Voter est simple : par correspondance ou dans sa commune.</p><ul class="cartes">' +
+      carte(cantNom, "Matériel de vote, dates et marche à suivre.", cantLien, codeNiveau()) +
+      '<li><a class="carte" href="#votation"><span class="carte__tete"><span class="carte__nom">Prochaine votation</span><span class="badge badge--gray">Ici</span></span><span class="carte__note">Les objets, les mots d\'ordre et le parcours complet.</span></a></li></ul></section>';
+    $("aides").innerHTML = h;
   }
 
-  /* ---------- Branchements ---------- */
-  var segBtns = $("seg").querySelectorAll(".seg__btn");
-  Array.prototype.forEach.call(segBtns, function (b) {
-    b.addEventListener("click", function () {
-      if (b.getAttribute("data-niveau") === "federal") appliquer("federal", null, true);
-      else if (niveau === "canton") ouvrirPicker();
-      else appliquer("canton", canton, true);
-    });
-    b.addEventListener("keydown", function (e) {
-      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-        var vers = niveau === "federal" ? "canton" : "federal";
-        appliquer(vers, null, true);
-        $("seg").querySelector('[data-niveau="' + vers + '"]').focus();
-        e.preventDefault();
-      }
-    });
-  });
-  $("picker-fond").addEventListener("click", fermerPicker);
-  $("picker-x").addEventListener("click", fermerPicker);
-  $("picker-q").addEventListener("input", function (e) { renderPicker(e.target.value); });
-  $("picker-liste").addEventListener("click", function (e) {
-    var b = e.target.closest ? e.target.closest(".picker__item") : null;
-    if (!b || b.disabled) return;
-    var code = b.getAttribute("data-code");
-    $("picker").hidden = true; document.body.style.overflow = "";
-    appliquer("canton", code, true);
-    $("seg-canton").focus();
-  });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !$("picker").hidden) fermerPicker(); });
-  window.addEventListener("hashchange", function () {
-    var d = lire(location.hash);
-    if (d && (d.n !== niveau || (d.c && d.c !== canton))) appliquer(d.n, d.c || null, false);
-  });
+  function renderLiens() {
+    var nq = norm(requete), html = "", total = 0;
+    $("etat-desc").textContent = "Sources officielles : " + (niveau === "federal" ? "Confédération." : "canton " + deCanton(canton) + ".");
+    var etat = courant().etat.filter(function (l) { return !nq || norm(l[1] + " " + l[2] + " " + l[3]).indexOf(nq) > -1; });
+    if (etat.length) html = '<ul class="cartes">' + etat.map(function (l) { return carte(l[1], l[2], l[3], codeNiveau()); }).join("") + '</ul>';
+    $("liens").innerHTML = html || '<p class="vide">Aucun résultat. Essayez un autre mot.</p>';
+  }
 
   $("prev").onclick = function () { aller(-1); };
   $("next").onclick = function () { aller(1); };
@@ -217,7 +210,10 @@
   $("q").addEventListener("input", function (e) { requete = e.target.value; renderLiens(); });
 
   try { var dernier = localStorage.getItem("boussole-canton"); if (dernier && couvert(dernier)) canton = dernier; } catch (e) {}
-  var init = etatInitial(); niveau = init.n; if (init.c) canton = init.c;
-  majSelecteur(); renderTout();
-  requestAnimationFrame(function () { requestAnimationFrame(function () { $("seg").classList.add("pret"); }); });
+  var d0 = lire(location.hash), s0 = null;
+  try { s0 = lire("#votation/" + (localStorage.getItem("boussole-niveau") || "")); } catch (e) {}
+  if (d0.n) { niveau = d0.n; if (d0.c) canton = d0.c; } else if (s0 && s0.n) { niveau = s0.n; if (s0.c) canton = s0.c; }
+  if (d0.p) page = d0.p;
+  window.Boussole = { etat: function () { return { niveau: niveau, canton: canton }; }, aller: appliquer, page: allerPage, picker: ouvrirPicker, nomCanton: nomCanton, esc: esc, hote: hote };
+  majBarre(); majAdresse(); renderTout();
 })();

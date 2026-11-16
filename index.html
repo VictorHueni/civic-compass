@@ -4,52 +4,70 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Boussole citoyenne</title>
-<meta name="description" content="Les sites des partis suisses et genevois, classés de gauche à droite, avec les outils d'aide au vote et les sites de l'État.">
+<meta name="description" content="La prochaine votation, les partis de gauche à droite, les outils d'aide au vote et les sites officiels, en Suisse et dans les cantons.">
 <link rel="stylesheet" href="css/designsystem.css">
 <link rel="stylesheet" href="css/boussole.css">
 </head>
 <body>
 <header class="topbar">
-  <div class="container">
-    <h1>Boussole citoyenne</h1>
-    <p>Les partis de gauche à droite, les outils pour voter et les sites de l'État, en Suisse et dans les cantons romands.</p>
+  <div class="container topbar__in">
+    <a class="marque" href="#votation"><span class="marque__nom">Boussole citoyenne</span><span class="marque__sous">La politique suisse, en un endroit</span></a>
+    <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="menu-btn__barres" aria-hidden="true"></span><span class="sr-only">Menu</span></button>
+    <nav id="menu" class="menu" aria-label="Navigation principale">
+      <p class="menu__titre">Je veux...</p>
+      <ul>
+        <li><a href="#votation" data-page="votation"><b>Prochaine votation</b><small>Consulter ce sur quoi je vote</small></a></li>
+        <li><a href="#partis" data-page="partis"><b>Partis</b><small>Voir les partis, de gauche à droite</small></a></li>
+        <li><a href="#aides" data-page="aides"><b>Aides à décider</b><small>Comprendre, comparer, décider</small></a></li>
+        <li><a href="#etat" data-page="etat"><b>Sites officiels</b><small>Lire une loi, trouver un élu, résultats</small></a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
 <div class="niveau-bar">
   <div class="container">
-    <div id="seg" class="seg" role="radiogroup" aria-label="Niveau politique">
-      <span class="seg__thumb" aria-hidden="true"></span>
-      <button type="button" role="radio" class="seg__btn" data-niveau="federal" aria-checked="true">Fédéral</button>
-      <button type="button" role="radio" class="seg__btn" data-niveau="canton" id="seg-canton" aria-checked="false" aria-haspopup="dialog">Genève <span aria-hidden="true">▾</span></button>
-    </div>
+    <button type="button" id="scope-btn" class="scope-btn" aria-haspopup="dialog">
+      <span class="scope-btn__l">Territoire</span><span class="scope-btn__v" id="scope-val">Toute la Suisse</span><span aria-hidden="true">▾</span>
+    </button>
   </div>
 </div>
 
 <main class="container">
-  <section id="scrutin" aria-labelledby="t-scrutin"></section>
-  <section id="besoins" aria-labelledby="t-besoins"></section>
-  <section aria-labelledby="t-partis">
-    <h2 id="t-partis">Les partis, de gauche à droite</h2>
-    <p class="bloc__desc" id="niveau-titre"></p>
-    <div id="spectre-zone">
-      <div id="hemicycle" class="hemicycle"></div>
-      <div class="nav-fleches">
-        <button id="prev" type="button" class="btn btn--outline btn--sm" aria-label="Parti précédent, plus à gauche"><span class="btn__text">← Plus à gauche</span></button>
-        <button id="next" type="button" class="btn btn--outline btn--sm" aria-label="Parti suivant, plus à droite"><span class="btn__text">Plus à droite →</span></button>
-      </div>
-      <div id="detail" class="detail" aria-live="polite"></div>
-      <p class="note-niveau" id="note-niveau"></p>
-    </div>
-  </section>
-
-  <section id="carte-cantons" aria-labelledby="t-carte"></section>
-
-  <div class="recherche">
-    <label for="q" class="sr-only">Rechercher un outil ou un site officiel</label>
-    <input id="q" type="search" placeholder="Rechercher un outil ou un site officiel..." autocomplete="off">
+  <div id="page-votation" class="page">
+    <section id="scrutin" aria-labelledby="t-scrutin"></section>
+    <section id="besoins" aria-labelledby="t-besoins"></section>
   </div>
-  <div id="liens"></div>
+
+  <div id="page-partis" class="page" hidden>
+    <section aria-labelledby="t-partis">
+      <h2 id="t-partis">Les partis, de gauche à droite</h2>
+      <p class="bloc__desc" id="niveau-titre"></p>
+      <div id="spectre-zone">
+        <div id="hemicycle" class="hemicycle"></div>
+        <div class="nav-fleches">
+          <button id="prev" type="button" class="btn btn--outline btn--sm" aria-label="Parti précédent, plus à gauche"><span class="btn__text">← Plus à gauche</span></button>
+          <button id="next" type="button" class="btn btn--outline btn--sm" aria-label="Parti suivant, plus à droite"><span class="btn__text">Plus à droite →</span></button>
+        </div>
+        <div id="detail" class="detail" aria-live="polite"></div>
+        <p class="note-niveau" id="note-niveau"></p>
+      </div>
+    </section>
+  </div>
+
+  <div id="page-aides" class="page" hidden><section id="aides" aria-labelledby="t-aides"></section></div>
+
+  <div id="page-etat" class="page" hidden>
+    <section aria-labelledby="t-etat">
+      <h2 id="t-etat">Sites officiels</h2>
+      <p class="bloc__desc" id="etat-desc"></p>
+      <div class="recherche">
+        <label for="q" class="sr-only">Rechercher un site officiel</label>
+        <input id="q" type="search" placeholder="Rechercher un site officiel..." autocomplete="off">
+      </div>
+      <div id="liens"></div>
+    </section>
+  </div>
   <noscript><p>Cette page a besoin de JavaScript pour afficher les listes.</p></noscript>
 </main>
 
@@ -62,14 +80,16 @@
 <div id="picker" class="picker" hidden role="dialog" aria-modal="true" aria-labelledby="picker-titre">
   <div class="picker__fond" id="picker-fond"></div>
   <div class="picker__feuille">
-    <div class="picker__tete"><h2 id="picker-titre">Choisir un canton</h2><button type="button" id="picker-x" class="picker__x" aria-label="Fermer">✕</button></div>
-    <input id="picker-q" type="search" placeholder="Rechercher un canton..." autocomplete="off">
-    <ul id="picker-liste" class="picker__liste"></ul>
+    <div class="picker__tete"><h2 id="picker-titre">Choisir le territoire</h2><button type="button" id="picker-x" class="picker__x" aria-label="Fermer">✕</button></div>
+    <button type="button" id="scope-ch" class="scope-tout">Toute la Suisse</button>
+    <p class="mini">Ou touchez un canton sur la carte.</p>
+    <div id="tuiles" class="tuiles" role="group" aria-label="Carte des cantons"></div>
+    <ul class="legende"><li><i class="k k--ok"></i>Disponible</li><li><i class="k k--bientot"></i>Bientôt</li><li><i class="k k--pt"></i>Objet cantonal le 29 nov.</li></ul>
   </div>
 </div>
 <script src="js/data.js"></script>
-<script src="js/app.js"></script>
 <script src="js/votations.js"></script>
+<script src="js/app.js"></script>
 <script src="js/scrutin.js"></script>
 </body>
 </html>

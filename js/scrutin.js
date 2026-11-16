@@ -32,7 +32,7 @@
     }).join("");
     $("scrutin").innerHTML =
       '<div class="prochain"><div class="prochain__j"><b>' + esc(cd) + '</b><span>29 nov. 2026</span></div>' +
-      '<div><h2 id="t-scrutin">Prochaine votation</h2><p>' + V.objets.length + ' objets fédéraux. ' + esc(V.materiel) + '</p></div></div>' + cantonal +
+      '<div><h1 id="t-scrutin" class="h-page">Prochaine votation</h1><p>' + V.objets.length + ' objets fédéraux. ' + esc(V.materiel) + '</p></div></div>' + cantonal +
       '<div class="chips" role="group" aria-label="Objets de la votation">' + chips + '</div>' +
       '<article class="objet"><h3 class="objet__titre">' + esc(o.titre) + '</h3><p class="objet__q">' + esc(o.question) + '</p>' +
       '<div role="tablist" class="etapes" aria-label="Étapes">' + tabs + '</div><div class="etape__corps" id="etape-corps"></div></article>';
@@ -87,45 +87,32 @@
     }
   }
 
-  /* ---------- 4. Besoins ---------- */
+  /* ---------- Je veux... : navigation vers les pages et les sites officiels ---------- */
   function renderBesoins() {
     var et = B.etat(), fed = et.niveau === "federal", c = fed ? D.federal : D.cantons[et.canton];
     function cherche(mot, defaut) { var l = c.etat.filter(function (x) { return x[1].toLowerCase().indexOf(mot) > -1; })[0]; return l ? l[3] : defaut; }
     var cant = lienCanton();
     var items = [
-      ["Voter", "Comment et quand voter", fed ? "https://www.ch.ch" : cant.lien],
+      ["Voir les partis politiques", "De gauche à droite", "#partis", true],
+      ["Être aidé à décider", "Comprendre, comparer, décider", "#aides", true],
       ["Lire une loi", "Textes en vigueur", fed ? "https://www.fedlex.admin.ch" : c.etat[0][3]],
       ["Trouver un élu", "Députés et conseillers", fed ? "https://www.parlament.ch" : cherche("grand conseil", c.etat[0][3])],
-      ["Résultats", "Votations et élections", fed ? "https://www.bk.admin.ch" : cherche("votations", cant.lien)],
-      ["Chiffres", "Statistiques officielles", "https://www.bfs.admin.ch"]
+      ["Voir les résultats", "Votations et élections", fed ? "https://www.bk.admin.ch" : cherche("votations", cant.lien)],
+      ["Consulter les chiffres", "Statistiques officielles", "https://www.bfs.admin.ch"]
     ];
-    var h = '<h2 id="t-besoins">Je veux...</h2><p class="bloc__desc">Le bon site officiel, selon ce que vous cherchez (' + (fed ? "niveau fédéral" : "canton " + esc(B.nomCanton(et.canton))) + ').</p><ul class="besoins">';
-    items.forEach(function (x) { h += '<li><a class="besoin" href="' + esc(x[2]) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></a></li>'; });
+    var h = '<h2 id="t-besoins">Je veux...</h2><p class="bloc__desc">Aller directement au bon endroit (' + (fed ? "toute la Suisse" : "canton " + esc(B.nomCanton(et.canton))) + ').</p><ul class="besoins">';
+    items.forEach(function (x) {
+      h += '<li><a class="besoin' + (x[3] ? " besoin--int" : "") + '" href="' + esc(x[2]) + '"' + (x[3] ? "" : ' target="_blank" rel="noopener noreferrer"') + '><b>' + esc(x[0]) + (x[3] ? "" : ' <span aria-hidden="true">↗</span>') + '</b><span>' + esc(x[1]) + '</span></a></li>';
+    });
     $("besoins").innerHTML = h + '</ul>';
   }
 
-  /* ---------- 5. Carte de Suisse en cases (cartogramme) ---------- */
-  var GRILLE = { SH: [4, 0], TG: [5, 0], BS: [1, 1], BL: [2, 1], AG: [3, 1], ZH: [4, 1], SG: [5, 1], AR: [6, 1], AI: [7, 1],
-    JU: [0, 2], SO: [1, 2], LU: [2, 2], ZG: [3, 2], SZ: [4, 2], GL: [5, 2], NE: [0, 3], BE: [1, 3], OW: [2, 3], NW: [3, 3], UR: [4, 3], GR: [5, 3],
-    VD: [0, 4], FR: [1, 4], GE: [0, 5], VS: [2, 5], TI: [4, 5] };
-  function renderCarte() {
-    var et = B.etat(), h = '<h2 id="t-carte">Les cantons</h2><p class="bloc__desc">Carte simplifiée : un canton, une case. Touchez un canton disponible pour passer à son niveau.</p><div class="tuiles" role="group" aria-label="Carte des cantons">';
-    Object.keys(GRILLE).forEach(function (k) {
-      var ok = !!D.cantons[k], g = GRILLE[k], on = et.niveau === "canton" && et.canton === k, vot = V.cantons[k] && V.cantons[k].objets.length;
-      h += '<button type="button" class="tuile' + (ok ? " ok" : "") + (on ? " is-on" : "") + '" style="grid-column:' + (g[0] + 1) + ';grid-row:' + (g[1] + 1) + '" data-c="' + k + '"' + (ok ? "" : " disabled") + ' aria-label="' + esc(B.nomCanton(k)) + (ok ? "" : ", bientôt") + (vot ? ", objet cantonal en votation" : "") + '">' + k + (vot ? '<i aria-hidden="true"></i>' : "") + '</button>';
-    });
-    h += '</div><ul class="legende"><li><i class="k k--ok"></i>Disponible</li><li><i class="k k--bientot"></i>Bientôt</li><li><i class="k k--pt"></i>Objet cantonal le 29 nov.</li></ul>' +
-      '<p class="mini">Les résultats par canton seront ajoutés après la votation, avec les données officielles de l\'OFS.</p>';
-    $("carte-cantons").innerHTML = h;
-  }
-
-  function tout() { renderScrutin(); renderBesoins(); renderCarte(); }
+  function tout() { renderScrutin(); renderBesoins(); }
   document.addEventListener("click", function (e) {
-    var t = e.target.closest ? e.target.closest("[data-obj],[data-etape],.tuile") : null;
+    var t = e.target.closest ? e.target.closest("[data-obj],[data-etape]") : null;
     if (!t) return;
     if (t.hasAttribute("data-obj")) { obj = +t.getAttribute("data-obj"); pIdx = -1; renderScrutin(); }
     else if (t.hasAttribute("data-etape")) { etape = +t.getAttribute("data-etape"); renderScrutin(); }
-    else if (t.classList.contains("tuile") && !t.disabled) { B.aller("canton", t.getAttribute("data-c")); window.scrollTo({ top: 0, behavior: "smooth" }); }
   });
   document.addEventListener("boussole:maj", tout);
   tout();

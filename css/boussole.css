@@ -148,3 +148,48 @@ footer.pied p{margin:0 0 8px;max-width:75ch}
 .tuile i{position:absolute;top:3px;right:3px;width:8px;height:8px;border-radius:50%;background:var(--b-accent);box-shadow:0 0 0 1.5px #fff}
 .tuile.is-on i{background:#fff;box-shadow:none}
 @media (min-width:600px){.besoins{grid-template-columns:repeat(5,1fr)}}
+
+/* ---- Navigation, barre de territoire, carte en feuille ---- */
+.topbar__in{display:flex;align-items:center;justify-content:space-between;gap:12px;position:relative}
+.marque,.marque:visited{display:flex;flex-direction:column;text-decoration:none;color:var(--b-texte);padding:10px 0}
+.marque__nom{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.3rem;line-height:1.1}
+.marque__sous{font-size:.8rem;color:var(--b-doux)}
+.menu-btn{width:48px;height:48px;border:1px solid var(--b-bord);background:#fff;display:grid;place-items:center;cursor:pointer;border-radius:4px}
+.menu-btn__barres,.menu-btn__barres::before,.menu-btn__barres::after{display:block;width:22px;height:2px;background:var(--b-texte);content:"";position:relative}
+.menu-btn__barres::before{position:absolute;top:-7px}.menu-btn__barres::after{position:absolute;top:7px}
+.menu-ouvert .menu-btn__barres{background:transparent}
+.menu-ouvert .menu-btn__barres::before{top:0;transform:rotate(45deg)}.menu-ouvert .menu-btn__barres::after{top:0;transform:rotate(-45deg)}
+.menu{display:none;position:absolute;top:100%;left:0;right:0;z-index:25;background:#fff;border:1px solid var(--b-bord);border-top:2px solid var(--b-accent);box-shadow:0 8px 20px rgba(19,27,34,.15);padding:8px 16px 12px}
+.menu-ouvert .menu{display:block}
+.menu__titre{margin:6px 0;font-size:.85rem;color:var(--b-doux)}
+.menu ul{list-style:none;margin:0;padding:0}
+.menu a,.menu a:visited{display:flex;flex-direction:column;min-height:48px;justify-content:center;padding:6px 0;border-bottom:1px solid var(--b-bord);text-decoration:none;color:var(--b-texte)}
+.menu li:last-child a{border-bottom:0}
+.menu small{color:var(--b-doux);font-size:.82rem}
+.menu a[aria-current="page"] b{color:var(--b-accent)}
+.niveau-bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--b-bord);padding:8px 0}
+.scope-btn{width:100%;min-height:48px;display:flex;align-items:center;gap:8px;padding:0 14px;border:1px solid var(--color-secondary-300,#b6bec5);border-radius:6px;background:var(--b-fond);font:inherit;color:var(--b-texte);cursor:pointer}
+.scope-btn__l{font-size:.78rem;color:var(--b-doux);text-transform:uppercase;letter-spacing:.04em}
+.scope-btn__v{flex:1;text-align:left;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.page[hidden]{display:none}
+.h-page{margin:0 0 2px;font-size:1.4rem}
+.scope-tout{width:100%;min-height:48px;margin-bottom:6px;border:1px solid var(--b-texte);background:#fff;color:var(--b-texte);font:inherit;font-family:Font-Bold,Hind,Fallback-font,sans-serif;border-radius:6px;cursor:pointer}
+.scope-tout.is-on{background:var(--b-texte);color:#fff}
+.picker__feuille .tuiles{margin:0 auto 6px}
+.picker__feuille{overflow-y:auto}
+.etape-titre{display:flex;align-items:center;gap:8px;margin:0 0 4px}
+.etape-titre span{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--b-accent);color:#fff;font-size:.85rem}
+.besoin--int{border-left:4px solid var(--b-accent)}
+@media (min-width:900px){
+  .menu-btn{display:none}
+  .menu{display:block;position:static;border:0;box-shadow:none;padding:0;background:transparent}
+  .menu__titre,.menu small{display:none}
+  .menu ul{display:flex;gap:4px}
+  .menu a,.menu a:visited{min-height:48px;padding:0 14px;border:0;border-bottom:3px solid transparent}
+  .menu a[aria-current="page"]{border-bottom-color:var(--b-accent)}
+  .menu li:last-child a{border-bottom:3px solid transparent}
+  .menu li:last-child a[aria-current="page"]{border-bottom-color:var(--b-accent)}
+  .scope-btn{width:auto;min-width:280px}
+  .picker{align-items:center}
+  .picker__feuille{border-radius:12px;max-height:90%}
+}
