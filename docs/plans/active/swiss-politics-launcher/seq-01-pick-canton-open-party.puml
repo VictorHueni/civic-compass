@@ -1,0 +1,39 @@
+@startuml
+!include _theme.puml
+title seq-01: Voter picks Geneva on the map, then opens a party (US-05, US-06)
+
+actor "Voter" as voter
+participant "Page\n(index.html)" as page
+participant "app.ts" as app
+participant "referential.ts\n(data bundled)" as ref
+database "Browser storage" as store
+
+voter -> page : tap the territory button
+page -> app : openPicker()
+activate app
+app -> ref : allCantons, covered cantons
+app --> voter : sheet with Confédération\nand the 26 canton tiles
+deactivate app
+
+voter -> page : tap the GE tile
+page -> app : apply(canton, GE)
+activate app
+app -> store : save scope and canton
+app -> page : address becomes #partis/ge
+app -> ref : cantons.GE.parties, stateSites
+app -> app : renderHemicycle(), renderDetail()
+app --> voter : 9 parties, left to right,\ncard of the first one
+deactivate app
+
+voter -> page : tap a sector (or arrow, swipe)
+page -> app : select index
+activate app
+app -> app : renderDetail()
+note right of app
+  facts shown only with a source;
+  no URL: a search link instead
+end note
+app --> voter : party card with its site
+deactivate app
+
+@enduml

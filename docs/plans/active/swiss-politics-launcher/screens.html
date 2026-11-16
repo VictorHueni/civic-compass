@@ -1,0 +1,99 @@
+<!-- summary: 9 screens · 4 pages, 1 sheet, 1 menu -->
+<div class="block">
+  <h2>What the voter sees</h2>
+  <p class="note">Four pages, one territory sheet and one menu, all at phone width (390 px), captured from the built site. Every page reads the territory chosen once (US-05) and shows only what concerns it. The copy is the real French copy of the site.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Screen</th><th>Story</th><th>Address</th><th>Reads</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Ballot list</td><td>US-01</td><td class="nw"><span class="mono">#votation/&lt;territory&gt;</span></td><td>ballot items, cantonal items of the territory</td></tr>
+        <tr><td class="key">Ballot item, 3 tabs</td><td>US-02, US-03, US-04</td><td class="nw"><span class="mono">#votation/&lt;territory&gt;</span></td><td>one ballot item, its sourced party recommendations, tool and state site URLs by id</td></tr>
+        <tr><td class="key">Territory sheet</td><td>US-05</td><td class="nw">over any page</td><td>the 26 cantons, which are covered, which vote on a cantonal item</td></tr>
+        <tr><td class="key">Parties</td><td>US-06</td><td class="nw"><span class="mono">#partis/&lt;territory&gt;</span></td><td>parties of the territory, in file order</td></tr>
+        <tr><td class="key">Decision aids</td><td>US-07</td><td class="nw"><span class="mono">#aides/&lt;territory&gt;</span></td><td>tools listed by id, the territory's voting page</td></tr>
+        <tr><td class="key">Official sites</td><td>US-08</td><td class="nw"><span class="mono">#etat/&lt;territory&gt;</span></td><td>state sites of the territory with a URL</td></tr>
+        <tr><td class="key">Menu</td><td>US-08</td><td class="nw">over any page</td><td>four state-site shortcuts for the territory</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Ballot list (US-01)</h2>
+  <p class="note">Home page. The date and a countdown, the number of items, when the voting material arrives, then the numbered items with their question. With a canton chosen, a line names its cantonal items or links its voting page.</p>
+  {{FIGURE:ui-01-ballot-list|Phone screen: header with menu button, territory bar set to Confédération, "Dimanche 29 novembre 2026, dans 13 jours", title "4 objets à trancher", and a numbered list of ballot items with their questions|Ballot list, Confederation}}
+</div>
+
+<div class="block">
+  <h2>Ballot item: Comprendre (US-02)</h2>
+  <p class="note">One item, three tabs. The first gives what a yes and a no change, the Federal Council and Parliament recommendation when recorded, the note "Résumé indicatif. La brochure officielle fait foi.", then links to the official page, the brochure, easyvote and Vimentis. Back and next buttons move between items.</p>
+  {{FIGURE:ui-02-item-understand|Phone screen of ballot item 1 of 4 on the AVS and VAT, tab Comprendre selected, showing the block "Si vous votez OUI"|Item page, tab Comprendre}}
+</div>
+
+<div class="block">
+  <h2>Ballot item: Comparer (US-03)</h2>
+  <p class="note">The national parties as a half-circle, left to right, coloured yes, no or "À confirmer". Only recommendations with a source under the chart are coloured. Then smartvote, smartmonitor and Swissvotes.</p>
+  {{FIGURE:ui-03-item-compare|Phone screen, tab Comparer: a half-circle of nine national parties, PS and Verts in the yes colour, solidaritéS and PLR in the no colour, the others grey, with a legend Oui, Non, À confirmer|Item page, tab Comparer}}
+</div>
+
+<div class="block">
+  <h2>Ballot item: Décider (US-04)</h2>
+  <p class="note">The practical steps (material received, postal vote or vote at the commune, whom to ask), then the voting page of the chosen canton and ch.ch.</p>
+  {{FIGURE:ui-04-item-decide|Phone screen with territory Genève, tab Décider: numbered steps to check the voting material, vote by post or at the commune, and contact the chancellery|Item page, tab Décider, Geneva}}
+</div>
+
+<div class="block">
+  <h2>Territory sheet (US-05)</h2>
+  <p class="note">Opened by the territory bar on every page. "Confédération", then a tile map of the 26 cantons: covered cantons selectable, the others "Bientôt" and disabled, a dot on cantons with a cantonal item on 29 November. Closes by the close button, the backdrop or Escape, and gives focus back to the territory bar.</p>
+  {{FIGURE:ui-05-territory-sheet|Bottom sheet "Choisir le territoire" over the parties page: a Confédération button and a tile map of the 26 cantons, six of them dark (available), Genève highlighted, Valais with a dot, with a legend Disponible, Bientôt, Objet cantonal le 29 nov.|Territory sheet}}
+</div>
+
+<div class="block">
+  <h2>Parties (US-06)</h2>
+  <p class="note">One sector per party, left to right in the order of the data file, the chosen party and its rank in the centre. The card shows the name, a line of description, the position, the facts that have a source, and the party site, or a search link when no site is known. Facts without a source are not shown: on 2026-11-16 none has one, so no card shows them.</p>
+  {{FIGURE:ui-06-parties|Phone screen with territory Genève: half-circle of nine Geneva parties, PS selected (3 sur 9), arrow buttons Plus à gauche and Plus à droite, and the card of PS Genève with its position Centre gauche and a link Site du parti ps-ge.ch|Parties of Geneva, card of the third party}}
+</div>
+
+<div class="block">
+  <h2>Decision aids (US-07)</h2>
+  <p class="note">Three steps: Comprendre, Comparer, Décider. Each tool shows its name, what it does and its host; the last step links the territory's voting page and the next ballot.</p>
+  {{FIGURE:ui-07-aids|Phone screen "Aides à décider", step 1 Comprendre with cards for Vimentis, easyvote and Année politique suisse, each with a CH badge and its host|Decision aids, Geneva}}
+</div>
+
+<div class="block">
+  <h2>Official sites (US-08)</h2>
+  <p class="note">The official sites of the territory in one list, with a search that ignores accents and case. An empty result says so.</p>
+  {{FIGURE:ui-08-state-sites|Phone screen "Sites officiels" for the canton of Geneva, the search box holds "grand" and one card remains: Grand Conseil, ge.ch/grandconseil|Official sites of Geneva, filtered}}
+</div>
+
+<div class="block">
+  <h2>Menu (US-08)</h2>
+  <p class="note">A hamburger on a phone, open on a computer. Two groups: "Je veux..." (the three pages) and "Voir ce que fait l'État" (Lire une loi, Trouver un élu, Voir les résultats, Consulter les chiffres, Tous les sites), whose links follow the territory.</p>
+  {{FIGURE:ui-09-menu|Phone screen with the menu open: group Je veux with three page links, group Voir ce que fait l'État with four external shortcuts to ge.ch, ge.ch/grandconseil, ge.ch/elections and bfs.admin.ch, and Tous les sites|Menu, Geneva}}
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>Mobile first: the voter's device is a phone; the menu folds into a hamburger on a phone and is open on a computer.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+        <li>The Confederation design system gives the look, without its coat of arms or logos; the site says it is independent and not official.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+        <li>A recommendation is coloured only when sourced; every other party reads "À confirmer".<span class="refs"><span class="chip ref">PRD-0001.US-03</span></span></li>
+        <li>A party fact appears only with a source and a check date.<span class="refs"><span class="chip ref">PRD-0001.US-06</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>A party with no known site gets a search link, never a guessed address.<span class="refs"><span class="chip ref">PRD-0001.US-06</span><span class="chip ref">PRD-0001.US-10</span></span></li>
+        <li>Uncovered cantons stay on the map, marked "Bientôt" and disabled.<span class="refs"><span class="chip ref">PRD-0001.US-05</span></span></li>
+        <li>Keyboard access to the half-circle, the map and the sheet, ARIA labels on sectors and tiles, focus returned on close.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+        <li>Editorial tone: airy, numbered lists, no long dash in any text.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>The exact countdown wording and the breakpoint where the menu unfolds.</li>
+        <li>The order of the tools inside each step of the decision aids.</li>
+      </ul>
+    </section>
+  </div>
+</div>

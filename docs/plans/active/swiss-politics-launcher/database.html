@@ -1,0 +1,66 @@
+<!-- summary: no database · 5 data files · 11 entities -->
+<div class="block">
+  <h2>No database: five JSON files</h2>
+  <p class="note">There is no database and no server. The "tables" are five JSON files in <span class="mono">data/</span>, edited by hand and checked by <span class="mono">npm run check</span>, then copied into the script at build time. Each file wraps its content in one key, next to a free <span class="mono">_readme</span> note for editors. Row counts are those of 2026-11-16.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>File</th><th>Holds</th><th>Rows</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">territories.json</span></td><td>The Confederation (<span class="mono">CH</span>) and the 26 cantons; a canton is covered once it has parties</td><td class="num">27</td></tr>
+        <tr><td class="key"><span class="mono">parties.json</span></td><td>Parties per territory, left to right: the order of the array is the order on screen. 33 verified, 2 to confirm, 16 not found</td><td class="num">51</td></tr>
+        <tr><td class="key"><span class="mono">state-sites.json</span></td><td>Official sites per territory, the canton's own site first. 14 verified, 1 to confirm</td><td class="num">15</td></tr>
+        <tr><td class="key"><span class="mono">tools.json</span></td><td>Decision aids, valid for every territory. All verified</td><td class="num">7</td></tr>
+        <tr><td class="key"><span class="mono">ballot.json</span></td><td>The next ballot: 4 items, 7 sourced party recommendations, 6 cantonal entries, 3 sources</td><td class="num">1</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Nested in these rows: 10 previous URLs and 18 party facts, all 18 still without a source.</p>
+</div>
+
+<div class="block">
+  <h2>Entities and relations</h2>
+  {{FIGURE:er-01-referential|Entity-relationship diagram: Territory has many Party and many StateSite through their territory code; Party has SourcedFact and PreviousUrl; StateSite and Tool have PreviousUrl; Ballot has one or more BallotItem, CantonBallot entries keyed by canton, and BallotSource; a BallotItem names national parties by their abbreviation|The referential as typed in src/types.ts}}
+</div>
+
+<div class="block">
+  <h2>Field conventions</h2>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>Convention</th><th>Rule</th><th>Enforced by</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Keys</td><td><span class="mono">id</span> unique across parties, state sites and tools; <span class="mono">code</span> unique among territories; ballot item ids unique</td><td><span class="mono">check</span></td></tr>
+        <tr><td class="key">References</td><td><span class="mono">party.territory</span> and <span class="mono">state_site.territory</span> name a <span class="mono">territory.code</span>; the keys of <span class="mono">ballot.cantons</span> name a canton; the keys of a ballot item's <span class="mono">parties</span> name the <span class="mono">abbr</span> of a <span class="mono">CH</span> party</td><td><span class="mono">check</span></td></tr>
+        <tr><td class="key">Link status</td><td><span class="mono">status</span> is <span class="mono">verified</span>, <span class="mono">to_confirm</span> or <span class="mono">not_found</span>; <span class="mono">url</span> is null exactly when the status is <span class="mono">not_found</span></td><td><span class="mono">check</span></td></tr>
+        <tr><td class="key">Proof</td><td>Every link entry carries <span class="mono">checked_on</span> and <span class="mono">evidence</span> (for example the page title); a URL or a recommendation is never added without a source</td><td><span class="mono">check</span> for the fields; review for the source</td></tr>
+        <tr><td class="key">Previous URLs</td><td>An abandoned address moves to <span class="mono">previous_urls</span> with <span class="mono">seen_on</span> and a <span class="mono">note</span>; never tested by <span class="mono">links</span></td><td><span class="mono">check</span>, <span class="mono">links</span></td></tr>
+        <tr><td class="key">Sourced facts</td><td>A fact is <span class="mono">{value, source, checked_on}</span>; the site shows it only when <span class="mono">source</span> is set</td><td>Site rendering</td></tr>
+        <tr><td class="key">Dates</td><td>ISO <span class="mono">YYYY-MM-DD</span>, real calendar dates</td><td><span class="mono">check</span></td></tr>
+        <tr><td class="key">Language</td><td>Keys and enum values in English, values (names, descriptions, notes) in French</td><td>Review</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>The data lives in one JSON file per referential, not in code.<span class="refs"><span class="chip ref">PRD-0001.US-09</span></span></li>
+        <li>Every link records its status, check date, evidence and previous addresses.<span class="refs"><span class="chip ref">PRD-0001.US-10</span></span></li>
+        <li>A canton is available as soon as it has parties in the parties file.<span class="refs"><span class="chip ref">PRD-0001.US-09</span></span></li>
+        <li>Facts without a source are kept in the data but not shown.<span class="refs"><span class="chip ref">PRD-0001 §8</span><span class="chip ref">PRD-0001.US-06</span></span></li>
+        <li>Party recommendations exist only for national parties and only with a listed source.<span class="refs"><span class="chip ref">PRD-0001.US-03</span></span></li>
+        <li>The data is embedded at build time; nothing is fetched at run time.<span class="refs"><span class="chip ref">PRD-0001.US-12</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>The order of keys inside an entry and the indentation of the files.</li>
+        <li>The wording of the <span class="mono">_readme</span> notes.</li>
+      </ul>
+    </section>
+  </div>
+</div>
