@@ -1,10 +1,10 @@
 /*
  * Local tool of the Boussole citoyenne. Node 26 runs this TypeScript file directly (type stripping).
  *
- *   node tools/boussole.ts check            validates data/*.json against src/types.ts   (npm run check)
- *   node tools/boussole.ts links [--all]     tests every current URL of data/*.json      (npm run links)
- *   node tools/boussole.ts seats --show      shows the columns of the OFS file            (npm run seats -- --show)
- *   node tools/boussole.ts seats             writes data/seats-national-council-2023.json (npm run seats)
+ *   node tools/cli.ts check                 validates data/*.json against src/types.ts   (npm run check)
+ *   node tools/cli.ts links [--all]          tests every current URL of data/*.json      (npm run links)
+ *   node tools/cli.ts seats --show           shows the columns of the OFS file            (npm run seats -- --show)
+ *   node tools/cli.ts seats                  writes data/seats-national-council-2023.json (npm run seats)
  *
  * Console messages are in French: the maintainers read them in French.
  */
@@ -16,7 +16,7 @@ import { DATA_FILES, type AnySchema, type Referential, type Rule } from "../src/
 import { AID_TOOL_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const USER_AGENT = "Mozilla/5.0 (compatible; boussole-citoyenne-outil-local)";
+const USER_AGENT = "Mozilla/5.0 (compatible; civic-compass-link-checker)";
 /** Party results, National Council elections 2023 (OFS, via opendata.swiss). */
 const SEATS_URL = "https://ogd-static.voteinfo-app.ch/v4/ogd/sd-t-17.02-NRW2023-parteien-appendix.csv";
 const SEATS_FILE = "seats-national-council-2023.json";

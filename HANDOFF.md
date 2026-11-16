@@ -3,7 +3,7 @@
 Site statique mobile first en TypeScript, construit en un seul script classique qui fonctionne en file://. Projet issu d'une conversation avec Claude. Ce fichier résume les décisions pour reprendre le développement en local.
 
 ## Intention
-Un « gros lanceur » pour la politique suisse : prochaine votation, partis de gauche à droite (Confédération et cantons), outils d'aide à décider, sites officiels. Public GitHub sous VictorHueni, dépôt prévu `boussole-citoyenne` (pas encore créé), Pages via GitHub Actions.
+Un « gros lanceur » pour la politique suisse : prochaine votation, partis de gauche à droite (Confédération et cantons), outils d'aide à décider, sites officiels. Public GitHub sous VictorHueni, dépôt `civic-compass`, Pages via GitHub Actions.
 
 ## Décisions prises
 - Nom : Boussole citoyenne. Design system de la Confédération (github.com/swiss/designsystem, MIT), site indépendant, sans logos ni armoiries.
@@ -20,8 +20,8 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - `data/*.json` : référentiel (territories, parties, state-sites, tools, ballot du 29.11.2026), avec statut, date et preuve pour chaque lien, et anciennes URL (`previous_urls`).
 - `src/types.ts` : types du référentiel, partagés par le site et l'outil. Chaque type a un schéma voisin que `tsc` force à rester aligné ; `npm run check` contrôle les JSON avec ces schémas.
 - `src/site/` : le site en modules (`main.ts` point d'entrée, `app.ts` routage, menu, carte, partis, aides et sites officiels, `ballot.ts` page votation, `referential.ts` lecture des JSON, `links.ts` ids des entrées du référentiel vers lesquelles le site renvoie, `dom.ts` utilitaires).
-- `index.html`, `css/boussole.css` (+ `css/designsystem.css` et `css/fonts` du DS).
-- `tools/boussole.ts` : outil local. `check` contrôle `data/*.json` ; `links` teste les URL actuelles ; `seats` télécharge les sièges du Conseil national 2023 (OFS) vers `data/seats-national-council-2023.json` (pas encore branché à l'interface). `tools/build.ts` construit `dist/`.
+- `index.html`, `css/site.css` (+ `css/designsystem.css` et `css/fonts` du DS).
+- `tools/cli.ts` : outil local. `check` contrôle `data/*.json` ; `links` teste les URL actuelles ; `seats` télécharge les sièges du Conseil national 2023 (OFS) vers `data/seats-national-council-2023.json` (pas encore branché à l'interface). `tools/build.ts` construit `dist/`.
 - `.github/workflows/` : `links.yml` (`npm run check` et `npm run links`) et `pages.yml` (`npm run build`, publie `dist/`).
 
 ## Données : état et limites
