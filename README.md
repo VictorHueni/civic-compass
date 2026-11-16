@@ -6,7 +6,7 @@ Site statique écrit en TypeScript. Une fois construit, il tient en un dossier `
 
 ## Contenu
 
-- **Partis** : navigation de gauche à droite, au niveau suisse et genevois. Le classement est indicatif (usage courant des médias et de la recherche).
+- **Partis** : navigation de gauche à droite, au niveau suisse et genevois. Le classement est indicatif : pour les partis nationaux et leurs sections, il s'appuie sur l'enquête d'experts Chapel Hill (CHES 2024, variable `lrgen`), dont le score est gardé dans `data/parties.json` (`left_right`) comme aide et n'est pas affiché ; `npm run check` signale tout ordre qui le contredit, sans bloquer. Les partis sans score (PST-POP, solidaritéS, partis uniquement cantonaux) sont placés à la main. Voir `docs/architecture/research/0001-left-right-placement-sources.md`.
 - **Aider à décider** : smartvote, smartmonitor, PolitPro, Vimentis, easyvote, Swissvotes, Année politique suisse.
 - **Sites de l'État** : Confédération, Parlement, Chancellerie, canton et Grand Conseil de Genève.
 

@@ -13,6 +13,7 @@ export type Rule = Flags &
   (
     | { readonly kind: "string" }
     | { readonly kind: "integer" }
+    | { readonly kind: "number" } // any finite number, decimals allowed
     | { readonly kind: "date" } // AAAA-MM-JJ
     | { readonly kind: "url" } // http:// or https://
     | { readonly kind: "enum"; readonly values: readonly string[] }
@@ -102,6 +103,31 @@ export const SOURCED_FACT_SCHEMA: Schema<SourcedFact> = {
   checked_on: { kind: "date", nullable: true },
 };
 
+/**
+ * Left-right score of a party from a published survey. An aid for the maintainers to order
+ * the parties (the order shown stays indicative and editorial): never shown on the site.
+ * A cantonal section inherits the score of its national party: `inherited_from` names that
+ * party's id and the value, dataset and source are copied from it.
+ */
+export interface LeftRight {
+  value: number;
+  /** E.g. "0 = extrême gauche, 10 = extrême droite". */
+  scale: string;
+  /** E.g. "CHES 2024, variable lrgen". */
+  dataset: string;
+  source: string;
+  checked_on: string;
+  inherited_from?: string;
+}
+export const LEFT_RIGHT_SCHEMA: Schema<LeftRight> = {
+  value: { kind: "number" },
+  scale: { kind: "string" },
+  dataset: { kind: "string" },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+  inherited_from: { kind: "string", optional: true },
+};
+
 export interface PartyFacts {
   founded?: SourcedFact;
   federal_council_seats?: SourcedFact;
@@ -117,6 +143,7 @@ export interface Party extends LinkEntry {
   short: string;
   position: string;
   facts?: PartyFacts;
+  left_right?: LeftRight;
 }
 export const PARTY_SCHEMA: Schema<Party> = {
   ...LINK_ENTRY_SCHEMA,
@@ -125,6 +152,7 @@ export const PARTY_SCHEMA: Schema<Party> = {
   short: { kind: "string" },
   position: { kind: "string" },
   facts: { kind: "object", schema: PARTY_FACTS_SCHEMA, optional: true },
+  left_right: { kind: "object", schema: LEFT_RIGHT_SCHEMA, optional: true },
 };
 
 /* ---------- State sites and tools ---------- */
