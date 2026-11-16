@@ -304,10 +304,10 @@
       "short": "EàG",
       "position": "Gauche radicale",
       "description": "Coalition de solidaritéS, du Parti du Travail et de la DAL.",
-      "url": null,
-      "status": "not_found",
+      "url": "https://eag-ge.ch/",
+      "status": "verified",
       "checked_on": "2026-11-16",
-      "evidence": "Aucun site retenu. Candidat écarté : https://eag-ge.ch/ (derniers articles de mars 2025, nom « Ensemble à Gauche » repris par un autre groupe en 2022 selon ce site).",
+      "evidence": "Titre de la page : Ensemble à Gauche - L'égalité maintenant! (retenu par le mainteneur le 2026-11-16 malgré des derniers articles de mars 2025)",
       "previous_urls": [
         {
           "url": "https://www.ensembleagauche.ch",
