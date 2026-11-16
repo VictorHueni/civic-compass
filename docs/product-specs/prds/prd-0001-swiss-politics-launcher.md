@@ -125,7 +125,7 @@ As a voter, I want to see the parties of my territory ordered from left to right
 **Acceptance Criteria:**
 - [ ] `#partis` shows a half-circle with one sector per party, left to right in the order of the data file; the active party's short name and rank ("3 sur 9") show in the centre.
 - [ ] Moving works by tapping a sector, the arrow buttons, the keyboard arrows and a horizontal swipe.
-- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats), and a link to the party site; when no site is known, a link that searches for the party name instead.
+- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
 - [ ] A fact without a source and a check date is never shown.
 - [ ] The page states that the left-right order is indicative.
 
@@ -140,7 +140,7 @@ As a voter, I want the independent decision tools grouped by what they help with
 
 **Acceptance Criteria:**
 - [ ] `#aides` groups the tools in three steps: "Comprendre" (easyvote, Vimentis, Année politique suisse), "Comparer" (smartvote, smartmonitor, PolitPro, Swissvotes), "Décider" (the territory's voting page and the next ballot).
-- [ ] Each tool shows its name, one line on what it does, and its host name.
+- [ ] Each tool shows its name, one line on what it does, and its host name; only tools whose link is verified are listed.
 
 ### PRD-0001.US-08 · Find official sites
 
@@ -152,7 +152,7 @@ As a voter, I want the independent decision tools grouped by what they help with
 As a voter, I want the official sites of my territory in one searchable list, plus shortcuts in the menu, so that I can read a law, find an elected member or see results without searching the web.
 
 **Acceptance Criteria:**
-- [ ] `#etat` lists the official sites of the chosen territory with a search box that ignores accents and case; an empty result says so.
+- [ ] `#etat` lists the official sites of the chosen territory with a search box that ignores accents and case; an empty result says so. Only sites whose link is verified are listed.
 - [ ] The menu group "Voir ce que fait l'État" offers "Lire une loi", "Trouver un élu", "Voir les résultats", "Consulter les chiffres" for the chosen territory, and "Tous les sites".
 - [ ] Every shortcut URL comes from the data referential, none is written in the code.
 
@@ -248,13 +248,13 @@ There is no analytics on the site, so metrics come from the repository and its c
 ## 8. Open Questions
 
 - **Languages.** The owner wants to see the site in French, German and Italian. Is a trilingual site part of the next PRD, and does it come with the German-speaking cantons? Proposed names: "Bürgerkompass" or "Stimmkompass", "Bussola civica".
-- **Showing link status to voters.** A link marked "to confirm" is shown like a verified one. Should the card say so?
 - **Left-right order.** The order follows "common usage in media and research" without a cited source. Which source should the order cite?
 - **Analytics.** Keeping the site free of tracking is assumed. Confirm, or choose a privacy-respecting counter?
 
 Settled on 2026-11-16 by the owner:
 
 - **Facts without sources** are hidden until each carries a source and a check date (US-06); the 18 current facts are kept in the data with a null source.
+- **Link status is never shown to voters.** Every link a voter sees must simply work; a link that is not verified is not shown (a party card offers a search instead). The maintainer runs the check and promotes links to verified (US-06, US-07, US-08, US-10).
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
 ## 9. Open Items
