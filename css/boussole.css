@@ -1,0 +1,50 @@
+/* Styles propres à la Boussole citoyenne, construits sur les variables du
+   Design System de la Confédération (css/designsystem.css). */
+:root{ --b-bord:var(--color-secondary-100); --b-fond:var(--color-secondary-50); --b-texte:var(--color-secondary-800); --b-doux:var(--color-secondary-400); --b-accent:var(--color-primary-600); }
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--b-texte);font-family:Font-Regular,Hind,Fallback-font,sans-serif;line-height:1.55}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--b-accent);outline-offset:2px}
+.topbar{border-top:6px solid var(--b-accent);border-bottom:1px solid var(--b-bord);background:#fff}
+.topbar .container{padding-top:18px;padding-bottom:18px}
+.topbar h1{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:clamp(1.6rem,4vw,2.25rem);line-height:1.15;margin:0}
+.topbar p{margin:4px 0 0;color:var(--b-doux)}
+main.container{padding-top:28px;padding-bottom:56px}
+h2{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.45rem;margin:0 0 4px}
+.bloc{margin-top:40px}
+.bloc__desc{color:var(--b-doux);margin:0 0 14px}
+.host{font-size:.8rem;color:var(--b-doux);word-break:break-all}
+.niveaux{display:flex;gap:8px;margin:12px 0 18px}
+.spectre-axe{display:flex;justify-content:space-between;font-size:.85rem;color:var(--b-doux);margin-bottom:6px}
+.spectre-barre{height:6px;border-radius:3px;background:linear-gradient(90deg,var(--color-secondary-800),var(--color-secondary-200));margin-bottom:-2px}
+.spectre{list-style:none;margin:0;padding:12px 0 8px;display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity}
+.spectre li{flex:1 0 auto;scroll-snap-align:center}
+.party{width:100%;min-width:76px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 8px;border:1px solid var(--b-bord);border-radius:6px;background:#fff;color:inherit;font:inherit;cursor:pointer}
+.party:hover{border-color:var(--b-accent)}
+.party__dot{width:12px;height:12px;border-radius:50%;background:var(--color-secondary-200)}
+.party__abbr{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:.9rem;white-space:nowrap}
+.party.is-active{border-color:var(--b-accent);background:var(--color-primary-50)}
+.party.is-active .party__dot{background:var(--b-accent)}
+.nav-fleches{display:flex;gap:8px;margin:8px 0 14px}
+.detail{border:1px solid var(--b-bord);border-left:6px solid var(--b-accent);border-radius:6px;padding:18px 20px;background:var(--b-fond)}
+.detail__pos{margin:0;font-size:.85rem;color:var(--b-doux);text-transform:uppercase;letter-spacing:.04em}
+.detail__rank{text-transform:none;letter-spacing:0;margin-left:6px}
+.detail__name{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.5rem;margin:4px 0 8px}
+.detail p{margin:0 0 12px;max-width:65ch}
+.recherche{margin-top:40px}
+.recherche input{width:100%;padding:12px 14px;font:inherit;border:1px solid var(--color-secondary-200);border-radius:4px;background:#fff;color:inherit}
+.cartes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.carte{display:flex;flex-direction:column;gap:6px;height:100%;padding:14px 16px;border:1px solid var(--b-bord);border-radius:6px;text-decoration:none;background:#fff}
+.carte:hover{border-color:var(--b-accent);box-shadow:0 6px 18px rgba(0,0,0,.08)}
+.carte__tete{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.carte__nom{font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.carte__note{font-size:.92rem}
+.vide{color:var(--b-doux);padding:24px 0}
+footer.pied{border-top:1px solid var(--b-bord);background:var(--b-fond);font-size:.85rem;color:var(--b-doux)}
+footer.pied .container{padding-top:20px;padding-bottom:28px}
+footer.pied p{margin:0 0 8px;max-width:75ch}
+.sr-only{position:absolute;left:-9999px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.carte,.carte:visited{color:var(--b-texte)}
+.carte__nom{color:var(--b-texte)}
+.carte:hover .carte__nom{color:var(--color-primary-700)}

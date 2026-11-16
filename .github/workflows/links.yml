@@ -1,0 +1,23 @@
+name: Contrôle des liens
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"   # chaque lundi
+jobs:
+  liens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vérifier tous les liens externes
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # 403 et 429 : certains sites bloquent les robots, ce n'est pas un lien cassé
+          args: >-
+            --no-progress --max-retries 3 --timeout 30
+            --accept 200..=299,403,429
+            --user-agent "Mozilla/5.0 (compatible; boussole-citoyenne-linkcheck)"
+            --exclude-path css
+            "index.html" "js/data.js"
+          fail: true
