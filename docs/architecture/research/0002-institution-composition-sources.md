@@ -366,6 +366,17 @@ Slices 1 and 2 are independent of each other and of slice 4; the order above is 
 
 None of these changes is implemented by this note.
 
+### Owner rulings (2026-11-16)
+
+1. **Election result or current composition:** cantonal parliaments show the latest election result with its date (OFS, generated); the federal chambers show the current composition (Parliament API, generated).
+2. **Parliament API:** the new `ws.parl.ch`. The owner registered; the key lives outside the repository in `~/.config/civic-compass/env` (`PARL_API_KEY`, mode 600) and is read by the generating command only. Checked with the key on 2026-11-16: the OpenAPI document is public at `https://ws.parl.ch/doc/v3/api-docs` (title "Swiss Parliament Open Data Webservice (OWS)", version 1.0.0); the key goes in the `X-API-KEY` header; filters use the `q` parameter (`eq(active,true)`, strings in double quotes); `/api/v1/persons?q=eq(active,true)` returned 255 active persons with council, party and canton; the schema `FederalCouncilMandateV1` carries `department`.
+3. **Terms of use:** counting members per party and mapping labels to the site's parties is accepted, with three safeguards: the generated file keeps the Parliament's data unchanged (raw), the mapping is stored apart; every figure shown carries "Source : Services du Parlement de l'Assemblée fédérale, Berne" and the download date; the site keeps stating that it is independent and not official.
+4. **Regional parties:** PLD (Basel-Stadt) is counted under PLR and Al (Zug) under the Greens, as the OFS does; the original label stays in the raw data and may be named on the card ("dont 1 PLD Bâle-Ville").
+5. **Reading xlsx:** a small reader written in the tool (zip and XML with Node's built-ins), no new dependency; a library only if the reader meets a case it cannot handle.
+6. **Fribourg:** the Grand Conseil elected in November 2026 is shown now, labelled with its election date; the new Conseil d'État after the second round of 29 November 2026, once published by the OFS and checked.
+7. **Names:** names, party, canton and function only (no photo, address or date of birth) for the Federal Council (with department), the Council of States and National Council members of the chosen canton, the cantonal governments (with department) and party presidents; cantonal parliaments show seats per party only.
+8. **Staleness:** `npm run check` warns, never fails, when a hand-kept person record (cantonal government, party presidency) was checked more than 180 days ago. Party presidencies are shown only when sourced, never as "unknown", as `presidency {names, source, checked_on}`.
+
 ### Open items (to file once the ledger exists)
 
 The repository has no central open-items ledger yet (PRD-0001 §9 and Research-0001 note the same), so the gaps found here are listed for filing:
@@ -376,7 +387,6 @@ The repository has no central open-items ledger yet (PRD-0001 §9 and Research-0
 - doc-gap, `#q5`: find, for each of the 36 cantonal executives, a source naming the person's party (party page or cantonal election results), since no official canton page shows it.
 - doc-gap, `#q6`: extract the PVL president's name, and find whether PST-POP and solidaritéS name a president or a collective leadership.
 - doc-gap, `#q6`: read the ordinance of 13 December 2002 on the party register (Fedlex needs JavaScript) to confirm what the register holds.
-- doc-gap, `#q1`: read the new `ws.parl.ch` OpenAPI after registration, to check whether it adds departments for the Federal Council.
 
 ---
 
