@@ -1,5 +1,5 @@
 {
-  "_readme": "Partis par territoire (CH = Confédération), dans l'ordre de gauche à droite : l'ordre du tableau compte. status : verified, to_confirm ou not_found (url null). previous_urls garde les adresses abandonnées. Après modification : npm run check.",
+  "_readme": "Partis par territoire (CH = Confédération), dans l'ordre de gauche à droite : l'ordre du tableau compte. status : verified, to_confirm ou not_found (url null). previous_urls garde les adresses abandonnées. facts : chaque fait (value) n’est affiché sur le site que s’il a une source (url) et une date checked_on. Après modification : npm run check.",
   "parties": [
     {
       "id": "pst-ch",
@@ -15,8 +15,16 @@
       "evidence": "Titre de la page : PST-POP / Parti Suisse du Travail - Parti Ouvrier Populaire",
       "previous_urls": [],
       "facts": {
-        "founded": 1944,
-        "federal_council_seats": 0
+        "founded": {
+          "value": 1944,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 0,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -47,8 +55,16 @@
       "evidence": "Titre de la page : Accueil - Les VERT-E-S suisses",
       "previous_urls": [],
       "facts": {
-        "founded": 1983,
-        "federal_council_seats": 0
+        "founded": {
+          "value": 1983,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 0,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -71,8 +87,16 @@
         }
       ],
       "facts": {
-        "founded": 1888,
-        "federal_council_seats": 2
+        "founded": {
+          "value": 1888,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 2,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -95,8 +119,16 @@
         }
       ],
       "facts": {
-        "founded": 2007,
-        "federal_council_seats": 0
+        "founded": {
+          "value": 2007,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 0,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -119,8 +151,16 @@
         }
       ],
       "facts": {
-        "founded": 2021,
-        "federal_council_seats": 1
+        "founded": {
+          "value": 2021,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 1,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -143,8 +183,16 @@
         }
       ],
       "facts": {
-        "founded": 1919,
-        "federal_council_seats": 0
+        "founded": {
+          "value": 1919,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 0,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -161,8 +209,16 @@
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux - Accueil",
       "previous_urls": [],
       "facts": {
-        "founded": 2009,
-        "federal_council_seats": 2
+        "founded": {
+          "value": 2009,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 2,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -179,8 +235,16 @@
       "evidence": "Titre de la page : UDC Suisse",
       "previous_urls": [],
       "facts": {
-        "founded": 1971,
-        "federal_council_seats": 2
+        "founded": {
+          "value": 1971,
+          "source": null,
+          "checked_on": null
+        },
+        "federal_council_seats": {
+          "value": 2,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -279,7 +343,11 @@
       "evidence": "Aucun site retrouvé",
       "previous_urls": [],
       "facts": {
-        "founded": 2023
+        "founded": {
+          "value": 2023,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {
@@ -310,7 +378,11 @@
       "evidence": "Titre de la page : Accueil - MCGE",
       "previous_urls": [],
       "facts": {
-        "founded": 2005
+        "founded": {
+          "value": 2005,
+          "source": null,
+          "checked_on": null
+        }
       }
     },
     {

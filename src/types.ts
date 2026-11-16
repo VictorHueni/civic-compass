@@ -87,13 +87,28 @@ export const TERRITORY_SCHEMA: Schema<Territory> = {
 
 /* ---------- Parties ---------- */
 
+/**
+ * A fact about a party. The site shows it only once it has a source (PRD-0001 goal 2:
+ * no fact without a source); until then it is kept here with source and checked_on null.
+ */
+export interface SourcedFact {
+  value: number;
+  source: string | null;
+  checked_on: string | null;
+}
+export const SOURCED_FACT_SCHEMA: Schema<SourcedFact> = {
+  value: { kind: "integer" },
+  source: { kind: "url", nullable: true },
+  checked_on: { kind: "date", nullable: true },
+};
+
 export interface PartyFacts {
-  founded?: number;
-  federal_council_seats?: number;
+  founded?: SourcedFact;
+  federal_council_seats?: SourcedFact;
 }
 export const PARTY_FACTS_SCHEMA: Schema<PartyFacts> = {
-  founded: { kind: "integer", optional: true },
-  federal_council_seats: { kind: "integer", optional: true },
+  founded: { kind: "object", schema: SOURCED_FACT_SCHEMA, optional: true },
+  federal_council_seats: { kind: "object", schema: SOURCED_FACT_SCHEMA, optional: true },
 };
 
 export interface Party extends LinkEntry {

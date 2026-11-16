@@ -255,7 +255,12 @@ const TIMEOUT_MS = 25_000;
 const ATTEMPTS = 3;
 const BACKOFF_MS = [1_000, 3_000];
 
-type Verdict = "ok" | "redirected" | "elsewhere" | "blocked" | "broken";
+/**
+ * blocked: 403/429, the site refuses robots. unreachable: no answer in time after every attempt
+ * (some Swiss sites do not answer servers abroad, such as CI runners). Both are listed for a manual
+ * check and do not fail the run; a refused connection, a DNS error or a 404 do.
+ */
+type Verdict = "ok" | "redirected" | "elsewhere" | "blocked" | "unreachable" | "broken";
 interface LinkResult {
   url: string;
   verdict: Verdict;
@@ -328,8 +333,13 @@ async function checkLink(url: string): Promise<LinkResult> {
       return { url, verdict: "ok", status: res.status, note: "" };
     } catch (e) {
       const err = e as Error & { cause?: { code?: string; message?: string } };
-      const reason = err.name === "TimeoutError" ? `pas de réponse en ${TIMEOUT_MS / 1000} s` : err.cause?.code || err.cause?.message || err.message;
-      last = { url, verdict: "broken", status: 0, note: `${reason}, après ${attempt + 1} essai(s)` };
+      const timedOut = err.name === "TimeoutError" || /TIMEOUT/.test(err.cause?.code ?? "");
+      if (timedOut) {
+        last = { url, verdict: "unreachable", status: 0, note: `pas de réponse en ${TIMEOUT_MS / 1000} s après ${attempt + 1} essai(s), à vérifier à la main` };
+      } else {
+        const reason = err.cause?.code || err.cause?.message || err.message;
+        last = { url, verdict: "broken", status: 0, note: `${reason}, après ${attempt + 1} essai(s)` };
+      }
     }
   }
   return last;
@@ -352,10 +362,11 @@ const LABELS: Record<Verdict, string> = {
   broken: "CASSÉ   ",
   elsewhere: "AILLEURS",
   blocked: "À VOIR  ",
+  unreachable: "À VOIR  ",
   redirected: "OK      ",
   ok: "OK      ",
 };
-const ORDER: Verdict[] = ["broken", "elsewhere", "blocked", "redirected", "ok"];
+const ORDER: Verdict[] = ["broken", "elsewhere", "unreachable", "blocked", "redirected", "ok"];
 
 async function cmdLinks(dataDir: string, all: boolean): Promise<number> {
   const found = new Map<string, Set<string>>();
@@ -376,7 +387,7 @@ async function cmdLinks(dataDir: string, all: boolean): Promise<number> {
   const failing = count("broken") + count("elsewhere");
   console.log(
     `\n${results.length} liens : ${ok} OK (dont ${count("redirected")} redirigé(s) sur le même domaine), ` +
-      `${count("broken")} cassé(s), ${count("elsewhere")} redirigé(s) ailleurs, ${count("blocked")} à vérifier à la main.`,
+      `${count("broken")} cassé(s), ${count("elsewhere")} redirigé(s) ailleurs, ${count("blocked") + count("unreachable")} à vérifier à la main.`,
   );
   if (failing) console.log("Échec : corrigez les liens cassés ou redirigés ailleurs dans data/ (gardez l'ancienne adresse dans previous_urls).");
   return failing ? 1 : 0;

@@ -267,10 +267,11 @@ function renderDetail(): void {
   const p = list[index];
   if (!p) return;
   const facts: [string, string][] = [["Position", p.position]];
-  const founded = p.facts?.founded;
-  const seats = p.facts?.federal_council_seats;
-  if (founded) facts.push(["Fondé en", String(founded)]);
-  if (typeof seats === "number") facts.push(["Conseil fédéral", seats ? seats + (seats > 1 ? " sièges" : " siège") : "Aucun siège"]);
+  // A fact is shown only once it has a source (PRD-0001 goal 2).
+  const founded = p.facts?.founded?.source ? p.facts.founded.value : null;
+  const seats = p.facts?.federal_council_seats?.source ? p.facts.federal_council_seats.value : null;
+  if (founded !== null) facts.push(["Fondé en", String(founded)]);
+  if (seats !== null) facts.push(["Conseil fédéral", seats ? seats + (seats > 1 ? " sièges" : " siège") : "Aucun siège"]);
   const dl = facts.map((f) => '<div class="fiche__ligne"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
   let link: string;
   if (p.url) {
