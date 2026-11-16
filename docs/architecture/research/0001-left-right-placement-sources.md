@@ -257,15 +257,17 @@ One line: cite **CHES 2024 `lrgen`** for the order of the national parties, inhe
 
 These changes are proposals for the owner; none is implemented by this note.
 
+### Owner rulings (2026-11-16)
+
+- **Order and labels (Q3, Q5):** the order stays indicative and editorial, and every party stays on the half-circle. The CHES 2024 `lrgen` scores are kept in `data/parties.json` (`left_right`) as an aid for the maintainers and are never shown; cantonal sections inherit their national party's score; parties without a score are placed by hand. The labels are kept, except the PS, which becomes "Gauche". Implemented in PR #8.
+- **CHES reuse (Q4):** keeping the scores in the public repository is accepted as long as they are sourced: each `left_right` names the data file and the citation the CHES page requests (Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981), and the site footer names the survey. No written confirmation is sought.
+
 ### Open items (to file once the ledger exists)
 
 The repository has no central open-items ledger yet (PRD-0001 §9 notes the same), so the gaps found here are listed for filing:
 
-- doc-gap, Source anchor `#q4`, Source heading "Q4: Under which reuse terms may the site publish a source's values": ask the CHES team in writing whether a public, non-commercial site may display Swiss `lrgen` means with the requested citation.
 - doc-gap, `#q1`, "Q1: Which published sources give a current general left-right position": read smartmonitor's own party-level figures and method (its pages render in JavaScript and could not be read), and the NZZ DW-Nominate article, instead of news reports.
 - doc-gap, `#q1`: extract the CSES Module 6 collaborator values for Switzerland (`F5029_A` to `F5029_I`) from the dataset, since the Macro Report PDF does not yield them as text.
-- decision-gap, `#q3`, "Q3: Does any published source place cantonal sections, or the canton-only parties": owner's rule for placing LJS, PCSI, CG-PCS, Ensemble à Gauche and CS-POP, and for PST-POP and solidaritéS nationally.
-- decision-gap, `#q5`, "Q5: Can any source justify the eight French labels": owner's choice among score only, score bands, or CHES family.
 - doc-gap, `#q3`: search further for a citable survey of Swiss cantonal parties (for example cantonal party presidents) that could place cantonal sections and canton-only parties.
 
 ---
