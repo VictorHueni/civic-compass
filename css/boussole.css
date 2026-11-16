@@ -242,3 +242,39 @@ footer.pied p{margin:0 0 8px;max-width:75ch}
 .suite{display:flex;justify-content:space-between;gap:12px;margin-top:56px;padding-top:20px;border-top:1px solid var(--b-bord)}
 .suite button{min-height:48px;padding:0;border:0;background:transparent;font:inherit;color:var(--b-accent);cursor:pointer}
 @media (min-width:700px){.oui-non{grid-template-columns:1fr 1fr;gap:40px}.h-page{font-size:2.3rem}}
+
+/* ---- Menu : deux groupes bien séparés ---- */
+.menu .menu__titre{margin:0 0 4px;padding:0;border:0;font-size:.78rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--b-texte)}
+.menu__groupe{padding:12px 0 4px}
+.menu__groupe--etat{margin:12px -16px -12px;padding:20px 16px 12px;background:var(--b-fond);border-top:3px solid var(--b-texte)}
+.menu__groupe--etat .menu__titre{color:var(--b-texte)}
+.menu__groupe--etat a{border-bottom-color:var(--b-bord)}
+@media (min-width:900px){
+  .menu{align-items:stretch;gap:0}
+  .menu__groupe,.menu__groupe--etat{display:flex;align-items:center;gap:14px;margin:0;padding:0;background:transparent;border:0}
+  .menu__groupe--etat{border-top:1px solid var(--b-bord);padding-top:2px}
+  .menu .menu__titre{display:block;flex:none;width:190px;margin:0;text-align:right;font-size:.72rem;color:var(--b-doux)}
+  .menu__groupe ul{margin:0}
+}
+@media (min-width:900px){
+  .marque{flex:none}
+  .topbar__in .menu{flex:1;min-width:0}
+  .menu .menu__titre{width:auto;margin-left:auto}
+  .menu__groupe ul{flex-wrap:nowrap;justify-content:flex-start;width:640px}
+  .menu__etat a{white-space:nowrap}
+}
+@media (min-width:900px){
+  .menu .menu__titre{width:170px;margin:0;text-align:left;flex:none}
+  .menu__groupe ul{width:auto}
+  .menu{align-items:flex-start;padding-left:24px}
+  .menu__groupe,.menu__groupe--etat{width:100%;gap:0}
+  .menu__etat a{padding:0 10px}
+  .menu__etat a:first-child{padding-left:14px}
+}
+@media (min-width:900px){
+  .menu{padding-left:8px}
+  .menu .menu__titre{width:150px}
+  .menu__etat a{padding:0 8px}
+  .menu__etat a:first-child{padding-left:14px}
+}
+@media (min-width:900px){.menu .menu__titre .long{display:none}.menu .menu__titre .court{display:inline}}

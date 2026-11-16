@@ -64,7 +64,7 @@
     ];
     $("menu-etat").innerHTML = items.map(function (x) {
       return '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(x[0]) + ' <span aria-hidden="true">↗</span></b><small>' + esc(hote(x[1])) + '</small></a></li>';
-    }).join("") + '<li><a href="#etat" data-page="etat"><b>Tous les sites officiels</b><small>Liste complète et recherche</small></a></li>';
+    }).join("") + '<li><a href="#etat" data-page="etat"><b>Tous les sites</b><small>Liste complète et recherche</small></a></li>';
   }
 
   /* ---------- Menu (hamburger sur téléphone, déplié sur ordinateur) ---------- */

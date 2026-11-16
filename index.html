@@ -14,14 +14,18 @@
     <a class="marque" href="#votation"><span class="marque__nom">Boussole citoyenne</span><span class="marque__sous">La politique suisse, en un endroit</span></a>
     <button type="button" id="menu-btn" class="menu-btn" aria-expanded="false" aria-controls="menu"><span class="menu-btn__barres" aria-hidden="true"></span><span class="sr-only">Menu</span></button>
     <nav id="menu" class="menu" aria-label="Navigation principale">
+      <div class="menu__groupe">
       <p class="menu__titre">Je veux...</p>
       <ul>
         <li><a href="#votation" data-page="votation"><b><span class="long">Consulter ce sur quoi je vote</span><span class="court">Prochaine votation</span></b><small>Prochaine votation</small></a></li>
         <li><a href="#partis" data-page="partis"><b><span class="long">Voir les partis, de gauche à droite</span><span class="court">Partis</span></b><small>Partis</small></a></li>
         <li><a href="#aides" data-page="aides"><b><span class="long">Me faire aider à décider</span><span class="court">Aides à décider</span></b><small>Aides à décider</small></a></li>
       </ul>
-      <p class="menu__titre menu__titre--etat">Voir ce que fait l'État</p>
+      </div>
+      <div class="menu__groupe menu__groupe--etat">
+      <p class="menu__titre"><span class="long">Voir ce que fait l'État</span><span class="court">L'État</span></p>
       <ul id="menu-etat" class="menu__etat"></ul>
+      </div>
     </nav>
   </div>
 </header>
