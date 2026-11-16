@@ -9,6 +9,7 @@
     "node": ">=26"
   },
   "scripts": {
+    "build": "node tools/build.ts",
     "check": "tsc -p tsconfig.json && tsc -p tools/tsconfig.json && node tools/boussole.ts check",
     "links": "node tools/boussole.ts links",
     "seats": "node tools/boussole.ts seats"
