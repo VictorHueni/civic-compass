@@ -16,7 +16,7 @@ rmSync(DIST, { recursive: true, force: true });
 
 await build({
   entryPoints: [join(ROOT, "src/site/main.ts")],
-  outfile: join(DIST, "js/boussole.js"),
+  outfile: join(DIST, "js/site.js"),
   bundle: true,
   format: "iife",
   platform: "browser",
@@ -30,5 +30,5 @@ for (const path of ["index.html", "css", "LICENSE"]) {
   cpSync(join(ROOT, path), join(DIST, path), { recursive: true });
 }
 
-const script = join(DIST, "js/boussole.js");
+const script = join(DIST, "js/site.js");
 console.log(`Site construit dans ${relative(ROOT, DIST)}/ : ${relative(ROOT, script)} (${Math.round(statSync(script).size / 1024)} Ko), index.html, css/, LICENSE.`);

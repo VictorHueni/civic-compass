@@ -1,5 +1,5 @@
 {
-  "name": "boussole-citoyenne",
+  "name": "civic-compass",
   "version": "0.0.0",
   "private": true,
   "description": "La prochaine votation, les partis de gauche à droite, les outils d'aide au vote et les sites officiels, en Suisse et dans les cantons.",
@@ -10,9 +10,9 @@
   },
   "scripts": {
     "build": "node tools/build.ts",
-    "check": "tsc -p tsconfig.json && tsc -p tools/tsconfig.json && node tools/boussole.ts check",
-    "links": "node tools/boussole.ts links",
-    "seats": "node tools/boussole.ts seats"
+    "check": "tsc -p tsconfig.json && tsc -p tools/tsconfig.json && node tools/cli.ts check",
+    "links": "node tools/cli.ts links",
+    "seats": "node tools/cli.ts seats"
   },
   "devDependencies": {
     "@types/node": "26.6.6",

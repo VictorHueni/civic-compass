@@ -16,10 +16,10 @@ Il faut Node 26 (il exécute directement les fichiers `.ts`, sans compilation).
 
 ```
 npm ci              # installe typescript, esbuild et @types/node (versions épinglées)
-npm run build       # construit dist/ : index.html, css/, js/boussole.js
+npm run build       # construit dist/ : index.html, css/, js/site.js
 ```
 
-`dist/js/boussole.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement.
+`dist/js/site.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement.
 
 ## Organisation
 
@@ -27,7 +27,7 @@ npm run build       # construit dist/ : index.html, css/, js/boussole.js
 data/*.json        référentiel : partis, sites officiels, outils, territoires, votation
 src/types.ts       types du référentiel, partagés par le site et l'outil
 src/site/*.ts      le site (modules TypeScript)
-tools/boussole.ts  outil local : check, links, seats
+tools/cli.ts       outil local : check, links, seats
 tools/build.ts     construction de dist/
 index.html, css/   page et styles (Design System de la Confédération)
 dist/              site construit (non versionné)
@@ -45,6 +45,8 @@ Les données sont des fichiers JSON dans `data/`, pas du code :
 
 Chaque lien porte un `status` (`verified`, `to_confirm`, `not_found` avec `url: null`), une date `checked_on`, une preuve `evidence` (par exemple le titre de la page) et la liste `previous_urls` des adresses abandonnées (`url`, `seen_on`, `note`), gardées pour mémoire. La forme exacte de chaque fichier est décrite par `src/types.ts`.
 
+Le site n'affiche que les liens `verified` et ne montre jamais le statut au visiteur : un parti dont le lien n'est pas vérifié propose une recherche, un site officiel ou un outil non vérifié n'apparaît pas. Pour publier un lien, vérifiez-le puis passez-le en `verified`.
+
 Le site ne contient aucune URL en dur : il retrouve Fedlex, le Parlement, ch.ch, smartvote et les autres dans le référentiel par leur `id` (liste dans `src/site/links.ts`).
 
 Après une modification :
@@ -58,7 +60,7 @@ Le workflow **Contrôle des liens** lance les deux à chaque push et chaque lund
 
 ## Outil local
 
-`tools/boussole.ts` tourne sur votre machine avec Node 26, sans étape de compilation :
+`tools/cli.ts` tourne sur votre machine avec Node 26, sans étape de compilation :
 
 ```
 npm run check                    # contrôle data/*.json : champs, types, id uniques, territoires, statuts, dates, mots d'ordre
