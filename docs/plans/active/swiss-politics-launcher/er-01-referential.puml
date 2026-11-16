@@ -22,6 +22,15 @@ entity Party {
   * evidence : string
 }
 
+entity LeftRight {
+  * value : number (0 to 10)
+  --
+  * scale, dataset : string
+  * source : url
+  * checked_on : date
+  inherited_from : party id
+}
+
 entity SourcedFact {
   * kind : founded | federal_council_seats
   --
@@ -98,6 +107,8 @@ entity BallotSource {
 Territory ||--o{ Party : territory
 Territory ||--o{ StateSite : territory
 Party ||--o{ SourcedFact : facts
+Party ||--o| LeftRight : left_right
+LeftRight }o..o| Party : inherited_from\n(a CH party)
 Party ||--o{ PreviousUrl : previous_urls
 StateSite ||--o{ PreviousUrl : previous_urls
 Tool ||--o{ PreviousUrl : previous_urls

@@ -1,5 +1,5 @@
 {
-  "_readme": "Partis par territoire (CH = Confédération), dans l'ordre de gauche à droite : l'ordre du tableau compte. status : verified, to_confirm ou not_found (url null). previous_urls garde les adresses abandonnées. facts : chaque fait (value) n’est affiché sur le site que s’il a une source (url) et une date checked_on. Après modification : npm run check.",
+  "_readme": "Partis par territoire (CH = Confédération), dans l'ordre de gauche à droite : l'ordre du tableau compte. status : verified, to_confirm ou not_found (url null). previous_urls garde les adresses abandonnées. facts : chaque fait (value) n’est affiché sur le site que s’il a une source (url) et une date checked_on. left_right : score gauche-droite publié (CHES 2024), aide pour ordonner, jamais affiché ; une section cantonale hérite du score de son parti national (inherited_from). Après modification : npm run check.",
   "parties": [
     {
       "id": "pst-ch",
@@ -65,6 +65,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -73,7 +80,7 @@
       "name": "Parti socialiste suisse",
       "abbr": "PS",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Plus grand parti de gauche, deux sièges au Conseil fédéral.",
       "url": "https://www.sp-ps.ch/fr/",
       "status": "verified",
@@ -97,6 +104,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -129,6 +143,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 4.6,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -161,6 +182,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -193,6 +221,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 5.64,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -219,6 +254,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -245,6 +287,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -279,7 +328,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Les Vert·e·s genevois·e·s - Les Verts - Genève",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-ge",
@@ -287,13 +344,21 @@
       "name": "PS Genève",
       "abbr": "PS GE",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.ps-ge.ch",
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Parti Socialiste Genevois - Pour toutes et tous, sans privilèges.",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "pvl-ge",
@@ -313,7 +378,15 @@
           "seen_on": "2026-11-16",
           "note": "redirige vers https://ge.pvl.swiss/"
         }
-      ]
+      ],
+      "left_right": {
+        "value": 4.6,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "pvl-ch"
+      }
     },
     {
       "id": "centre-ge",
@@ -327,7 +400,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Au Centre l’Humain | Le Centre Genève",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "centre-ch"
+      }
     },
     {
       "id": "ljs-ge",
@@ -362,7 +443,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux Genève - Accueil",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "mcg-ge",
@@ -383,6 +472,13 @@
           "source": null,
           "checked_on": null
         }
+      },
+      "left_right": {
+        "value": 8.08,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16"
       }
     },
     {
@@ -397,7 +493,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Home - UDC Genève",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     },
     {
       "id": "pop-vd",
@@ -425,7 +529,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Accueil - Les VERT.E.S vaudois.es",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-vd",
@@ -433,13 +545,21 @@
       "name": "Parti socialiste vaudois",
       "abbr": "PS VD",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://ps-vd.ch",
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Accueil – Parti Socialiste Vaudois",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "pvl-vd",
@@ -453,7 +573,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 4.6,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "pvl-ch"
+      }
     },
     {
       "id": "centre-vd",
@@ -467,7 +595,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "centre-ch"
+      }
     },
     {
       "id": "plr-vd",
@@ -481,7 +617,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux Canton de Vaud - Accueil",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "udc-vd",
@@ -495,7 +639,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : UDC Vaud – Le parti de la liberté !",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     },
     {
       "id": "verts-vs",
@@ -509,7 +661,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Accueil - Les VERT·E·S Valais",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-vs",
@@ -517,13 +677,21 @@
       "name": "Parti socialiste du Valais romand",
       "abbr": "PS VS",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.psvr.ch",
       "status": "to_confirm",
       "checked_on": "2026-11-16",
       "evidence": "HTTP 200, protection anti-robots, à ouvrir à la main",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "centre-vs",
@@ -537,7 +705,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "centre-ch"
+      }
     },
     {
       "id": "plr-vs",
@@ -551,7 +727,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux Canton du Valais - Accueil",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "udc-vs",
@@ -565,7 +749,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : UDC Valais Romand",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     },
     {
       "id": "pop-ne",
@@ -607,7 +799,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-ne",
@@ -615,13 +815,21 @@
       "name": "Parti socialiste neuchâtelois",
       "abbr": "PS NE",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.psn.ch",
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Parti Socialiste Neuchâtelois",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "pvl-ne",
@@ -641,7 +849,15 @@
           "seen_on": "2026-11-16",
           "note": "redirige vers https://ne.pvl.swiss/"
         }
-      ]
+      ],
+      "left_right": {
+        "value": 4.6,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "pvl-ch"
+      }
     },
     {
       "id": "plr-ne",
@@ -655,7 +871,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux Canton de Neuchâtel - Accueil",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "udc-ne",
@@ -669,7 +893,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : UDC Neuchâtel",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     },
     {
       "id": "cs-pop-ju",
@@ -697,7 +929,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-ju",
@@ -705,13 +945,21 @@
       "name": "Parti socialiste jurassien",
       "abbr": "PS JU",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": null,
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "centre-ju",
@@ -725,7 +973,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "centre-ch"
+      }
     },
     {
       "id": "pcsi-ju",
@@ -753,7 +1009,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "udc-ju",
@@ -767,7 +1031,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     },
     {
       "id": "verts-fr",
@@ -781,7 +1053,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Accueil - Les VERT-E-S Fribourg",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.33,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "verts-ch"
+      }
     },
     {
       "id": "ps-fr",
@@ -789,13 +1069,21 @@
       "name": "Parti socialiste fribourgeois",
       "abbr": "PS FR",
       "short": "PS",
-      "position": "Centre gauche",
+      "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.ps-fr.ch",
       "status": "to_confirm",
       "checked_on": "2026-11-16",
       "evidence": "HTTP 200, protection anti-robots, à ouvrir à la main",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 1.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "ps-ch"
+      }
     },
     {
       "id": "cg-pcs-fr",
@@ -835,7 +1123,15 @@
           "seen_on": "2026-11-16",
           "note": "redirige vers https://fr.pvl.swiss/"
         }
-      ]
+      ],
+      "left_right": {
+        "value": 4.6,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "pvl-ch"
+      }
     },
     {
       "id": "centre-fr",
@@ -849,7 +1145,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Page d'accueil | Le Centre Fribourg",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 5.47,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "centre-ch"
+      }
     },
     {
       "id": "plr-fr",
@@ -863,7 +1167,15 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PLR.Les Libéraux-Radicaux Canton de Fribourg - Accueil",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 7.67,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "plr-ch"
+      }
     },
     {
       "id": "udc-fr",
@@ -877,7 +1189,15 @@
       "status": "not_found",
       "checked_on": "2026-11-16",
       "evidence": "Aucun site retrouvé",
-      "previous_urls": []
+      "previous_urls": [],
+      "left_right": {
+        "value": 9,
+        "scale": "0 = extrême gauche, 10 = extrême droite",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
+        "checked_on": "2026-11-16",
+        "inherited_from": "udc-ch"
+      }
     }
   ]
 }

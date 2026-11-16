@@ -247,14 +247,15 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-- **Languages.** The owner wants to see the site in French, German and Italian. Is a trilingual site part of the next PRD, and does it come with the German-speaking cantons? Proposed names: "Bürgerkompass" or "Stimmkompass", "Bussola civica".
-- **Left-right order.** The order follows "common usage in media and research" without a cited source. Which source should the order cite?
-- **Analytics.** Keeping the site free of tracking is assumed. Confirm, or choose a privacy-respecting counter?
+No question is left open on 2026-11-16.
 
 Settled on 2026-11-16 by the owner:
 
 - **Facts without sources** are hidden until each carries a source and a check date (US-06); the 18 current facts are kept in the data with a null source.
 - **Link status is never shown to voters.** Every link a voter sees must simply work; a link that is not verified is not shown (a party card offers a search instead). The maintainer runs the check and promotes links to verified (US-06, US-07, US-08, US-10).
+- **Languages.** The MVP stays French only; German, Italian and the other cantons come in a later PRD.
+- **Analytics.** None for the MVP: no counter, no third-party script. Visit measurement comes later with dedicated SEO work.
+- **Left-right order.** It stays indicative and every party stays on the half-circle. For the national parties and their cantonal sections it rests on the Chapel Hill Expert Survey 2024 (`lrgen`), kept in the data as an aid and not shown; the footer names the survey. Parties the survey does not cover are placed by hand. The PS label becomes "Gauche" (its score, 1.67, is next to the Greens'). See `docs/architecture/research/0001-left-right-placement-sources.md`.
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
 ## 9. Open Items
