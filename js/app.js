@@ -33,8 +33,9 @@
   function majAdresse() { if (history.replaceState) { try { history.replaceState(null, "", "#" + page + "/" + cleScope()); } catch (e) {} } }
   function memoriser() { try { localStorage.setItem("boussole-niveau", cleScope()); localStorage.setItem("boussole-canton", canton); } catch (e) {} }
   function majBarre() {
+    renderMenuEtat();
     $("scope-val").textContent = niveau === "federal" ? "Toute la Suisse" : nomCanton(canton);
-    Array.prototype.forEach.call(document.querySelectorAll("#menu a"), function (l) {
+    Array.prototype.forEach.call(document.querySelectorAll("#menu a[data-page]"), function (l) {
       if (l.getAttribute("data-page") === page) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
     });
     PAGES.forEach(function (p) { $("page-" + p).hidden = p !== page; });
@@ -48,6 +49,22 @@
     if (page === "etat") renderLiens();
     if (page === "aides") renderAides();
     try { document.dispatchEvent(new CustomEvent("boussole:maj")); } catch (e) {}
+  }
+
+  /* ---------- Menu "Voir ce que fait l'État" : sites officiels selon le territoire ---------- */
+  function renderMenuEtat() {
+    var fed = niveau === "federal", c = courant(), V = window.VOTATIONS || { cantons: {} };
+    var cant = V.cantons[canton] || { lien: c.etat[0][3] };
+    function cherche(mot, defaut) { var l = c.etat.filter(function (x) { return x[1].toLowerCase().indexOf(mot) > -1; })[0]; return l ? l[3] : defaut; }
+    var items = [
+      ["Lire une loi", fed ? "https://www.fedlex.admin.ch" : c.etat[0][3]],
+      ["Trouver un élu", fed ? "https://www.parlament.ch" : cherche("grand conseil", c.etat[0][3])],
+      ["Voir les résultats", fed ? "https://www.bk.admin.ch" : cherche("votations", cant.lien)],
+      ["Consulter les chiffres", "https://www.bfs.admin.ch"]
+    ];
+    $("menu-etat").innerHTML = items.map(function (x) {
+      return '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(x[0]) + ' <span aria-hidden="true">↗</span></b><small>' + esc(hote(x[1])) + '</small></a></li>';
+    }).join("") + '<li><a href="#etat" data-page="etat"><b>Tous les sites officiels</b><small>Liste complète et recherche</small></a></li>';
   }
 
   /* ---------- Menu (hamburger sur téléphone, déplié sur ordinateur) ---------- */

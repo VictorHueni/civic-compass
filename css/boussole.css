@@ -193,3 +193,13 @@ footer.pied p{margin:0 0 8px;max-width:75ch}
   .picker{align-items:center}
   .picker__feuille{border-radius:12px;max-height:90%}
 }
+
+.menu__titre--etat{margin-top:14px;padding-top:10px;border-top:2px solid var(--b-bord)}
+@media (min-width:900px){
+  .menu{display:flex;flex-direction:column;align-items:flex-end;gap:0}
+  .menu__titre--etat{display:block;margin:0 14px 0 0;padding:0;border:0;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+  .menu__etat{display:flex;gap:2px;flex-wrap:wrap;justify-content:flex-end}
+  .menu__etat a{min-height:34px;padding:0 10px;font-size:.88rem;border:0;flex-direction:row;align-items:center}
+  .menu__etat small{display:none}
+  .menu__etat a:hover{text-decoration:underline}
+}

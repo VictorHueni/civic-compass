@@ -87,27 +87,7 @@
     }
   }
 
-  /* ---------- Je veux... : navigation vers les pages et les sites officiels ---------- */
-  function renderBesoins() {
-    var et = B.etat(), fed = et.niveau === "federal", c = fed ? D.federal : D.cantons[et.canton];
-    function cherche(mot, defaut) { var l = c.etat.filter(function (x) { return x[1].toLowerCase().indexOf(mot) > -1; })[0]; return l ? l[3] : defaut; }
-    var cant = lienCanton();
-    var items = [
-      ["Voir les partis politiques", "De gauche à droite", "#partis", true],
-      ["Être aidé à décider", "Comprendre, comparer, décider", "#aides", true],
-      ["Lire une loi", "Textes en vigueur", fed ? "https://www.fedlex.admin.ch" : c.etat[0][3]],
-      ["Trouver un élu", "Députés et conseillers", fed ? "https://www.parlament.ch" : cherche("grand conseil", c.etat[0][3])],
-      ["Voir les résultats", "Votations et élections", fed ? "https://www.bk.admin.ch" : cherche("votations", cant.lien)],
-      ["Consulter les chiffres", "Statistiques officielles", "https://www.bfs.admin.ch"]
-    ];
-    var h = '<h2 id="t-besoins">Je veux...</h2><p class="bloc__desc">Aller directement au bon endroit (' + (fed ? "toute la Suisse" : "canton " + esc(B.nomCanton(et.canton))) + ').</p><ul class="besoins">';
-    items.forEach(function (x) {
-      h += '<li><a class="besoin' + (x[3] ? " besoin--int" : "") + '" href="' + esc(x[2]) + '"' + (x[3] ? "" : ' target="_blank" rel="noopener noreferrer"') + '><b>' + esc(x[0]) + (x[3] ? "" : ' <span aria-hidden="true">↗</span>') + '</b><span>' + esc(x[1]) + '</span></a></li>';
-    });
-    $("besoins").innerHTML = h + '</ul>';
-  }
-
-  function tout() { renderScrutin(); renderBesoins(); }
+  function tout() { renderScrutin(); }
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-obj],[data-etape]") : null;
     if (!t) return;
