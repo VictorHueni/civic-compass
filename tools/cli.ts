@@ -216,11 +216,12 @@ function checkConsistency(d: Referential): string[] {
   }
 
   // Entries the site links to by id (src/site/links.ts).
-  const linked = (file: string, entries: { id: string; url: string | null }[], wanted: readonly string[], needUrl: boolean) => {
+  // The site shows only verified links, so an entry it links to directly must be verified.
+  const linked = (file: string, entries: { id: string; status: string }[], wanted: readonly string[], needVerified: boolean) => {
     for (const id of wanted) {
       const entry = entries.find((x) => x.id === id);
       if (!entry) report.add([file], `id « ${id} » utilisé par le site (src/site/links.ts) mais absent`);
-      else if (needUrl && entry.url === null) report.add([file, id], "le site renvoie vers cette entrée, elle doit avoir une URL");
+      else if (needVerified && entry.status !== "verified") report.add([file, id], "le site renvoie vers cette entrée, son lien doit être verified");
     }
   };
   linked("data/state-sites.json", d.state_sites, Object.values(STATE_SITE_IDS), true);

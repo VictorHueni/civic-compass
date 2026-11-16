@@ -1,7 +1,10 @@
 /*
  * The referential as the site sees it. data/*.json is bundled into the script at build time
- * (no fetch: the site must work when index.html is opened from disk). Entries without a URL
- * are left out of the lists; a party without a URL stays, its card offers a search instead.
+ * (no fetch: the site must work when index.html is opened from disk).
+ *
+ * Voters only ever see verified links (PRD-0001 §8): the link status is internal to the maintainer.
+ * A state site or a tool whose link is not verified is left out of the lists; a party stays, but
+ * its URL is hidden and its card offers a search instead.
  */
 import territoriesFile from "../../data/territories.json";
 import partiesFile from "../../data/parties.json";
@@ -36,16 +39,18 @@ const allTools: Tool[] = checked<ToolsFile>(toolsFile).tools;
 
 export const ballot: Ballot = checked<BallotFile>(ballotFile).ballot;
 
-function hasUrl<T extends LinkEntry>(x: T): x is Linked<T> {
-  return x.url !== null;
+/** A verified entry always has a URL (`npm run check` enforces: url null exactly when not_found). */
+function isVerified<T extends LinkEntry>(x: T): x is Linked<T> {
+  return x.status === "verified" && x.url !== null;
 }
 
+/** Parties of a territory; an unverified party URL is hidden. */
 function partiesOf(code: string): Party[] {
-  return parties.filter((p) => p.territory === code);
+  return parties.filter((p) => p.territory === code).map((p) => (isVerified(p) ? p : { ...p, url: null }));
 }
-/** Official sites of a territory, the canton's own site first. */
+/** Verified official sites of a territory, the canton's own site first. */
 function stateSitesOf(code: string): Linked<StateSite>[] {
-  return stateSites.filter((s) => s.territory === code).filter(hasUrl);
+  return stateSites.filter((s) => s.territory === code).filter(isVerified);
 }
 
 export interface Level {
@@ -69,12 +74,12 @@ for (const t of territories) {
   cantons[t.code] = { name: t.name, note: t.note || "", parties: partiesOf(t.code), stateSites: stateSitesOf(t.code) };
 }
 
-/** Decision aids with a URL, in the order of data/tools.json. */
-export const tools: Linked<Tool>[] = allTools.filter(hasUrl);
+/** Verified decision aids, in the order of data/tools.json. */
+export const tools: Linked<Tool>[] = allTools.filter(isVerified);
 
 function urlOf(entries: LinkEntry[], file: string, id: string): string {
   const entry = entries.find((x) => x.id === id);
-  if (!entry || entry.url === null) throw new Error(`${file} : aucune URL pour « ${id} »`);
+  if (!entry || !isVerified(entry)) throw new Error(`${file} : pas de lien vérifié pour « ${id} »`);
   return entry.url;
 }
 export function stateSiteUrl(id: string): string {
