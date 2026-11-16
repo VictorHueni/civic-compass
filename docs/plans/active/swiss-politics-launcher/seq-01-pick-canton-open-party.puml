@@ -19,7 +19,7 @@ voter -> page : tap the GE tile
 page -> app : apply(canton, GE)
 activate app
 app -> store : save scope and canton
-app -> page : address becomes #partis/ge
+app -> page : address becomes #parties/ge
 app -> ref : cantons.GE.parties, stateSites
 app -> app : renderHemicycle(), renderDetail()
 app --> voter : 9 parties, left to right,\ncard of the first one

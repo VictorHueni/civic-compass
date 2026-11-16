@@ -8,7 +8,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 ## Décisions prises
 - Nom : Boussole citoyenne. Design system de la Confédération (github.com/swiss/designsystem, MIT), site indépendant, sans logos ni armoiries.
 - Mobile first. Territoire choisi sur une carte en cases (cartogramme des 26 cantons) dans une feuille modale, ou « Confédération ». Cantons couverts : GE, VD, VS, NE, JU, FR (les autres « bientôt »).
-- Pages (hash `#page/territoire`, ex. `#partis/ge`) : votation (accueil), partis (hémicycle, un secteur par parti, gauche à droite), aides (Comprendre, Comparer, Décider), etat (sites officiels avec recherche).
+- Pages (hash `#page/territoire`, ex. `#parties/ge`, Confédération `ch`) : ballot (accueil, prochaine votation), parties (hémicycle, un secteur par parti, gauche à droite), tools (aides à décider : Comprendre, Comparer, Décider), state (sites officiels avec recherche). Les anciennes routes françaises (`#votation`, `#partis`, `#aides`, `#etat`, `federal`) restent acceptées et sont réécrites.
 - Menu hamburger sur téléphone, déplié sur ordinateur. Deux groupes : « Je veux... » (pages) et « Voir ce que fait l'État » (Fedlex, Parlement, Chancellerie, OFS, selon le territoire).
 - Votation : liste numérotée des objets, une page par objet avec trois onglets (Comprendre : oui/non + liens ; Comparer : hémicycle coloré par mots d'ordre + smartvote, smartmonitor, Swissvotes ; Décider). Style éditorial, aéré, pas de cartes colorées « trop IA ».
 - Préférence de rédaction : ne pas utiliser le tiret long dans les textes.

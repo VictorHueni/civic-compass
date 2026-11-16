@@ -1,3 +1,0 @@
-PASS: no findings
-file: docs/plans/active/swiss-politics-launcher/out/swiss-politics-launcher.html
-design: base

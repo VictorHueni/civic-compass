@@ -25,8 +25,9 @@
     <table class="cols">
       <thead><tr><th>Part</th><th>Values</th><th>When absent or unknown</th></tr></thead>
       <tbody>
-        <tr><td class="key">page</td><td><span class="mono">votation</span>, <span class="mono">partis</span>, <span class="mono">aides</span>, <span class="mono">etat</span></td><td>The ballot page</td></tr>
-        <tr><td class="key">territory</td><td><span class="mono">federal</span>, or the lower-case code of a covered canton (<span class="mono">ge</span>, <span class="mono">vd</span>, <span class="mono">vs</span>, <span class="mono">ne</span>, <span class="mono">ju</span>, <span class="mono">fr</span>)</td><td>The remembered territory, else the Confederation</td></tr>
+        <tr><td class="key">page</td><td><span class="mono">ballot</span>, <span class="mono">parties</span>, <span class="mono">tools</span>, <span class="mono">state</span></td><td>The ballot page</td></tr>
+        <tr><td class="key">legacy routes</td><td><span class="mono">votation</span>, <span class="mono">partis</span>, <span class="mono">aides</span>, <span class="mono">etat</span> and territory <span class="mono">federal</span>, used until 2026-11-16</td><td>Read as <span class="mono">ballot</span>, <span class="mono">parties</span>, <span class="mono">tools</span>, <span class="mono">state</span> and <span class="mono">ch</span>; the address is rewritten to the English form</td></tr>
+        <tr><td class="key">territory</td><td><span class="mono">ch</span>, or the lower-case code of a covered canton (<span class="mono">ge</span>, <span class="mono">vd</span>, <span class="mono">vs</span>, <span class="mono">ne</span>, <span class="mono">ju</span>, <span class="mono">fr</span>)</td><td>The remembered territory, else the Confederation</td></tr>
         <tr><td class="key">short form</td><td><span class="mono">#&lt;territory&gt;</span> alone</td><td>Read as the ballot page of that territory</td></tr>
       </tbody>
     </table>
@@ -40,7 +41,7 @@
     <table class="cols">
       <thead><tr><th>Key</th><th>Value</th><th>Read</th></tr></thead>
       <tbody>
-        <tr><td class="key"><span class="mono">civic-compass.scope</span></td><td><span class="mono">federal</span> or a lower-case canton code</td><td>At start, when the address names no territory</td></tr>
+        <tr><td class="key"><span class="mono">civic-compass.scope</span></td><td><span class="mono">ch</span> or a lower-case canton code (<span class="mono">federal</span> still read from older visits)</td><td>At start, when the address names no territory</td></tr>
         <tr><td class="key"><span class="mono">civic-compass.canton</span></td><td>The last canton chosen, upper case</td><td>At start, if that canton is still covered</td></tr>
       </tbody>
     </table>

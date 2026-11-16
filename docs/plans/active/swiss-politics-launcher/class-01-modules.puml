@@ -27,7 +27,7 @@ package "src/site (bundled into dist/js/site.js)" {
   }
   class "links.ts" as links {
     +STATE_SITE_IDS
-    +TOOL_IDS, AID_TOOL_IDS
+    +TOOL_IDS, TOOLS_PAGE_IDS
   }
   class "dom.ts" as dom {
     +$(), escapeHtml(), normalize(), host()

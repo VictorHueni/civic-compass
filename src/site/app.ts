@@ -3,16 +3,21 @@
  * The ballot page lives in ballot.ts and re-renders through onRender().
  */
 import { $, SVG_NS, escapeHtml as esc, host, normalize } from "./dom.ts";
-import { STATE_SITE_IDS, AID_TOOL_IDS } from "./links.ts";
+import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
 import { allCantons, ballot, cantons, federal, stateSiteUrl, tools, type Level } from "./referential.ts";
 import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
-/** Route segments (#page/territoire). */
-const PAGES = ["votation", "partis", "aides", "etat"] as const;
+/** Route segments: #<page>/<territory>, territory "ch" or a canton code in lower case. */
+const PAGES = ["ballot", "parties", "tools", "state"] as const;
 type Page = (typeof PAGES)[number];
 /** Id of the block of each page in index.html. */
-const PAGE_IDS: Record<Page, string> = { votation: "page-ballot", partis: "page-parties", aides: "page-aids", etat: "page-state" };
+const PAGE_IDS: Record<Page, string> = { ballot: "page-ballot", parties: "page-parties", tools: "page-tools", state: "page-state" };
+/** French routes used until 2026-11-16, still accepted so old links and bookmarks keep working. */
+const LEGACY_PAGES: Record<string, Page> = { votation: "ballot", partis: "parties", aides: "tools", etat: "state" };
+/** Territory segment of the Confederation; "federal" is its legacy spelling. */
+const CH = "ch";
+const LEGACY_CH = "federal";
 /** localStorage keys of the last territory, and the keys they replaced (read once, then removed). */
 const SCOPE_KEY = "civic-compass.scope";
 const CANTON_KEY = "civic-compass.canton";
@@ -22,7 +27,7 @@ let level: LevelKind = "federal";
 let canton = "GE"; // last canton chosen
 let index = 0;
 let query = "";
-let page: Page = "votation";
+let page: Page = "ballot";
 const renderListeners: (() => void)[] = [];
 
 export function cantonName(code: string): string {
@@ -64,16 +69,16 @@ function isPage(p: string | undefined): p is Page {
 }
 function parseHash(hash: string): Route {
   const parts = (hash || "").replace(/^#\/?/, "").toLowerCase().split("/");
-  const p = parts[0];
-  let s = parts[1];
+  const p = parts[0] && parts[0] in LEGACY_PAGES ? LEGACY_PAGES[parts[0]] : parts[0];
+  let s = parts[1] === LEGACY_CH ? CH : parts[1];
   const r: Route = {};
   if (isPage(p)) {
     r.page = p;
-  } else if (p === "federal" || (p && isCovered(p.toUpperCase()))) {
-    r.page = "votation";
-    s = p;
+  } else if (p === CH || p === LEGACY_CH || (p && isCovered(p.toUpperCase()))) {
+    r.page = "ballot";
+    s = p === LEGACY_CH ? CH : p;
   }
-  if (s === "federal") {
+  if (s === CH) {
     r.level = "federal";
   } else if (s && isCovered(s.toUpperCase())) {
     r.level = "canton";
@@ -82,7 +87,7 @@ function parseHash(hash: string): Route {
   return r;
 }
 function scopeKey(): string {
-  return level === "federal" ? "federal" : canton.toLowerCase();
+  return level === "federal" ? CH : canton.toLowerCase();
 }
 function updateAddress(): void {
   if (history.replaceState) {
@@ -118,13 +123,13 @@ function apply(kind: LevelKind, code: string | null): void {
   renderAll();
 }
 function renderAll(): void {
-  if (page === "partis") {
+  if (page === "parties") {
     renderTitle();
     renderHemicycle();
     renderDetail();
   }
-  if (page === "etat") renderStateSites();
-  if (page === "aides") renderAids();
+  if (page === "state") renderStateSites();
+  if (page === "tools") renderTools();
   renderListeners.forEach((f) => f());
 }
 
@@ -154,7 +159,7 @@ function renderStateMenu(): void {
           '<li><a href="' + esc(x[1]) + '" target="_blank" rel="noopener noreferrer"><b>' + esc(x[0]) +
           ' <span aria-hidden="true">↗</span></b><small>' + esc(host(x[1])) + "</small></a></li>",
       )
-      .join("") + '<li><a href="#etat" data-page="etat"><b>Tous les sites</b><small>Liste complète et recherche</small></a></li>';
+      .join("") + '<li><a href="#state" data-page="state"><b>Tous les sites</b><small>Liste complète et recherche</small></a></li>';
 }
 
 /* ---------- Menu (hamburger on phones, unfolded on computers) ---------- */
@@ -303,13 +308,13 @@ function card(name: string, note: string, url: string, badge: string): string {
 }
 
 /* ---------- Decision aids: understand, compare, decide ---------- */
-function renderAids(): void {
+function renderTools(): void {
   const cant = cantonBallot(canton) || null;
   const groups: [string, string, readonly string[]][] = [
-    ["Comprendre", "Saisir l'objet avant de voter.", AID_TOOL_IDS.understand],
-    ["Comparer", "Se situer face aux partis et aux élus.", AID_TOOL_IDS.compare],
+    ["Comprendre", "Saisir l'objet avant de voter.", TOOLS_PAGE_IDS.understand],
+    ["Comparer", "Se situer face aux partis et aux élus.", TOOLS_PAGE_IDS.compare],
   ];
-  let h = '<h2 id="t-aids">Aides à décider</h2><p class="panel__desc">Trois étapes pour se faire une opinion.</p>';
+  let h = '<h2 id="t-tools">Aides à décider</h2><p class="panel__desc">Trois étapes pour se faire une opinion.</p>';
   groups.forEach((g, i) => {
     const items = tools.filter((o) => g[2].indexOf(o.id) > -1);
     h += '<section class="panel"><h3 class="step-title"><span>' + (i + 1) + "</span> " + g[0] + '</h3><p class="panel__desc">' + g[1] + '</p><ul class="link-cards">' +
@@ -319,8 +324,8 @@ function renderAids(): void {
   const cantName = level === "canton" ? "Votations du canton " + cantonName(canton) : "ch.ch, droits politiques";
   h += '<section class="panel"><h3 class="step-title"><span>3</span> Décider</h3><p class="panel__desc">Voter est simple : par correspondance ou dans sa commune.</p><ul class="link-cards">' +
     card(cantName, "Matériel de vote, dates et marche à suivre.", cantUrl, levelCode()) +
-    '<li><a class="link-card" href="#votation"><span class="link-card__head"><span class="link-card__name">Prochaine votation</span><span class="badge badge--gray">Ici</span></span><span class="link-card__note">Les objets, les mots d\'ordre et le parcours complet.</span></a></li></ul></section>';
-  $("aids").innerHTML = h;
+    '<li><a class="link-card" href="#ballot"><span class="link-card__head"><span class="link-card__name">Prochaine votation</span><span class="badge badge--gray">Ici</span></span><span class="link-card__note">Les objets, les mots d\'ordre et le parcours complet.</span></a></li></ul></section>';
+  $("tools").innerHTML = h;
 }
 
 function renderStateSites(): void {
@@ -421,7 +426,7 @@ export function start(): void {
   const d0 = parseHash(location.hash);
   let s0: Route | null = null;
   try {
-    s0 = parseHash("#votation/" + (localStorage.getItem(SCOPE_KEY) || ""));
+    s0 = parseHash("#ballot/" + (localStorage.getItem(SCOPE_KEY) || ""));
   } catch {}
   if (d0.level) {
     level = d0.level;
