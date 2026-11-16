@@ -3,7 +3,7 @@
   var NS = "http://www.w3.org/2000/svg";
   var $ = function (id) { return document.getElementById(id); };
   var esc = B.esc, hote = B.hote;
-  var obj = 0, etape = 0, pIdx = -1;
+  var obj = -1, etape = 0, pIdx = -1;
   var ETAPES = ["Comprendre", "Comparer", "Décider"];
   var LIBELLE = { oui: "Oui", non: "Non" };
 
@@ -18,30 +18,46 @@
   }
 
   /* ---------- 1. Prochain scrutin + 2. fiche objet + 3. parcours ---------- */
+  var MOIS_JOUR = "Dimanche 29 novembre 2026";
+  function cantonalHtml() {
+    var cant = lienCanton(), et = B.etat();
+    if (et.niveau !== "canton") return "";
+    return '<p class="cant">' + (cant.objets.length
+      ? '<b>' + esc(B.nomCanton(et.canton)) + ' vote aussi sur :</b> ' + cant.objets.map(esc).join(" ; ") + ' <a href="' + esc(cant.lien) + '" target="_blank" rel="noopener noreferrer">Détails</a>'
+      : '<b>' + esc(B.nomCanton(et.canton)) + ' :</b> aucun objet cantonal retrouvé. <a href="' + esc(cant.lien) + '" target="_blank" rel="noopener noreferrer">Vérifier sur le site du canton</a>') + '</p>';
+  }
   function renderScrutin() {
-    var j = jours(), o = V.objets[obj], cant = lienCanton(), et = B.etat();
-    var cd = j > 1 ? "Dans " + j + " jours" : j === 1 ? "Demain" : j === 0 ? "Aujourd'hui" : "Scrutin passé";
-    var chips = V.objets.map(function (x, i) {
-      return '<button type="button" class="chip' + (i === obj ? " is-on" : "") + '" data-obj="' + i + '" aria-pressed="' + (i === obj) + '"><span class="chip__n">' + (i + 1) + '</span>' + esc(x.court) + '</button>';
-    }).join("");
-    var cantonal = et.niveau === "canton" ? (cant.objets.length
-      ? '<p class="scrutin__cant"><strong>' + esc(B.nomCanton(et.canton)) + ' :</strong> ' + cant.objets.map(esc).join(" ; ") + ' <a href="' + esc(cant.lien) + '" target="_blank" rel="noopener noreferrer">Détails</a></p>'
-      : '<p class="scrutin__cant">Objet cantonal : aucun retrouvé dans nos sources. <a href="' + esc(cant.lien) + '" target="_blank" rel="noopener noreferrer">Vérifier sur le site du canton</a></p>') : "";
+    if (obj < 0) return renderListe();
+    var j = jours(), o = V.objets[obj], n = V.objets.length;
     var tabs = ETAPES.map(function (e, i) {
-      return '<button type="button" role="tab" class="etape' + (i === etape ? " is-on" : "") + '" data-etape="' + i + '" aria-selected="' + (i === etape) + '"><span>' + (i + 1) + '</span> ' + e + '</button>';
+      return '<button type="button" role="tab" class="etape' + (i === etape ? " is-on" : "") + '" data-etape="' + i + '" aria-selected="' + (i === etape) + '">' + e + '</button>';
     }).join("");
     $("scrutin").innerHTML =
-      '<div class="prochain"><div class="prochain__j"><b>' + esc(cd) + '</b><span>29 nov. 2026</span></div>' +
-      '<div><h1 id="t-scrutin" class="h-page">Prochaine votation</h1><p>' + V.objets.length + ' objets fédéraux. ' + esc(V.materiel) + '</p></div></div>' + cantonal +
-      '<div class="chips" role="group" aria-label="Objets de la votation">' + chips + '</div>' +
-      '<article class="objet"><h3 class="objet__titre">' + esc(o.titre) + '</h3><p class="objet__q">' + esc(o.question) + '</p>' +
-      '<div role="tablist" class="etapes" aria-label="Étapes">' + tabs + '</div><div class="etape__corps" id="etape-corps"></div></article>';
+      '<button type="button" class="retour" data-obj="-1">← Les ' + n + ' objets</button>' +
+      '<p class="kicker">Objet ' + (obj + 1) + ' sur ' + n + '</p>' +
+      '<h1 id="t-scrutin" class="h-page">' + esc(o.titre) + '</h1><p class="lede">' + esc(o.question) + '</p>' +
+      '<div role="tablist" class="etapes" aria-label="Étapes">' + tabs + '</div><div class="etape__corps" id="etape-corps"></div>' +
+      '<nav class="suite" aria-label="Autres objets">' +
+      (obj > 0 ? '<button type="button" data-obj="' + (obj - 1) + '">← ' + esc(V.objets[obj - 1].court) + '</button>' : '<span></span>') +
+      (obj < n - 1 ? '<button type="button" data-obj="' + (obj + 1) + '">' + esc(V.objets[obj + 1].court) + ' →</button>' : '<span></span>') + '</nav>';
     renderEtape();
+  }
+  function renderListe() {
+    var j = jours(), n = V.objets.length;
+    var cd = j > 1 ? "dans " + j + " jours" : j === 1 ? "demain" : j === 0 ? "aujourd'hui" : "scrutin passé";
+    var lis = V.objets.map(function (x, i) {
+      return '<li><button type="button" class="so" data-obj="' + i + '"><span class="so__n" aria-hidden="true">' + (i + 1) + '</span><span class="so__t"><b>' + esc(x.court) + '</b><span>' + esc(x.question) + '</span></span><span class="so__fl" aria-hidden="true">→</span></button></li>';
+    }).join("");
+    $("scrutin").innerHTML =
+      '<p class="kicker">' + MOIS_JOUR + ' · ' + cd + '</p>' +
+      '<h1 id="t-scrutin" class="h-page">' + n + ' objets à trancher</h1>' +
+      '<p class="lede">Touchez un objet pour comprendre l\'enjeu, comparer les positions et décider. ' + esc(V.materiel) + '</p>' + cantonalHtml() +
+      '<ol class="sommaire">' + lis + '</ol>';
   }
   function renderEtape() {
     var o = V.objets[obj], h = "", et = B.etat(), cant = lienCanton();
     if (etape === 0) {
-      h = '<div class="oui-non"><div class="on on--oui"><b>Si OUI</b><p>' + esc(o.oui) + '</p></div><div class="on on--non"><b>Si NON</b><p>' + esc(o.non) + '</p></div></div>' +
+      h = '<div class="oui-non"><div class="on on--oui"><h4>Si vous votez OUI</h4><p>' + esc(o.oui) + '</p></div><div class="on on--non"><h4>Si vous votez NON</h4><p>' + esc(o.non) + '</p></div></div>' +
         (o.cf ? '<p class="reco">Conseil fédéral et Parlement : <b>' + (o.cf === "oui" ? "OUI" : "NON") + '</b></p>' : '<p class="reco">Recommandation du Conseil fédéral : voir la brochure officielle.</p>') +
         '<p class="mini">Résumé indicatif. La brochure officielle fait foi.</p>' +
         lien(o.lien, "Page officielle de l'objet", "admin.ch") + lien(V.brochure, "Brochure officielle (PDF)", "Explications du Conseil fédéral") +
@@ -91,7 +107,7 @@
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-obj],[data-etape]") : null;
     if (!t) return;
-    if (t.hasAttribute("data-obj")) { obj = +t.getAttribute("data-obj"); pIdx = -1; renderScrutin(); }
+    if (t.hasAttribute("data-obj")) { obj = +t.getAttribute("data-obj"); pIdx = -1; etape = 0; renderScrutin(); if (obj >= 0) window.scrollTo(0, 0); }
     else if (t.hasAttribute("data-etape")) { etape = +t.getAttribute("data-etape"); renderScrutin(); }
   });
   document.addEventListener("boussole:maj", tout);
