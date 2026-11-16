@@ -23,7 +23,7 @@ export const TOOL_IDS = {
 } as const;
 
 /** Entries of data/tools.json listed on the "Aides à décider" page, shown in the order of tools.json. */
-export const AID_TOOL_IDS = {
+export const TOOLS_PAGE_IDS = {
   understand: ["easyvote", "vimentis", "annee-politique-suisse"],
   compare: ["smartvote", "smartmonitor", "politpro", "swissvotes"],
 } as const;

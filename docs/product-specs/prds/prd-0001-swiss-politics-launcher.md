@@ -53,7 +53,7 @@ Roles: **voter**, a Swiss citizen preparing a vote, usually on a phone, a few ti
 As a voter, I want to see on the home page the date of the next ballot and the list of its objects so that I know what I am voting on before opening anything else.
 
 **Acceptance Criteria:**
-- [ ] The home page (`#votation`) shows the ballot label, its date, when the voting material arrives, and a numbered list of the federal objects with a short title and the question.
+- [ ] The home page (`#ballot`) shows the ballot label, its date, when the voting material arrives, and a numbered list of the federal objects with a short title and the question.
 - [ ] When a canton is chosen and it has cantonal objects recorded with an official source, they are listed; otherwise only its official voting page is linked.
 - [ ] Tapping an object opens its own page; previous and next buttons move between objects.
 - [ ] Typecheck passes; verified in a browser at 360 px.
@@ -110,7 +110,7 @@ As a voter, I want to pick the Confederation or my canton once so that every pag
 
 **Acceptance Criteria:**
 - [ ] A territory button opens a sheet with "Confédération" and a tile map of the 26 cantons; covered cantons are selectable, the others are marked "bientôt" and disabled; cantons with a cantonal object on the next ballot carry a marker.
-- [ ] The choice applies to every page, is kept in the address (`#<page>/<territory>`, for example `#partis/ge`) and is remembered for the next visit in the browser.
+- [ ] The choice applies to every page, is kept in the address (`#<page>/<territory>`, for example `#parties/ge`; the Confederation is `ch`) and is remembered for the next visit in the browser.
 - [ ] The sheet closes with the close button, the backdrop or Escape, and gives focus back to the territory button.
 
 ### PRD-0001.US-06 · Browse the parties from left to right
@@ -123,7 +123,7 @@ As a voter, I want to pick the Confederation or my canton once so that every pag
 As a voter, I want to see the parties of my territory ordered from left to right and open a short card for each so that I can locate a party and reach its site.
 
 **Acceptance Criteria:**
-- [ ] `#partis` shows a half-circle with one sector per party, left to right in the order of the data file; the active party's short name and rank ("3 sur 9") show in the centre.
+- [ ] `#parties` shows a half-circle with one sector per party, left to right in the order of the data file; the active party's short name and rank ("3 sur 9") show in the centre.
 - [ ] Moving works by tapping a sector, the arrow buttons, the keyboard arrows and a horizontal swipe.
 - [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
 - [ ] A fact without a source and a check date is never shown.
@@ -139,7 +139,7 @@ As a voter, I want to see the parties of my territory ordered from left to right
 As a voter, I want the independent decision tools grouped by what they help with so that I pick the right one quickly.
 
 **Acceptance Criteria:**
-- [ ] `#aides` groups the tools in three steps: "Comprendre" (easyvote, Vimentis, Année politique suisse), "Comparer" (smartvote, smartmonitor, PolitPro, Swissvotes), "Décider" (the territory's voting page and the next ballot).
+- [ ] `#tools` groups the tools in three steps: "Comprendre" (easyvote, Vimentis, Année politique suisse), "Comparer" (smartvote, smartmonitor, PolitPro, Swissvotes), "Décider" (the territory's voting page and the next ballot).
 - [ ] Each tool shows its name, one line on what it does, and its host name; only tools whose link is verified are listed.
 
 ### PRD-0001.US-08 · Find official sites
@@ -152,7 +152,7 @@ As a voter, I want the independent decision tools grouped by what they help with
 As a voter, I want the official sites of my territory in one searchable list, plus shortcuts in the menu, so that I can read a law, find an elected member or see results without searching the web.
 
 **Acceptance Criteria:**
-- [ ] `#etat` lists the official sites of the chosen territory with a search box that ignores accents and case; an empty result says so. Only sites whose link is verified are listed.
+- [ ] `#state` lists the official sites of the chosen territory with a search box that ignores accents and case; an empty result says so. Only sites whose link is verified are listed.
 - [ ] The menu group "Voir ce que fait l'État" offers "Lire une loi", "Trouver un élu", "Voir les résultats", "Consulter les chiffres" for the chosen territory, and "Tous les sites".
 - [ ] Every shortcut URL comes from the data referential, none is written in the code.
 

@@ -13,7 +13,7 @@ import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { DATA_FILES, type AnySchema, type Referential, type Rule } from "../src/types.ts";
-import { AID_TOOL_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
+import { TOOLS_PAGE_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const USER_AGENT = "Mozilla/5.0 (compatible; civic-compass-link-checker)";
@@ -226,7 +226,7 @@ function checkConsistency(d: Referential): string[] {
   };
   linked("data/state-sites.json", d.state_sites, Object.values(STATE_SITE_IDS), true);
   linked("data/tools.json", d.tools, Object.values(TOOL_IDS), true);
-  linked("data/tools.json", d.tools, [...AID_TOOL_IDS.understand, ...AID_TOOL_IDS.compare], false);
+  linked("data/tools.json", d.tools, [...TOOLS_PAGE_IDS.understand, ...TOOLS_PAGE_IDS.compare], false);
 
   return report.errors;
 }
