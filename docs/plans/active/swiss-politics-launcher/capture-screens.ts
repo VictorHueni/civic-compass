@@ -31,9 +31,9 @@ interface Screen {
 }
 const SCREENS: Screen[] = [
   { name: "ui-01-ballot-list", hash: "#votation/federal" },
-  { name: "ui-02-item-understand", hash: "#votation/federal", steps: ["document.querySelector('.so[data-obj=\"0\"]').click()"] },
-  { name: "ui-03-item-compare", hash: "#votation/federal", steps: ["document.querySelector('.so[data-obj=\"0\"]').click()", "document.querySelector('[data-etape=\"1\"]').click()", "window.scrollTo(0, 330)"] },
-  { name: "ui-04-item-decide", hash: "#votation/ge", steps: ["document.querySelector('.so[data-obj=\"0\"]').click()", "document.querySelector('[data-etape=\"2\"]').click()"] },
+  { name: "ui-02-item-understand", hash: "#votation/federal", steps: ["document.querySelector('.ballot-item[data-item=\"0\"]').click()"] },
+  { name: "ui-03-item-compare", hash: "#votation/federal", steps: ["document.querySelector('.ballot-item[data-item=\"0\"]').click()", "document.querySelector('[data-step=\"1\"]').click()", "window.scrollTo(0, 330)"] },
+  { name: "ui-04-item-decide", hash: "#votation/ge", steps: ["document.querySelector('.ballot-item[data-item=\"0\"]').click()", "document.querySelector('[data-step=\"2\"]').click()"] },
   { name: "ui-05-territory-sheet", hash: "#partis/ge", steps: ["document.getElementById('scope-btn').click()"] },
   { name: "ui-06-parties", hash: "#partis/ge", steps: ["document.getElementById('next').click()", "document.getElementById('next').click()", "window.scrollTo(0, 120)"] },
   { name: "ui-07-aids", hash: "#aides/ge" },
