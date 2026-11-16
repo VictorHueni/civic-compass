@@ -45,6 +45,8 @@ Les données sont des fichiers JSON dans `data/`, pas du code :
 
 Chaque lien porte un `status` (`verified`, `to_confirm`, `not_found` avec `url: null`), une date `checked_on`, une preuve `evidence` (par exemple le titre de la page) et la liste `previous_urls` des adresses abandonnées (`url`, `seen_on`, `note`), gardées pour mémoire. La forme exacte de chaque fichier est décrite par `src/types.ts`.
 
+Le site n'affiche que les liens `verified` et ne montre jamais le statut au visiteur : un parti dont le lien n'est pas vérifié propose une recherche, un site officiel ou un outil non vérifié n'apparaît pas. Pour publier un lien, vérifiez-le puis passez-le en `verified`.
+
 Le site ne contient aucune URL en dur : il retrouve Fedlex, le Parlement, ch.ch, smartvote et les autres dans le référentiel par leur `id` (liste dans `src/site/links.ts`).
 
 Après une modification :
