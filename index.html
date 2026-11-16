@@ -16,11 +16,20 @@
   </div>
 </header>
 
+<div class="niveau-bar">
+  <div class="container">
+    <div id="seg" class="seg" role="radiogroup" aria-label="Niveau politique">
+      <span class="seg__thumb" aria-hidden="true"></span>
+      <button type="button" role="radio" class="seg__btn" data-niveau="Suisse" aria-checked="true">Fédéral</button>
+      <button type="button" role="radio" class="seg__btn" data-niveau="Genève" aria-checked="false">Genève</button>
+    </div>
+  </div>
+</div>
+
 <main class="container">
   <section aria-labelledby="t-partis">
     <h2 id="t-partis">Les partis, de gauche à droite</h2>
     <p class="bloc__desc">Touchez un parti dans l'hémicycle, ou glissez vers la gauche et la droite.</p>
-    <div id="niveaux" class="niveaux" role="group" aria-label="Niveau politique"></div>
     <div id="spectre-zone">
       <div id="hemicycle" class="hemicycle"></div>
       <div class="nav-fleches">

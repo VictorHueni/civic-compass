@@ -13,18 +13,44 @@
     return e;
   }
 
-  function renderNiveaux() {
-    var box = $("niveaux");
-    box.innerHTML = "";
-    ["Suisse", "Genève"].forEach(function (n) {
-      var b = document.createElement("button");
-      b.type = "button";
-      b.className = "btn " + (n === niveau ? "btn--filled" : "btn--outline");
-      b.textContent = n;
-      b.setAttribute("aria-pressed", String(n === niveau));
-      b.onclick = function () { niveau = n; index = 0; renderNiveaux(); renderHemicycle(); renderDetail(); };
-      box.appendChild(b);
+  /* Niveau : un seul sélecteur, collant en haut de page, mémorisé dans l'adresse (#geneve, #federal). */
+  var HASH = { Suisse: "federal", "Genève": "geneve" };
+  function niveauDepuisAdresse() {
+    var h = (location.hash || "").replace("#", "");
+    if (h === "geneve") return "Genève";
+    if (h === "federal") return "Suisse";
+    try { var m = localStorage.getItem("boussole-niveau"); if (m === "Suisse" || m === "Genève") return m; } catch (e) {}
+    return "Suisse";
+  }
+  function majSelecteur() {
+    var seg = $("seg");
+    seg.setAttribute("data-niveau", niveau);
+    Array.prototype.forEach.call(seg.querySelectorAll(".seg__btn"), function (b) {
+      var on = b.getAttribute("data-niveau") === niveau;
+      b.setAttribute("aria-checked", String(on));
+      b.tabIndex = on ? 0 : -1;
     });
+  }
+  function choisirNiveau(n, majAdresse) {
+    if (n === niveau && !majAdresse) return;
+    niveau = n; index = 0;
+    try { localStorage.setItem("boussole-niveau", n); } catch (e) {}
+    if (majAdresse && history.replaceState) { try { history.replaceState(null, "", "#" + HASH[n]); } catch (e) {} }
+    majSelecteur(); renderHemicycle(); renderDetail(); renderLiens();
+  }
+  function initSelecteur() {
+    Array.prototype.forEach.call($("seg").querySelectorAll(".seg__btn"), function (b) {
+      b.addEventListener("click", function () { choisirNiveau(b.getAttribute("data-niveau"), true); });
+      b.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+          var n = niveau === "Suisse" ? "Genève" : "Suisse";
+          choisirNiveau(n, true);
+          $("seg").querySelector('[data-niveau="' + n + '"]').focus();
+          e.preventDefault();
+        }
+      });
+    });
+    window.addEventListener("hashchange", function () { var n = niveauDepuisAdresse(); if (n !== niveau) choisirNiveau(n, false); });
   }
 
   /* Hémicycle : un secteur par parti, de la gauche (à gauche) à la droite. */
@@ -88,13 +114,14 @@
 
   var SECTIONS = [
     ["Aider à décider", "Comparer les positions et comprendre les objets de votation."],
-    ["Sites de l'État", "Sources officielles : lois, résultats, parlements."]
+    ["Sites de l'État", "Sources officielles du niveau choisi : lois, résultats, parlements."]
   ];
   function renderLiens() {
     var nq = norm(requete), html = "", total = 0;
     SECTIONS.forEach(function (s) {
       var items = D.liens.filter(function (l) {
         if (l[0] !== s[0]) return false;
+        if (s[0] === "Sites de l'État" && l[1] !== niveau) return false;
         return !nq || norm(l[2] + " " + l[3] + " " + l[4]).indexOf(nq) > -1;
       });
       if (!items.length) return;
@@ -125,5 +152,6 @@
   }, { passive: true });
   $("q").addEventListener("input", function (e) { requete = e.target.value; renderLiens(); });
 
-  renderNiveaux(); renderHemicycle(); renderDetail(); renderLiens();
+  niveau = niveauDepuisAdresse(); initSelecteur(); majSelecteur(); renderHemicycle(); renderDetail(); renderLiens();
+  requestAnimationFrame(function () { requestAnimationFrame(function () { $("seg").classList.add("pret"); }); });
 })();
