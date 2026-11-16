@@ -20,7 +20,7 @@
   function courant() { return niveau === "federal" ? D.federal : D.cantons[canton]; }
   function codeNiveau() { return niveau === "federal" ? "CH" : canton; }
 
-  /* ---------- Territoire (Toute la Suisse ou un canton), choisi sur la carte ---------- */
+  /* ---------- Territoire (Confédération ou un canton), choisi sur la carte ---------- */
   var PAGES = ["votation", "partis", "aides", "etat"];
   function lire(h) {
     h = (h || "").replace(/^#\/?/, "").toLowerCase().split("/");
@@ -34,7 +34,7 @@
   function memoriser() { try { localStorage.setItem("boussole-niveau", cleScope()); localStorage.setItem("boussole-canton", canton); } catch (e) {} }
   function majBarre() {
     renderMenuEtat();
-    $("scope-val").textContent = niveau === "federal" ? "Toute la Suisse" : nomCanton(canton);
+    $("scope-val").textContent = niveau === "federal" ? "Confédération" : nomCanton(canton);
     Array.prototype.forEach.call(document.querySelectorAll("#menu a[data-page]"), function (l) {
       if (l.getAttribute("data-page") === page) l.setAttribute("aria-current", "page"); else l.removeAttribute("aria-current");
     });
