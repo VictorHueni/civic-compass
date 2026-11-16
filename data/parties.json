@@ -69,7 +69,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -108,7 +108,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -147,7 +147,7 @@
       "left_right": {
         "value": 4.6,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -186,7 +186,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -225,7 +225,7 @@
       "left_right": {
         "value": 5.64,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -258,7 +258,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -291,7 +291,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -332,7 +332,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -354,7 +354,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -382,7 +382,7 @@
       "left_right": {
         "value": 4.6,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
@@ -404,7 +404,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
@@ -447,7 +447,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -476,7 +476,7 @@
       "left_right": {
         "value": 8.08,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16"
       }
@@ -497,7 +497,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
@@ -533,7 +533,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -555,7 +555,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -577,7 +577,7 @@
       "left_right": {
         "value": 4.6,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
@@ -599,7 +599,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
@@ -621,7 +621,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -643,7 +643,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
@@ -665,7 +665,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -687,7 +687,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -709,7 +709,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
@@ -731,7 +731,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -753,7 +753,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
@@ -803,7 +803,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -825,7 +825,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -853,7 +853,7 @@
       "left_right": {
         "value": 4.6,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
@@ -875,7 +875,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -897,7 +897,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
@@ -933,7 +933,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -955,7 +955,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -977,7 +977,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
@@ -1013,7 +1013,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -1035,7 +1035,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
@@ -1057,7 +1057,7 @@
       "left_right": {
         "value": 1.33,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
@@ -1079,7 +1079,7 @@
       "left_right": {
         "value": 1.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
@@ -1127,7 +1127,7 @@
       "left_right": {
         "value": 4.6,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
@@ -1149,7 +1149,7 @@
       "left_right": {
         "value": 5.47,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
@@ -1171,7 +1171,7 @@
       "left_right": {
         "value": 7.67,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
@@ -1193,7 +1193,7 @@
       "left_right": {
         "value": 9,
         "scale": "0 = extrême gauche, 10 = extrême droite",
-        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen",
+        "dataset": "CHES 2024 (Chapel Hill Expert Survey), variable lrgen ; Rovny et al. 2025, doi:10.1016/j.electstud.2025.102981",
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
