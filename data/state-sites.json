@@ -18,9 +18,9 @@
       "name": "Confédération",
       "description": "Site central de l'administration fédérale.",
       "url": "https://www.admin.ch",
-      "status": "to_confirm",
+      "status": "verified",
       "checked_on": "2026-11-16",
-      "evidence": "HTTP 403, protection anti-robots, à ouvrir à la main",
+      "evidence": "Confirmé à la main dans un navigateur par le mainteneur le 2026-11-16 (le site bloque les robots)",
       "previous_urls": []
     },
     {

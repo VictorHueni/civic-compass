@@ -680,9 +680,9 @@
       "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.psvr.ch",
-      "status": "to_confirm",
+      "status": "verified",
       "checked_on": "2026-11-16",
-      "evidence": "HTTP 200, protection anti-robots, à ouvrir à la main",
+      "evidence": "Confirmé à la main dans un navigateur par le mainteneur le 2026-11-16 (le site bloque les robots)",
       "previous_urls": [],
       "left_right": {
         "value": 1.67,
@@ -1072,9 +1072,9 @@
       "position": "Gauche",
       "description": "Section cantonale du Parti socialiste.",
       "url": "https://www.ps-fr.ch",
-      "status": "to_confirm",
+      "status": "verified",
       "checked_on": "2026-11-16",
-      "evidence": "HTTP 200, protection anti-robots, à ouvrir à la main",
+      "evidence": "Confirmé à la main dans un navigateur par le mainteneur le 2026-11-16 (le site bloque les robots)",
       "previous_urls": [],
       "left_right": {
         "value": 1.67,
