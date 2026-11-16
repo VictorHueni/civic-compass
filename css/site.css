@@ -44,6 +44,8 @@ h2{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.3rem;margin:0
 .fact-sheet__row{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--cc-border)}
 .fact-sheet__row dt{color:var(--cc-muted);font-size:.92rem}
 .fact-sheet__row dd{margin:0;text-align:right;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.fact-sheet__source{font-size:.85rem;color:var(--cc-muted);margin:8px 0 0}
+.fact-sheet__source a{color:inherit}
 .fact-sheet__link,.fact-sheet__link:visited{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:56px;padding:10px 0;border-top:1px solid var(--cc-border);border-bottom:1px solid var(--cc-border);color:var(--cc-accent);font-family:Font-Bold,Hind,Fallback-font,sans-serif;text-decoration:none}
 .fact-sheet__link small{display:block;font-family:Font-Regular,Hind,Fallback-font,sans-serif;font-size:.8rem;color:var(--cc-muted);word-break:break-all}
 .fact-sheet__link:hover{color:var(--color-primary-800)}

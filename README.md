@@ -71,7 +71,7 @@ npm run seats                    # écrit data/seats-national-council-2023.json
 
 `links` ne teste pas les `previous_urls`. Un lien est cassé s'il répond par une erreur, ou s'il redirige vers un autre domaine (par exemple un ancien domaine de parti renvoyé vers une page de recherche) : la commande échoue alors. Les erreurs passagères (réseau, délai dépassé, erreur 5xx) sont retentées avant d'être signalées. Les réponses 403 et 429 (sites qui bloquent les robots) sont à vérifier à la main et ne font pas échouer.
 
-Le fichier des sièges vient de l'OFS (opendata.swiss, élections au Conseil national 2023). Si l'outil ne reconnaît pas les colonnes, relancez avec `--col-name N --col-seats N`. Contrôlez que le total fait 200 sièges. Pour les votations et le Parlement : voir Swissvotes (CSV) et api.openparldata.ch.
+Le fichier des sièges vient de l'OFS (opendata.swiss, élections au Conseil national 2023 ; utilisation libre, mention de la source obligatoire). La commande ne lit que les lignes nationales (`ebene_resultat = Schweiz`), refuse d'écrire si le total n'est pas 200, et produit `data/seats-national-council-2023.json` : il est commité, ne se modifie jamais à la main (relancer la commande), et `npm run check` vérifie qu'il fait toujours 200 sièges. Le site affiche les sièges sur la fiche des partis de la Confédération, avec la mention « Source : Office fédéral de la statistique (OFS) ». Si l'outil ne reconnaît pas les colonnes, relancez avec `--col-name N --col-seats N`. Pour les votations et le Parlement : voir Swissvotes (CSV) et api.openparldata.ch.
 
 ## Design
 

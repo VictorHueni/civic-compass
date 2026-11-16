@@ -33,7 +33,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 ## Prochaines étapes suggérées
 1. Créer le dépôt public, pousser, activer Pages (Settings > Pages > Source: GitHub Actions).
 2. Lancer `npm run links` et corriger les URL signalées.
-3. Lancer `npm run seats -- --show` puis `npm run seats`, compléter les alias, brancher les sièges dans la fiche parti.
+3. ~~Brancher les sièges du Conseil national dans la fiche parti~~ : fait le 2026-11-16 (`data/seats-national-council-2023.json`, fiche des partis CH).
 4. Déplacer les faits (fondation, sièges, positions) en JSON avec source et date par fait.
 5. Compléter les mots d'ordre à partir des sites des partis ; automatiser avec Swissvotes après le scrutin.
 6. Résultats par canton sur le cartogramme après la votation (données OFS) ; cantons alémaniques (textes en allemand).

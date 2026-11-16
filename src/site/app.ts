@@ -4,7 +4,7 @@
  */
 import { $, SVG_NS, escapeHtml as esc, host, normalize } from "./dom.ts";
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
-import { allCantons, ballot, cantons, federal, stateSiteUrl, tools, type Level } from "./referential.ts";
+import { allCantons, ballot, cantons, federal, nationalSeats, seats as seatsInfo, stateSiteUrl, tools, type Level } from "./referential.ts";
 import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
@@ -278,18 +278,27 @@ function renderDetail(): void {
   if (!p) return;
   const facts: [string, string][] = [["Position", p.position]];
   // A fact is shown only once it has a source (PRD-0001 goal 2).
+  const seatCount = (n: number) => (n ? n + (n > 1 ? " sièges" : " siège") : "Aucun siège");
   const founded = p.facts?.founded?.source ? p.facts.founded.value : null;
-  const seats = p.facts?.federal_council_seats?.source ? p.facts.federal_council_seats.value : null;
+  const fcSeats = p.facts?.federal_council_seats?.source ? p.facts.federal_council_seats.value : null;
+  // National Council seats are a national result: shown for the parties of the Confederation only.
+  const ncSeats = p.territory === "CH" ? nationalSeats(p.abbr) : null;
   if (founded !== null) facts.push(["Fondé en", String(founded)]);
-  if (seats !== null) facts.push(["Conseil fédéral", seats ? seats + (seats > 1 ? " sièges" : " siège") : "Aucun siège"]);
+  if (ncSeats !== null) facts.push([seatsInfo.election, seatCount(ncSeats)]);
+  if (fcSeats !== null) facts.push(["Conseil fédéral", seatCount(fcSeats)]);
   const dl = facts.map((f) => '<div class="fact-sheet__row"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
+  // The terms of use of the OFS data require the source next to the figure.
+  const source =
+    ncSeats !== null
+      ? '<p class="fact-sheet__source"><a href="' + esc(seatsInfo.dataset_page) + '" target="_blank" rel="noopener noreferrer">' + esc(seatsInfo.attribution) + "</a>, " + esc(seatsInfo.election.toLowerCase()) + ".</p>"
+      : "";
   let link: string;
   if (p.url) {
     link = '<a class="fact-sheet__link" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(host(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
   } else {
-    link = '<a class="fact-sheet__link fact-sheet__link--search" href="https://duckduckgo.com/?q=' + encodeURIComponent(p.name) + '" target="_blank" rel="noopener noreferrer"><span>Chercher le site du parti<small>adresse pas encore vérifiée</small></span><span aria-hidden="true">↗</span></a>';
+    link = '<a class="fact-sheet__link fact-sheet__link--search" href="https://duckduckgo.com/?q=' + encodeURIComponent(p.name) + '" target="_blank" rel="noopener noreferrer"><span>Chercher le site du parti<small>recherche sur le web</small></span><span aria-hidden="true">↗</span></a>';
   }
-  $("detail").innerHTML = '<h3 class="fact-sheet__name">' + esc(p.name) + "</h3>" + '<p class="fact-sheet__desc">' + esc(p.description) + "</p>" + '<dl class="fact-sheet__facts">' + dl + "</dl>" + link;
+  $("detail").innerHTML = '<h3 class="fact-sheet__name">' + esc(p.name) + "</h3>" + '<p class="fact-sheet__desc">' + esc(p.description) + "</p>" + '<dl class="fact-sheet__facts">' + dl + "</dl>" + source + link;
   ($("prev") as HTMLButtonElement).disabled = index === 0;
   ($("next") as HTMLButtonElement).disabled = index === list.length - 1;
 }

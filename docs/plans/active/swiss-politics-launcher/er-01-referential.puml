@@ -78,6 +78,17 @@ entity CantonBallot {
   * url : url
 }
 
+entity Seats {
+  * election : string
+  --
+  * total : integer (200)
+  * source, dataset_page : url
+  * attribution, license : string
+  * retrieved_on : date
+  * raw : OFS name to seats
+  * parties : abbr to seats
+}
+
 entity BallotSource {
   * title : string
   --
@@ -95,5 +106,6 @@ Ballot ||--o{ CantonBallot : cantons
 Territory ||--o| CantonBallot : canton
 Ballot ||--o{ BallotSource : sources
 BallotItem }o..o{ Party : parties keyed by abbr\n(CH parties only)
+Seats }o..o{ Party : parties keyed by abbr\n(CH parties only)
 
 @enduml

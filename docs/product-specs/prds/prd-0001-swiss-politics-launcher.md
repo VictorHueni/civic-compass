@@ -36,7 +36,7 @@ A Swiss voter who wants to prepare a ballot has to assemble the picture from a d
 - **German and Italian versions.** The site is French only in this slice; German-speaking and Italian-speaking cantons come with translated copy in a later PRD (see §8).
 - **Cantons beyond GE, VD, VS, NE, JU, FR.** The other 20 cantons appear on the map as "bientôt"; adding them is data work under goal 5, not part of this slice.
 - **Ballot results.** Results per canton on the map after the vote are deferred: the data source (OFS) is identified but not integrated.
-- **National Council seats on the party card.** The tool can fetch the 2023 seats from the OFS, but showing them is deferred until each fact carries its own source and date (HANDOFF next step 4).
+- **Seats in cantonal parliaments.** National Council seats are shown for the parties of the Confederation since 2026-11-16 (US-06), from the OFS 2023 results with their source; seats in cantonal parliaments need other datasets and are deferred.
 - **Any backend, account, tracking or personal data.** The site is static; the only stored state is the last territory chosen, in the visitor's own browser.
 
 ## 4. User Stories
@@ -125,7 +125,7 @@ As a voter, I want to see the parties of my territory ordered from left to right
 **Acceptance Criteria:**
 - [ ] `#parties` shows a half-circle with one sector per party, left to right in the order of the data file; the active party's short name and rank ("3 sur 9") show in the centre.
 - [ ] Moving works by tapping a sector, the arrow buttons, the keyboard arrows and a horizontal swipe.
-- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
+- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats; for a party of the Confederation, its National Council seats from the OFS 2023 results, with "Source : Office fédéral de la statistique (OFS)" next to the figure), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
 - [ ] A fact without a source and a check date is never shown.
 - [ ] The page states that the left-right order is indicative.
 
