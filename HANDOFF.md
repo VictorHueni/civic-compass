@@ -14,14 +14,15 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - Préférence de rédaction : ne pas utiliser le tiret long dans les textes.
 
 ## Fichiers
-- `index.html`, `css/boussole.css` (+ `css/designsystem.css` du DS), `js/data.js` (partis, outils, sites par canton), `js/votations.js` (scrutin du 29.11.2026), `js/app.js` (routage, menu, carte, partis), `js/scrutin.js` (page votation).
-- `tools/boussole.py` : script local sans dépendance (Python 3.8+). `liens` teste toutes les URLs de `js/data.js` ; `sieges` télécharge les sièges du Conseil national 2023 (OFS) vers `data/sieges-cn-2023.json` (pas encore branché à l'interface).
+- `data/*.json` : référentiels (partis, etat, outils, territoires, votation du 29.11.2026), avec statut, date et preuve pour chaque lien, et anciennes URL. `js/donnees.js` en est généré par `tools/boussole.py generer` ; `js/data.js` l'adapte aux formes qu'attendent `js/app.js` (routage, menu, carte, partis) et `js/scrutin.js` (page votation).
+- `index.html`, `css/boussole.css` (+ `css/designsystem.css` du DS).
+- `tools/boussole.py` : script local sans dépendance (Python 3.8+). `generer` contrôle `data/*.json` et écrit `js/donnees.js` ; `liens` teste les URL actuelles de `data/*.json` ; `sieges` télécharge les sièges du Conseil national 2023 (OFS) vers `data/sieges-cn-2023.json` (pas encore branché à l'interface).
 - `.github/workflows/` : `links.yml` (lychee) et `pages.yml` (déploiement Pages).
 
 ## Données : état et limites
 - Les URLs de partis cantonaux ne sont PAS validées (réseau bloqué dans la session). Certaines viennent d'adresses e-mail de pages officielles. À faire : `python3 tools/boussole.py liens`, puis corriger. Sans site connu, `url: null` (la fiche propose une recherche).
 - Sans site retrouvé : LJS (GE), PCSI (JU), Centre (VS), Verts et POP (NE), UDC (FR).
-- `js/votations.js` : mots d'ordre PARTIELS (PS, Verts oui et PLR, solidaritéS non sur l'AVS ; PLR non feux d'artifice ; Centre, UDC oui couples mariés), avec sources listées ; à confirmer sur les sites des partis. Résumés oui/non indicatifs, la brochure officielle fait foi.
+- `data/votation.json` : mots d'ordre PARTIELS (PS, Verts oui et PLR, solidaritéS non sur l'AVS ; PLR non feux d'artifice ; Centre, UDC oui couples mariés), avec sources listées ; à confirmer sur les sites des partis. Résumés oui/non indicatifs, la brochure officielle fait foi.
 - Sources de données publiques identifiées : OFS / opendata.swiss (résultats CN 2023 : https://ogd-static.voteinfo-app.ch/v4/ogd/sd-t-17.02-NRW2023-parteien.json et le CSV appendix), parlament.ch OData (ws.parlament.ch/odata.svc), OpenParlData (api.openparldata.ch), Swissvotes (CSV, CC BY 4.0), calendrier des votations de la Chancellerie, JSON élections de ge.ch sur opendata.swiss.
 
 ## Prochaines étapes suggérées

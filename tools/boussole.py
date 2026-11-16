@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Outil local de la Boussole citoyenne. Python 3.8+, aucune dépendance.
 
-  python3 tools/boussole.py liens            teste tous les liens de js/data.js
+  python3 tools/boussole.py generer          contrôle data/*.json et écrit js/donnees.js
+  python3 tools/boussole.py generer --verifier   échoue si js/donnees.js n'est pas à jour (CI)
+  python3 tools/boussole.py liens            teste toutes les URL actuelles de data/*.json
   python3 tools/boussole.py sieges --show    montre les colonnes du fichier de l'OFS
   python3 tools/boussole.py sieges           écrit data/sieges-cn-2023.json
 """
@@ -32,9 +34,24 @@ def verifier(url):
     except Exception as e:
         return url, 0, "casse", str(getattr(e, "reason", e))
 
+def urls_actuelles(valeur, cle=None):
+    """Toutes les URL d'un document JSON, sauf celles rangées sous "anciennes_urls"."""
+    if cle == "anciennes_urls":
+        return
+    if isinstance(valeur, dict):
+        for k, v in valeur.items():
+            yield from urls_actuelles(v, k)
+    elif isinstance(valeur, list):
+        for v in valeur:
+            yield from urls_actuelles(v, cle)
+    elif isinstance(valeur, str) and re.match(r"https?://", valeur):
+        yield valeur
+
 def cmd_liens(a):
-    texte = pathlib.Path(a.data).read_text(encoding="utf-8")
-    urls = sorted(set(re.findall(r'https?://[^"\'\s)]+', texte)))
+    urls = set()
+    for f in sorted(pathlib.Path(a.data).glob("*.json")):
+        urls.update(urls_actuelles(json.loads(f.read_text(encoding="utf-8"))))
+    urls = sorted(urls)
     with ThreadPoolExecutor(8) as ex:
         res = list(ex.map(verifier, urls))
     ordre = {"casse": 0, "bloque": 1, "bloqué": 1, "ok": 2}
@@ -44,6 +61,56 @@ def cmd_liens(a):
     cassés = [r for r in res if r[2] == "casse"]
     print(f"\n{len(res)} liens, {len(cassés)} cassé(s), {sum(r[2]=='bloqué' for r in res)} à vérifier à la main.")
     return 1 if cassés else 0
+
+# ---------- generer ----------
+REFERENTIELS = ["territoires", "partis", "etat", "outils", "votation"]
+STATUTS = {"verifie", "a_confirmer", "introuvable"}
+DATE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+def controler(donnees):
+    """Renvoie la liste des erreurs de saisie dans les référentiels."""
+    err = []
+    codes = {t["code"] for t in donnees["territoires"]}
+    vus = set()
+    for nom in ("partis", "etat", "outils"):
+        for i, x in enumerate(donnees[nom]):
+            ici = f"{nom}.json, entrée {i + 1} ({x.get('id', '?')})"
+            for champ in ("id", "nom", "url", "statut", "verifie_le", "preuve", "anciennes_urls"):
+                if champ not in x: err.append(f"{ici} : champ « {champ} » manquant")
+            if x.get("id") in vus: err.append(f"{ici} : id en double")
+            vus.add(x.get("id"))
+            if nom != "outils" and x.get("territoire") not in codes: err.append(f"{ici} : territoire inconnu « {x.get('territoire')} »")
+            if x.get("statut") not in STATUTS: err.append(f"{ici} : statut « {x.get('statut')} » (attendu : {', '.join(sorted(STATUTS))})")
+            if (x.get("url") is None) != (x.get("statut") == "introuvable"): err.append(f"{ici} : url null si et seulement si statut introuvable")
+            if not DATE.match(str(x.get("verifie_le"))): err.append(f"{ici} : verifie_le doit être une date AAAA-MM-JJ")
+            for v in x.get("anciennes_urls", []):
+                if not {"url", "constate_le", "note"} <= set(v): err.append(f"{ici} : ancienne URL sans url, constate_le ou note")
+    abbr_ch = {p["abbr"] for p in donnees["partis"] if p["territoire"] == "CH"}
+    for o in donnees["votation"]["objets"]:
+        for k in o["partis"]:
+            if k not in abbr_ch: err.append(f"votation.json, objet {o['id']} : parti « {k} » absent des partis CH")
+    return err
+
+def cmd_generer(a):
+    dossier = pathlib.Path(a.data)
+    donnees = {nom: json.loads((dossier / f"{nom}.json").read_text(encoding="utf-8"))[nom] for nom in REFERENTIELS}
+    erreurs = controler(donnees)
+    if erreurs:
+        print("\n".join(erreurs), file=sys.stderr)
+        return 1
+    js = ("/* Fichier généré par « python3 tools/boussole.py generer » à partir de data/*.json.\n"
+          "   Ne pas modifier à la main : corriger les fichiers de data/ puis relancer. */\n"
+          "window.DONNEES = " + json.dumps(donnees, ensure_ascii=False, indent=1) + ";\n")
+    sortie = ROOT / "js" / "donnees.js"
+    if a.verifier:
+        if not sortie.exists() or sortie.read_text(encoding="utf-8") != js:
+            print("js/donnees.js n'est pas à jour : lancez python3 tools/boussole.py generer", file=sys.stderr)
+            return 1
+        print("js/donnees.js est à jour.")
+        return 0
+    sortie.write_text(js, encoding="utf-8", newline="\n")
+    print("Écrit js/donnees.js : " + ", ".join(f"{len(donnees[n]) if isinstance(donnees[n], list) else len(donnees[n]['objets'])} {n}" for n in REFERENTIELS))
+    return 0
 
 # ---------- sièges ----------
 ALIAS = {  # nom brut (minuscules) -> abréviation du site
@@ -100,7 +167,8 @@ def cmd_sieges(a):
 def main():
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     s = p.add_subparsers(dest="cmd", required=True)
-    l = s.add_parser("liens"); l.add_argument("--data", default=str(ROOT / "js" / "data.js")); l.set_defaults(f=cmd_liens)
+    l = s.add_parser("liens"); l.add_argument("--data", default=str(ROOT / "data")); l.set_defaults(f=cmd_liens)
+    n = s.add_parser("generer"); n.add_argument("--data", default=str(ROOT / "data")); n.add_argument("--verifier", action="store_true"); n.set_defaults(f=cmd_generer)
     g = s.add_parser("sieges"); g.add_argument("--url", default=URL_SIEGES); g.add_argument("--show", action="store_true")
     g.add_argument("--col-nom", type=int); g.add_argument("--col-sieges", type=int); g.set_defaults(f=cmd_sieges)
     a = p.parse_args(); sys.exit(a.f(a))

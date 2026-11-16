@@ -1,0 +1,81 @@
+{
+  "_lisez_moi": "Outils d'aide à la décision, valables pour tous les territoires. Après modification : python3 tools/boussole.py generer.",
+  "outils": [
+    {
+      "id": "smartvote",
+      "nom": "smartvote",
+      "description": "Questionnaire qui vous place face aux candidats et aux partis, au fédéral et au cantonal.",
+      "url": "https://www.smartvote.ch",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Bienvenue sur smartvote !",
+      "anciennes_urls": []
+    },
+    {
+      "id": "smartmonitor",
+      "nom": "smartmonitor",
+      "description": "Comportement de vote réel des élus au Parlement.",
+      "url": "https://www.smartmonitor.ch",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : smartmonitor",
+      "anciennes_urls": []
+    },
+    {
+      "id": "politpro",
+      "nom": "PolitPro",
+      "description": "Positions des partis suisses sur l'économie, l'Europe et la société.",
+      "url": "https://politpro.eu/fr/suisse/elections",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Résultats électoraux Suisse : toutes les élections depuis 1945",
+      "anciennes_urls": []
+    },
+    {
+      "id": "vimentis",
+      "nom": "Vimentis",
+      "description": "Explications neutres des grands sujets politiques.",
+      "url": "https://www.vimentis.ch",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Vimentis - Neutral über Schweizer Politik informieren",
+      "anciennes_urls": []
+    },
+    {
+      "id": "easyvote",
+      "nom": "easyvote",
+      "description": "Objets de votation expliqués simplement.",
+      "url": "https://www.easyvote.ch",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Politik, einfach verständlich und neutral erklärt mit easyvote - easyvote.ch",
+      "anciennes_urls": []
+    },
+    {
+      "id": "swissvotes",
+      "nom": "Swissvotes",
+      "description": "Toutes les votations fédérales depuis 1848, avec les mots d'ordre des partis.",
+      "url": "https://swissvotes.ch",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Swissvotes",
+      "anciennes_urls": []
+    },
+    {
+      "id": "annee-politique-suisse",
+      "nom": "Année politique suisse",
+      "description": "Analyses détaillées de la politique suisse, année par année.",
+      "url": "https://anneepolitique.swiss/fr/",
+      "statut": "verifie",
+      "verifie_le": "2026-11-16",
+      "preuve": "Titre de la page : Page d'accueil - année politique suisse",
+      "anciennes_urls": [
+        {
+          "url": "https://anneepolitique.swiss",
+          "constate_le": "2026-11-16",
+          "note": "redirige toujours vers /de/, version française sous /fr/"
+        }
+      ]
+    }
+  ]
+}
