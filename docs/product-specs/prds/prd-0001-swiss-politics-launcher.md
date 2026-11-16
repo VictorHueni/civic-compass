@@ -82,7 +82,7 @@ As a voter, I want a plain summary of what a yes and a no change for one object 
 As a voter, I want to see which national parties recommend yes or no on an object so that I can situate my vote against the parties I know.
 
 **Acceptance Criteria:**
-- [ ] The "Comparer" tab shows the national parties as a half-circle, left to right, coloured by recommendation: yes, no, or unknown.
+- [ ] The "Comparer" tab shows the national parties as a half-circle, left to right, coloured by recommendation: yes, no, free vote ("liberté de vote", only when the party's own source says so), or unknown.
 - [ ] A recommendation appears only if a source for it is listed under the chart; every other party shows "à confirmer" with a link to its site.
 - [ ] The tab links smartvote, smartmonitor and Swissvotes.
 
@@ -238,7 +238,7 @@ There is no analytics on the site, so metrics come from the repository and its c
 - **Verified party links:** 33 of 51 on 2026-11-16 (16 not found, 2 to confirm). Success: 45 of 51 by the 29 November 2026 ballot; stretch: 51.
 - **Official sites and tools verified:** 21 of 22 (admin.ch to confirm). Success: 22.
 - **Scheduled check:** green on at least 3 of 4 Mondays per month, every failure explained by a named link.
-- **Sourced recommendations:** 7 recorded for the 29 November ballot, on 3 of its 4 objects; every one with a source under the chart.
+- **Sourced recommendations:** 32 of 36 recorded for the 29 November ballot on 2026-11-16 (7 at the start of the day), each from the national party's own page or communiqué and cross-checked against Swissvotes; the 4 left are solidaritéS on two items, with no national position found.
 
 ### 7.2 Lagging Indicators
 
