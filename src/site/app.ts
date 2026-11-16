@@ -8,9 +8,15 @@ import { allCantons, ballot, cantons, federal, stateSiteUrl, tools, type Level }
 import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
-/** Route segments (#page/territoire), also the ids of the page blocks in index.html. */
+/** Route segments (#page/territoire). */
 const PAGES = ["votation", "partis", "aides", "etat"] as const;
 type Page = (typeof PAGES)[number];
+/** Id of the block of each page in index.html. */
+const PAGE_IDS: Record<Page, string> = { votation: "page-ballot", partis: "page-parties", aides: "page-aids", etat: "page-state" };
+/** localStorage keys of the last territory, and the keys they replaced (read once, then removed). */
+const SCOPE_KEY = "civic-compass.scope";
+const CANTON_KEY = "civic-compass.canton";
+const LEGACY_KEYS: [string, string][] = [[SCOPE_KEY, "boussole-niveau"], [CANTON_KEY, "boussole-canton"]];
 
 let level: LevelKind = "federal";
 let canton = "GE"; // last canton chosen
@@ -85,11 +91,10 @@ function updateAddress(): void {
     } catch {}
   }
 }
-// Storage keys kept as they were, so returning visitors keep their territory.
 function remember(): void {
   try {
-    localStorage.setItem("boussole-niveau", scopeKey());
-    localStorage.setItem("boussole-canton", canton);
+    localStorage.setItem(SCOPE_KEY, scopeKey());
+    localStorage.setItem(CANTON_KEY, canton);
   } catch {}
 }
 function updateBar(): void {
@@ -100,7 +105,7 @@ function updateBar(): void {
     else l.removeAttribute("aria-current");
   });
   PAGES.forEach((p) => {
-    $("page-" + p).hidden = p !== page;
+    $(PAGE_IDS[p]).hidden = p !== page;
   });
 }
 function apply(kind: LevelKind, code: string | null): void {
@@ -142,7 +147,7 @@ function renderStateMenu(): void {
     ["Voir les résultats", fed ? stateSiteUrl(STATE_SITE_IDS.chancellery) : find("votations", cant.url)],
     ["Consulter les chiffres", stateSiteUrl(STATE_SITE_IDS.statistics)],
   ];
-  $("menu-etat").innerHTML =
+  $("menu-state").innerHTML =
     items
       .map(
         (x) =>
@@ -154,7 +159,7 @@ function renderStateMenu(): void {
 
 /* ---------- Menu (hamburger on phones, unfolded on computers) ---------- */
 function closeMenu(): void {
-  document.body.classList.remove("menu-ouvert");
+  document.body.classList.remove("menu-open");
   $("menu-btn").setAttribute("aria-expanded", "false");
 }
 
@@ -173,11 +178,11 @@ function renderTiles(): void {
     const g = GRID[k] as [number, number];
     const on = level === "canton" && canton === k;
     const vote = cantonBallot(k)?.items.length;
-    h += '<button type="button" class="tuile' + (ok ? " ok" : "") + (on ? " is-on" : "") + '" style="grid-column:' + (g[0] + 1) + ";grid-row:" + (g[1] + 1) + '" data-c="' + k + '"' + (ok ? "" : " disabled") +
+    h += '<button type="button" class="tile' + (ok ? " is-available" : "") + (on ? " is-on" : "") + '" style="grid-column:' + (g[0] + 1) + ";grid-row:" + (g[1] + 1) + '" data-c="' + k + '"' + (ok ? "" : " disabled") +
       ' aria-label="' + esc(cantonName(k)) + (ok ? "" : ", bientôt") + (vote ? ", objet cantonal en votation" : "") + '">' + k + (vote ? '<i aria-hidden="true"></i>' : "") + "</button>";
   });
-  $("tuiles").innerHTML = h;
-  $("scope-ch").className = "scope-tout" + (level === "federal" ? " is-on" : "");
+  $("tiles").innerHTML = h;
+  $("scope-ch").className = "scope-all" + (level === "federal" ? " is-on" : "");
 }
 function openPicker(): void {
   returnFocus = $("scope-btn");
@@ -208,11 +213,11 @@ function partyList() {
   return current().parties;
 }
 function renderTitle(): void {
-  $("niveau-titre").textContent =
+  $("scope-title").textContent =
     level === "federal"
       ? "Partis représentés au niveau fédéral. Touchez un parti, ou glissez vers la gauche et la droite."
       : "Principaux partis du canton " + ofCanton(canton) + ". Touchez un parti, ou glissez vers la gauche et la droite.";
-  $("note-niveau").textContent = level === "federal" ? "" : (cantons[canton]?.note || "");
+  $("scope-note").textContent = level === "federal" ? "" : (cantons[canton]?.note || "");
 }
 function renderHemicycle(): void {
   const list = partyList();
@@ -252,13 +257,13 @@ function renderHemicycle(): void {
       }
     });
   });
-  const c1 = svgEl("text", { x: CX, y: CY - 30, "text-anchor": "middle", class: "centre-nom" }, svg);
+  const c1 = svgEl("text", { x: CX, y: CY - 30, "text-anchor": "middle", class: "center-name" }, svg);
   c1.textContent = list[index]?.short ?? "";
-  const c2 = svgEl("text", { x: CX, y: CY - 8, "text-anchor": "middle", class: "centre-rang" }, svg);
+  const c2 = svgEl("text", { x: CX, y: CY - 8, "text-anchor": "middle", class: "center-rank" }, svg);
   c2.textContent = index + 1 + " sur " + n;
-  const g1 = svgEl("text", { x: 4, y: 196, class: "axe" }, svg);
+  const g1 = svgEl("text", { x: 4, y: 196, class: "axis-label" }, svg);
   g1.textContent = "← Gauche";
-  const g2 = svgEl("text", { x: 356, y: 196, "text-anchor": "end", class: "axe" }, svg);
+  const g2 = svgEl("text", { x: 356, y: 196, "text-anchor": "end", class: "axis-label" }, svg);
   g2.textContent = "Droite →";
 }
 
@@ -272,14 +277,14 @@ function renderDetail(): void {
   const seats = p.facts?.federal_council_seats?.source ? p.facts.federal_council_seats.value : null;
   if (founded !== null) facts.push(["Fondé en", String(founded)]);
   if (seats !== null) facts.push(["Conseil fédéral", seats ? seats + (seats > 1 ? " sièges" : " siège") : "Aucun siège"]);
-  const dl = facts.map((f) => '<div class="fiche__ligne"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
+  const dl = facts.map((f) => '<div class="fact-sheet__row"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
   let link: string;
   if (p.url) {
-    link = '<a class="fiche__lien" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(host(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
+    link = '<a class="fact-sheet__link" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(host(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
   } else {
-    link = '<a class="fiche__lien fiche__lien--cherche" href="https://duckduckgo.com/?q=' + encodeURIComponent(p.name) + '" target="_blank" rel="noopener noreferrer"><span>Chercher le site du parti<small>adresse pas encore vérifiée</small></span><span aria-hidden="true">↗</span></a>';
+    link = '<a class="fact-sheet__link fact-sheet__link--search" href="https://duckduckgo.com/?q=' + encodeURIComponent(p.name) + '" target="_blank" rel="noopener noreferrer"><span>Chercher le site du parti<small>adresse pas encore vérifiée</small></span><span aria-hidden="true">↗</span></a>';
   }
-  $("detail").innerHTML = '<h3 class="fiche__nom">' + esc(p.name) + "</h3>" + '<p class="fiche__desc">' + esc(p.description) + "</p>" + '<dl class="fiche__faits">' + dl + "</dl>" + link;
+  $("detail").innerHTML = '<h3 class="fact-sheet__name">' + esc(p.name) + "</h3>" + '<p class="fact-sheet__desc">' + esc(p.description) + "</p>" + '<dl class="fact-sheet__facts">' + dl + "</dl>" + link;
   ($("prev") as HTMLButtonElement).disabled = index === 0;
   ($("next") as HTMLButtonElement).disabled = index === list.length - 1;
 }
@@ -292,9 +297,9 @@ function move(delta: number): void {
 }
 
 function card(name: string, note: string, url: string, badge: string): string {
-  return '<li><a class="carte" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
-    '<span class="carte__tete"><span class="carte__nom">' + esc(name) + '</span><span class="badge badge--gray">' + esc(badge) + "</span></span>" +
-    '<span class="carte__note">' + esc(note) + '</span><span class="host">' + esc(host(url)) + "</span></a></li>";
+  return '<li><a class="link-card" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' +
+    '<span class="link-card__head"><span class="link-card__name">' + esc(name) + '</span><span class="badge badge--gray">' + esc(badge) + "</span></span>" +
+    '<span class="link-card__note">' + esc(note) + '</span><span class="host">' + esc(host(url)) + "</span></a></li>";
 }
 
 /* ---------- Decision aids: understand, compare, decide ---------- */
@@ -304,33 +309,33 @@ function renderAids(): void {
     ["Comprendre", "Saisir l'objet avant de voter.", AID_TOOL_IDS.understand],
     ["Comparer", "Se situer face aux partis et aux élus.", AID_TOOL_IDS.compare],
   ];
-  let h = '<h2 id="t-aides">Aides à décider</h2><p class="bloc__desc">Trois étapes pour se faire une opinion.</p>';
+  let h = '<h2 id="t-aids">Aides à décider</h2><p class="panel__desc">Trois étapes pour se faire une opinion.</p>';
   groups.forEach((g, i) => {
     const items = tools.filter((o) => g[2].indexOf(o.id) > -1);
-    h += '<section class="bloc"><h3 class="etape-titre"><span>' + (i + 1) + "</span> " + g[0] + '</h3><p class="bloc__desc">' + g[1] + '</p><ul class="cartes">' +
+    h += '<section class="panel"><h3 class="step-title"><span>' + (i + 1) + "</span> " + g[0] + '</h3><p class="panel__desc">' + g[1] + '</p><ul class="link-cards">' +
       items.map((o) => card(o.name, o.description, o.url, "CH")).join("") + "</ul></section>";
   });
   const cantUrl = level === "canton" && cant ? cant.url : stateSiteUrl(STATE_SITE_IDS.portal);
   const cantName = level === "canton" ? "Votations du canton " + cantonName(canton) : "ch.ch, droits politiques";
-  h += '<section class="bloc"><h3 class="etape-titre"><span>3</span> Décider</h3><p class="bloc__desc">Voter est simple : par correspondance ou dans sa commune.</p><ul class="cartes">' +
+  h += '<section class="panel"><h3 class="step-title"><span>3</span> Décider</h3><p class="panel__desc">Voter est simple : par correspondance ou dans sa commune.</p><ul class="link-cards">' +
     card(cantName, "Matériel de vote, dates et marche à suivre.", cantUrl, levelCode()) +
-    '<li><a class="carte" href="#votation"><span class="carte__tete"><span class="carte__nom">Prochaine votation</span><span class="badge badge--gray">Ici</span></span><span class="carte__note">Les objets, les mots d\'ordre et le parcours complet.</span></a></li></ul></section>';
-  $("aides").innerHTML = h;
+    '<li><a class="link-card" href="#votation"><span class="link-card__head"><span class="link-card__name">Prochaine votation</span><span class="badge badge--gray">Ici</span></span><span class="link-card__note">Les objets, les mots d\'ordre et le parcours complet.</span></a></li></ul></section>';
+  $("aids").innerHTML = h;
 }
 
 function renderStateSites(): void {
   const nq = normalize(query);
   let html = "";
-  $("etat-desc").textContent = "Sources officielles : " + (level === "federal" ? "Confédération." : "canton " + ofCanton(canton) + ".");
+  $("state-desc").textContent = "Sources officielles : " + (level === "federal" ? "Confédération." : "canton " + ofCanton(canton) + ".");
   const sites = current().stateSites.filter((l) => !nq || normalize(l.name + " " + l.description + " " + l.url).indexOf(nq) > -1);
-  if (sites.length) html = '<ul class="cartes">' + sites.map((l) => card(l.name, l.description, l.url, levelCode())).join("") + "</ul>";
-  $("liens").innerHTML = html || '<p class="vide">Aucun résultat. Essayez un autre mot.</p>';
+  if (sites.length) html = '<ul class="link-cards">' + sites.map((l) => card(l.name, l.description, l.url, levelCode())).join("") + "</ul>";
+  $("state-sites").innerHTML = html || '<p class="empty-state">Aucun résultat. Essayez un autre mot.</p>';
 }
 
 /** Wires the events, restores the territory (address, then last visit) and renders. */
 export function start(): void {
   $("menu-btn").addEventListener("click", () => {
-    const open = document.body.classList.toggle("menu-ouvert");
+    const open = document.body.classList.toggle("menu-open");
     $("menu-btn").setAttribute("aria-expanded", String(open));
   });
   document.addEventListener("keydown", (e) => {
@@ -358,15 +363,15 @@ export function start(): void {
   });
 
   $("scope-btn").addEventListener("click", openPicker);
-  $("picker-fond").addEventListener("click", closePicker);
-  $("picker-x").addEventListener("click", closePicker);
+  $("picker-backdrop").addEventListener("click", closePicker);
+  $("picker-close").addEventListener("click", closePicker);
   $("scope-ch").addEventListener("click", () => {
     closePicker();
     apply("federal", null);
   });
-  $("tuiles").addEventListener("click", (e) => {
+  $("tiles").addEventListener("click", (e) => {
     const t = e.target as Element | null;
-    const b = t && t.closest ? (t.closest(".tuile") as HTMLButtonElement | null) : null;
+    const b = t && t.closest ? (t.closest(".tile") as HTMLButtonElement | null) : null;
     if (!b || b.disabled) return;
     closePicker();
     apply("canton", b.getAttribute("data-c"));
@@ -377,7 +382,7 @@ export function start(): void {
 
   $("prev").onclick = () => move(-1);
   $("next").onclick = () => move(1);
-  const zone = $("spectre-zone");
+  const zone = $("spectrum-zone");
   let x0: number | null = null;
   zone.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
@@ -404,13 +409,19 @@ export function start(): void {
   });
 
   try {
-    const last = localStorage.getItem("boussole-canton");
+    // Move a territory saved under the old keys, so a returning visitor keeps it.
+    for (const [key, legacy] of LEGACY_KEYS) {
+      const old = localStorage.getItem(legacy);
+      if (old !== null && localStorage.getItem(key) === null) localStorage.setItem(key, old);
+      localStorage.removeItem(legacy);
+    }
+    const last = localStorage.getItem(CANTON_KEY);
     if (last && isCovered(last)) canton = last;
   } catch {}
   const d0 = parseHash(location.hash);
   let s0: Route | null = null;
   try {
-    s0 = parseHash("#votation/" + (localStorage.getItem("boussole-niveau") || ""));
+    s0 = parseHash("#votation/" + (localStorage.getItem(SCOPE_KEY) || ""));
   } catch {}
   if (d0.level) {
     level = d0.level;

@@ -1,5 +1,5 @@
 /*
- * Types of the referential in data/*.json, shared by the site (src/site) and the tool (tools/boussole.ts).
+ * Types of the referential in data/*.json, shared by the site (src/site) and the tool (tools/cli.ts).
  *
  * Each interface has a schema next to it. The type `Schema<T>` forces the schema to list every key of
  * the interface, with `optional: true` exactly on the optional keys, so `tsc` fails as soon as the two

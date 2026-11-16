@@ -16,10 +16,10 @@ Il faut Node 26 (il exécute directement les fichiers `.ts`, sans compilation).
 
 ```
 npm ci              # installe typescript, esbuild et @types/node (versions épinglées)
-npm run build       # construit dist/ : index.html, css/, js/boussole.js
+npm run build       # construit dist/ : index.html, css/, js/site.js
 ```
 
-`dist/js/boussole.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement.
+`dist/js/site.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement.
 
 ## Organisation
 
@@ -27,7 +27,7 @@ npm run build       # construit dist/ : index.html, css/, js/boussole.js
 data/*.json        référentiel : partis, sites officiels, outils, territoires, votation
 src/types.ts       types du référentiel, partagés par le site et l'outil
 src/site/*.ts      le site (modules TypeScript)
-tools/boussole.ts  outil local : check, links, seats
+tools/cli.ts       outil local : check, links, seats
 tools/build.ts     construction de dist/
 index.html, css/   page et styles (Design System de la Confédération)
 dist/              site construit (non versionné)
@@ -58,7 +58,7 @@ Le workflow **Contrôle des liens** lance les deux à chaque push et chaque lund
 
 ## Outil local
 
-`tools/boussole.ts` tourne sur votre machine avec Node 26, sans étape de compilation :
+`tools/cli.ts` tourne sur votre machine avec Node 26, sans étape de compilation :
 
 ```
 npm run check                    # contrôle data/*.json : champs, types, id uniques, territoires, statuts, dates, mots d'ordre
