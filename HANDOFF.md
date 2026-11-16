@@ -28,7 +28,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - `.github/workflows/` : `links.yml` (`npm run check`, `npm run links`, à chaque push et chaque lundi) et `pages.yml` (`npm run build`, publie `dist/`).
 
 ## Documents
-- `docs/product-specs/prds/prd-0001-swiss-politics-launcher.md` : spécification (12 stories, décisions du 2026-11-16 en §8).
+- `docs/product-specs/prds/prd-0001-swiss-politics-launcher.md` : spécification (18 stories dont 6 sur les institutions, décisions du 2026-11-16 en §8).
 - `docs/plans/active/swiss-politics-launcher/` : fiche de conception (écrans, contrats, code, données). Page privée : https://claude.ai/artifact/Vn8oXEHZVTgLLxi3iAMoS1 ; reconstruire avec `./render.sh`, `capture-screens.ts` puis le rendu `com-artefact-viz` (voir son README). `out/` n'est pas commité.
 - `docs/architecture/research/0001-left-right-placement-sources.md` : sources du classement gauche-droite.
 
@@ -44,4 +44,5 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 2. Sourcer les faits masqués : sièges au Conseil fédéral (admin.ch) et années de fondation.
 3. Après le 29.11.2026 : résultats par canton sur la carte (données OFS), puis préparer `ballot.json` du scrutin suivant.
 4. Travail SEO, avec la mesure des visites.
-5. PRD-0002 : site trilingue et cantons alémaniques et tessinois, un canton à la fois.
+5. Institutions (PRD-0001 US-13 à US-18) : fédéral, puis Grands Conseils, Conseils d'État et présidences.
+6. Plus tard : site trilingue et cantons alémaniques et tessinois, un canton à la fois.

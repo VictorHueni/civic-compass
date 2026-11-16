@@ -17,7 +17,7 @@ review_interval: 30d
 
 The site is named "Boussole citoyenne" in French; the repository and the code use `civic-compass`. User-facing copy quoted below stays in French, as on the site.
 
-Sources of this PRD: `HANDOFF.md`, `README.md` and `CLAUDE.md` of the repository at commit `8f9edd8`, the site as built at that commit, and the owner's decisions of 2026-11-16 (data referential, TypeScript only, repository name). No persona, capability map or FBS exists yet, so §0 is omitted and stories name the role instead of a `P-NN`.
+Sources of this PRD: `HANDOFF.md`, `README.md` and `CLAUDE.md` of the repository at commit `8f9edd8`, the site as built at that commit, and the owner's decisions of 2026-11-16 (data referential, TypeScript only, repository name). The institutions part (US-13 to US-18) adds Research-0002 (`docs/architecture/research/0002-institution-composition-sources.md`, owner rulings included) and the owner-approved mockup (https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc, private). No persona, capability map or FBS exists yet, so §0 is omitted and stories name the role instead of a `P-NN`.
 
 ## 1. Problem Statement
 
@@ -36,7 +36,8 @@ A Swiss voter who wants to prepare a ballot has to assemble the picture from a d
 - **German and Italian versions.** The site is French only in this slice; German-speaking and Italian-speaking cantons come with translated copy in a later PRD (see §8).
 - **Cantons beyond GE, VD, VS, NE, JU, FR.** The other 20 cantons appear on the map as "bientôt"; adding them is data work under goal 5, not part of this slice.
 - **Ballot results.** Results per canton on the map after the vote are deferred: the data source (OFS) is identified but not integrated.
-- **Seats in cantonal parliaments.** National Council seats are shown for the parties of the Confederation since 2026-11-16 (US-06), from the OFS 2023 results with their source; seats in cantonal parliaments need other datasets and are deferred.
+- **Names of cantonal parliament members.** Cantonal parliaments show seats per party from the latest election only (US-14); listing their 60 to 150 members by name, or tracking changes since the election, is out of scope.
+- **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them.
 - **Any backend, account, tracking or personal data.** The site is static; the only stored state is the last territory chosen, in the visitor's own browser.
 
 ## 4. User Stories
@@ -213,8 +214,101 @@ As a maintainer, I want one command to build the site and the deployment to run 
 - [ ] A push to `main` builds and deploys to GitHub Pages.
 - [ ] The data check and the link check run on every pull request and their result shows on it.
 
+### PRD-0001.US-13 · See who governs and sits for the Confederation
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want one page that shows the Federal Council and the two federal chambers so that I know who governs and who represents the parties today.
+
+**Acceptance Criteria:**
+- [ ] The menu group "Voir ce que fait l'État" opens a page "Qui gouverne et qui siège" (route `#institutions/ch`); it replaces the external "Trouver un élu" link.
+- [ ] Federal Council: the 7 members with party and department, the President and Vice-President of the Confederation marked, and the Federal Chancellor on a separate line.
+- [ ] National Council: a half-circle proportional to the 200 seats, parties from left to right, with a legend of seats per party; current composition.
+- [ ] Council of States: the 46 seats per party.
+- [ ] Every figure carries "Source : Services du Parlement de l'Assemblée fédérale, Berne" and the download date; the page states the site is independent and not an official publication; it links to parlament.ch for all members.
+
+### PRD-0001.US-14 · See who governs and sits for my canton
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want the same page for my canton so that I know my cantonal government, the balance of my cantonal parliament and who represents my canton in Bern.
+
+**Acceptance Criteria:**
+- [ ] Route `#institutions/<canton>` for each covered canton.
+- [ ] Conseil d'État: each member with name, party, department and the presidency, with its source and check date.
+- [ ] Grand Conseil: a half-circle proportional to the seats per party from the latest election, labelled with that election's date, and a note that the composition may have changed since; source OFS.
+- [ ] "Les élus <du canton> à Berne": Council of States and National Council members of the canton, by name and grouped by party; source Parliament with its date.
+- [ ] A section whose data is not yet sourced is not shown; nothing appears as "unknown".
+
+### PRD-0001.US-15 · See a party's seats and leadership on its card
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want a party's card to tell me who leads it and how many seats it holds so that I can weigh it.
+
+**Acceptance Criteria:**
+- [ ] Presidency: the name or names (co-presidency), shown only with a source and a check date.
+- [ ] A party of the Confederation: its Federal Council members by name, its National Council and Council of States seats (current composition).
+- [ ] A cantonal section: its Conseil d'État members (count out of the total), its Grand Conseil seats (with the election year) and the canton's National Council and Council of States seats it holds.
+- [ ] Regional parties counted with a national one show it ("dont 1 PLD Bâle-Ville").
+- [ ] Each line appears only when its data is sourced; the sources are named under the card.
+
+### PRD-0001.US-16 · Generate the federal composition from the Parliament
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want one command to fetch the current federal chambers and Federal Council from the Parliament's API so that these figures stay current without hand work.
+
+**Acceptance Criteria:**
+- [ ] `npm run parliament` reads the API key from `PARL_API_KEY` or `~/.config/civic-compass/env`; the key is never written to the repository, the generated file or the logs.
+- [ ] It writes a generated file with the Parliament's data unchanged (raw) and, apart, the mapping to `parties.json` abbreviations (PLD counted with PLR, Al with the Greens), plus the download date.
+- [ ] `npm run check` validates it: 200 National Council seats, 46 Council of States seats, 7 Federal Council members, every mapped abbreviation exists.
+- [ ] The file is never edited by hand; a failed fetch writes nothing.
+
+### PRD-0001.US-17 · Generate the cantonal election results
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want one command to fetch the latest cantonal parliament results from the OFS so that each covered canton shows its seats per party.
+
+**Acceptance Criteria:**
+- [ ] The command finds and downloads the OFS table of cantonal parliament results and reads it with a reader written in the tool (no new dependency).
+- [ ] It writes a generated file per canton with the election date, the seats per party (raw labels and mapping to `parties.json` ids) and the source.
+- [ ] `npm run check` fails when a canton's seats do not add up to its parliament's size or a mapped id does not exist.
+- [ ] A canton that elected recently (Fribourg, November 2026) shows that election as soon as the OFS publishes it.
+
+### PRD-0001.US-18 · Keep hand-kept records fresh
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want the records kept by hand (cantonal governments, party presidencies) to carry a source and a date and to remind me when they are old so that the site never shows a stale name for long.
+
+**Acceptance Criteria:**
+- [ ] Each Conseil d'État member and each presidency has a source URL and a `checked_on` date; without them it is not shown.
+- [ ] `npm run check` warns, never fails, for any such record checked more than 180 days ago, and lists them.
+- [ ] A cantonal government changes on the site only after the official result is published and checked (Fribourg: after the second round of 29 November 2026).
+
 ## 5. Design Considerations
 
+- **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours in it are provisional (§8).
 - **Mobile first.** The voter's device is a phone; the menu folds into a hamburger on a phone and is open on a computer.
 - **Look.** The Swiss Confederation design system (MIT licence), without its coat of arms or logos; the site states it is independent and not official.
 - **Editorial tone.** Airy layout, numbered lists, no coloured "AI-looking" cards; no long dash in any text.
@@ -227,7 +321,10 @@ As a maintainer, I want one command to build the site and the deployment to run 
 - **Shared types.** One `src/types.ts` describes the data and is used by both the site and the check, so the schema has a single description.
 - **Code in English, copy in French.** File names, identifiers, JSON keys and enum values in English; data values and everything shown on the site in French.
 - **Starts from the current site.** Routes, markup and behaviour are those of commit `8f9edd8`; the migration changes the language and the data source, not the screens.
-- **Public data sources identified** (not yet integrated): OFS election results on opendata.swiss, parlament.ch OData, OpenParlData, Swissvotes (CC BY 4.0), the Federal Chancellery's ballot calendar.
+- **Parliament API.** The new `ws.parl.ch` (key in the `X-API-KEY` header, filters in `q`); the key lives outside the repository; terms of use met by keeping raw data unchanged, naming the source with the download date and staying non-official (Research-0002, rulings 2 and 3).
+- **OFS tables in xlsx.** Read by a small reader in the tool (zip and XML with Node's built-ins); a library only if needed (ruling 5).
+- **Rejected source:** OpenParlData, whose counts do not match the seats of the covered cantons (Research-0002).
+- **Other public sources identified** (not yet integrated): Swissvotes (CC BY 4.0), the Federal Chancellery's ballot calendar.
 
 ## 7. Success Metrics
 
@@ -247,7 +344,7 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-No question is left open on 2026-11-16.
+- **Party colours.** The institutions half-circles need one colour per party; the mockup's colours are provisional. Which palette, and should it follow each party's own colour?
 
 Settled on 2026-11-16 by the owner:
 
@@ -256,11 +353,11 @@ Settled on 2026-11-16 by the owner:
 - **Languages.** The MVP stays French only; German, Italian and the other cantons come in a later PRD.
 - **Analytics.** None for the MVP: no counter, no third-party script. Visit measurement comes later with dedicated SEO work.
 - **Left-right order.** It stays indicative and every party stays on the half-circle. For the national parties and their cantonal sections it rests on the Chapel Hill Expert Survey 2024 (`lrgen`), kept in the data as an aid and not shown; the footer names the survey. Parties the survey does not cover are placed by hand. The PS label becomes "Gauche" (its score, 1.67, is next to the Greens'). See `docs/architecture/research/0001-left-right-placement-sources.md`.
+- **Institutions (Research-0002, eight rulings).** Election result for cantonal parliaments, current composition for the federal chambers; the new Parliament API; terms of use with three safeguards; PLD and Al counted with PLR and the Greens; an xlsx reader in the tool; Fribourg shown with its November 2026 election; names for small bodies only; a 180-day staleness warning. Everything goes in this PRD (US-13 to US-18), no separate PRD.
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
 ## 9. Open Items
 
 The repository has no central open-items ledger yet. Actionable items surfaced while writing this PRD, to file once the ledger exists:
 
-- execution-item: find or confirm the 16 not-found and 2 to-confirm party URLs (§7.1).
 - execution-item: source the founding years and Federal Council seats (US-06), for example from the OFS data the seats command reads.
