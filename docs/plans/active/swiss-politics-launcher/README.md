@@ -50,4 +50,4 @@ python3 <com-artefact-viz>/scripts/shared/check_render.py --record out/swiss-pol
 
 The build is done when `out/swiss-politics-launcher.html.verdict.txt` opens with `PASS: no findings`.
 
-**Published page:** not published yet.
+**Published page:** https://claude.ai/artifact/Vn8oXEHZVTgLLxi3iAMoS1 (private)
