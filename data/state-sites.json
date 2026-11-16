@@ -1,0 +1,170 @@
+{
+  "_readme": "Sites officiels par territoire. Le premier site d'un canton est son site officiel. Après modification : npm run check.",
+  "state_sites": [
+    {
+      "id": "ch-ch-ch",
+      "territory": "CH",
+      "name": "ch.ch",
+      "description": "Portail officiel de la Confédération : droits politiques et démarches.",
+      "url": "https://www.ch.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Page d'accueil ch.ch - les informations officielles des autorités suisses",
+      "previous_urls": []
+    },
+    {
+      "id": "confederation-ch",
+      "territory": "CH",
+      "name": "Confédération",
+      "description": "Site central de l'administration fédérale.",
+      "url": "https://www.admin.ch",
+      "status": "to_confirm",
+      "checked_on": "2026-11-16",
+      "evidence": "HTTP 403, protection anti-robots, à ouvrir à la main",
+      "previous_urls": []
+    },
+    {
+      "id": "parlement-federal-ch",
+      "territory": "CH",
+      "name": "Parlement fédéral",
+      "description": "Objets, débats, votes et élus.",
+      "url": "https://www.parlament.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Parlement suisse",
+      "previous_urls": []
+    },
+    {
+      "id": "chancellerie-federale-ch",
+      "territory": "CH",
+      "name": "Chancellerie fédérale",
+      "description": "Résultats et brochures officielles des votations et élections.",
+      "url": "https://www.bk.admin.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Die Bundeskanzlei BK",
+      "previous_urls": []
+    },
+    {
+      "id": "fedlex-ch",
+      "territory": "CH",
+      "name": "Fedlex",
+      "description": "Lois fédérales en vigueur.",
+      "url": "https://www.fedlex.admin.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Fedlex",
+      "previous_urls": []
+    },
+    {
+      "id": "office-federal-de-la-statistique-ch",
+      "territory": "CH",
+      "name": "Office fédéral de la statistique",
+      "description": "Statistiques et résultats électoraux.",
+      "url": "https://www.bfs.admin.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Home | Bundesamt für Statistik",
+      "previous_urls": []
+    },
+    {
+      "id": "republique-et-canton-de-geneve-ge",
+      "territory": "GE",
+      "name": "République et canton de Genève",
+      "description": "Site officiel du canton.",
+      "url": "https://www.ge.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : ge.ch – République et canton de Genève | ge.ch",
+      "previous_urls": []
+    },
+    {
+      "id": "votations-et-elections-ge",
+      "territory": "GE",
+      "name": "Votations et élections",
+      "description": "Résultats et informations officielles du canton.",
+      "url": "https://www.ge.ch/elections",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Résultats des élections - République et canton de Genève - GE.CH",
+      "previous_urls": []
+    },
+    {
+      "id": "grand-conseil-ge",
+      "territory": "GE",
+      "name": "Grand Conseil",
+      "description": "Parlement cantonal, députés, mémorial, objets.",
+      "url": "https://ge.ch/grandconseil",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Grand Conseil de Genève",
+      "previous_urls": []
+    },
+    {
+      "id": "ville-de-geneve-ge",
+      "territory": "GE",
+      "name": "Ville de Genève",
+      "description": "Conseil municipal et administration communale.",
+      "url": "https://www.geneve.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Page d'accueil - Ville de Genève - Site officiel",
+      "previous_urls": []
+    },
+    {
+      "id": "canton-de-vaud-vd",
+      "territory": "VD",
+      "name": "Canton de Vaud",
+      "description": "Site officiel du canton.",
+      "url": "https://www.vd.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Site officiel du Canton de Vaud | État de Vaud",
+      "previous_urls": []
+    },
+    {
+      "id": "canton-du-valais-vs",
+      "territory": "VS",
+      "name": "Canton du Valais",
+      "description": "Site officiel du canton.",
+      "url": "https://www.vs.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Administration cantonale valaisanne - Canton du Valais - vs.ch",
+      "previous_urls": []
+    },
+    {
+      "id": "republique-et-canton-de-neuchatel-ne",
+      "territory": "NE",
+      "name": "République et canton de Neuchâtel",
+      "description": "Site officiel du canton.",
+      "url": "https://www.ne.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Page d'accueil | ne.ch",
+      "previous_urls": []
+    },
+    {
+      "id": "republique-et-canton-du-jura-ju",
+      "territory": "JU",
+      "name": "République et canton du Jura",
+      "description": "Site officiel du canton.",
+      "url": "https://www.jura.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Canton du Jura - Suisse - Administration - République et Canton du Jura",
+      "previous_urls": []
+    },
+    {
+      "id": "etat-de-fribourg-fr",
+      "territory": "FR",
+      "name": "État de Fribourg",
+      "description": "Site officiel du canton.",
+      "url": "https://www.fr.ch",
+      "status": "verified",
+      "checked_on": "2026-11-16",
+      "evidence": "Titre de la page : Site officiel de l'Etat de Fribourg - FR.ch",
+      "previous_urls": []
+    }
+  ]
+}

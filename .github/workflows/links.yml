@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Vérifier tous les liens externes
-        uses: lycheeverse/lychee-action@v2
+      - uses: actions/setup-node@v4
         with:
-          # 403 et 429 : certains sites bloquent les robots, ce n'est pas un lien cassé
-          args: >-
-            --no-progress --max-retries 3 --timeout 30
-            --accept 200..=299,403,429
-            --user-agent "Mozilla/5.0 (compatible; boussole-citoyenne-linkcheck)"
-            --exclude-path css
-            "index.html" "js/data.js"
-          fail: true
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Types et référentiel data/*.json
+        run: npm run check
+      # Même outil qu'en local. Les previous_urls ne sont pas testées ;
+      # 403 et 429 (sites qui bloquent les robots) ne font pas échouer,
+      # une redirection vers un autre domaine fait échouer.
+      - name: Vérifier les liens actuels de data/*.json
+        run: npm run links

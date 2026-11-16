@@ -1,0 +1,108 @@
+{
+  "_readme": "Prochain scrutin. Ne jamais inventer un mot d'ordre : source obligatoire dans sources. Clés de parties = abréviations (abbr) des partis CH de parties.json, valeurs yes ou no. Après modification : npm run check.",
+  "ballot": {
+    "date": "2026-11-29",
+    "label": "Votation populaire du 29 novembre 2026",
+    "voting_material": "Le matériel de vote est reçu entre le 2 et le 6 novembre 2026.",
+    "page": "https://www.admin.ch/fr/votation-populaire-du-29-novembre-2026",
+    "brochure": "https://www.admin.ch/dam/fr/sd-web/HXhFMFWOaa6u/BAR_Erlaeuterungen_Nov26_FR_v6.pdf",
+    "items": [
+      {
+        "id": "avs",
+        "short": "AVS et TVA",
+        "title": "Financement additionnel de l'AVS par une hausse de la TVA",
+        "question": "Faut-il relever la TVA pour financer la 13e rente AVS ?",
+        "yes": "La TVA augmente et finance en partie la 13e rente. La Confédération estime les recettes à 1,4 milliard de francs par an.",
+        "no": "Pas de hausse de la TVA. Les opposants veulent d'autres mesures, comme un relèvement de l'âge de la retraite.",
+        "federal_council": null,
+        "url": "https://www.admin.ch/fr/votation-populaire-du-29-novembre-2026",
+        "parties": {
+          "PS": "yes",
+          "Verts": "yes",
+          "PLR": "no",
+          "solidaritéS": "no"
+        }
+      },
+      {
+        "id": "feux",
+        "short": "Feux d'artifice",
+        "title": "Initiative « Pour une limitation des feux d'artifice »",
+        "question": "Faut-il limiter l'usage des feux d'artifice ?",
+        "yes": "Les feux d'artifice sont limités par la Constitution.",
+        "no": "Le Conseil fédéral et le Parlement jugent l'initiative trop radicale : pour beaucoup, les feux font partie des fêtes du 1er août et du Nouvel An.",
+        "federal_council": "no",
+        "url": "https://www.admin.ch/fr/initiative-feux-artifice",
+        "parties": {
+          "PLR": "no"
+        }
+      },
+      {
+        "id": "couples",
+        "short": "Couples mariés",
+        "title": "Initiative « Oui à des impôts fédéraux équitables pour les couples mariés »",
+        "question": "Faut-il mettre fin au désavantage fiscal des couples mariés ?",
+        "yes": "L'impôt fédéral direct ne pénalise plus les couples mariés par rapport aux couples non mariés.",
+        "no": "Le système d'imposition actuel est maintenu.",
+        "federal_council": null,
+        "url": "https://www.admin.ch/fr/votation-populaire-du-29-novembre-2026",
+        "parties": {
+          "Centre": "yes",
+          "UDC": "yes"
+        }
+      },
+      {
+        "id": "armes",
+        "short": "Matériel de guerre",
+        "title": "Modification de la loi sur le matériel de guerre",
+        "question": "Faut-il assouplir les règles d'exportation d'armes ?",
+        "yes": "La loi modifiée est acceptée. Le Conseil fédéral et le Parlement la recommandent.",
+        "no": "Le comité référendaire craint un affaiblissement de la loi, avec des exportations possibles vers des régimes qui violent les droits humains.",
+        "federal_council": "yes",
+        "url": "https://www.seco.admin.ch/fr/votation-lfmg",
+        "parties": {}
+      }
+    ],
+    "cantons": {
+      "VS": {
+        "items": [
+          "Loi sur la société de gestion et d'exploitation de l'aéroport de Sion Valais-Wallis"
+        ],
+        "url": "https://www.vs.ch/web/votel"
+      },
+      "VD": {
+        "items": [],
+        "url": "https://www.vd.ch/etat-droit-finances/votations-et-elections/votation-federale-du-29-novembre-2026"
+      },
+      "GE": {
+        "items": [],
+        "url": "https://www.ge.ch/elections"
+      },
+      "FR": {
+        "items": [],
+        "url": "https://www.fr.ch/etat-et-droit/votations-elections-et-droits-politiques/votations-informations-sur-les-objets-de-vote-et-resultats"
+      },
+      "NE": {
+        "items": [],
+        "url": "https://www.ne.ch"
+      },
+      "JU": {
+        "items": [],
+        "url": "https://www.jura.ch"
+      }
+    },
+    "sources": [
+      {
+        "title": "PLR : NON à la hausse de la TVA",
+        "url": "https://www.plr.ch/votations-campagnes/recommandations-de-vote"
+      },
+      {
+        "title": "Prises de position citées par solidaritéS Neuchâtel",
+        "url": "https://solidarites.ch/ne/2026/10/27/votation-populaire-du-29-novembre-2026/"
+      },
+      {
+        "title": "Sondage SSR et tendances par parti",
+        "url": "https://www.rts.ch/info/suisse/2026/article/votations-du-29-novembre-issue-incertaine-selon-le-sondage-ssr-29392960.html"
+      }
+    ]
+  }
+}

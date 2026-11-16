@@ -1,0 +1,119 @@
+{
+  "_readme": "CH puis les 26 cantons. Un canton est couvert dès qu'il a des partis dans parties.json. Après modification : npm run check.",
+  "territories": [
+    {
+      "code": "CH",
+      "name": "Confédération"
+    },
+    {
+      "code": "AG",
+      "name": "Argovie"
+    },
+    {
+      "code": "AI",
+      "name": "Appenzell Rhodes-Intérieures"
+    },
+    {
+      "code": "AR",
+      "name": "Appenzell Rhodes-Extérieures"
+    },
+    {
+      "code": "BE",
+      "name": "Berne"
+    },
+    {
+      "code": "BL",
+      "name": "Bâle-Campagne"
+    },
+    {
+      "code": "BS",
+      "name": "Bâle-Ville"
+    },
+    {
+      "code": "FR",
+      "name": "Fribourg",
+      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+    },
+    {
+      "code": "GE",
+      "name": "Genève",
+      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+    },
+    {
+      "code": "GL",
+      "name": "Glaris"
+    },
+    {
+      "code": "GR",
+      "name": "Grisons"
+    },
+    {
+      "code": "JU",
+      "name": "Jura",
+      "note": "Liste des principaux partis, à compléter avec la composition du Parlement."
+    },
+    {
+      "code": "LU",
+      "name": "Lucerne"
+    },
+    {
+      "code": "NE",
+      "name": "Neuchâtel",
+      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+    },
+    {
+      "code": "NW",
+      "name": "Nidwald"
+    },
+    {
+      "code": "OW",
+      "name": "Obwald"
+    },
+    {
+      "code": "SG",
+      "name": "Saint-Gall"
+    },
+    {
+      "code": "SH",
+      "name": "Schaffhouse"
+    },
+    {
+      "code": "SO",
+      "name": "Soleure"
+    },
+    {
+      "code": "SZ",
+      "name": "Schwytz"
+    },
+    {
+      "code": "TG",
+      "name": "Thurgovie"
+    },
+    {
+      "code": "TI",
+      "name": "Tessin"
+    },
+    {
+      "code": "UR",
+      "name": "Uri"
+    },
+    {
+      "code": "VD",
+      "name": "Vaud",
+      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+    },
+    {
+      "code": "VS",
+      "name": "Valais",
+      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+    },
+    {
+      "code": "ZG",
+      "name": "Zoug"
+    },
+    {
+      "code": "ZH",
+      "name": "Zurich"
+    }
+  ]
+}
