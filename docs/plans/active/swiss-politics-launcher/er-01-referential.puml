@@ -1,0 +1,99 @@
+@startuml
+!include _theme.puml
+title er-01: The referential in data/*.json (PRD-0001 US-09, US-10)
+
+entity Territory {
+  * code : string <<PK>> (CH or canton)
+  --
+  * name : string
+  note : string
+}
+
+entity Party {
+  * id : string <<PK>>
+  --
+  * territory : string <<FK>>
+  * name, abbr, short : string
+  * position : string
+  * description : string
+  url : url or null
+  * status : verified | to_confirm | not_found
+  * checked_on : date
+  * evidence : string
+}
+
+entity SourcedFact {
+  * kind : founded | federal_council_seats
+  --
+  * value : integer
+  source : url or null
+  checked_on : date or null
+}
+
+entity PreviousUrl {
+  * url : url
+  --
+  * seen_on : date
+  * note : string
+}
+
+entity StateSite {
+  * id : string <<PK>>
+  --
+  * territory : string <<FK>>
+  * name, description : string
+  url : url or null
+  * status, checked_on, evidence
+}
+
+entity Tool {
+  * id : string <<PK>>
+  --
+  * name, description : string
+  url : url or null
+  * status, checked_on, evidence
+}
+
+entity Ballot {
+  * date : date
+  --
+  * label, voting_material : string
+  * page, brochure : url
+}
+
+entity BallotItem {
+  * id : string <<PK>>
+  --
+  * short, title, question : string
+  * yes, no : string
+  federal_council : yes | no | null
+  * url : url
+  * parties : abbr to yes | no
+}
+
+entity CantonBallot {
+  * canton : string <<FK>>
+  --
+  * items : list of titles
+  * url : url
+}
+
+entity BallotSource {
+  * title : string
+  --
+  * url : url
+}
+
+Territory ||--o{ Party : territory
+Territory ||--o{ StateSite : territory
+Party ||--o{ SourcedFact : facts
+Party ||--o{ PreviousUrl : previous_urls
+StateSite ||--o{ PreviousUrl : previous_urls
+Tool ||--o{ PreviousUrl : previous_urls
+Ballot ||--|{ BallotItem : items
+Ballot ||--o{ CantonBallot : cantons
+Territory ||--o| CantonBallot : canton
+Ballot ||--o{ BallotSource : sources
+BallotItem }o..o{ Party : parties keyed by abbr\n(CH parties only)
+
+@enduml

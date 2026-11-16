@@ -1,0 +1,124 @@
+<!-- summary: no HTTP API · 7 contracts · 1 decision table -->
+<div class="block">
+  <h2>No HTTP API</h2>
+  <p class="note">The site is static: no server of its own, no account, no request to a backend. Every piece of data is inside the script at build time, so there is no OpenAPI document. What it does have are contracts: the address a voter can share, what the browser remembers, the files the build produces, and the commands the maintainer runs.</p>
+  <div class="scroll">
+    <table class="ops">
+      <thead><tr><th>Name</th><th>What it does</th><th>Direction</th><th>Carrier</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Page address</td><td>Opens a page for a territory; changes when the voter moves</td><td>Voter to site, site to address bar</td><td>URL fragment <span class="mono">#&lt;page&gt;/&lt;territory&gt;</span></td></tr>
+        <tr><td class="key">Remembered territory</td><td>Restores the last territory on the next visit</td><td>Site to browser and back</td><td>Browser storage, 2 keys</td></tr>
+        <tr><td class="key">Built site</td><td>What GitHub Pages serves and what opens from disk</td><td>Build to visitor</td><td><span class="mono">dist/</span></td></tr>
+        <tr><td class="key">npm run build</td><td>Bundles the site and its data into <span class="mono">dist/</span></td><td>Maintainer, CI</td><td>Command</td></tr>
+        <tr><td class="key">npm run check</td><td>Type-checks the code and validates <span class="mono">data/*.json</span></td><td>Maintainer, CI</td><td>Command</td></tr>
+        <tr><td class="key">npm run links</td><td>Tests every current URL of the referential</td><td>Maintainer, CI each push and Monday</td><td>Command</td></tr>
+        <tr><td class="key">npm run seats</td><td>Fetches the 2023 National Council seats from the OFS</td><td>Maintainer</td><td>Command</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Page address</h2>
+  <p class="note">Shareable and bookmarkable. Read on load and on every change of the fragment; rewritten (without a new history entry) when the voter changes page or territory.</p>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>Part</th><th>Values</th><th>When absent or unknown</th></tr></thead>
+      <tbody>
+        <tr><td class="key">page</td><td><span class="mono">votation</span>, <span class="mono">partis</span>, <span class="mono">aides</span>, <span class="mono">etat</span></td><td>The ballot page</td></tr>
+        <tr><td class="key">territory</td><td><span class="mono">federal</span>, or the lower-case code of a covered canton (<span class="mono">ge</span>, <span class="mono">vd</span>, <span class="mono">vs</span>, <span class="mono">ne</span>, <span class="mono">ju</span>, <span class="mono">fr</span>)</td><td>The remembered territory, else the Confederation</td></tr>
+        <tr><td class="key">short form</td><td><span class="mono">#&lt;territory&gt;</span> alone</td><td>Read as the ballot page of that territory</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The page segments stay in French for now: they are the addresses voters may have shared.</p>
+</div>
+
+<div class="block">
+  <h2>Remembered territory</h2>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>Key</th><th>Value</th><th>Read</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">civic-compass.scope</span></td><td><span class="mono">federal</span> or a lower-case canton code</td><td>At start, when the address names no territory</td></tr>
+        <tr><td class="key"><span class="mono">civic-compass.canton</span></td><td>The last canton chosen, upper case</td><td>At start, if that canton is still covered</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Written each time the territory changes. Any storage error is ignored: the site works without it, in a private window too.</p>
+</div>
+
+<div class="block">
+  <h2>Built site</h2>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>File</th><th>Contract</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">dist/index.html</span></td><td>Loads one classic script (not a module), so it also works when opened from disk</td></tr>
+        <tr><td class="key"><span class="mono">dist/js/site.js</span></td><td>One self-contained script (IIFE) with <span class="mono">data/*.json</span> inside; no request at run time</td></tr>
+        <tr><td class="key"><span class="mono">dist/css/</span>, <span class="mono">dist/LICENSE</span></td><td>Copied as they are: <span class="mono">css/site.css</span>, the design system stylesheet and fonts, the licence</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Commands</h2>
+  <p class="note">All run by Node 26 straight from TypeScript, through <span class="mono">tools/cli.ts</span> (check, links, seats) and <span class="mono">tools/build.ts</span>. Messages are in French. Common option: <span class="mono">--data</span> folder, <span class="mono">data/</span> by default.</p>
+  <div class="scroll">
+    <table class="ops">
+      <thead><tr><th>Command</th><th>Reads</th><th>Writes or prints</th><th>Exit code</th></tr></thead>
+      <tbody>
+        <tr><td class="key">build</td><td><span class="mono">src/site/</span>, <span class="mono">data/*.json</span>, <span class="mono">index.html</span>, <span class="mono">css/</span></td><td>Replaces <span class="mono">dist/</span>; prints the bundle size</td><td>0 built, other on a build error</td></tr>
+        <tr><td class="key">check</td><td>Code, <span class="mono">data/*.json</span></td><td>Each error with its file and entry, or a one-line summary of the counts</td><td>0 valid, 1 errors (type or data)</td></tr>
+        <tr><td class="key">links</td><td>Every current URL of <span class="mono">data/*.json</span>, never <span class="mono">previous_urls</span></td><td>Each link that is not plainly OK, with its reason and where it is used, then a summary; <span class="mono">--all</span> also lists the OK ones</td><td>0 nothing failing, 1 a link fails (table below)</td></tr>
+        <tr><td class="key">seats</td><td>The OFS CSV of the 2023 election; <span class="mono">--url</span> to override</td><td><span class="mono">--show</span>: the columns and first rows; else <span class="mono">data/seats-national-council-2023.json</span>, the parties recognised and the total to compare with 200</td><td>0 done, 2 download failed or columns not found</td></tr>
+        <tr><td class="key">(none, or unknown)</td><td></td><td>The help</td><td>2 (0 with <span class="mono">--help</span>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Link verdicts</h2>
+  <p class="note">Each URL is fetched with redirects followed, a 25 s limit and up to 3 attempts. The first matching row decides.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Order</th><th>When</th><th>Verdict</th><th>Shown as</th><th>Fails the run</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td>The final address is on another registered domain (a parked domain, a search engine)</td><td class="key">elsewhere</td><td>AILLEURS</td><td>Yes</td></tr>
+        <tr><td class="num">2</td><td>403 or 429: the site refuses robots</td><td class="key">blocked</td><td>À VOIR</td><td>No</td></tr>
+        <tr><td class="num">3</td><td>5xx or network error: retried after 1 s, then 3 s; still failing</td><td class="key">broken</td><td>CASSÉ</td><td>Yes</td></tr>
+        <tr><td class="num">4</td><td>No answer in time after every attempt</td><td class="key">unreachable</td><td>À VOIR</td><td>No</td></tr>
+        <tr><td class="num">5</td><td>Any other status that is not 2xx (404, 410...)</td><td class="key">broken</td><td>CASSÉ</td><td>Yes</td></tr>
+        <tr><td class="num">6</td><td>2xx after a redirect on the same domain</td><td class="key">redirected</td><td>OK</td><td>No</td></tr>
+        <tr><td class="num">7</td><td>2xx at the same address</td><td class="key">ok</td><td>OK</td><td>No</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>No backend, no account, no tracking; the only stored state is the territory, in the visitor's own browser.<span class="refs"><span class="chip ref">PRD-0001 §3</span></span></li>
+        <li>The page and territory live in the address, so a page can be shared.<span class="refs"><span class="chip ref">PRD-0001.US-05</span></span></li>
+        <li>The built site works from disk: one classic script with the data inside.<span class="refs"><span class="chip ref">PRD-0001.US-12</span><span class="chip ref">PRD-0001 §6</span></span></li>
+        <li>A redirect to another domain fails the link check; previous URLs are never tested.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-10</span></span></li>
+        <li>Refused robots and timeouts are listed for a manual check and never fail, locally or in CI.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The data check and the link check run on every push and pull request, the link check also every Monday.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-12</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>The timeout, the number of attempts and the waits between them.</li>
+        <li>How many links are tested at once.</li>
+        <li>The exact wording of the console messages.</li>
+      </ul>
+    </section>
+  </div>
+</div>

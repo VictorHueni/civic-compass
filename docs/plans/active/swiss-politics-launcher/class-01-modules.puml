@@ -1,0 +1,76 @@
+@startuml
+!include _theme.puml
+title class-01: Modules of the site and of the tooling (PRD-0001)
+
+package "src/site (bundled into dist/js/site.js)" {
+  class "main.ts" as main <<entry>> {
+    starts app and ballot
+  }
+  class "app.ts" as app {
+    +start()
+    +scope() : level, canton
+    +onRender(listener)
+    +cantonName(code)
+    routing, menu, territory sheet
+    parties half-circle, aids, state sites
+  }
+  class "ballot.ts" as ballot {
+    +start()
+    ballot list, item page
+    Comprendre / Comparer / Décider
+  }
+  class "referential.ts" as ref {
+    +federal : Level
+    +cantons : Record<code, Canton>
+    +tools, ballot, allCantons
+    +stateSiteUrl(id), toolUrl(id)
+  }
+  class "links.ts" as links {
+    +STATE_SITE_IDS
+    +TOOL_IDS, AID_TOOL_IDS
+  }
+  class "dom.ts" as dom {
+    +$(), escapeHtml(), normalize(), host()
+  }
+}
+
+class "src/types.ts" as types {
+  interfaces of the referential
+  one schema per interface
+  +DATA_FILES
+}
+
+package "tools (run by Node 26 from .ts)" {
+  class "cli.ts" as cli {
+    check : schema + cross checks
+    links : test current URLs
+    seats : OFS 2023 seats
+  }
+  class "build.ts" as build {
+    esbuild IIFE bundle
+    copies index.html, css, LICENSE
+  }
+}
+
+class "data/*.json" as data <<referential>> {
+  territories, parties, state-sites
+  tools, ballot
+}
+
+main --> app
+main --> ballot
+ballot --> app : scope(), onRender()
+app --> ref
+ballot --> ref
+app --> links
+ballot --> links
+app --> dom
+ballot --> dom
+ref --> types : types only
+ref ..> data : imported at build time
+cli --> types : schemas
+cli --> links : ids the site needs
+cli ..> data : reads
+build ..> main : bundles
+
+@enduml

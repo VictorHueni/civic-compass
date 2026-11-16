@@ -1,0 +1,71 @@
+<!-- summary: 8 modules · 2 diagrams · 4 checks -->
+<div class="block">
+  <h2>What each module owns</h2>
+  <p class="note">TypeScript only, with English names. The site is a few ES modules bundled into one script; the tooling runs on Node 26 straight from its <span class="mono">.ts</span> files. One file of types describes the data for both.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Module</th><th>Owns</th><th>Tested by</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">src/types.ts</span></td><td>The interfaces of the referential, a schema next to each, and the list of data files. The schema type makes the compiler fail if a schema misses a key, adds one, or gets an optional or nullable flag wrong.</td><td><span class="mono">tsc</span>; used by <span class="mono">check</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/referential.ts</span></td><td>The data as the site sees it: imports <span class="mono">data/*.json</span> at build time, the Confederation level, the covered cantons (any canton with parties), URL lookup by id. It is the one place that keeps voters to verified links: unverified state sites and tools are left out, an unverified party URL is hidden so its card offers a search.</td><td><span class="mono">check</span> guarantees the shapes it trusts and that every entry linked by id is verified; parity run</td></tr>
+        <tr><td class="key"><span class="mono">src/site/links.ts</span></td><td>The ids of the state sites and tools the site links to by name (menu shortcuts, item tabs, aids). No URL in code.</td><td><span class="mono">check</span> fails if an id is missing or has no URL</td></tr>
+        <tr><td class="key"><span class="mono">src/site/app.ts</span></td><td>Routing and address, remembered territory, menu, territory sheet and tile map, parties half-circle and card, decision aids, official sites with search. Exposes the current territory and a render hook.</td><td>Parity run; <span class="mono">tsc</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/ballot.ts</span></td><td>The ballot page: list, item page, the three tabs, the mini half-circle of recommendations. Re-renders when the territory changes.</td><td>Parity run; <span class="mono">tsc</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/dom.ts</span>, <span class="mono">main.ts</span></td><td>Small helpers (element lookup, HTML escaping, accent-free search, host name); the entry point that starts both pages.</td><td><span class="mono">tsc</span></td></tr>
+        <tr><td class="key"><span class="mono">tools/cli.ts</span></td><td>The maintainer's commands: <span class="mono">check</span> (schemas, then cross checks), <span class="mono">links</span>, <span class="mono">seats</span>.</td><td>Run on deliberately broken data and on a local server (redirect to a search engine, 503 then 200)</td></tr>
+        <tr><td class="key"><span class="mono">tools/build.ts</span></td><td>Bundles <span class="mono">src/site/main.ts</span> with esbuild as one classic script, copies the page, styles and licence into <span class="mono">dist/</span>.</td><td>Opening <span class="mono">dist/index.html</span> from disk</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Reused unchanged: <span class="mono">index.html</span>, the Confederation design system stylesheet and fonts, <span class="mono">css/site.css</span>.</p>
+</div>
+
+<div class="block">
+  <h2>How the modules depend on each other</h2>
+  {{FIGURE:class-01-modules|Module diagram: main starts app and ballot; ballot reads the territory from app; both read referential, links and dom; referential imports data at build time and takes its types from src/types.ts; tools/cli.ts reads the data with the schemas of src/types.ts and the ids of links.ts; tools/build.ts bundles main|Site modules on top, tooling below, the data files and their types shared}}
+</div>
+
+<div class="block">
+  <h2>One run: choose Geneva, open a party</h2>
+  {{FIGURE:seq-01-pick-canton-open-party|Sequence diagram: the voter taps the territory button, app opens the sheet with the cantons from referential; the voter taps GE, app saves the territory in browser storage, sets the address to #partis/ge, reads the Geneva parties and draws the half-circle; the voter taps a sector and app renders the party card, with facts only when sourced and a search link when no site is known|PRD-0001.US-05 then US-06}}
+</div>
+
+<div class="block">
+  <h2>How it is checked</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Check</th><th>What it proves</th><th>Where it runs</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">tsc</span> on two configurations</td><td>The site (browser types) and the tooling (Node types) compile; schemas match their interfaces</td><td><span class="mono">npm run check</span>, CI</td></tr>
+        <tr><td class="key">Referential check</td><td>Every data file matches its schema, then: unique ids and codes, known territories, url null exactly when not found, ballot recommendations only for existing national parties, every id the site links to exists</td><td><span class="mono">npm run check</span>, CI</td></tr>
+        <tr><td class="key">Link check</td><td>Current URLs answer and stay on their domain (decision table in the previous tab)</td><td><span class="mono">npm run links</span>, CI on each push and every Monday</td></tr>
+        <tr><td class="key">Parity run</td><td>During the migration, the old site and the new <span class="mono">dist/</span> were driven through the same 29 steps in headless Chromium: 27 identical renders, 2 differing only where the old script crashed on a shorter party list</td><td>Once, by hand; not automated</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">There are no unit tests of the rendering code: the screens are checked by eye and by the parity run, the data by the referential check.</p>
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>One language, TypeScript, for the site and the tooling; the tooling runs on Node 26 with no compile step.<span class="refs"><span class="chip ref">PRD-0001 §6</span></span></li>
+        <li>Development dependencies only: typescript, esbuild, @types/node, pinned exactly.<span class="refs"><span class="chip ref">PRD-0001 §6</span></span></li>
+        <li>One file of types describes the data; site and check both use it.<span class="refs"><span class="chip ref">PRD-0001 §6</span><span class="chip ref">PRD-0001.US-09</span></span></li>
+        <li>No URL in the site code: links are looked up by id in the referential.<span class="refs"><span class="chip ref">PRD-0001.US-08</span></span></li>
+        <li>Code names in English, everything shown on the site in French.<span class="refs"><span class="chip ref">PRD-0001 §6</span></span></li>
+        <li>Routes, markup and behaviour are those of the site before the migration.<span class="refs"><span class="chip ref">PRD-0001 §6</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>How the rendering code is split inside <span class="mono">app.ts</span> and <span class="mono">ballot.ts</span>.</li>
+        <li>Whether the parity run becomes an automated test.</li>
+      </ul>
+    </section>
+  </div>
+</div>
