@@ -12,7 +12,7 @@
 <header class="topbar">
   <div class="container">
     <h1>Boussole citoyenne</h1>
-    <p>Les partis de gauche à droite, les outils pour voter et les sites de l'État, en Suisse et à Genève.</p>
+    <p>Les partis de gauche à droite, les outils pour voter et les sites de l'État, en Suisse et dans les cantons romands.</p>
   </div>
 </header>
 
@@ -20,8 +20,8 @@
   <div class="container">
     <div id="seg" class="seg" role="radiogroup" aria-label="Niveau politique">
       <span class="seg__thumb" aria-hidden="true"></span>
-      <button type="button" role="radio" class="seg__btn" data-niveau="Suisse" aria-checked="true">Fédéral</button>
-      <button type="button" role="radio" class="seg__btn" data-niveau="Genève" aria-checked="false">Genève</button>
+      <button type="button" role="radio" class="seg__btn" data-niveau="federal" aria-checked="true">Fédéral</button>
+      <button type="button" role="radio" class="seg__btn" data-niveau="canton" id="seg-canton" aria-checked="false" aria-haspopup="dialog">Genève <span aria-hidden="true">▾</span></button>
     </div>
   </div>
 </div>
@@ -29,7 +29,7 @@
 <main class="container">
   <section aria-labelledby="t-partis">
     <h2 id="t-partis">Les partis, de gauche à droite</h2>
-    <p class="bloc__desc">Touchez un parti dans l'hémicycle, ou glissez vers la gauche et la droite.</p>
+    <p class="bloc__desc" id="niveau-titre"></p>
     <div id="spectre-zone">
       <div id="hemicycle" class="hemicycle"></div>
       <div class="nav-fleches">
@@ -37,6 +37,7 @@
         <button id="next" type="button" class="btn btn--outline btn--sm" aria-label="Parti suivant, plus à droite"><span class="btn__text">Plus à droite →</span></button>
       </div>
       <div id="detail" class="detail" aria-live="polite"></div>
+      <p class="note-niveau" id="note-niveau"></p>
     </div>
   </section>
 
@@ -54,6 +55,14 @@
     <p>Le classement des partis de gauche à droite est indicatif. Il suit l'usage courant dans les médias et la recherche, et ne remplace pas les outils de comparaison de la section « Aider à décider ».</p>
   </div>
 </footer>
+<div id="picker" class="picker" hidden role="dialog" aria-modal="true" aria-labelledby="picker-titre">
+  <div class="picker__fond" id="picker-fond"></div>
+  <div class="picker__feuille">
+    <div class="picker__tete"><h2 id="picker-titre">Choisir un canton</h2><button type="button" id="picker-x" class="picker__x" aria-label="Fermer">✕</button></div>
+    <input id="picker-q" type="search" placeholder="Rechercher un canton..." autocomplete="off">
+    <ul id="picker-liste" class="picker__liste"></ul>
+  </div>
+</div>
 <script src="js/data.js"></script>
 <script src="js/app.js"></script>
 </body>
