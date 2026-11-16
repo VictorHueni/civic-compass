@@ -173,6 +173,9 @@ export const TOOL_SCHEMA: Schema<Tool> = LINK_ENTRY_SCHEMA;
 
 export const RECOMMENDATIONS = ["yes", "no"] as const;
 export type Recommendation = (typeof RECOMMENDATIONS)[number];
+/** A party may also leave the vote free ("liberté de vote"), when its own source says so. */
+export const PARTY_RECOMMENDATIONS = ["yes", "no", "free"] as const;
+export type PartyRecommendation = (typeof PARTY_RECOMMENDATIONS)[number];
 
 export interface BallotItem {
   id: string;
@@ -185,7 +188,7 @@ export interface BallotItem {
   federal_council: Recommendation | null;
   url: string;
   /** Party recommendations, keyed by the `abbr` of a CH party. Only sourced ones. */
-  parties: Record<string, Recommendation>;
+  parties: Record<string, PartyRecommendation>;
 }
 export const BALLOT_ITEM_SCHEMA: Schema<BallotItem> = {
   id: { kind: "string" },
@@ -196,7 +199,7 @@ export const BALLOT_ITEM_SCHEMA: Schema<BallotItem> = {
   no: { kind: "string" },
   federal_council: { kind: "enum", values: RECOMMENDATIONS, nullable: true },
   url: { kind: "url" },
-  parties: { kind: "record", value: { kind: "enum", values: RECOMMENDATIONS } },
+  parties: { kind: "record", value: { kind: "enum", values: PARTY_RECOMMENDATIONS } },
 };
 
 export interface CantonBallot {

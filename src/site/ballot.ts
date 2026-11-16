@@ -6,13 +6,13 @@ import { $, escapeHtml as esc, host } from "./dom.ts";
 import { cantonName, onRender, scope } from "./app.ts";
 import { STATE_SITE_IDS, TOOL_IDS } from "./links.ts";
 import { ballot, federal, stateSiteUrl, toolUrl } from "./referential.ts";
-import type { CantonBallot, Recommendation } from "../types.ts";
+import type { CantonBallot, PartyRecommendation } from "../types.ts";
 
 let item = -1; // -1: the list of items
 let step = 0;
 let partyIndex = -1;
 const STEPS = ["Comprendre", "Comparer", "Décider"];
-const LABEL: Record<Recommendation, string> = { yes: "Oui", no: "Non" };
+const LABEL: Record<PartyRecommendation, string> = { yes: "Oui", no: "Non", free: "Liberté de vote" };
 
 function days(): number {
   const d = new Date(ballot.date + "T00:00:00");
@@ -113,7 +113,7 @@ function miniHemicycle(): void {
       '<path d="M' + String(o0) + " A" + R + " " + R + " 0 0 1 " + String(o1) + " L" + String(i1) + " A" + r + " " + r + " 0 0 0 " + String(i0) + ' Z"/>' +
       '<text transform="translate(' + tp[0].toFixed(1) + " " + tp[1].toFixed(1) + ") rotate(" + rot.toFixed(1) + ')" text-anchor="middle" dominant-baseline="central">' + esc(p.short) + "</text></g>";
   });
-  s += '</svg><ul class="legend-list"><li><i class="legend-key legend-key--yes"></i>Oui</li><li><i class="legend-key legend-key--no"></i>Non</li><li><i class="legend-key legend-key--unknown"></i>À confirmer</li></ul>';
+  s += '</svg><ul class="legend-list"><li><i class="legend-key legend-key--yes"></i>Oui</li><li><i class="legend-key legend-key--no"></i>Non</li><li><i class="legend-key legend-key--free"></i>Liberté de vote</li><li><i class="legend-key legend-key--unknown"></i>À confirmer</li></ul>';
   $("mini-hemi").innerHTML = s;
   $("mini-hemi").querySelectorAll(".mini-sector").forEach((g) => {
     const f = () => {

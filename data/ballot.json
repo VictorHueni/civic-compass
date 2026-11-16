@@ -1,5 +1,5 @@
 {
-  "_readme": "Prochain scrutin. Ne jamais inventer un mot d'ordre : source obligatoire dans sources. Clés de parties = abréviations (abbr) des partis CH de parties.json, valeurs yes ou no. Après modification : npm run check.",
+  "_readme": "Prochain scrutin. Ne jamais inventer un mot d'ordre : source obligatoire dans sources. Valeurs des partis : yes, no ou free (liberté de vote, seulement si la source du parti le dit). Clés de parties = abréviations (abbr) des partis CH de parties.json. Après modification : npm run check.",
   "ballot": {
     "date": "2026-11-29",
     "label": "Votation populaire du 29 novembre 2026",
@@ -14,13 +14,18 @@
         "question": "Faut-il relever la TVA pour financer la 13e rente AVS ?",
         "yes": "La TVA augmente et finance en partie la 13e rente. La Confédération estime les recettes à 1,4 milliard de francs par an.",
         "no": "Pas de hausse de la TVA. Les opposants veulent d'autres mesures, comme un relèvement de l'âge de la retraite.",
-        "federal_council": null,
+        "federal_council": "yes",
         "url": "https://www.admin.ch/fr/votation-populaire-du-29-novembre-2026",
         "parties": {
-          "PS": "yes",
+          "PST-POP": "no",
+          "solidaritéS": "no",
           "Verts": "yes",
+          "PS": "yes",
+          "PVL": "yes",
+          "Centre": "yes",
+          "PEV": "yes",
           "PLR": "no",
-          "solidaritéS": "no"
+          "UDC": "no"
         }
       },
       {
@@ -33,7 +38,14 @@
         "federal_council": "no",
         "url": "https://www.admin.ch/fr/initiative-feux-artifice",
         "parties": {
-          "PLR": "no"
+          "PST-POP": "free",
+          "Verts": "yes",
+          "PS": "yes",
+          "PVL": "yes",
+          "Centre": "no",
+          "PEV": "yes",
+          "PLR": "no",
+          "UDC": "no"
         }
       },
       {
@@ -43,10 +55,16 @@
         "question": "Faut-il mettre fin au désavantage fiscal des couples mariés ?",
         "yes": "L'impôt fédéral direct ne pénalise plus les couples mariés par rapport aux couples non mariés.",
         "no": "Le système d'imposition actuel est maintenu.",
-        "federal_council": null,
+        "federal_council": "no",
         "url": "https://www.admin.ch/fr/votation-populaire-du-29-novembre-2026",
         "parties": {
+          "PST-POP": "no",
+          "Verts": "no",
+          "PS": "no",
+          "PVL": "no",
           "Centre": "yes",
+          "PEV": "yes",
+          "PLR": "no",
           "UDC": "yes"
         }
       },
@@ -59,13 +77,24 @@
         "no": "Le comité référendaire craint un affaiblissement de la loi, avec des exportations possibles vers des régimes qui violent les droits humains.",
         "federal_council": "yes",
         "url": "https://www.seco.admin.ch/fr/votation-lfmg",
-        "parties": {}
+        "parties": {
+          "PST-POP": "no",
+          "solidaritéS": "no",
+          "Verts": "no",
+          "PS": "no",
+          "PVL": "yes",
+          "Centre": "yes",
+          "PEV": "no",
+          "PLR": "yes",
+          "UDC": "yes"
+        }
       }
     ],
     "cantons": {
       "VS": {
         "items": [
-          "Loi sur la société de gestion et d'exploitation de l'aéroport de Sion Valais-Wallis"
+          "Loi sur la société de gestion et d'exploitation de l'aéroport de Sion Valais-Wallis",
+          "Initiative populaire cantonale pour un salaire minimum légal"
         ],
         "url": "https://www.vs.ch/web/votel"
       },
@@ -74,8 +103,10 @@
         "url": "https://www.vd.ch/etat-droit-finances/votations-et-elections/votation-federale-du-29-novembre-2026"
       },
       "GE": {
-        "items": [],
-        "url": "https://www.ge.ch/elections"
+        "items": [
+          "Loi modifiant les limites de zones au lieu-dit « Seymaz-Sud »"
+        ],
+        "url": "https://www.ge.ch/votations/20261129/"
       },
       "FR": {
         "items": [],
@@ -83,25 +114,85 @@
       },
       "NE": {
         "items": [],
-        "url": "https://www.ne.ch"
+        "url": "https://www.ne.ch/themes/etat-droit-et-finances/democratie/elections-et-votations"
       },
       "JU": {
         "items": [],
-        "url": "https://www.jura.ch"
+        "url": "https://www.jura.ch/fr/Autorites/Administration/CHA/SCH/Elections-et-votations/Resultats-des-scrutins/Resultats-des-scrutins.html"
       }
     },
     "sources": [
       {
-        "title": "PLR : NON à la hausse de la TVA",
-        "url": "https://www.plr.ch/votations-campagnes/recommandations-de-vote"
+        "title": "Conseil fédéral : explications de vote du 29 novembre 2026",
+        "url": "https://www.admin.ch/dam/fr/sd-web/HXhFMFWOaa6u/BAR_Erlaeuterungen_Nov26_FR_v6.pdf"
       },
       {
-        "title": "Prises de position citées par solidaritéS Neuchâtel",
-        "url": "https://solidarites.ch/ne/2026/10/27/votation-populaire-du-29-novembre-2026/"
+        "title": "PST-POP : non au financement de la 13e rente AVS par la TVA",
+        "url": "https://pst-pop.ch/2026/10/25/non-au-financement-de-la-13e-rente-avs-par-la-tva/"
       },
       {
-        "title": "Sondage SSR et tendances par parti",
-        "url": "https://www.rts.ch/info/suisse/2026/article/votations-du-29-novembre-issue-incertaine-selon-le-sondage-ssr-29392960.html"
+        "title": "PST-POP : liberté de vote pour l'initiative sur les feux d'artifice",
+        "url": "https://pst-pop.ch/2026/11/05/un-cadeau-fiscal-pour-les-couples-maries-fortunes-non-a-linitiative-du-centre/"
+      },
+      {
+        "title": "PST-POP : non à l'initiative du Centre",
+        "url": "https://pst-pop.ch/2026/11/05/un-cadeau-fiscal-pour-les-couples-maries-fortunes-non-a-linitiative-du-centre-2/"
+      },
+      {
+        "title": "PST-POP : non à l'assouplissement d'exportation d'armes",
+        "url": "https://pst-pop.ch/2026/10/25/non-a-lassouplissement-dexportation-darmes-oui-a-la-solidarite-internationale/"
+      },
+      {
+        "title": "solidaritéS : non à la hausse de la TVA",
+        "url": "https://solidarites.ch/2026/11/06/non-a-la-hausse-de-la-tva-oui-a-des-retraites-solidaires/"
+      },
+      {
+        "title": "solidaritéS : non à une loi dictée par l'industrie de l'armement (article du journal)",
+        "url": "https://solidarites.ch/journal/470-2/non-a-une-loi-dictee-par-lindustrie-de-larmement/"
+      },
+      {
+        "title": "Swissvotes : mots d'ordre sur la loi sur le matériel de guerre",
+        "url": "https://swissvotes.ch/vote/693.00"
+      },
+      {
+        "title": "Les Vert-e-s : votations du 29 novembre 2026",
+        "url": "https://verts.ch/votations-du-29-novembre-2026"
+      },
+      {
+        "title": "PS : recommandations de vote",
+        "url": "https://www.sp-ps.ch/fr/recommandations-de-vote/"
+      },
+      {
+        "title": "PVL : votations",
+        "url": "https://pvl.swiss/actualites/votations/"
+      },
+      {
+        "title": "Le Centre : mots d'ordre",
+        "url": "https://le-centre.ch/actualite/mots-dordre/"
+      },
+      {
+        "title": "PEV : positions de l'assemblée des délégués pour le 29 novembre",
+        "url": "https://www.evppev.ch/fr/news/derniere-chance-pour-une-fiscalite-equitable-pour-les-couples-maries"
+      },
+      {
+        "title": "PLR : recommandations de vote",
+        "url": "https://www.plr.ch/votations/recommandations-de-vote"
+      },
+      {
+        "title": "UDC : financement de l'AVS par la TVA, mot d'ordre non",
+        "url": "https://www.udc.ch/actualites/campagnes/financement-additionnel-de-lavs-par-le-biais-dun-relevement-de-la-tva/"
+      },
+      {
+        "title": "UDC : initiative feux d'artifice, mot d'ordre non",
+        "url": "https://www.udc.ch/actualites/campagnes/initiative-populaire-pour-une-limitation-des-feux-dartifice/"
+      },
+      {
+        "title": "UDC : initiative couples mariés, mot d'ordre oui",
+        "url": "https://www.udc.ch/actualites/campagnes/initiative-populaire-oui-a-des-impots-federaux-equitables-pour-les-couples-maries-pour-enfin-en-finir-avec-la-discrimination-du-mariage/"
+      },
+      {
+        "title": "UDC : loi sur le matériel de guerre, mot d'ordre oui",
+        "url": "https://www.udc.ch/actualites/campagnes/modification-du-19-decembre-2025-de-la-loi-federale-sur-le-materiel-de-guerre/"
       }
     ]
   }

@@ -77,7 +77,7 @@ entity BallotItem {
   * yes, no : string
   federal_council : yes | no | null
   * url : url
-  * parties : abbr to yes | no
+  * parties : abbr to yes | no | free
 }
 
 entity CantonBallot {
