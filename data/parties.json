@@ -911,10 +911,10 @@
       "short": "CS-POP",
       "position": "Gauche radicale",
       "description": "Parti de gauche jurassien.",
-      "url": null,
-      "status": "not_found",
+      "url": "https://popjura.ch/",
+      "status": "verified",
       "checked_on": "2026-11-16",
-      "evidence": "Aucun site retenu. Piste : http://popjura.ch/ (lié depuis pst-pop.ch comme « POP Jura »), certificat HTTPS invalide, et peut-être distinct de CS-POP.",
+      "evidence": "Titre de la page : POP Jura / Parti Ouvrier Populaire Jurassien (lié depuis pst-pop.ch). Certificat HTTPS au nom de pst-pop.ch : avertissement du navigateur, retenu par le mainteneur le 2026-11-16.",
       "previous_urls": []
     },
     {

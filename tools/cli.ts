@@ -346,6 +346,15 @@ function registeredDomain(hostname: string): string {
 }
 
 /**
+ * Sites whose HTTPS certificate is known to be invalid and that the maintainer chose to show
+ * anyway: listed for a manual check instead of failing the run. Visitors still get the browser's
+ * security warning. Remove an entry as soon as the site fixes its certificate.
+ */
+const ACCEPTED_CERT_ISSUES: Record<string, string> = {
+  "popjura.ch": "certificat au nom de pst-pop.ch, retenu par le mainteneur le 2026-11-16",
+};
+
+/**
  * Registered domains run by the same owner: a redirect between them is not "elsewhere".
  * GitHub serves release downloads from its storage domain.
  */
@@ -389,6 +398,10 @@ async function checkLink(url: string): Promise<LinkResult> {
     } catch (e) {
       const err = e as Error & { cause?: { code?: string; message?: string } };
       const timedOut = err.name === "TimeoutError" || /TIMEOUT/.test(err.cause?.code ?? "");
+      const host = new URL(url).hostname;
+      if (/^ERR_TLS_CERT|CERT_/.test(err.cause?.code ?? "") && host in ACCEPTED_CERT_ISSUES) {
+        return { url, verdict: "blocked", status: 0, note: `certificat HTTPS invalide, exception acceptée : ${ACCEPTED_CERT_ISSUES[host]}` };
+      }
       if (timedOut) {
         last = { url, verdict: "unreachable", status: 0, note: `pas de réponse en ${TIMEOUT_MS / 1000} s après ${attempt + 1} essai(s), à vérifier à la main` };
       } else {
