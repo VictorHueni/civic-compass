@@ -345,6 +345,15 @@ function registeredDomain(hostname: string): string {
   return labels.slice(-keep).join(".");
 }
 
+/**
+ * Registered domains run by the same owner: a redirect between them is not "elsewhere".
+ * GitHub serves release downloads from its storage domain.
+ */
+const SAME_OWNER: string[][] = [["github.com", "githubusercontent.com"]];
+function sameOwner(a: string, b: string): boolean {
+  return a === b || SAME_OWNER.some((group) => group.includes(a) && group.includes(b));
+}
+
 function sameAddress(a: string, b: string): boolean {
   return a.replace(/\/$/, "") === b.replace(/\/$/, "");
 }
@@ -364,7 +373,7 @@ async function checkLink(url: string): Promise<LinkResult> {
       await res.body?.cancel().catch(() => {});
       const final = res.url || url;
       // First, whatever the status: an address now serving another site (a parked domain, a search engine) is not the right one.
-      if (registeredDomain(new URL(url).hostname) !== registeredDomain(new URL(final).hostname)) {
+      if (!sameOwner(registeredDomain(new URL(url).hostname), registeredDomain(new URL(final).hostname))) {
         return { url, verdict: "elsewhere", status: res.status, note: `redirigé ailleurs : ${final}` };
       }
       if (res.status === 403 || res.status === 429) {
