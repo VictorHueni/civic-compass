@@ -10,9 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: js/donnees.js correspond à data/*.json
-        run: python3 tools/boussole.py generer --verifier
-      # Même outil qu'en local. Les anciennes_urls ne sont pas testées ;
-      # 403 et 429 (sites qui bloquent les robots) ne font pas échouer.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Types et référentiel data/*.json
+        run: npm run check
+      # Même outil qu'en local. Les previous_urls ne sont pas testées ;
+      # 403 et 429 (sites qui bloquent les robots) ne font pas échouer,
+      # une redirection vers un autre domaine fait échouer.
       - name: Vérifier les liens actuels de data/*.json
-        run: python3 tools/boussole.py liens
+        run: npm run links
