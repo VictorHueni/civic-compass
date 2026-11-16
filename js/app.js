@@ -66,12 +66,15 @@
 
   function renderDetail() {
     var liste = D.partis[niveau], p = liste[index];
+    var faits = [["Position", p.position]];
+    if (p.fonde) faits.push(["Fondé en", String(p.fonde)]);
+    if (typeof p.cf === "number") faits.push(["Conseil fédéral", p.cf ? p.cf + (p.cf > 1 ? " sièges" : " siège") : "Aucun siège"]);
+    var dl = faits.map(function (f) { return '<div class="fiche__ligne"><dt>' + esc(f[0]) + '</dt><dd>' + esc(f[1]) + '</dd></div>'; }).join("");
     $("detail").innerHTML =
-      '<p class="detail__pos">' + esc(p.position) + '</p>' +
-      '<h3 class="detail__name">' + esc(p.nom) + '</h3>' +
-      '<p>' + esc(p.desc) + '</p>' +
-      '<p class="detail__lien"><a class="btn btn--filled btn--full-width" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span class="btn__text">Ouvrir le site du parti</span></a></p>' +
-      '<p class="host">' + esc(hote(p.url)) + '</p>';
+      '<h3 class="fiche__nom">' + esc(p.nom) + '</h3>' +
+      '<p class="fiche__desc">' + esc(p.desc) + '</p>' +
+      '<dl class="fiche__faits">' + dl + '</dl>' +
+      '<a class="fiche__lien" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(hote(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
     $("prev").disabled = index === 0;
     $("next").disabled = index === liste.length - 1;
   }

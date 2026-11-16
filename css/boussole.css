@@ -29,11 +29,17 @@ h2{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.3rem;margin:0
 .centre-rang{font-size:13px;fill:var(--b-doux)}
 .axe{font-size:12px;fill:var(--b-doux)}
 .nav-fleches{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0 14px}
-.detail{border:1px solid var(--b-bord);border-left:6px solid var(--b-accent);border-radius:6px;padding:16px;background:var(--b-fond)}
-.detail__pos{margin:0;font-size:.8rem;color:var(--b-doux);text-transform:uppercase;letter-spacing:.04em}
-.detail__name{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.35rem;margin:4px 0 8px;line-height:1.2}
-.detail p{margin:0 0 12px;max-width:65ch}
-.detail .detail__lien{margin-bottom:8px}
+.detail{margin-top:4px;border-top:2px solid var(--b-texte);padding-top:12px}
+.fiche__nom{font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-size:1.3rem;line-height:1.2;margin:0 0 4px}
+.fiche__desc{margin:0 0 10px;max-width:60ch}
+.fiche__faits{margin:0;padding:0}
+.fiche__ligne{display:flex;justify-content:space-between;gap:16px;padding:9px 0;border-top:1px solid var(--b-bord)}
+.fiche__ligne dt{color:var(--b-doux);font-size:.92rem}
+.fiche__ligne dd{margin:0;text-align:right;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.fiche__lien,.fiche__lien:visited{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:56px;padding:10px 0;border-top:1px solid var(--b-bord);border-bottom:1px solid var(--b-bord);color:var(--b-accent);font-family:Font-Bold,Hind,Fallback-font,sans-serif;text-decoration:none}
+.fiche__lien small{display:block;font-family:Font-Regular,Hind,Fallback-font,sans-serif;font-size:.8rem;color:var(--b-doux);word-break:break-all}
+.fiche__lien:hover{color:var(--color-primary-800)}
+.fiche__lien:hover span:first-child{text-decoration:underline}
 
 .recherche{margin-top:32px}
 .recherche input{width:100%;min-height:48px;padding:10px 14px;font:inherit;font-size:16px;border:1px solid var(--color-secondary-200);border-radius:4px;background:#fff;color:inherit}
@@ -55,7 +61,6 @@ footer.pied p{margin:0 0 8px;max-width:75ch}
   .niveaux{display:flex;width:max-content}
   .cartes{grid-template-columns:repeat(2,1fr)}
   .nav-fleches{display:flex}
-  .detail .btn--full-width{width:auto}
 }
 @media (min-width:960px){
   .cartes{grid-template-columns:repeat(3,1fr)}
