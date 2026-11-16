@@ -59,8 +59,9 @@
           p("Ensemble à Gauche", "EàG", "EàG", GR, "Coalition de solidaritéS, du Parti du Travail et de la DAL.", "https://www.ensembleagauche.ch"),
           p("Les Vert-e-s Genève", "Verts GE", "Verts", GE_, "Section cantonale des Verts.", "https://www.verts-ge.ch"),
           p("PS Genève", "PS GE", "PS", CG, "Section cantonale du Parti socialiste.", "https://www.ps-ge.ch"),
-          p("Vert'libéraux Genève", "PVL GE", "PVL", C, "Section cantonale du Parti vert'libéral.", null),
-          p("Le Centre Genève", "Centre GE", "Centre", C, "Section cantonale du Centre.", null),
+          p("Vert'libéraux Genève", "PVL GE", "PVL", C, "Section cantonale du Parti vert'libéral.", "https://ge.vertliberaux.ch"),
+          p("Le Centre Genève", "Centre GE", "Centre", C, "Section cantonale du Centre.", "https://ge.le-centre.ch"),
+          p("Libertés et justice sociale", "LJS", "LJS", CD, "Mouvement fondé en 2023 autour de Pierre Maudet, 10 sièges au Grand Conseil.", null, { fonde: 2023 }),
           p("PLR Genève", "PLR GE", "PLR", CD, "Les Libéraux-Radicaux Genève.", "https://www.plr-ge.ch"),
           p("Mouvement Citoyens Genevois", "MCG", "MCG", "Droite populiste", "Parti régional centré sur la défense des résidents genevois.", "https://www.mcge.ch", { fonde: 2005 }),
           p("UDC Genève", "UDC GE", "UDC", DC, "Section cantonale de l'UDC.", "https://www.udc-ge.ch")
@@ -75,24 +76,24 @@
       VD: {
         nom: "Vaud", note: "Liste des principaux partis, à compléter avec la composition du Grand Conseil.",
         partis: [
-          p("Parti ouvrier et populaire Vaud", "POP VD", "POP", GR, "Parti de gauche radicale, avec solidaritéS dans Ensemble à Gauche.", null),
-          p("Les Vert-e-s vaudois", "Verts VD", "Verts", GE_, "Section cantonale des Verts.", null),
-          p("Parti socialiste vaudois", "PS VD", "PS", CG, "Section cantonale du Parti socialiste.", null),
+          p("Parti ouvrier et populaire Vaud", "POP VD", "POP", GR, "Parti de gauche radicale, avec solidaritéS dans Ensemble à Gauche.", "https://popvaud.ch"),
+          p("Les Vert-e-s vaudois", "Verts VD", "Verts", GE_, "Section cantonale des Verts.", "https://vert-e-s-vd.ch"),
+          p("Parti socialiste vaudois", "PS VD", "PS", CG, "Section cantonale du Parti socialiste.", "https://ps-vd.ch"),
           p("Vert'libéraux Vaud", "PVL VD", "PVL", C, "Section cantonale du Parti vert'libéral.", null),
           p("Le Centre Vaud", "Centre VD", "Centre", C, "Section cantonale du Centre.", null),
-          p("PLR Vaud", "PLR VD", "PLR", CD, "Les Libéraux-Radicaux vaudois.", null),
-          p("UDC Vaud", "UDC VD", "UDC", DC, "Section cantonale de l'UDC.", null)
+          p("PLR Vaud", "PLR VD", "PLR", CD, "Les Libéraux-Radicaux vaudois.", "https://www.plr-vd.ch"),
+          p("UDC Vaud", "UDC VD", "UDC", DC, "Section cantonale de l'UDC.", "https://udc-vaud.ch")
         ],
         etat: [["Vaud", "Canton de Vaud", "Site officiel du canton.", "https://www.vd.ch"]]
       },
       VS: {
         nom: "Valais", note: "Liste des principaux partis, à compléter avec la composition du Grand Conseil.",
         partis: [
-          p("Les Vert-e-s valaisans", "Verts VS", "Verts", GE_, "Section cantonale des Verts.", null),
-          p("Parti socialiste du Valais romand", "PS VS", "PS", CG, "Section cantonale du Parti socialiste.", null),
+          p("Les Vert-e-s valaisans", "Verts VS", "Verts", GE_, "Section cantonale des Verts.", "https://www.verts-vs.ch"),
+          p("Parti socialiste du Valais romand", "PS VS", "PS", CG, "Section cantonale du Parti socialiste.", "https://www.psvr.ch"),
           p("Le Centre Valais", "Centre VS", "Centre", C, "Section cantonale du Centre, très présente en Valais.", null),
-          p("PLR Valais", "PLR VS", "PLR", CD, "Les Libéraux-Radicaux valaisans.", null),
-          p("UDC Valais", "UDC VS", "UDC", DC, "Section cantonale de l'UDC.", null)
+          p("PLR Valais", "PLR VS", "PLR", CD, "Les Libéraux-Radicaux valaisans.", "https://www.plrvs.ch"),
+          p("UDC Valais", "UDC VS", "UDC", DC, "Section cantonale de l'UDC.", "https://www.udc-valais.ch")
         ],
         etat: [["Valais", "Canton du Valais", "Site officiel du canton.", "https://www.vs.ch"]]
       },
@@ -102,10 +103,10 @@
           p("Parti ouvrier et populaire neuchâtelois", "POP NE", "POP", GR, "Parti de gauche radicale.", null),
           p("solidaritéS Neuchâtel", "Sol. NE", "Sol.", "Gauche anticapitaliste", "Section cantonale de solidaritéS.", null),
           p("Les Vert-e-s neuchâtelois", "Verts NE", "Verts", GE_, "Section cantonale des Verts.", null),
-          p("Parti socialiste neuchâtelois", "PS NE", "PS", CG, "Section cantonale du Parti socialiste.", null),
-          p("Vert'libéraux Neuchâtel", "PVL NE", "PVL", C, "Section cantonale du Parti vert'libéral.", null),
-          p("PLR Neuchâtel", "PLR NE", "PLR", CD, "Les Libéraux-Radicaux neuchâtelois.", null),
-          p("UDC Neuchâtel", "UDC NE", "UDC", DC, "Section cantonale de l'UDC.", null)
+          p("Parti socialiste neuchâtelois", "PS NE", "PS", CG, "Section cantonale du Parti socialiste.", "https://www.psn.ch"),
+          p("Vert'libéraux Neuchâtel", "PVL NE", "PVL", C, "Section cantonale du Parti vert'libéral.", "https://ne.vertliberaux.ch"),
+          p("PLR Neuchâtel", "PLR NE", "PLR", CD, "Les Libéraux-Radicaux neuchâtelois.", "https://www.plrn.ch"),
+          p("UDC Neuchâtel", "UDC NE", "UDC", DC, "Section cantonale de l'UDC.", "https://www.udc-ne.ch")
         ],
         etat: [["Neuchâtel", "République et canton de Neuchâtel", "Site officiel du canton.", "https://www.ne.ch"]]
       },
@@ -115,8 +116,8 @@
           p("Combat socialiste - POP", "CS-POP", "CS-POP", GR, "Parti de gauche jurassien.", null),
           p("Les Vert-e-s jurassiens", "Verts JU", "Verts", GE_, "Section cantonale des Verts.", null),
           p("Parti socialiste jurassien", "PS JU", "PS", CG, "Section cantonale du Parti socialiste.", null),
-          p("Vert'libéraux Jura", "PVL JU", "PVL", C, "Section cantonale du Parti vert'libéral.", null),
           p("Le Centre Jura", "Centre JU", "Centre", C, "Section cantonale du Centre.", null),
+          p("PDC-CSI (PCSI)", "PCSI", "PCSI", C, "Parti chrétien-social indépendant, 5 sièges au Parlement jurassien en 2025.", null),
           p("PLR Jura", "PLR JU", "PLR", CD, "Les Libéraux-Radicaux jurassiens.", null),
           p("UDC Jura", "UDC JU", "UDC", DC, "Section cantonale de l'UDC.", null)
         ],
@@ -125,11 +126,12 @@
       FR: {
         nom: "Fribourg", note: "Liste des principaux partis, à compléter avec la composition du Grand Conseil.",
         partis: [
-          p("Les Vert-e-s fribourgeois", "Verts FR", "Verts", GE_, "Section cantonale des Verts.", null),
-          p("Parti socialiste fribourgeois", "PS FR", "PS", CG, "Section cantonale du Parti socialiste.", null),
-          p("Vert'libéraux Fribourg", "PVL FR", "PVL", C, "Section cantonale du Parti vert'libéral.", null),
-          p("Le Centre Fribourg", "Centre FR", "Centre", C, "Section cantonale du Centre.", null),
-          p("PLR Fribourg", "PLR FR", "PLR", CD, "Les Libéraux-Radicaux fribourgeois.", null),
+          p("Les Vert-e-s fribourgeois", "Verts FR", "Verts", GE_, "Section cantonale des Verts.", "https://www.verts-fr.ch"),
+          p("Parti socialiste fribourgeois", "PS FR", "PS", CG, "Section cantonale du Parti socialiste.", "https://www.ps-fr.ch"),
+          p("Centre Gauche - PCS", "CG-PCS", "CG-PCS", CG, "Parti de centre gauche chrétien-social.", "https://cg-pcs-fribourg.ch"),
+          p("Vert'libéraux Fribourg", "PVL FR", "PVL", C, "Section cantonale du Parti vert'libéral.", "https://fr.vertliberaux.ch"),
+          p("Le Centre Fribourg", "Centre FR", "Centre", C, "Section cantonale du Centre.", "https://fr.le-centre.ch"),
+          p("PLR Fribourg", "PLR FR", "PLR", CD, "Les Libéraux-Radicaux fribourgeois.", "https://www.plrf.ch"),
           p("UDC Fribourg", "UDC FR", "UDC", DC, "Section cantonale de l'UDC.", null)
         ],
         etat: [["Fribourg", "État de Fribourg", "Site officiel du canton.", "https://www.fr.ch"]]
