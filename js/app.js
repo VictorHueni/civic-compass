@@ -50,7 +50,8 @@
     if (majAdresse && history.replaceState) { try { history.replaceState(null, "", "#" + cle); } catch (e) {} }
     majSelecteur(); renderTout();
   }
-  function renderTout() { renderTitre(); renderHemicycle(); renderDetail(); renderLiens(); }
+  function renderTout() { renderTitre(); renderHemicycle(); renderDetail(); renderLiens(); try { document.dispatchEvent(new CustomEvent("boussole:maj")); } catch (e) {} }
+  window.Boussole = { etat: function () { return { niveau: niveau, canton: canton }; }, aller: function (n, c) { appliquer(n, c, true); }, picker: function () { ouvrirPicker(); }, nomCanton: nomCanton, esc: esc, hote: hote };
 
   /* ---------- Sélecteur de canton (feuille qui monte du bas) ---------- */
   var retourFocus = null;
