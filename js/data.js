@@ -5,23 +5,23 @@
 window.BOUSSOLE = {
   partis: {
     Suisse: [
-      { nom: "Parti suisse du travail", abbr: "PST-POP", position: "Gauche radicale", desc: "Parti communiste et populaire, fondé en 1944.", url: "https://pst-pop.ch" },
-      { nom: "solidaritéS", abbr: "solidaritéS", position: "Gauche anticapitaliste", desc: "Mouvement de gauche anticapitaliste et écosocialiste.", url: "https://www.solidarites.ch" },
-      { nom: "Les Vert-e-s suisses", abbr: "Verts", position: "Gauche écologiste", desc: "Écologie politique et justice sociale, issus du mouvement antinucléaire.", url: "https://www.verts.ch" },
-      { nom: "Parti socialiste suisse", abbr: "PS", position: "Centre gauche", desc: "Plus grand parti de gauche, deux sièges au Conseil fédéral.", url: "https://www.sp-ps.ch" },
-      { nom: "Parti vert'libéral", abbr: "PVL", position: "Centre", desc: "Écologie et libéralisme économique.", url: "https://www.vertliberaux.ch" },
-      { nom: "Le Centre", abbr: "Centre", position: "Centre", desc: "Parti du centre, issu du PDC et du PBD.", url: "https://www.le-centre.ch" },
-      { nom: "Parti évangélique suisse", abbr: "PEV", position: "Centre", desc: "Valeurs chrétiennes, politique sociale et environnementale.", url: "https://www.evppev.ch" },
-      { nom: "Parti libéral-radical", abbr: "PLR", position: "Centre droit", desc: "Libéralisme économique, deux sièges au Conseil fédéral.", url: "https://www.plr.ch" },
-      { nom: "Union démocratique du centre", abbr: "UDC", position: "Droite conservatrice", desc: "Droite conservatrice et nationale, premier parti de Suisse.", url: "https://www.udc.ch" }
+      { nom: "Parti suisse du travail", abbr: "PST-POP", court: "PST", position: "Gauche radicale", desc: "Parti communiste et populaire, fondé en 1944.", url: "https://pst-pop.ch" },
+      { nom: "solidaritéS", abbr: "solidaritéS", court: "Sol.", position: "Gauche anticapitaliste", desc: "Mouvement de gauche anticapitaliste et écosocialiste.", url: "https://www.solidarites.ch" },
+      { nom: "Les Vert-e-s suisses", abbr: "Verts", court: "Verts", position: "Gauche écologiste", desc: "Écologie politique et justice sociale, issus du mouvement antinucléaire.", url: "https://www.verts.ch" },
+      { nom: "Parti socialiste suisse", abbr: "PS", court: "PS", position: "Centre gauche", desc: "Plus grand parti de gauche, deux sièges au Conseil fédéral.", url: "https://www.sp-ps.ch" },
+      { nom: "Parti vert'libéral", abbr: "PVL", court: "PVL", position: "Centre", desc: "Écologie et libéralisme économique.", url: "https://www.vertliberaux.ch" },
+      { nom: "Le Centre", abbr: "Centre", court: "Centre", position: "Centre", desc: "Parti du centre, issu du PDC et du PBD.", url: "https://www.le-centre.ch" },
+      { nom: "Parti évangélique suisse", abbr: "PEV", court: "PEV", position: "Centre", desc: "Valeurs chrétiennes, politique sociale et environnementale.", url: "https://www.evppev.ch" },
+      { nom: "Parti libéral-radical", abbr: "PLR", court: "PLR", position: "Centre droit", desc: "Libéralisme économique, deux sièges au Conseil fédéral.", url: "https://www.plr.ch" },
+      { nom: "Union démocratique du centre", abbr: "UDC", court: "UDC", position: "Droite conservatrice", desc: "Droite conservatrice et nationale, premier parti de Suisse.", url: "https://www.udc.ch" }
     ],
     "Genève": [
-      { nom: "Ensemble à Gauche", abbr: "EàG", position: "Gauche radicale", desc: "Coalition de solidaritéS, du Parti du Travail et de la DAL.", url: "https://www.ensembleagauche.ch" },
-      { nom: "Les Vert-e-s Genève", abbr: "Verts GE", position: "Gauche écologiste", desc: "Section cantonale des Verts.", url: "https://www.verts-ge.ch" },
-      { nom: "PS Genève", abbr: "PS GE", position: "Centre gauche", desc: "Section cantonale du Parti socialiste.", url: "https://www.ps-ge.ch" },
-      { nom: "PLR Genève", abbr: "PLR GE", position: "Centre droit", desc: "Les Libéraux-Radicaux Genève.", url: "https://www.plr-ge.ch" },
-      { nom: "Mouvement Citoyens Genevois", abbr: "MCG", position: "Droite populiste", desc: "Parti régional centré sur la défense des résidents genevois.", url: "https://www.mcge.ch" },
-      { nom: "UDC Genève", abbr: "UDC GE", position: "Droite conservatrice", desc: "Section cantonale de l'UDC.", url: "https://www.udc-ge.ch" }
+      { nom: "Ensemble à Gauche", abbr: "EàG", court: "EàG", position: "Gauche radicale", desc: "Coalition de solidaritéS, du Parti du Travail et de la DAL.", url: "https://www.ensembleagauche.ch" },
+      { nom: "Les Vert-e-s Genève", abbr: "Verts GE", court: "Verts", position: "Gauche écologiste", desc: "Section cantonale des Verts.", url: "https://www.verts-ge.ch" },
+      { nom: "PS Genève", abbr: "PS GE", court: "PS", position: "Centre gauche", desc: "Section cantonale du Parti socialiste.", url: "https://www.ps-ge.ch" },
+      { nom: "PLR Genève", abbr: "PLR GE", court: "PLR", position: "Centre droit", desc: "Les Libéraux-Radicaux Genève.", url: "https://www.plr-ge.ch" },
+      { nom: "Mouvement Citoyens Genevois", abbr: "MCG", court: "MCG", position: "Droite populiste", desc: "Parti régional centré sur la défense des résidents genevois.", url: "https://www.mcge.ch" },
+      { nom: "UDC Genève", abbr: "UDC GE", court: "UDC", position: "Droite conservatrice", desc: "Section cantonale de l'UDC.", url: "https://www.udc-ge.ch" }
     ]
   },
   // [section, niveau, nom, note, url]

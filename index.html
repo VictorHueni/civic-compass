@@ -19,12 +19,10 @@
 <main class="container">
   <section aria-labelledby="t-partis">
     <h2 id="t-partis">Les partis, de gauche à droite</h2>
-    <p class="bloc__desc">Choisissez un niveau, puis avancez parti par parti avec les flèches ou le clavier (← →).</p>
+    <p class="bloc__desc">Touchez un parti dans l'hémicycle, ou glissez vers la gauche et la droite.</p>
     <div id="niveaux" class="niveaux" role="group" aria-label="Niveau politique"></div>
     <div id="spectre-zone">
-      <div class="spectre-axe" aria-hidden="true"><span>← Gauche</span><span>Droite →</span></div>
-      <div class="spectre-barre" aria-hidden="true"></div>
-      <ol id="spectre" class="spectre" aria-label="Partis classés de gauche à droite"></ol>
+      <div id="hemicycle" class="hemicycle"></div>
       <div class="nav-fleches">
         <button id="prev" type="button" class="btn btn--outline btn--sm" aria-label="Parti précédent, plus à gauche"><span class="btn__text">← Plus à gauche</span></button>
         <button id="next" type="button" class="btn btn--outline btn--sm" aria-label="Parti suivant, plus à droite"><span class="btn__text">Plus à droite →</span></button>
