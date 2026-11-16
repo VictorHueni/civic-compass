@@ -203,3 +203,6 @@ footer.pied p{margin:0 0 8px;max-width:75ch}
   .menu__etat small{display:none}
   .menu__etat a:hover{text-decoration:underline}
 }
+
+.menu .court{display:none}
+@media (min-width:900px){.menu .long{display:none}.menu .court{display:inline}}
