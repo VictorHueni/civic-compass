@@ -400,7 +400,7 @@ As a maintainer, I want every person named as a media owner to be shown fairly a
 
 **Acceptance Criteria:**
 - [ ] A person is shown with name and share only, as the source publishes them, with the source and the check date; no photo, age, address or contact.
-- [ ] The media page offers a way to report an error or ask for removal ("Signaler une erreur"); the channel is set by the owner (§8 open question).
+- [ ] The media page offers a way to report an error or ask for removal ("Signaler une erreur"): the address huni.victor@gmail.com, shown as selectable text with a `mailto:` link, and what to write (the media or person concerned, the error, the source if any).
 - [ ] A removal is recorded in the data (who, date, reason "demande de la personne") so that the next update does not bring the entry back; the page then shows the holding without the name ("actionnaire privé").
 - [ ] A correction or removal request is handled within 30 days.
 
@@ -459,9 +459,7 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-Open on 2026-11-17:
-
-- **Channel for "Signaler une erreur".** The site has no contact today; the channel for corrections and removal requests is to be chosen (US-24).
+No question is left open on 2026-11-17.
 
 Settled on 2026-11-16 by the owner:
 
@@ -479,6 +477,7 @@ Settled on 2026-11-16 by the owner:
 - **A figure stays with its word (2026-11-17).** On a party's card, a no-break space joins a count to its noun and "sur" to the total ("14 sièges sur 100", "27 sièges, dont 1 PLD Bâle-Ville"), so a narrow screen wraps "14 sièges / sur 100", never "14 sièges sur / 100". Names keep their own break points, as blocking them would push a long name off the screen (US-15, US-18).
 - **The Parliament API key stays off CI (2026-11-17).** For now the key stays on the maintainer's machine and is not stored as a CI secret: `npm run parliament` runs by hand, and the pipeline does not refresh the federal composition (US-16).
 - **Media and their owners (2026-11-17, Research-0003, five rulings).** The fög index shown under its own label with the media average, updated when the fög publishes, nothing for titles it does not measure; scope: everything Medienmonitor covers in the six cantons plus titles with a sourced publisher, each with an "Éditeur" line (commercial register) and a "Propriétaire" line only when a source names one; owners who are people named with their share, as published, with source, date, a way to report an error and the 180-day warning (LPD art. 6, 30, 31, 32); the stories go in this PRD (US-20 to US-25), lobbies follow here too; the ownership graph has two views, Réseau and Soleil.
+- **Channel for "Signaler une erreur" (2026-11-17).** The owner's own address, huni.victor@gmail.com, for now: an e-mail keeps a removal request private, which a public GitHub issue would not; it can later be replaced by a dedicated address with no other change (US-24).
 - **Graph libraries (2026-11-17).** The Réseau view uses Cytoscape.js with the fcose layout, installed with npm and bundled at build time (the site's first runtime dependency); the Soleil view is drawn by the site's own SVG code, as the half-circles are, so ECharts is not used; the graph code is a second script loaded only when the media page opens, so the rest of the site keeps its weight and everything works without network (US-21, goal 4). Integrated mockup: https://claude.ai/artifact/HxqpCXiRyjFpUqxXhiyTcb (private): a "Transparence" menu group with "Médias" and "Lobbies (bientôt)". On reviewing it, the owner ruled that the media page shows every medium whatever the territory, so the "Territoire" selector is hidden there (US-21).
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
