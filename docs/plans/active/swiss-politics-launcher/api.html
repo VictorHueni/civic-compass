@@ -192,6 +192,7 @@
         <li>The data check and the link check run on every push and pull request, the link check also every Monday.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-12</span></span></li>
         <li>The federal composition comes from the new Parliament API <span class="mono">ws.parl.ch</span>; the legacy OData service and OpenParlData are not used.<span class="refs"><span class="chip ref">Research-0002, ruling 2</span><span class="chip ref">PRD-0001 §8</span></span></li>
         <li>The key is read from the environment or the maintainer's file and is never written to the repository, the generated file or the logs; the command runs on the maintainer's machine.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
+        <li>For now the key is not a CI secret: the pipeline does not refresh the federal composition, the maintainer runs the command by hand.<span class="refs"><span class="chip ref">PRD-0001 §8</span></span></li>
         <li>A failed fetch, or an answer that breaks a rule above, writes nothing.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
         <li>The stored request is text, not a link, so the link check never calls an API that refuses calls without a key.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-16</span></span></li>
         <li>The cantonal parliaments come from one OFS table found through its catalogue, read by a reader written in the tool; the command writes nothing when the table, its terms or its totals are not as expected.<span class="refs"><span class="chip ref">PRD-0001.US-17</span><span class="chip ref">Research-0002, rulings 1, 5 and 6</span></span></li>
@@ -203,7 +204,6 @@
       <ul>
         <li>The timeout, the number of attempts and the waits between them.</li>
         <li>How many links are tested at once.</li>
-        <li>Whether a CI secret lets the pipeline refresh the federal composition; not decided, the command runs by hand.</li>
         <li>The exact wording of the console messages.</li>
       </ul>
     </section>
