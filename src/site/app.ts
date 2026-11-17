@@ -1,6 +1,6 @@
 /*
  * Routing, menu, territory picker (canton map), parties hemicycle, decision aids and official sites.
- * The ballot page lives in ballot.ts and re-renders through onRender().
+ * The ballot page (ballot.ts) and the institutions page (institutions.ts) re-render through onRender().
  */
 import { $, SVG_NS, escapeHtml as esc, host, normalize } from "./dom.ts";
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
@@ -9,10 +9,10 @@ import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
 /** Route segments: #<page>/<territory>, territory "ch" or a canton code in lower case. */
-const PAGES = ["ballot", "parties", "tools", "state"] as const;
+const PAGES = ["ballot", "parties", "tools", "state", "institutions"] as const;
 type Page = (typeof PAGES)[number];
 /** Id of the block of each page in index.html. */
-const PAGE_IDS: Record<Page, string> = { ballot: "page-ballot", parties: "page-parties", tools: "page-tools", state: "page-state" };
+const PAGE_IDS: Record<Page, string> = { ballot: "page-ballot", parties: "page-parties", tools: "page-tools", state: "page-state", institutions: "page-institutions" };
 /** French routes used until 2026-11-16, still accepted so old links and bookmarks keep working. */
 const LEGACY_PAGES: Record<string, Page> = { votation: "ballot", partis: "parties", aides: "tools", etat: "state" };
 /** Territory segment of the Confederation; "federal" is its legacy spelling. */
@@ -35,7 +35,7 @@ export function cantonName(code: string): string {
   return code;
 }
 /** "de Genève", "d'Argovie", "du Jura" */
-function ofCanton(code: string): string {
+export function ofCanton(code: string): string {
   const n = cantonName(code);
   return code === "JU" || code === "VS" ? "du " + n : (/^[AEIOUÉ]/.test(n) ? "d'" : "de ") + n;
 }
@@ -148,11 +148,12 @@ function renderStateMenu(): void {
   }
   const items: [string, string][] = [
     ["Lire une loi", fed ? stateSiteUrl(STATE_SITE_IDS.laws) : first],
-    ["Trouver un élu", fed ? stateSiteUrl(STATE_SITE_IDS.parliament) : find("grand conseil", first)],
     ["Voir les résultats", fed ? stateSiteUrl(STATE_SITE_IDS.chancellery) : find("votations", cant.url)],
     ["Consulter les chiffres", stateSiteUrl(STATE_SITE_IDS.statistics)],
   ];
+  // "Qui gouverne et qui siège" replaces the external "Trouver un élu" link (PRD-0001 US-13).
   $("menu-state").innerHTML =
+    '<li><a href="#institutions" data-page="institutions"><b>Qui gouverne et qui siège</b><small>Gouvernement, parlements, élus</small></a></li>' +
     items
       .map(
         (x) =>

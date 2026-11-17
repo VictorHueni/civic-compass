@@ -22,7 +22,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 ## Fichiers
 - `data/` : référentiel édité à la main (`territories`, `parties`, `state-sites`, `tools`, `ballot` du 29.11.2026), avec pour chaque lien `status`, `checked_on`, `evidence` et `previous_urls`. `seats-national-council-2023.json` est généré par `npm run seats` et `parliament-current.json` par `npm run parliament` (API du Parlement, clé hors du dépôt), jamais modifiés à la main.
 - `src/types.ts` : types et schémas du référentiel, partagés par le site et l'outil.
-- `src/site/` : `main.ts` (entrée), `app.ts` (routage, menu, carte, partis, aides, sites officiels), `ballot.ts` (page votation), `referential.ts` (lecture des données, liens vérifiés seulement), `links.ts` (ids des entrées liées par le site), `dom.ts`.
+- `src/site/` : `main.ts` (entrée), `app.ts` (routage, menu, carte, partis, aides, sites officiels), `ballot.ts` (page votation), `institutions.ts` (page « Qui gouverne et qui siège », `#institutions/<territoire>`), `parliament.ts` (lecture de `parliament-current.json`, partagée avec l'outil), `party-colours.ts` (palette B2), `referential.ts` (lecture des données, liens vérifiés seulement), `links.ts` (ids des entrées liées par le site), `dom.ts`.
 - `index.html`, `css/site.css` (+ `css/designsystem.css` et `css/fonts` du DS).
 - `tools/cli.ts` : `check` (schémas, cohérences, avis sur l'ordre gauche-droite), `links` (URL actuelles ; redirection vers un autre domaine = erreur ; 403, 429, délai dépassé et exceptions de certificat `ACCEPTED_CERT_ISSUES` = à vérifier), `seats` (sièges OFS, lignes nationales seulement, total 200 obligatoire), `parliament` (composition actuelle depuis `ws.parl.ch` : réponse brute, correspondance des partis à part, 200 + 46 + 7 obligatoires). `tools/build.ts` construit `dist/`.
 - `.github/workflows/` : `links.yml` (`npm run check`, `npm run links`, à chaque push et chaque lundi) et `pages.yml` (`npm run build`, publie `dist/`).
@@ -37,6 +37,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - Sites de l'État : 15 sur 15 vérifiés ; outils : 7 sur 7 (`anneepolitique.swiss` refuse les robots, à revoir à la main).
 - Votation du 29.11.2026 : 32 mots d'ordre sur 36 (solidaritéS sans position nationale trouvée sur les feux d'artifice et les couples mariés), recommandation du Conseil fédéral sur les 4 objets, objets cantonaux GE (Seymaz-Sud) et VS (aéroport, salaire minimum). Résumés oui/non indicatifs, la brochure officielle fait foi.
 - Sièges du Conseil national 2023 (OFS) affichés sur les fiches des partis CH avec la mention de l'OFS.
+- Institutions de la Confédération (`#institutions/ch`) : Conseil fédéral, Conseil national et Conseil des États dans leur composition actuelle (API du Parlement), couleurs de la palette B2, partis sans couleur regroupés sous « Autres ». Pour un canton, la page montre ses élus à Berne ; Conseil d'État et Grand Conseil viendront avec US-14 et US-17. Le menu « Qui gouverne et qui siège » remplace le lien externe « Trouver un élu ».
 - Sources publiques identifiées : OFS / opendata.swiss, parlament.ch OData (ws.parlament.ch/odata.svc), OpenParlData (api.openparldata.ch), Swissvotes (CSV, CC BY 4.0), calendrier des votations de la Chancellerie, JSON élections de ge.ch.
 
 ## Prochaines étapes suggérées
