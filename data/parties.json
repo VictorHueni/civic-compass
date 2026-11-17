@@ -19,11 +19,6 @@
           "value": 1944,
           "source": null,
           "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 0,
-          "source": null,
-          "checked_on": null
         }
       }
     },
@@ -57,11 +52,6 @@
       "facts": {
         "founded": {
           "value": 1983,
-          "source": null,
-          "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 0,
           "source": null,
           "checked_on": null
         }
@@ -98,11 +88,6 @@
           "value": 1888,
           "source": null,
           "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 2,
-          "source": null,
-          "checked_on": null
         }
       },
       "left_right": {
@@ -135,11 +120,6 @@
       "facts": {
         "founded": {
           "value": 2007,
-          "source": null,
-          "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 0,
           "source": null,
           "checked_on": null
         }
@@ -176,11 +156,6 @@
           "value": 2021,
           "source": null,
           "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 1,
-          "source": null,
-          "checked_on": null
         }
       },
       "left_right": {
@@ -215,11 +190,6 @@
           "value": 1919,
           "source": null,
           "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 0,
-          "source": null,
-          "checked_on": null
         }
       },
       "left_right": {
@@ -248,11 +218,6 @@
           "value": 2009,
           "source": null,
           "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 2,
-          "source": null,
-          "checked_on": null
         }
       },
       "left_right": {
@@ -279,11 +244,6 @@
       "facts": {
         "founded": {
           "value": 1971,
-          "source": null,
-          "checked_on": null
-        },
-        "federal_council_seats": {
-          "value": 2,
           "source": null,
           "checked_on": null
         }

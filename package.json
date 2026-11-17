@@ -12,7 +12,6 @@
     "build": "node tools/build.ts",
     "check": "tsc -p tsconfig.json && tsc -p tools/tsconfig.json && node tools/cli.ts check",
     "links": "node tools/cli.ts links",
-    "seats": "node tools/cli.ts seats",
     "parliament": "node tools/cli.ts parliament"
   },
   "devDependencies": {

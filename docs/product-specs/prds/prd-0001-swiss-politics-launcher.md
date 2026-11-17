@@ -126,7 +126,7 @@ As a voter, I want to see the parties of my territory ordered from left to right
 **Acceptance Criteria:**
 - [ ] `#parties` shows a half-circle with one sector per party, left to right in the order of the data file; the active party's short name and rank ("3 sur 9") show in the centre.
 - [ ] Moving works by tapping a sector, the arrow buttons, the keyboard arrows and a horizontal swipe.
-- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year, Federal Council seats; for a party of the Confederation, its National Council seats from the OFS 2023 results, with "Source : Office fédéral de la statistique (OFS)" next to the figure), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
+- [ ] The card shows the name, a one-line description, the position, the facts that have a source (founding year; for a party of the Confederation, its federal members and seats, see US-15), and a link to the party site when that link is verified; otherwise (not found or to confirm), a link that searches for the party name instead.
 - [ ] A fact without a source and a check date is never shown.
 - [ ] The page states that the left-right order is indicative.
 
@@ -361,4 +361,4 @@ Settled on 2026-11-16 by the owner:
 
 The repository has no central open-items ledger yet. Actionable items surfaced while writing this PRD, to file once the ledger exists:
 
-- execution-item: source the founding years and Federal Council seats (US-06), for example from the OFS data the seats command reads.
+- execution-item: source the founding years (US-06). Federal Council members and federal seats now come from the Parliament's data (US-15).
