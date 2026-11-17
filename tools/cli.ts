@@ -36,6 +36,7 @@ import {
   extractTable,
   unmappedSeats,
 } from "./cantonal-parliaments.ts";
+import { checkCantonalGovernments, governmentsSummary, staleMembers, STALE_AFTER_DAYS } from "./cantonal-governments.ts";
 import { readWorkbook } from "./xlsx.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -255,6 +256,9 @@ function checkConsistency(d: Referential): string[] {
   for (const e of checkCantonalParliaments(d.cantonal_parliaments, d.territories, d.parties)) {
     report.add([`data/${DATA_FILES.cantonal_parliaments.file}`], e);
   }
+  for (const e of checkCantonalGovernments(d.cantonal_governments, d.territories, d.parties)) {
+    report.add([`data/${DATA_FILES.cantonal_governments.file}`], e);
+  }
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -285,8 +289,13 @@ function cmdCheck(dataDir: string): number {
     `Référentiel valide : ${d.territories.length} territoires, ${d.parties.length} partis, ${d.state_sites.length} sites officiels, ` +
       `${d.tools.length} outils, ${d.ballot.items.length} objets en votation, ` +
       `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}), ` +
-      `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}).`,
+      `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}), ` +
+      `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}).`,
   );
+  const stale = staleMembers(d.cantonal_governments, new Date().toISOString().slice(0, 10));
+  if (stale.length) {
+    console.log(`\nAvis (ne bloque pas) : fiches de gouvernement vérifiées il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier sur la page officielle :\n` + stale.join("\n"));
+  }
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));
   return 0;

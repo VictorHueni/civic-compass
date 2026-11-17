@@ -369,6 +369,50 @@ export const CANTONAL_PARLIAMENTS_SCHEMA: Schema<CantonalParliaments> = {
   party_mapping: { kind: "record", value: { kind: "record", value: { kind: "string" } } },
 };
 
+/* ---------- Cantonal governments (kept by hand) ---------- */
+
+/**
+ * The government of a covered canton (PRD-0001 US-14 and US-18, owner rulings 6 to 8 of Research-0002).
+ * Kept by hand: every member carries the page that shows the function and the one that names the party,
+ * with the date they were checked. A canton without an entry shows no government section (Fribourg until
+ * its new Conseil d'État is published).
+ */
+export interface CantonalGovernment {
+  canton: string;
+  /** The body's name in the canton: "Conseil d'État", "Gouvernement". */
+  body: string;
+  members: GovernmentMember[];
+}
+/** A member: name, party, department and function only (ruling 7). */
+export interface GovernmentMember {
+  name: string;
+  /** id of a party of the canton in parties.json. */
+  party: string;
+  /** The department, as the official page names it. */
+  department: string;
+  /** The presidency or vice-presidency as the official page writes it ("Présidente du Conseil d'Etat"), else null. */
+  role: string | null;
+  /** The official page that shows the member, the department and the role. */
+  source: string;
+  /** The page that names the member's party (official page, election result or Parliament record). */
+  party_source: string;
+  checked_on: string;
+}
+const GOVERNMENT_MEMBER_SCHEMA: Schema<GovernmentMember> = {
+  name: { kind: "string" },
+  party: { kind: "string" },
+  department: { kind: "string" },
+  role: { kind: "string", nullable: true },
+  source: { kind: "url" },
+  party_source: { kind: "url" },
+  checked_on: { kind: "date" },
+};
+export const CANTONAL_GOVERNMENT_SCHEMA: Schema<CantonalGovernment> = {
+  canton: { kind: "string" },
+  body: { kind: "string" },
+  members: { kind: "list", item: { kind: "object", schema: GOVERNMENT_MEMBER_SCHEMA } },
+};
+
 /* ---------- Files in data/ ---------- */
 
 /** Every file wraps its content in one key, next to a free note for editors (`_readme`). */
@@ -399,6 +443,10 @@ export interface ParliamentFile {
 export interface CantonalParliamentsFile {
   _readme: string;
   cantonal_parliaments: CantonalParliaments;
+}
+export interface CantonalGovernmentsFile {
+  _readme: string;
+  cantonal_governments: CantonalGovernment[];
 }
 
 const list = (schema: AnySchema) => ({ kind: "list", item: { kind: "object", schema } }) as const;
@@ -436,6 +484,10 @@ export const DATA_FILES = {
       cantonal_parliaments: { kind: "object", schema: CANTONAL_PARLIAMENTS_SCHEMA },
     } satisfies Schema<CantonalParliamentsFile>,
   },
+  cantonal_governments: {
+    file: "cantonal-governments.json",
+    schema: { _readme: { kind: "string" }, cantonal_governments: list(CANTONAL_GOVERNMENT_SCHEMA) } satisfies Schema<CantonalGovernmentsFile>,
+  },
 } as const;
 
 /** The whole referential, once loaded. */
@@ -447,4 +499,5 @@ export interface Referential {
   ballot: Ballot;
   parliament: Parliament;
   cantonal_parliaments: CantonalParliaments;
+  cantonal_governments: CantonalGovernment[];
 }
