@@ -859,6 +859,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Clément Borgeaud"
+          ],
+          "source": "https://www.psvr.ch/parti/presidence/",
+          "evidence": "Membres de la Présidence : Clément Borgeaud, Président (lu à la main dans un navigateur par le mainteneur, le site bloque les robots)",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1416,6 +1426,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Thomas Gremaud"
+          ],
+          "source": "https://www.ps-fr.ch/parti/presidence/",
+          "evidence": "Président : Thomas Gremaud, Président du PS Fribourgeois (lu à la main dans un navigateur par le mainteneur, le site bloque les robots)",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
