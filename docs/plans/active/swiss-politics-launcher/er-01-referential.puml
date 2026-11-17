@@ -1,6 +1,6 @@
 @startuml
 !include _theme.puml
-title er-01: The referential in data/*.json (PRD-0001 US-09, US-10)
+title er-01: The referential in data/*.json (PRD-0001 US-09, US-10, US-16)
 
 entity Territory {
   * code : string <<PK>> (CH or canton)
@@ -32,7 +32,7 @@ entity LeftRight {
 }
 
 entity SourcedFact {
-  * kind : founded | federal_council_seats
+  * kind : founded
   --
   * value : integer
   source : url or null
@@ -87,15 +87,29 @@ entity CantonBallot {
   * url : url
 }
 
-entity Seats {
-  * election : string
-  --
-  * total : integer (200)
-  * source, dataset_page : url
-  * attribution, license : string
+entity Parliament <<generated>> {
   * retrieved_on : date
-  * raw : OFS name to seats
-  * parties : abbr to seats
+  --
+  * request : string (no key)
+  * api_docs, terms_page : url
+  * attribution, license : string
+  * party_mapping : API label to abbr
+}
+
+entity ParliamentPerson <<raw>> {
+  * id : integer <<PK>>
+  --
+  * firstName, lastName : string
+  council.abbreviation : CN | CE | null
+  party.shortName : string | null
+  canton.abbreviation : string | null
+}
+
+entity FederalCouncilMandate <<raw>> {
+  * function.key, function.name : string
+  --
+  * department.abbreviation : string
+  * department.name : string
 }
 
 entity BallotSource {
@@ -117,6 +131,9 @@ Ballot ||--o{ CantonBallot : cantons
 Territory ||--o| CantonBallot : canton
 Ballot ||--o{ BallotSource : sources
 BallotItem }o..o{ Party : parties keyed by abbr\n(CH parties only)
-Seats }o..o{ Party : parties keyed by abbr\n(CH parties only)
+Parliament ||--|{ ParliamentPerson : persons
+ParliamentPerson ||--o{ FederalCouncilMandate : activeFederalCouncilMandates
+Parliament }o..o{ Party : party_mapping to abbr\n(CH parties only)
+ParliamentPerson }o..o| Territory : canton
 
 @enduml

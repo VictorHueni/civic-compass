@@ -39,6 +39,10 @@ const SCREENS: Screen[] = [
   { name: "ui-07-tools", hash: "#tools/ge" },
   { name: "ui-08-state-sites", hash: "#state/ge", steps: ["const q = document.getElementById('q'); q.value = 'grand'; q.dispatchEvent(new Event('input'))"] },
   { name: "ui-09-menu", hash: "#ballot/ge", steps: ["document.getElementById('menu-btn').click()"] },
+  { name: "ui-10-institutions-ch", hash: "#institutions/ch", steps: ["window.scrollTo(0, 60)"] },
+  { name: "ui-11-institutions-ch-chambers", hash: "#institutions/ch", steps: ["document.getElementById('t-national-council').scrollIntoView()", "window.scrollBy(0, -70)"] },
+  { name: "ui-12-institutions-ge", hash: "#institutions/ge", steps: ["window.scrollTo(0, 60)"] },
+  { name: "ui-13-party-card-ch", hash: "#parties/ch", steps: [...Array(7)].map(() => "document.getElementById('next').click()").concat(["document.getElementById('detail').scrollIntoView()", "window.scrollBy(0, -130)"]) },
 ];
 
 const FRAMES = {

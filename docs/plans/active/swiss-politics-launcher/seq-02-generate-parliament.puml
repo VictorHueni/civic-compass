@@ -1,0 +1,36 @@
+@startuml
+!include _theme.puml
+title seq-02: Maintainer refreshes the federal composition (US-16)
+
+actor "Maintainer" as dev
+participant "tools/cli.ts\nparliament" as cli
+database "PARL_API_KEY or\n~/.config/civic-compass/env" as key
+participant "Parliament API\nws.parl.ch" as api
+database "data/\nparliament-current.json" as file
+
+dev -> cli : npm run parliament
+activate cli
+cli -> key : read the key
+alt no key
+  cli --> dev : message, exit 2, nothing written
+end
+cli -> api : GET /api/v1/persons\nq=eq(active,true), include=..., sort=id:asc\nheader X-API-KEY
+api --> cli : active persons, pages until hasNext is false
+alt download fails
+  cli --> dev : status and request (never the key),\nexit 2, nothing written
+end
+cli -> cli : wrap: request, terms, retrieved_on,\npersons as returned, party_mapping apart
+cli -> cli : schema of src/types.ts,\nthen checkParliament: 200 CN, 46 CE,\n7 Federal Council, 1 President, 1 Vice-President,\n1 Chancellor, known abbreviations
+alt a check fails
+  cli --> dev : each error, exit 1, nothing written
+end
+cli -> file : write
+cli --> dev : counts, labels without a CH party
+deactivate cli
+
+note over dev, file
+  Then npm run check applies the same rules,
+  npm run build bundles the file into the site.
+end note
+
+@enduml

@@ -1,7 +1,7 @@
-<!-- summary: no HTTP API · 7 contracts · 1 decision table -->
+<!-- summary: no HTTP API of its own · 9 contracts · 2 decision tables -->
 <div class="block">
   <h2>No HTTP API</h2>
-  <p class="note">The site is static: no server of its own, no account, no request to a backend. Every piece of data is inside the script at build time, so there is no OpenAPI document. What it does have are contracts: the address a voter can share, what the browser remembers, the files the build produces, and the commands the maintainer runs.</p>
+  <p class="note">The site is static: no server of its own, no account, no request to a backend. Every piece of data is inside the script at build time, so there is no OpenAPI document. What it does have are contracts: the address a voter can share, what the browser remembers, the files the build produces, the commands the maintainer runs, and the one outside API the maintainer's machine calls.</p>
   <div class="scroll">
     <table class="ops">
       <thead><tr><th>Name</th><th>What it does</th><th>Direction</th><th>Carrier</th></tr></thead>
@@ -12,7 +12,9 @@
         <tr><td class="key">npm run build</td><td>Bundles the site and its data into <span class="mono">dist/</span></td><td>Maintainer, CI</td><td>Command</td></tr>
         <tr><td class="key">npm run check</td><td>Type-checks the code and validates <span class="mono">data/*.json</span></td><td>Maintainer, CI</td><td>Command</td></tr>
         <tr><td class="key">npm run links</td><td>Tests every current URL of the referential</td><td>Maintainer, CI each push and Monday</td><td>Command</td></tr>
-        <tr><td class="key">npm run seats</td><td>Fetches the 2023 National Council seats from the OFS</td><td>Maintainer</td><td>Command</td></tr>
+        <tr><td class="key">npm run parliament</td><td>Fetches the current federal chambers and Federal Council into <span class="mono">data/parliament-current.json</span></td><td>Maintainer</td><td>Command</td></tr>
+        <tr><td class="key">Parliament API</td><td>The Parliament's open data web service, active persons only</td><td>Maintainer's machine to <span class="mono">ws.parl.ch</span></td><td>HTTPS, key in the <span class="mono">X-API-KEY</span> header</td></tr>
+        <tr><td class="key">API key</td><td>The maintainer's personal key, outside the repository</td><td>Maintainer to the command</td><td><span class="mono">PARL_API_KEY</span>, else <span class="mono">~/.config/civic-compass/env</span> (mode 600)</td></tr>
       </tbody>
     </table>
   </div>
@@ -25,14 +27,14 @@
     <table class="cols">
       <thead><tr><th>Part</th><th>Values</th><th>When absent or unknown</th></tr></thead>
       <tbody>
-        <tr><td class="key">page</td><td><span class="mono">ballot</span>, <span class="mono">parties</span>, <span class="mono">tools</span>, <span class="mono">state</span></td><td>The ballot page</td></tr>
+        <tr><td class="key">page</td><td><span class="mono">ballot</span>, <span class="mono">parties</span>, <span class="mono">tools</span>, <span class="mono">state</span>, <span class="mono">institutions</span></td><td>The ballot page</td></tr>
         <tr><td class="key">legacy routes</td><td><span class="mono">votation</span>, <span class="mono">partis</span>, <span class="mono">aides</span>, <span class="mono">etat</span> and territory <span class="mono">federal</span>, used until 2026-11-16</td><td>Read as <span class="mono">ballot</span>, <span class="mono">parties</span>, <span class="mono">tools</span>, <span class="mono">state</span> and <span class="mono">ch</span>; the address is rewritten to the English form</td></tr>
         <tr><td class="key">territory</td><td><span class="mono">ch</span>, or the lower-case code of a covered canton (<span class="mono">ge</span>, <span class="mono">vd</span>, <span class="mono">vs</span>, <span class="mono">ne</span>, <span class="mono">ju</span>, <span class="mono">fr</span>)</td><td>The remembered territory, else the Confederation</td></tr>
         <tr><td class="key">short form</td><td><span class="mono">#&lt;territory&gt;</span> alone</td><td>Read as the ballot page of that territory</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note">The page segments stay in French for now: they are the addresses voters may have shared.</p>
+  <p class="note">The French segments used until 2026-11-16 stay readable: they are addresses voters may have shared.</p>
 </div>
 
 <div class="block">
@@ -65,7 +67,7 @@
 
 <div class="block">
   <h2>Commands</h2>
-  <p class="note">All run by Node 26 straight from TypeScript, through <span class="mono">tools/cli.ts</span> (check, links, seats) and <span class="mono">tools/build.ts</span>. Messages are in French. Common option: <span class="mono">--data</span> folder, <span class="mono">data/</span> by default.</p>
+  <p class="note">All run by Node 26 straight from TypeScript, through <span class="mono">tools/cli.ts</span> (check, links, parliament) and <span class="mono">tools/build.ts</span>. Messages are in French. Common option: <span class="mono">--data</span> folder, <span class="mono">data/</span> by default.</p>
   <div class="scroll">
     <table class="ops">
       <thead><tr><th>Command</th><th>Reads</th><th>Writes or prints</th><th>Exit code</th></tr></thead>
@@ -73,8 +75,45 @@
         <tr><td class="key">build</td><td><span class="mono">src/site/</span>, <span class="mono">data/*.json</span>, <span class="mono">index.html</span>, <span class="mono">css/</span></td><td>Replaces <span class="mono">dist/</span>; prints the bundle size</td><td>0 built, other on a build error</td></tr>
         <tr><td class="key">check</td><td>Code, <span class="mono">data/*.json</span></td><td>Each error with its file and entry, or a one-line summary of the counts</td><td>0 valid, 1 errors (type or data)</td></tr>
         <tr><td class="key">links</td><td>Every current URL of <span class="mono">data/*.json</span>, never <span class="mono">previous_urls</span></td><td>Each link that is not plainly OK, with its reason and where it is used, then a summary; <span class="mono">--all</span> also lists the OK ones</td><td>0 nothing failing, 1 a link fails (table below)</td></tr>
-        <tr><td class="key">seats</td><td>The OFS CSV of the 2023 election; <span class="mono">--url</span> to override</td><td><span class="mono">--show</span>: the columns and first rows; else <span class="mono">data/seats-national-council-2023.json</span>, the parties recognised and the total to compare with 200</td><td>0 done, 2 download failed or columns not found</td></tr>
+        <tr><td class="key">parliament</td><td>The API key, the Parliament API, <span class="mono">data/parties.json</span> (CH abbreviations)</td><td><span class="mono">data/parliament-current.json</span>, then the counts and the API labels without a CH party; nothing is written on any failure</td><td>0 written, 1 unexpected answer or composition, 2 no key or download failed</td></tr>
         <tr><td class="key">(none, or unknown)</td><td></td><td>The help</td><td>2 (0 with <span class="mono">--help</span>)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Parliament API, as <span class="mono">npm run parliament</span> calls it</h2>
+  <p class="note">One request, repeated per page until the API says there is no next page. The OpenAPI description of the whole service is public at <span class="mono">ws.parl.ch/doc/v3/api-docs</span>; the sheet shows only the part the command uses.</p>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>Part</th><th>Value</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Operation</td><td><span class="mono">GET /api/v1/persons</span></td><td>Members of both chambers, of the Federal Council and of the Federal Chancellery in one list</td></tr>
+        <tr><td class="key">q</td><td><span class="mono">eq(active,true)</span></td><td>Current composition only; strings in this filter take double quotes</td></tr>
+        <tr><td class="key">include</td><td><span class="mono">id</span>, <span class="mono">firstName</span>, <span class="mono">lastName</span>, <span class="mono">council.abbreviation</span>, <span class="mono">party.shortName</span>, <span class="mono">canton.abbreviation</span>, and per active Federal Council mandate <span class="mono">department.abbreviation</span>, <span class="mono">department.name</span>, <span class="mono">function.key</span>, <span class="mono">function.name</span></td><td>Name, party, canton and function only: no photo, address or date of birth reaches the repository</td></tr>
+        <tr><td class="key">lang, sort, size, page</td><td><span class="mono">fr</span>, <span class="mono">id:asc</span>, <span class="mono">300</span> (the maximum), from <span class="mono">0</span></td><td>French labels, a stable order so a refresh changes only what changed</td></tr>
+        <tr><td class="key">X-API-KEY</td><td>The maintainer's key</td><td>Never printed, never written; the stored request leaves it out</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">Function keys used (master data category 160): <span class="mono">1601000</span> President, <span class="mono">1601002</span> Vice-President, <span class="mono">1601001</span> Federal Councillor, <span class="mono">1601003</span> deputy head of another department (ignored), <span class="mono">1601004</span> Chancellor, <span class="mono">1601005</span> Vice-Chancellor (not shown).</p>
+</div>
+
+<div class="block">
+  <h2>What the generated file must satisfy</h2>
+  <p class="note">The command applies these rules before writing, and <span class="mono">npm run check</span> applies them again to the committed file. Any failure: the command writes nothing, the check fails.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Rule</th><th>Fails when</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Shape</td><td>A person or mandate lacks a field of <span class="mono">src/types.ts</span>, or has one more</td></tr>
+        <tr><td class="key">National Council</td><td>Not exactly 200 active members with council <span class="mono">CN</span></td></tr>
+        <tr><td class="key">Council of States</td><td>Not exactly 46 active members with council <span class="mono">CE</span></td></tr>
+        <tr><td class="key">Federal Council</td><td>Not exactly 7 persons heading a department, or one of them heads 0 or 2, or also sits in a chamber</td></tr>
+        <tr><td class="key">Presidency, chancellery</td><td>Not exactly one President, one Vice-President and one Chancellor of the Confederation</td></tr>
+        <tr><td class="key">Party mapping</td><td>A mapped abbreviation is not the <span class="mono">abbr</span> of a CH party in <span class="mono">parties.json</span></td></tr>
+        <tr><td class="key">Ids</td><td>Two persons share an id</td></tr>
       </tbody>
     </table>
   </div>
@@ -111,6 +150,10 @@
         <li>A redirect to another domain fails the link check; previous URLs are never tested.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-10</span></span></li>
         <li>Refused robots and timeouts are listed for a manual check and never fail, locally or in CI.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001 §8</span></span></li>
         <li>The data check and the link check run on every push and pull request, the link check also every Monday.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-12</span></span></li>
+        <li>The federal composition comes from the new Parliament API <span class="mono">ws.parl.ch</span>; the legacy OData service and OpenParlData are not used.<span class="refs"><span class="chip ref">Research-0002, ruling 2</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The key is read from the environment or the maintainer's file and is never written to the repository, the generated file or the logs; the command runs on the maintainer's machine.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
+        <li>A failed fetch, or an answer that breaks a rule above, writes nothing.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
+        <li>The stored request is text, not a link, so the link check never calls an API that refuses calls without a key.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-16</span></span></li>
       </ul>
     </section>
     <section class="open">
@@ -118,6 +161,7 @@
       <ul>
         <li>The timeout, the number of attempts and the waits between them.</li>
         <li>How many links are tested at once.</li>
+        <li>Whether a CI secret lets the pipeline refresh the federal composition; not decided, the command runs by hand.</li>
         <li>The exact wording of the console messages.</li>
       </ul>
     </section>
