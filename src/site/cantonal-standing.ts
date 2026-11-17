@@ -100,7 +100,8 @@ export function cantonalStanding(
     const members = membersOf(parliament, council).filter((p) => p.canton?.abbreviation === code);
     if (!members.length) return;
     const n = members.filter(holds).length;
-    rows.push([label + " (" + code + ")", (n ? String(n) : "Aucun siège") + outOf(members.length)]);
+    // "3 sièges sur 12", as the zero reads "Aucun siège sur 12" and the other lines name their unit (owner, 2026-11-17).
+    rows.push([label + " (" + code + ")", (n ? countOf(n, "siège", "sièges") : "Aucun siège") + outOf(members.length)]);
     out.federal = true;
   };
   chamber("CN", "Conseil national");
