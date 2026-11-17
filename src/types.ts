@@ -128,11 +128,32 @@ export const LEFT_RIGHT_SCHEMA: Schema<LeftRight> = {
   inherited_from: { kind: "string", optional: true },
 };
 
+/**
+ * Who leads a party, kept by hand from the party's own site (Research-0002 Q6: no aggregated source).
+ * Several names for a co-presidency. Absent when the party's site names nobody: the card then shows nothing.
+ */
+export interface Presidency {
+  names: string[];
+  /** The party's page that names them. */
+  source: string;
+  /** The words of that page that name them. */
+  evidence: string;
+  checked_on: string;
+}
+export const PRESIDENCY_SCHEMA: Schema<Presidency> = {
+  names: { kind: "list", item: { kind: "string" } },
+  source: { kind: "url" },
+  evidence: { kind: "string" },
+  checked_on: { kind: "date" },
+};
+
 export interface PartyFacts {
   founded?: SourcedFact;
+  presidency?: Presidency;
 }
 export const PARTY_FACTS_SCHEMA: Schema<PartyFacts> = {
   founded: { kind: "object", schema: SOURCED_FACT_SCHEMA, optional: true },
+  presidency: { kind: "object", schema: PRESIDENCY_SCHEMA, optional: true },
 };
 
 export interface Party extends LinkEntry {

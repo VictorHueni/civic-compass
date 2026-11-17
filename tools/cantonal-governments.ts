@@ -33,11 +33,15 @@ export function checkCantonalGovernments(governments: CantonalGovernment[], terr
   return errors;
 }
 
+/** True when a record kept by hand was checked more than 180 days before `today` (both AAAA-MM-JJ). */
+export function isStale(checkedOn: string, today: string): boolean {
+  return Date.parse(checkedOn + "T00:00:00Z") < Date.parse(today + "T00:00:00Z") - STALE_AFTER_DAYS * 86_400_000;
+}
+
 /** Members checked more than 180 days before `today` (AAAA-MM-JJ), for a warning that never fails. */
 export function staleMembers(governments: CantonalGovernment[], today: string): string[] {
-  const limit = Date.parse(today + "T00:00:00Z") - STALE_AFTER_DAYS * 86_400_000;
   return governments.flatMap((g) =>
-    g.members.filter((m) => Date.parse(m.checked_on + "T00:00:00Z") < limit).map((m) => `${g.canton} : ${m.name}, vérifié le ${m.checked_on}`),
+    g.members.filter((m) => isStale(m.checked_on, today)).map((m) => `${g.canton} : ${m.name}, vérifié le ${m.checked_on}`),
   );
 }
 
