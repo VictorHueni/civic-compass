@@ -1,6 +1,6 @@
 @startuml
 !include _theme.puml
-title er-01: The referential in data/*.json (PRD-0001 US-09, US-10, US-16)
+title er-01: The referential in data/*.json (PRD-0001 US-09, US-10, US-14 to US-18)
 
 entity Territory {
   * code : string <<PK>> (CH or canton)
@@ -37,6 +37,14 @@ entity SourcedFact {
   * value : integer
   source : url or null
   checked_on : date or null
+}
+
+entity Presidency {
+  * names : list of string
+  --
+  * source : url (party's page)
+  * evidence : string
+  * checked_on : date
 }
 
 entity PreviousUrl {
@@ -112,6 +120,40 @@ entity FederalCouncilMandate <<raw>> {
   * department.name : string
 }
 
+entity CantonalParliaments <<generated>> {
+  * retrieved_on : date
+  --
+  * request : string
+  * asset_url : url
+  * title, table, sheet : string
+  * attribution, license : string
+  * columns : list of OFS labels
+  * notes : list of string
+  * party_mapping : canton to column to party id
+}
+
+entity CantonalParliamentRow <<raw>> {
+  * label : string (canton name)
+  --
+  * cells : column label to text
+}
+
+entity CantonalGovernment {
+  * canton : string <<PK>> <<FK>>
+  --
+  * body : string
+}
+
+entity GovernmentMember {
+  * name : string
+  --
+  * party : party id <<FK>>
+  * department : string
+  role : string or null
+  * source, party_source : url
+  * checked_on : date
+}
+
 entity BallotSource {
   * title : string
   --
@@ -121,6 +163,7 @@ entity BallotSource {
 Territory ||--o{ Party : territory
 Territory ||--o{ StateSite : territory
 Party ||--o{ SourcedFact : facts
+Party ||--o| Presidency : facts.presidency
 Party ||--o| LeftRight : left_right
 LeftRight }o..o| Party : inherited_from\n(a CH party)
 Party ||--o{ PreviousUrl : previous_urls
@@ -135,5 +178,11 @@ Parliament ||--|{ ParliamentPerson : persons
 ParliamentPerson ||--o{ FederalCouncilMandate : activeFederalCouncilMandates
 Parliament }o..o{ Party : party_mapping to abbr\n(CH parties only)
 ParliamentPerson }o..o| Territory : canton
+CantonalParliaments ||--|{ CantonalParliamentRow : rows
+CantonalParliamentRow }o..|| Territory : label = canton name
+CantonalParliaments }o..o{ Party : party_mapping to id\n(parties of the canton)
+Territory ||--o| CantonalGovernment : canton
+CantonalGovernment ||--|{ GovernmentMember : members
+GovernmentMember }o--|| Party : party (of the canton)
 
 @enduml

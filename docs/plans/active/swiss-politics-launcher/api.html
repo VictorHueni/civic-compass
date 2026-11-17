@@ -1,7 +1,7 @@
-<!-- summary: no HTTP API of its own · 9 contracts · 2 decision tables -->
+<!-- summary: no HTTP API of its own · 11 contracts · 4 rule tables -->
 <div class="block">
   <h2>No HTTP API</h2>
-  <p class="note">The site is static: no server of its own, no account, no request to a backend. Every piece of data is inside the script at build time, so there is no OpenAPI document. What it does have are contracts: the address a voter can share, what the browser remembers, the files the build produces, the commands the maintainer runs, and the one outside API the maintainer's machine calls.</p>
+  <p class="note">The site is static: no server of its own, no account, no request to a backend. Every piece of data is inside the script at build time, so there is no OpenAPI document. What it does have are contracts: the address a voter can share, what the browser remembers, the files the build produces, the commands the maintainer runs, and the two outside APIs the maintainer's machine calls.</p>
   <div class="scroll">
     <table class="ops">
       <thead><tr><th>Name</th><th>What it does</th><th>Direction</th><th>Carrier</th></tr></thead>
@@ -13,7 +13,9 @@
         <tr><td class="key">npm run check</td><td>Type-checks the code and validates <span class="mono">data/*.json</span></td><td>Maintainer, CI</td><td>Command</td></tr>
         <tr><td class="key">npm run links</td><td>Tests every current URL of the referential</td><td>Maintainer, CI each push and Monday</td><td>Command</td></tr>
         <tr><td class="key">npm run parliament</td><td>Fetches the current federal chambers and Federal Council into <span class="mono">data/parliament-current.json</span></td><td>Maintainer</td><td>Command</td></tr>
+        <tr><td class="key">npm run cantonal-parliaments</td><td>Fetches the latest election results of the covered cantonal parliaments into <span class="mono">data/cantonal-parliaments.json</span></td><td>Maintainer</td><td>Command</td></tr>
         <tr><td class="key">Parliament API</td><td>The Parliament's open data web service, active persons only</td><td>Maintainer's machine to <span class="mono">ws.parl.ch</span></td><td>HTTPS, key in the <span class="mono">X-API-KEY</span> header</td></tr>
+        <tr><td class="key">OFS asset API</td><td>The OFS catalogue (DAM): finds the current version of table je-f-17.02.05.01.03, its terms of use and its xlsx</td><td>Maintainer's machine to <span class="mono">dam-api.bfs.admin.ch</span></td><td>HTTPS, no key</td></tr>
         <tr><td class="key">API key</td><td>The maintainer's personal key, outside the repository</td><td>Maintainer to the command</td><td><span class="mono">PARL_API_KEY</span>, else <span class="mono">~/.config/civic-compass/env</span> (mode 600)</td></tr>
       </tbody>
     </table>
@@ -67,15 +69,17 @@
 
 <div class="block">
   <h2>Commands</h2>
-  <p class="note">All run by Node 26 straight from TypeScript, through <span class="mono">tools/cli.ts</span> (check, links, parliament) and <span class="mono">tools/build.ts</span>. Messages are in French. Common option: <span class="mono">--data</span> folder, <span class="mono">data/</span> by default.</p>
+  <p class="note">All run by Node 26 straight from TypeScript, through <span class="mono">tools/cli.ts</span> (check, links, parliament, cantonal-parliaments) and <span class="mono">tools/build.ts</span>. Messages are in French. Common option: <span class="mono">--data</span> folder, <span class="mono">data/</span> by default.</p>
   <div class="scroll">
     <table class="ops">
       <thead><tr><th>Command</th><th>Reads</th><th>Writes or prints</th><th>Exit code</th></tr></thead>
       <tbody>
         <tr><td class="key">build</td><td><span class="mono">src/site/</span>, <span class="mono">data/*.json</span>, <span class="mono">index.html</span>, <span class="mono">css/</span></td><td>Replaces <span class="mono">dist/</span>; prints the bundle size</td><td>0 built, other on a build error</td></tr>
-        <tr><td class="key">check</td><td>Code, <span class="mono">data/*.json</span></td><td>Each error with its file and entry, or a one-line summary of the counts</td><td>0 valid, 1 errors (type or data)</td></tr>
+        <tr><td class="key">check</td><td>Code, <span class="mono">data/*.json</span></td><td>Each error with its file and entry, or a one-line summary of the counts; then notices that never fail: government members and presidencies checked more than 180 days ago, left-right order contradictions</td><td>0 valid, 1 errors (type or data)</td></tr>
         <tr><td class="key">links</td><td>Every current URL of <span class="mono">data/*.json</span>, never <span class="mono">previous_urls</span></td><td>Each link that is not plainly OK, with its reason and where it is used, then a summary; <span class="mono">--all</span> also lists the OK ones</td><td>0 nothing failing, 1 a link fails (table below)</td></tr>
         <tr><td class="key">parliament</td><td>The API key, the Parliament API, <span class="mono">data/parties.json</span> (CH abbreviations)</td><td><span class="mono">data/parliament-current.json</span>, then the counts and the API labels without a CH party; nothing is written on any failure</td><td>0 written, 1 unexpected answer or composition, 2 no key or download failed</td></tr>
+        <tr><td class="key">cantonal-parliaments</td><td>The OFS asset API, <span class="mono">data/territories.json</span> and <span class="mono">data/parties.json</span> (covered cantons, their parties)</td><td><span class="mono">data/cantonal-parliaments.json</span>, then the election year and size per canton and the seats with no party of the canton on the site; nothing is written on any failure</td><td>0 written, 1 not exactly one current version, changed terms, unreadable or unexpected table, 2 download failed</td></tr>
+        <tr><td class="key">test</td><td><span class="mono">tools/*.test.ts</span></td><td>The node:test report</td><td>0 all pass, 1 a test fails</td></tr>
         <tr><td class="key">(none, or unknown)</td><td></td><td>The help</td><td>2 (0 with <span class="mono">--help</span>)</td></tr>
       </tbody>
     </table>
@@ -120,6 +124,42 @@
 </div>
 
 <div class="block">
+  <h2>OFS table, as <span class="mono">npm run cantonal-parliaments</span> reads it</h2>
+  <p class="note">The OFS keeps one current version of each table and marks the older ones as redundant. The command asks the catalogue for that version, checks its terms, downloads the workbook and reads it with a reader written in the tool (no new dependency).</p>
+  <div class="scroll">
+    <table class="cols">
+      <thead><tr><th>Step</th><th>Value</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Search</td><td><span class="mono">GET /hub/api/dam/assets?orderNr=je-f-17.02.05.01.03&amp;language=fr</span></td><td>Exactly one asset must be in the <span class="mono">CURRENT</span> lifecycle group; otherwise nothing is written</td></tr>
+        <tr><td class="key">Terms</td><td><span class="mono">GET /hub/api/dam/assets/&lt;damId&gt;</span>, terms of use <span class="mono">OPEN-BY</span></td><td>Free use with the source named; the command stops if the terms change</td></tr>
+        <tr><td class="key">Workbook</td><td><span class="mono">GET /hub/api/dam/assets/&lt;damId&gt;/master</span></td><td>The xlsx, read in memory by <span class="mono">tools/xlsx.ts</span></td></tr>
+        <tr><td class="key">Sheet</td><td>The sheet whose name starts with <span class="mono">actuel</span> ("actuel (2021-2026)" on 2026-11-17)</td><td>The latest election of every canton, Fribourg 2026 included</td></tr>
+        <tr><td class="key">Kept</td><td>Title and table number, column labels, the row of each covered canton and the notes, unchanged; apart, the mapping of OFS columns to the parties of each canton</td><td>The source's data stays as it came; the site's reading of it is kept apart</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The OFS gives the year of each election, not its date: the site writes "élection de 2023". Results are those of election day; later changes of group are not counted, and the page says so.</p>
+</div>
+
+<div class="block">
+  <h2>What the cantonal files must satisfy</h2>
+  <p class="note">The command applies the rules on the generated file before writing, and <span class="mono">npm run check</span> applies them again. The two hand-kept records are checked by <span class="mono">npm run check</span> only, and their age is a notice, never an error.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>File</th><th>Rule</th><th>Fails when</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">cantonal-parliaments.json</span></td><td>Rows</td><td>A row is not a covered canton, or a covered canton has no row</td></tr>
+        <tr><td class="key"><span class="mono">cantonal-parliaments.json</span></td><td>Seats</td><td>The total is not the parliament's size (GE 100, VD 150, VS 130, NE 100, JU 60, FR 110), or the seats per party do not add up to it, or the election year is not plausible</td></tr>
+        <tr><td class="key"><span class="mono">cantonal-parliaments.json</span></td><td>Mapping</td><td>A mapped column is not in the table, or names a party absent from <span class="mono">parties.json</span> or of another canton</td></tr>
+        <tr><td class="key"><span class="mono">cantonal-governments.json</span></td><td>Members</td><td>A canton is not covered or appears twice, the number of members is not the government's size (GE 7, VD 7, VS 5, NE 5, JU 5, FR 7), a name appears twice, or a member's party is unknown or of another canton</td></tr>
+        <tr><td class="key"><span class="mono">parties.json</span> presidency</td><td>Names</td><td>The list of names is empty, holds a blank name or the same name twice</td></tr>
+        <tr><td class="key">Both hand-kept records</td><td>Age</td><td>Never fails: a member or a presidency checked more than 180 days ago is listed for a new check</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
   <h2>Link verdicts</h2>
   <p class="note">Each URL is fetched with redirects followed, a 25 s limit and up to 3 attempts. The first matching row decides.</p>
   <div class="scroll">
@@ -154,6 +194,8 @@
         <li>The key is read from the environment or the maintainer's file and is never written to the repository, the generated file or the logs; the command runs on the maintainer's machine.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
         <li>A failed fetch, or an answer that breaks a rule above, writes nothing.<span class="refs"><span class="chip ref">PRD-0001.US-16</span></span></li>
         <li>The stored request is text, not a link, so the link check never calls an API that refuses calls without a key.<span class="refs"><span class="chip ref">PRD-0001.US-11</span><span class="chip ref">PRD-0001.US-16</span></span></li>
+        <li>The cantonal parliaments come from one OFS table found through its catalogue, read by a reader written in the tool; the command writes nothing when the table, its terms or its totals are not as expected.<span class="refs"><span class="chip ref">PRD-0001.US-17</span><span class="chip ref">Research-0002, rulings 1, 5 and 6</span></span></li>
+        <li>Governments and presidencies are kept by hand, each with its source and check date; the check warns after 180 days and never fails on age.<span class="refs"><span class="chip ref">PRD-0001.US-18</span><span class="chip ref">Research-0002, ruling 8</span></span></li>
       </ul>
     </section>
     <section class="open">
