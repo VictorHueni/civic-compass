@@ -11,6 +11,7 @@ import { STATE_SITE_IDS } from "./links.ts";
 import { cantonalGovernments, cantonalParliaments, cantons, federal, parliament, stateSiteUrl } from "./referential.ts";
 import { EIGHTH_COLOUR, OTHERS_COLOUR, hasColour, partyColour } from "./party-colours.ts";
 import { OTHER_LISTS, cantonRow, cantonSeats, councilGroups, othersNote, siteAbbr, type CouncilGroup } from "./cantonal-parliaments.ts";
+import { governmentSources, siteName } from "./cantonal-standing.ts";
 import { holds, isFederalCouncillor, mainLabel, membersOf, ownMandates, partyLabel, seatGroups, type SeatGroup } from "./parliament.ts";
 import { PARLIAMENT_FUNCTIONS, type ParliamentPerson } from "../types.ts";
 
@@ -143,15 +144,13 @@ function governmentSection(code: string): string {
     '<span class="member__dept">' + esc(m.department) + "</span>" +
     (m.role ? '<span class="member__role' + (/^pr/i.test(m.role) ? " member__role--first" : "") + '">' + esc(m.role) + "</span>" : "") + "</li>");
   // One link per site, the official page of the government first; each member's own pages stay in the data.
-  const byHost = new Map<string, string>();
-  for (const u of [...g.members.map((m) => m.source), ...g.members.map((m) => m.party_source)]) if (!byHost.has(host(u))) byHost.set(host(u), u);
-  const urls = [...byHost.values()];
+  const urls = governmentSources(g);
   const checked = g.members.map((m) => m.checked_on).sort()[0];
   const id = "t-government";
   return '<section class="inst-section" aria-labelledby="' + id + '"><h3 id="' + id + '">' + esc(g.body) + "</h3>" +
     '<p class="panel__desc">' + g.members.length + " membres : " + esc(summary) + ".</p>" +
     '<ol class="members">' + items.join("") + "</ol>" +
-    '<p class="mini">Sources : ' + urls.map((u) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(host(u)) + "</a>").join(", ") +
+    '<p class="mini">Sources : ' + urls.map((u) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(siteName(u)) + "</a>").join(", ") +
     ", vérifiées le " + swissDate(checked) + ".</p></section>";
 }
 
