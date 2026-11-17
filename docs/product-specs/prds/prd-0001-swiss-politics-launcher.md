@@ -7,7 +7,7 @@ tags: [civic-compass, static-site, referential, ballot, parties]
 timestamp: 2026-11-16T19:30:00Z
 status: draft
 owner: Victor Hueni
-last_reviewed: 2026-11-16
+last_reviewed: 2026-11-17
 review_interval: 30d
 ---
 
@@ -17,7 +17,7 @@ review_interval: 30d
 
 The site is named "Boussole citoyenne" in French; the repository and the code use `civic-compass`. User-facing copy quoted below stays in French, as on the site.
 
-Sources of this PRD: `HANDOFF.md`, `README.md` and `CLAUDE.md` of the repository at commit `8f9edd8`, the site as built at that commit, and the owner's decisions of 2026-11-16 (data referential, TypeScript only, repository name). The institutions part (US-13 to US-18) adds Research-0002 (`docs/architecture/research/0002-institution-composition-sources.md`, owner rulings included) and the owner-approved mockup (https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc, private). No persona, capability map or FBS exists yet, so §0 is omitted and stories name the role instead of a `P-NN`.
+Sources of this PRD: `HANDOFF.md`, `README.md` and `CLAUDE.md` of the repository at commit `8f9edd8`, the site as built at that commit, and the owner's decisions of 2026-11-16 (data referential, TypeScript only, repository name). The institutions part (US-13 to US-18) adds Research-0002 (`docs/architecture/research/0002-institution-composition-sources.md`, owner rulings included) and the owner-approved mockup (https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc, private). The media part (US-20 to US-25) adds Research-0003 (`docs/architecture/research/0003-media-ownership-and-leaning-sources.md`, owner rulings included) and the owner-approved mockup of the ownership graph (https://claude.ai/artifact/VbRVXNFMna9BdXTkiFgRnk, private). No persona, capability map or FBS exists yet, so §0 is omitted and stories name the role instead of a `P-NN`.
 
 ## 1. Problem Statement
 
@@ -37,7 +37,9 @@ A Swiss voter who wants to prepare a ballot has to assemble the picture from a d
 - **Cantons beyond GE, VD, VS, NE, JU, FR.** The other 20 cantons appear on the map as "bientôt"; adding them is data work under goal 5, not part of this slice.
 - **Ballot results.** Results per canton on the map after the vote are deferred: the data source (OFS) is identified but not integrated.
 - **Names of cantonal parliament members.** Cantonal parliaments show seats per party from the latest election only (US-14); listing their 60 to 150 members by name, or tracking changes since the election, is out of scope.
-- **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them.
+- **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them. A media owner who is a person is shown with name and share only, as the source publishes them, under the conditions of US-24 (owner, 2026-11-17).
+- **A measurement of media leaning of the site's own.** The site shows the fög index for the titles it covers and nothing for the others; rating articles itself, or collecting visitors' reports, needs its own method and a backend (Research-0003, ruling 1).
+- **Lobbies (phase 2 of the transparency area).** Links to Lobbywatch come in later stories of this PRD, after Research-0004.
 - **Any backend, account, tracking or personal data.** The site is static; the only stored state is the last territory chosen, in the visitor's own browser.
 
 ## 4. User Stories
@@ -322,9 +324,103 @@ As a voter, I want to tap a party on the Confederation page to see who sits for 
 - [ ] A Grand Conseil does not take this: the OFS table gives counts, not names.
 - [ ] The source line of the page covers the list; each button states whether its list is open (`aria-expanded`), and the half-circle stays decorative for screen readers.
 
+### PRD-0001.US-20 · See who publishes and who owns a media outlet
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to see, for a newspaper, radio, TV channel or news site of my region, which company publishes it and who owns that company so that I know whose interests stand behind what I read.
+
+**Acceptance Criteria:**
+- [ ] A new page lists the media of the six covered cantons that Medienmonitor Schweiz covers, plus any title whose publisher is sourced (Research-0003, ruling 2), with their genre (presse, radio, télévision, en ligne) and region.
+- [ ] Each title has an "Éditeur" line: the publishing company as the commercial register names it, with its legal form and seat, sourced to the register and to the title's own imprint for the link between them.
+- [ ] Each title has a "Propriétaire" line only when a source names the owner (Medienmonitor, the company's annual report, the partners of a Sàrl in the register), with each holder's share when published; otherwise the line is absent, never guessed.
+- [ ] When two sources disagree (Léman Bleu: the same 24.66 % share given to ESH Médias on one Medienmonitor page and to Philippe Hersant on another), both are shown and the line says the sources disagree.
+- [ ] Every line names its source with a link and its check date; the page names Medienmonitor (Publicom for OFCOM) as required by its terms ("nur unter Quellenangabe").
+
+### PRD-0001.US-21 · Explore the ownership graph
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to see the media and their owners as one picture so that I notice who holds several media and how far up the chains go.
+
+**Acceptance Criteria:**
+- [ ] Two views of the same data with a switch (Research-0003, ruling 5): **Réseau**, every owner including minority holders, an arrow from owner to owned with the share; **Soleil**, three rings (kind of top owner, top owner, media), each media under the holder of the largest published share, the centre ring in colour only.
+- [ ] Tapping a node or a sector opens the same card as US-20 (holders, holdings, sources, dates); a region filter (Genève; Vaud, Fribourg, Valais; Neuchâtel, Jura) and a search by name work in both views.
+- [ ] A list "Ils relient plusieurs médias" names the people and families present in the chain of at least two media.
+- [ ] Readable at 360 px width without sideways scroll of the page; the graph pans and zooms by touch inside its own box.
+- [ ] Keyboard and screen-reader users reach the same facts through the list of US-20; the drawing has a text label and does not trap focus.
+- [ ] The built site still works from `dist/index.html` with no network (goal 4).
+
+### PRD-0001.US-22 · See the fög index of a media outlet
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to see how a media outlet covered federal ballots, as measured by researchers, so that I can weigh its coverage without being told it is "left" or "right".
+
+**Acceptance Criteria:**
+- [ ] For the titles the fög measures (Le Matin Dimanche, lematin.ch, tdg.ch, letemps.ch, 24heures.ch, 20minutes.ch, RTS), the card shows the value under the fög's own label: tone of the coverage of federal ballots, number of ballots and period (61 ballots, 2018 to 2025), on a scale from −100 (support for centre-left proposals) to +100 (support for centre-right proposals).
+- [ ] The media average (−4) is shown beside the value, and the card says this is not the outlet's political position.
+- [ ] The words "gauche" and "droite" are never used as a badge of the outlet.
+- [ ] A title the fög does not measure shows "Pas de mesure du fög pour ce média", never a guess.
+- [ ] The value is stored as a sourced fact (value, edition, source URL, check date) and updated when the fög publishes new figures.
+
+### PRD-0001.US-23 · Keep the media data by hand, checked
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want the media, their publishers and their owners in one data file checked by `npm run check` so that adding or correcting an owner is data work only (goal 5).
+
+**Acceptance Criteria:**
+- [ ] One hand-kept file holds the media (name, genre, regions, publisher), the companies (name, legal form, seat, UID when known), the other holders (person, family, public body, association or foundation) and the holdings (holder, held, share or none, source URL, `checked_on`, a flag when sources disagree); its schema lives in `src/types.ts`.
+- [ ] `npm run check` fails when a holding names a missing holder, when published shares in one company add up to more than 100 %, when a fact has no source, or when a media has no publisher.
+- [ ] `npm run check` warns, never fails, when a holding or a fög value was checked more than 180 days ago (as US-18).
+- [ ] Medienmonitor is read by hand (HTML only, no download); the file says so, and no script scrapes it into the site.
+
+### PRD-0001.US-24 · Respect the people named as owners
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want every person named as a media owner to be shown fairly and to be able to have an error corrected or the entry removed so that the site meets the data protection act (Research-0003, ruling 3).
+
+**Acceptance Criteria:**
+- [ ] A person is shown with name and share only, as the source publishes them, with the source and the check date; no photo, age, address or contact.
+- [ ] The media page offers a way to report an error or ask for removal ("Signaler une erreur"); the channel is set by the owner (§8 open question).
+- [ ] A removal is recorded in the data (who, date, reason "demande de la personne") so that the next update does not bring the entry back; the page then shows the holding without the name ("actionnaire privé").
+- [ ] A correction or removal request is handled within 30 days.
+
+### PRD-0001.US-25 · Check publishers against the commercial register
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want one command to check every publishing company against the commercial register so that a renamed, merged or deleted company is noticed.
+
+**Acceptance Criteria:**
+- [ ] The command reads the register's linked open data (Zefix on `lindas.admin.ch`, no credentials) by UID and writes the result to a generated file with the download date.
+- [ ] It reports a company whose name, legal form or seat differs from the hand-kept file, or that is in liquidation or deleted; it never changes the hand-kept file.
+- [ ] A failed fetch writes nothing; the register is named as the source ("OGD Open use. Must provide the source.").
+
 ## 5. Design Considerations
 
 - **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours: palette B2 (§8).
+- **Media ownership mockup.** Owner-approved on 2026-11-17: https://claude.ai/artifact/VbRVXNFMna9BdXTkiFgRnk (Réseau and Soleil views, card, region filter, search). Holder colours: media red, company grey, person or family violet, public body blue, association or foundation green.
 - **Mobile first.** The voter's device is a phone; the menu folds into a hamburger on a phone and is open on a computer.
 - **Look.** The Swiss Confederation design system (MIT licence), without its coat of arms or logos; the site states it is independent and not official.
 - **Editorial tone.** Airy layout, numbered lists, no coloured "AI-looking" cards; no long dash in any text.
@@ -340,6 +436,8 @@ As a voter, I want to tap a party on the Confederation page to see who sits for 
 - **Parliament API.** The new `ws.parl.ch` (key in the `X-API-KEY` header, filters in `q`); the key lives outside the repository; terms of use met by keeping raw data unchanged, naming the source with the download date and staying non-official (Research-0002, rulings 2 and 3).
 - **OFS tables in xlsx.** Read by a small reader in the tool (zip and XML with Node's built-ins); a library only if needed (ruling 5).
 - **Rejected source:** OpenParlData, whose counts do not match the seats of the covered cantons (Research-0002).
+- **Media sources (Research-0003).** Medienmonitor Schweiz for owners (HTML only, reuse with attribution, accuracy disclaimed); the commercial register's linked open data for publishers (`lindas.admin.ch`, terms "OGD Open use. Must provide the source."); the fög factsheet of February 2026 for the index ("Copyright fög", cited, not reproduced).
+- **Graph libraries (open, §8).** The mockup loads Cytoscape.js and ECharts from a CDN, which the built site cannot do (goal 4, no network; development dependencies only).
 - **Other public sources identified** (not yet integrated): Swissvotes (CC BY 4.0), the Federal Chancellery's ballot calendar.
 
 ## 7. Success Metrics
@@ -360,7 +458,10 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-No question is left open on 2026-11-17.
+Open on 2026-11-17:
+
+- **Graph libraries.** How the built site draws the ownership graph without network access: bundle libraries into the site script (a first runtime dependency), or draw it with the site's own SVG code as the half-circles are (US-21).
+- **Channel for "Signaler une erreur".** The site has no contact today; the channel for corrections and removal requests is to be chosen (US-24).
 
 Settled on 2026-11-16 by the owner:
 
@@ -377,6 +478,7 @@ Settled on 2026-11-16 by the owner:
 - **Party presidency (2026-11-17).** Kept by hand in `parties.json` under `facts.presidency`: the names (several for a co-presidency), the party's own page, its words as evidence and the check date. On the card, a "Présidence" line right after "Position" ("A et B", "A, B et C") and "Présidence : <site>, vérifié le <date>" in the sources under the card. A party whose site names nobody has no entry and no line (US-15, US-18).
 - **A figure stays with its word (2026-11-17).** On a party's card, a no-break space joins a count to its noun and "sur" to the total ("14 sièges sur 100", "27 sièges, dont 1 PLD Bâle-Ville"), so a narrow screen wraps "14 sièges / sur 100", never "14 sièges sur / 100". Names keep their own break points, as blocking them would push a long name off the screen (US-15, US-18).
 - **The Parliament API key stays off CI (2026-11-17).** For now the key stays on the maintainer's machine and is not stored as a CI secret: `npm run parliament` runs by hand, and the pipeline does not refresh the federal composition (US-16).
+- **Media and their owners (2026-11-17, Research-0003, five rulings).** The fög index shown under its own label with the media average, updated when the fög publishes, nothing for titles it does not measure; scope: everything Medienmonitor covers in the six cantons plus titles with a sourced publisher, each with an "Éditeur" line (commercial register) and a "Propriétaire" line only when a source names one; owners who are people named with their share, as published, with source, date, a way to report an error and the 180-day warning (LPD art. 6, 30, 31, 32); the stories go in this PRD (US-20 to US-25), lobbies follow here too; the ownership graph has two views, Réseau and Soleil.
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
 ## 9. Open Items
