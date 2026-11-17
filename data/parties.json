@@ -54,6 +54,14 @@
           "value": 1983,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Lisa Mazzone"
+          ],
+          "source": "https://verts.ch/presidence-et-direction",
+          "evidence": "Lisa Mazzone présidente des VERT-E-S suisses et membre de la direction du parti",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -88,6 +96,15 @@
           "value": 1888,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Mattea Meyer",
+            "Cédric Wermuth"
+          ],
+          "source": "https://www.sp-ps.ch/fr/personnes/presidence/",
+          "evidence": "Mattea Meyer Conseillère nationale ZH, Co-Présidente du PS Suisse … Cédric Wermuth Conseiller national AG, Co-Président du PS Suisse",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -122,6 +139,14 @@
           "value": 2007,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Jürg Grossen"
+          ],
+          "source": "https://pvl.swiss/parti/personnes/presidence-comite/",
+          "evidence": "Président du parti Jürg Grossen Conseiller national (BE) Président du parti",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -156,6 +181,14 @@
           "value": 2021,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Philipp Matthias Bregy"
+          ],
+          "source": "https://le-centre.ch/le-centre/notre-equipe/",
+          "evidence": "Philipp Matthias Bregy Présidence du parti, Conseil national Conseiller national (VS) Président Le Centre Suisse",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -190,6 +223,14 @@
           "value": 1919,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Lilian Studer"
+          ],
+          "source": "https://www.evppev.ch/fr/parti/organigramme",
+          "evidence": "Depuis juin 2021, la Conseillère nationale Lilian Studer est Présidente du PEV.",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -218,6 +259,15 @@
           "value": 2009,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Susanne Vincenz-Stauffacher",
+            "Benjamin Mühlemann"
+          ],
+          "source": "https://www.plr.ch/parti/organes/comite-directeur",
+          "evidence": "Susanne Vincenz-Stauffacher Coprésidente du parti Benjamin Mühlemann Coprésident du parti",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {
@@ -246,6 +296,14 @@
           "value": 1971,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Marcel Dettling"
+          ],
+          "source": "https://www.udc.ch/parti/organes/direction-du-parti/",
+          "evidence": "Etat: 23.03.2024 Président du parti Marcel Dettling UDC conseiller national SZ",
+          "checked_on": "2026-11-17"
         }
       },
       "left_right": {

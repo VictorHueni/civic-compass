@@ -8,6 +8,7 @@ import { allCantons, ballot, cantonalGovernments, cantonalParliaments, cantons, 
 import { cantonRow } from "./cantonal-parliaments.ts";
 import { cantonalStanding, governmentSources, siteName } from "./cantonal-standing.ts";
 import { isFederalCouncillor, mainLabel, membersOf, partyLabel, partyMembers } from "./parliament.ts";
+import { presidencyFact } from "./presidency.ts";
 import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
@@ -307,8 +308,8 @@ function parliamentSource(): string {
     esc(parliament.attribution.replace(/^Source : /, "")) + "</a>, données du " + swissDate(parliament.retrieved_on);
 }
 
-/** Adds the lines of a party of a canton to `facts`; returns the line naming their sources ("" when none). */
-function cantonalLines(p: { id: string; abbr: string; territory: string }, facts: [string, string][]): string {
+/** Adds the lines of a party of a canton to `facts`; returns the sources that name them (none: empty list). */
+function cantonalLines(p: { id: string; abbr: string; territory: string }, facts: [string, string][]): string[] {
   const code = p.territory;
   const government = cantonalGovernments.find((g) => g.canton === code);
   const row = cantonRow(cantonalParliaments, cantons[code]?.name ?? "");
@@ -322,7 +323,7 @@ function cantonalLines(p: { id: string; abbr: string; territory: string }, facts
   }
   if (standing.grandCouncil) parts.push("Grand Conseil : " + esc(cantonalParliaments.attribution.replace(/^Source : /, "")) + ", données du " + swissDate(cantonalParliaments.retrieved_on));
   if (standing.federal) parts.push("Élus fédéraux : " + parliamentSource());
-  return parts.length ? '<p class="fact-sheet__source">' + parts.join(". ") + ".</p>" : "";
+  return parts;
 }
 
 function renderDetail(): void {
@@ -330,19 +331,25 @@ function renderDetail(): void {
   const p = list[index];
   if (!p) return;
   const facts: [string, string][] = [["Position", p.position]];
+  const sources: string[] = [];
   // A fact is shown only once it has a source (PRD-0001 goal 2).
+  const presidency = presidencyFact(p);
+  if (presidency) {
+    facts.push(presidency.row);
+    sources.push('Présidence : <a href="' + esc(presidency.source.url) + '" target="_blank" rel="noopener noreferrer">' + esc(presidency.source.site) + "</a>, vérifié le " + swissDate(presidency.source.checked_on));
+  }
   const founded = p.facts?.founded?.source ? p.facts.founded.value : null;
   if (founded !== null) facts.push(["Fondé en", String(founded)]);
   // Who sits for the party today (US-15): a party of the Confederation from the Parliament's data;
   // a party of a canton also from its government (kept by hand) and its Grand Conseil (OFS).
-  let source = "";
   if (p.territory === "CH") {
     const federalRows = federalStanding(p.abbr);
     facts.push(...federalRows);
-    if (federalRows.length) source = '<p class="fact-sheet__source">Élus : ' + parliamentSource() + ".</p>";
+    if (federalRows.length) sources.push("Élus : " + parliamentSource());
   } else {
-    source = cantonalLines(p, facts);
+    sources.push(...cantonalLines(p, facts));
   }
+  const source = sources.length ? '<p class="fact-sheet__source">' + sources.join(". ") + ".</p>" : "";
   const dl = facts.map((f) => '<div class="fact-sheet__row"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
   let link: string;
   if (p.url) {

@@ -37,6 +37,7 @@ import {
   unmappedSeats,
 } from "./cantonal-parliaments.ts";
 import { checkCantonalGovernments, governmentsSummary, staleMembers, STALE_AFTER_DAYS } from "./cantonal-governments.ts";
+import { checkPresidencies, stalePresidencies } from "./party-presidencies.ts";
 import { readWorkbook } from "./xlsx.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -259,6 +260,7 @@ function checkConsistency(d: Referential): string[] {
   for (const e of checkCantonalGovernments(d.cantonal_governments, d.territories, d.parties)) {
     report.add([`data/${DATA_FILES.cantonal_governments.file}`], e);
   }
+  for (const e of checkPresidencies(d.parties)) report.add(["data/parties.json"], e);
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -290,11 +292,17 @@ function cmdCheck(dataDir: string): number {
       `${d.tools.length} outils, ${d.ballot.items.length} objets en votation, ` +
       `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}), ` +
       `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}), ` +
-      `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}).`,
+      `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}), ` +
+      `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}).`,
   );
-  const stale = staleMembers(d.cantonal_governments, new Date().toISOString().slice(0, 10));
+  const today = new Date().toISOString().slice(0, 10);
+  const stale = staleMembers(d.cantonal_governments, today);
   if (stale.length) {
     console.log(`\nAvis (ne bloque pas) : fiches de gouvernement vérifiées il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier sur la page officielle :\n` + stale.join("\n"));
+  }
+  const stalePresidents = stalePresidencies(d.parties, today);
+  if (stalePresidents.length) {
+    console.log(`\nAvis (ne bloque pas) : présidences de parti vérifiées il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier sur le site du parti :\n` + stalePresidents.join("\n"));
   }
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));
