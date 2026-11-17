@@ -6,7 +6,7 @@ Lire HANDOFF.md en premier : décisions, structure, limites des données et proc
 - Répondre en français. Ne pas utiliser le tiret long dans les textes.
 - Code en anglais (noms de fichiers, identifiants, types, clés et valeurs d'énumération JSON) ; textes affichés sur le site et messages de l'outil en français.
 - Ne jamais inventer d URL ni de mot d ordre : source obligatoire, sinon `null` ou "à confirmer".
-- Le visiteur ne voit que des liens `verified`, jamais leur statut ; un fait n'est affiché qu'avec sa source. Ne jamais modifier `data/seats-national-council-2023.json` ni `data/parliament-current.json` à la main (relancer `npm run seats` ou `npm run parliament`). Ne jamais afficher ni écrire la clé de l'API du Parlement (`PARL_API_KEY`).
+- Le visiteur ne voit que des liens `verified`, jamais leur statut ; un fait n'est affiché qu'avec sa source. Ne jamais modifier `data/parliament-current.json` à la main (relancer `npm run parliament`). Ne jamais afficher ni écrire la clé de l'API du Parlement (`PARL_API_KEY`).
 - Décisions et spécification : `docs/product-specs/prds/prd-0001-swiss-politics-launcher.md` (§8) ; conception : `docs/plans/active/swiss-politics-launcher/`.
 - Les données sont dans `data/*.json` (voir README), décrites par `src/types.ts`. Après tout changement : `npm run check` puis `npm run links`. Ne jamais mettre d'URL en dur dans `src/site` : la chercher dans le référentiel par son id (`src/site/links.ts`).
 - Node 26 exécute les `.ts` sans compilation : n'utiliser que de la syntaxe TypeScript effaçable (pas d'enum, de namespace ni de propriétés de paramètre).
