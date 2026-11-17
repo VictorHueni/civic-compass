@@ -1,0 +1,3980 @@
+{
+  "_readme": "Généré par « npm run parliament » depuis l'API du Parlement (ws.parl.ch) : ne pas modifier à la main, relancer la commande. persons : la réponse de l'API telle quelle (champs demandés par include) ; party_mapping : correspondance, tenue à part, entre les partis de l'API et les partis CH de parties.json.",
+  "parliament": {
+    "request": "GET https://ws.parl.ch/api/v1/persons?lang=fr&q=eq%28active%2Ctrue%29&include=id%2CfirstName%2ClastName%2Ccouncil.abbreviation%2Cparty.shortName%2Ccanton.abbreviation%2CactiveFederalCouncilMandates.department.abbreviation%2CactiveFederalCouncilMandates.department.name%2CactiveFederalCouncilMandates.function.key%2CactiveFederalCouncilMandates.function.name&sort=id%3Aasc&size=300&page=0 (en-tête X-API-KEY)",
+    "api_docs": "https://ws.parl.ch/doc/v3/api-docs",
+    "terms_page": "https://www.parlament.ch/fr/%C3%BCber-das-parlament/faits-donnees-chifrees/open-data-web-services",
+    "attribution": "Source : Services du Parlement de l'Assemblée fédérale, Berne",
+    "license": "Conditions des Services Web du Parlement : source « Services du Parlement de l'Assemblée fédérale, Berne » et date de téléchargement affichées, contenu des données inchangé, reproduction non présentée comme une publication officielle",
+    "retrieved_on": "2026-11-17",
+    "persons": [
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 491,
+        "firstName": "Pierre-Yves",
+        "lastName": "Maillard",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 806,
+        "firstName": "Maya",
+        "lastName": "Graf",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 825,
+        "firstName": "Hannes",
+        "lastName": "Germann",
+        "canton": {
+          "abbreviation": "SH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 1106,
+        "firstName": "Brigitte",
+        "lastName": "Häberli-Koller",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DDPS",
+              "name": "Département fédéral de la défense, de la protection de la population et des sports (DDPS)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DEFR",
+              "name": "Département fédéral de l'économie, de la formation et de la recherche (DEFR)"
+            },
+            "function": {
+              "key": "1601000",
+              "name": "Président/e de la Confédération"
+            }
+          }
+        ],
+        "id": 1108,
+        "firstName": "Guy",
+        "lastName": "Parmelin",
+        "canton": null,
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 1109,
+        "firstName": "Gerhard",
+        "lastName": "Pfister",
+        "canton": {
+          "abbreviation": "ZG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 1120,
+        "firstName": "Carlo",
+        "lastName": "Sommaruga",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 1138,
+        "firstName": "Martin",
+        "lastName": "Bäumle",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 1159,
+        "firstName": "Pirmin",
+        "lastName": "Schwander",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DFI",
+              "name": "Département fédéral de l'intérieur (DFI)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DFAE",
+              "name": "Département fédéral des affaires étrangères (DFAE)"
+            },
+            "function": {
+              "key": "1601002",
+              "name": "Vice-président/e de la Confédération"
+            }
+          }
+        ],
+        "id": 3828,
+        "firstName": "Ignazio",
+        "lastName": "Cassis",
+        "canton": null,
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3871,
+        "firstName": "Pirmin",
+        "lastName": "Bischof",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3890,
+        "firstName": "Thomas",
+        "lastName": "Hurter",
+        "canton": {
+          "abbreviation": "SH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3891,
+        "firstName": "Daniel",
+        "lastName": "Jositsch",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "-"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3897,
+        "firstName": "Tiana Angelina",
+        "lastName": "Moser",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3901,
+        "firstName": "Lukas",
+        "lastName": "Reimann",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3912,
+        "firstName": "Christian",
+        "lastName": "Wasserfallen",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 3999,
+        "firstName": "Katharina",
+        "lastName": "Prelicz-Huber",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4025,
+        "firstName": "Roland Rino",
+        "lastName": "Büchel",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DEFR",
+              "name": "Département fédéral de l'économie, de la formation et de la recherche (DEFR)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DFJP",
+              "name": "Département fédéral de justice et police (DFJP)"
+            },
+            "function": {
+              "key": "1601001",
+              "name": "Conseillère fédérale / Conseiller fédéral"
+            }
+          }
+        ],
+        "id": 4032,
+        "firstName": "Beat",
+        "lastName": "Jans",
+        "canton": null,
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4040,
+        "firstName": "Elisabeth",
+        "lastName": "Schneider-Schneiter",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4046,
+        "firstName": "Lorenzo",
+        "lastName": "Quadri",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "Lega"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4051,
+        "firstName": "Thomas",
+        "lastName": "de Courten",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4052,
+        "firstName": "Markus",
+        "lastName": "Ritter",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4053,
+        "firstName": "Thomas",
+        "lastName": "Aeschi",
+        "canton": {
+          "abbreviation": "ZG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4055,
+        "firstName": "Stefan",
+        "lastName": "Engler",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4056,
+        "firstName": "Daniel",
+        "lastName": "Fässler",
+        "canton": {
+          "abbreviation": "AI"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4057,
+        "firstName": "Cédric",
+        "lastName": "Wermuth",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4058,
+        "firstName": "Jacqueline",
+        "lastName": "Badran",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4060,
+        "firstName": "Daniela",
+        "lastName": "Schneeberger",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DFJP",
+              "name": "Département fédéral de justice et police (DFJP)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DFF",
+              "name": "Département fédéral des finances (DFF)"
+            },
+            "function": {
+              "key": "1601001",
+              "name": "Conseillère fédérale / Conseiller fédéral"
+            }
+          }
+        ],
+        "id": 4062,
+        "firstName": "Karin",
+        "lastName": "Keller-Sutter",
+        "canton": null,
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4063,
+        "firstName": "Stefan",
+        "lastName": "Müller-Altermatt",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4065,
+        "firstName": "Nadja",
+        "lastName": "Umbricht Pieren",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4070,
+        "firstName": "Martin",
+        "lastName": "Candinas",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4072,
+        "firstName": "Fabio",
+        "lastName": "Regazzi",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4075,
+        "firstName": "Andrea",
+        "lastName": "Caroni",
+        "canton": {
+          "abbreviation": "AR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4077,
+        "firstName": "Olivier",
+        "lastName": "Feller",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4078,
+        "firstName": "Martin",
+        "lastName": "Schmid",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4083,
+        "firstName": "Jürg",
+        "lastName": "Grossen",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4090,
+        "firstName": "Céline",
+        "lastName": "Amaudruz",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4094,
+        "firstName": "Lorenz",
+        "lastName": "Hess",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4097,
+        "firstName": "Leo",
+        "lastName": "Müller",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DETEC",
+              "name": "Département fédéral de l'environnement, des transports, de l'énergie et de la communication (DETEC)"
+            },
+            "function": {
+              "key": "1601001",
+              "name": "Conseillère fédérale / Conseiller fédéral"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DFF",
+              "name": "Département fédéral des finances (DFF)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          }
+        ],
+        "id": 4100,
+        "firstName": "Albert",
+        "lastName": "Rösti",
+        "canton": null,
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4101,
+        "firstName": "Christine",
+        "lastName": "Bulliard-Marbach",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4102,
+        "firstName": "Kathrin",
+        "lastName": "Bertschy",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4109,
+        "firstName": "Valérie",
+        "lastName": "Piller Carrard",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4116,
+        "firstName": "Petra",
+        "lastName": "Gössi",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4118,
+        "firstName": "Christian",
+        "lastName": "Lohr",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4121,
+        "firstName": "Barbara",
+        "lastName": "Gysi",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4124,
+        "firstName": "Peter",
+        "lastName": "Schilliger",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4125,
+        "firstName": "Gregor",
+        "lastName": "Rutz",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4130,
+        "firstName": "Nadine",
+        "lastName": "Masshardt",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4137,
+        "firstName": "Roger",
+        "lastName": "Golay",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "MCG"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4141,
+        "firstName": "Hans-Peter",
+        "lastName": "Portmann",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4142,
+        "firstName": "Beat",
+        "lastName": "Walti",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4144,
+        "firstName": "Thomas",
+        "lastName": "Matter",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4151,
+        "firstName": "Josef",
+        "lastName": "Dittli",
+        "canton": {
+          "abbreviation": "UR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4152,
+        "firstName": "Hans",
+        "lastName": "Wicki",
+        "canton": {
+          "abbreviation": "NW"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4153,
+        "firstName": "Peter",
+        "lastName": "Hegglin",
+        "canton": {
+          "abbreviation": "ZG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4154,
+        "firstName": "Jean-Luc",
+        "lastName": "Addor",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4156,
+        "firstName": "Michaël",
+        "lastName": "Buffat",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4157,
+        "firstName": "Manfred",
+        "lastName": "Bühler",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4158,
+        "firstName": "Thomas",
+        "lastName": "Burgherr",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4159,
+        "firstName": "Marco",
+        "lastName": "Chiesa",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4160,
+        "firstName": "Marcel",
+        "lastName": "Dettling",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4161,
+        "firstName": "Andreas",
+        "lastName": "Glarner",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4162,
+        "firstName": "Franz",
+        "lastName": "Grüter",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4163,
+        "firstName": "Erich",
+        "lastName": "Hess",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4164,
+        "firstName": "Christian",
+        "lastName": "Imark",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4167,
+        "firstName": "Magdalena",
+        "lastName": "Martullo-Blocher",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4168,
+        "firstName": "Jacques",
+        "lastName": "Nicolet",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4169,
+        "firstName": "Pierre-André",
+        "lastName": "Page",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4172,
+        "firstName": "Werner",
+        "lastName": "Salzmann",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4173,
+        "firstName": "Sandra",
+        "lastName": "Sollberger",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4174,
+        "firstName": "Barbara",
+        "lastName": "Steinemann",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4175,
+        "firstName": "Mauro",
+        "lastName": "Tuena",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4177,
+        "firstName": "Bruno",
+        "lastName": "Walliser",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4181,
+        "firstName": "Andrea",
+        "lastName": "Gmür-Schönenberger",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4184,
+        "firstName": "Sibel",
+        "lastName": "Arslan",
+        "canton": {
+          "abbreviation": "BS"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4189,
+        "firstName": "Thierry",
+        "lastName": "Burkart",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4190,
+        "firstName": "Marcel",
+        "lastName": "Dobler",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4193,
+        "firstName": "Philippe",
+        "lastName": "Nantermod",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4194,
+        "firstName": "Laurent",
+        "lastName": "Wehrli",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4195,
+        "firstName": "Laurence",
+        "lastName": "Fehlmann Rielle",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4197,
+        "firstName": "Min Li",
+        "lastName": "Marti",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4198,
+        "firstName": "Mattea",
+        "lastName": "Meyer",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4199,
+        "firstName": "Priska",
+        "lastName": "Seiler Graf",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4202,
+        "firstName": "Regine",
+        "lastName": "Sauter",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4204,
+        "firstName": "Beat",
+        "lastName": "Rieder",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4206,
+        "firstName": "Erich",
+        "lastName": "Ettlin",
+        "canton": {
+          "abbreviation": "OW"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4207,
+        "firstName": "Damian",
+        "lastName": "Müller",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4208,
+        "firstName": "Matthias Samuel",
+        "lastName": "Jauslin",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4213,
+        "firstName": "Samuel",
+        "lastName": "Bendahan",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4214,
+        "firstName": "Niklaus-Samuel",
+        "lastName": "Gugger",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PEV"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4216,
+        "firstName": "Diana",
+        "lastName": "Gutjahr",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4218,
+        "firstName": "Irène",
+        "lastName": "Kälin",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4219,
+        "firstName": "Brigitte",
+        "lastName": "Crottaz",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4220,
+        "firstName": "Benjamin",
+        "lastName": "Roduit",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4221,
+        "firstName": "Michael",
+        "lastName": "Töngi",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4222,
+        "firstName": "Nicolò",
+        "lastName": "Paganini",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4223,
+        "firstName": "Fabian",
+        "lastName": "Molina",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4224,
+        "firstName": "Flavia",
+        "lastName": "Wasserfallen",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4225,
+        "firstName": "Philipp",
+        "lastName": "Kutter",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4228,
+        "firstName": "Samira",
+        "lastName": "Marti",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4229,
+        "firstName": "Mike",
+        "lastName": "Egger",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4230,
+        "firstName": "Philipp Matthias",
+        "lastName": "Bregy",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "ChF",
+              "name": "Chancellerie fédérale"
+            },
+            "function": {
+              "key": "1601004",
+              "name": "Chancelier/chancelière de la Confédération"
+            }
+          }
+        ],
+        "id": 4231,
+        "firstName": "Viktor",
+        "lastName": "Rossi",
+        "canton": null,
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4234,
+        "firstName": "Therese",
+        "lastName": "Schläpfer",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4236,
+        "firstName": "Martin",
+        "lastName": "Haab",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4237,
+        "firstName": "Benedikt",
+        "lastName": "Würth",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DFI",
+              "name": "Département fédéral de l'intérieur (DFI)"
+            },
+            "function": {
+              "key": "1601001",
+              "name": "Conseillère fédérale / Conseiller fédéral"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DFAE",
+              "name": "Département fédéral des affaires étrangères (DFAE)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          }
+        ],
+        "id": 4238,
+        "firstName": "Elisabeth",
+        "lastName": "Baume-Schneider",
+        "canton": null,
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4239,
+        "firstName": "Eva",
+        "lastName": "Herzog",
+        "canton": {
+          "abbreviation": "BS"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4240,
+        "firstName": "Charles",
+        "lastName": "Juillard",
+        "canton": {
+          "abbreviation": "JU"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4241,
+        "firstName": "Jakob",
+        "lastName": "Stark",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4243,
+        "firstName": "Heidi",
+        "lastName": "Z'graggen",
+        "canton": {
+          "abbreviation": "UR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4244,
+        "firstName": "Mathias",
+        "lastName": "Zopfi",
+        "canton": {
+          "abbreviation": "GL"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4245,
+        "firstName": "Gerhard",
+        "lastName": "Andrey",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4246,
+        "firstName": "Christine",
+        "lastName": "Badertscher",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4247,
+        "firstName": "Kilian",
+        "lastName": "Baumann",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4249,
+        "firstName": "Marianne",
+        "lastName": "Binder-Keller",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4252,
+        "firstName": "Katja",
+        "lastName": "Christ",
+        "canton": {
+          "abbreviation": "BS"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4253,
+        "firstName": "Christophe",
+        "lastName": "Clivaz",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4254,
+        "firstName": "Damien",
+        "lastName": "Cottier",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4255,
+        "firstName": "Christian",
+        "lastName": "Dandrès",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4256,
+        "firstName": "Simone",
+        "lastName": "de Montmollin",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4257,
+        "firstName": "Jacqueline",
+        "lastName": "de Quattro",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4259,
+        "firstName": "Alex",
+        "lastName": "Farinelli",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4260,
+        "firstName": "Fabien",
+        "lastName": "Fivaz",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4261,
+        "firstName": "Esther",
+        "lastName": "Friedli",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4262,
+        "firstName": "Tamara",
+        "lastName": "Funiciello",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4263,
+        "firstName": "Andreas",
+        "lastName": "Gafner",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDF"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4265,
+        "firstName": "Anna",
+        "lastName": "Giacometti",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4266,
+        "firstName": "Benjamin",
+        "lastName": "Giezendanner",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4267,
+        "firstName": "Corina",
+        "lastName": "Gredig",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4268,
+        "firstName": "Greta",
+        "lastName": "Gysin",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4270,
+        "firstName": "Baptiste",
+        "lastName": "Hurni",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4271,
+        "firstName": "Sidney",
+        "lastName": "Kamerzin",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4272,
+        "firstName": "Delphine",
+        "lastName": "Klopfenstein Broggini",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4275,
+        "firstName": "Vincent",
+        "lastName": "Maitre",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4278,
+        "firstName": "Sophie",
+        "lastName": "Michaud Gigon",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4280,
+        "firstName": "Léonore",
+        "lastName": "Porchet",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4281,
+        "firstName": "Jon",
+        "lastName": "Pult",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4282,
+        "firstName": "Thomas",
+        "lastName": "Rechsteiner",
+        "canton": {
+          "abbreviation": "AI"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4283,
+        "firstName": "Franziska",
+        "lastName": "Roth",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4284,
+        "firstName": "Marie-France",
+        "lastName": "Roth Pasquier",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4285,
+        "firstName": "Monika",
+        "lastName": "Rüegger",
+        "canton": {
+          "abbreviation": "OW"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4286,
+        "firstName": "Franziska",
+        "lastName": "Ryser",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4287,
+        "firstName": "Barbara",
+        "lastName": "Schaffner",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4288,
+        "firstName": "Marionna",
+        "lastName": "Schlatter",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4289,
+        "firstName": "Meret",
+        "lastName": "Schneider",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4290,
+        "firstName": "Andri",
+        "lastName": "Silberschmidt",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4292,
+        "firstName": "Simon",
+        "lastName": "Stadler",
+        "canton": {
+          "abbreviation": "UR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4293,
+        "firstName": "Manuel",
+        "lastName": "Strupler",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4295,
+        "firstName": "Gabriela",
+        "lastName": "Suter",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4296,
+        "firstName": "Susanne",
+        "lastName": "Vincenz-Stauffacher",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4298,
+        "firstName": "Manuela",
+        "lastName": "Weichelt",
+        "canton": {
+          "abbreviation": "ZG"
+        },
+        "party": {
+          "shortName": "Al"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4303,
+        "firstName": "Marianne",
+        "lastName": "Maret",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4305,
+        "firstName": "Priska",
+        "lastName": "Wismer-Felder",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4306,
+        "firstName": "Johanna",
+        "lastName": "Gapany",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4309,
+        "firstName": "Matthias",
+        "lastName": "Michel",
+        "canton": {
+          "abbreviation": "ZG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4310,
+        "firstName": "Lars",
+        "lastName": "Guggisberg",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4312,
+        "firstName": "Bruno",
+        "lastName": "Storni",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4313,
+        "firstName": "Maja",
+        "lastName": "Riniker",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4314,
+        "firstName": "Stefanie",
+        "lastName": "Heimgartner",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4315,
+        "firstName": "Florence",
+        "lastName": "Brenzikofer",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4317,
+        "firstName": "Alois",
+        "lastName": "Huber",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4318,
+        "firstName": "Sarah",
+        "lastName": "Wyss",
+        "canton": {
+          "abbreviation": "BS"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4319,
+        "firstName": "Michael",
+        "lastName": "Graber",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4320,
+        "firstName": "Emmanuel",
+        "lastName": "Amoos",
+        "canton": {
+          "abbreviation": "VS"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4323,
+        "firstName": "Céline",
+        "lastName": "Weber",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4324,
+        "firstName": "Patricia",
+        "lastName": "von Falkenstein",
+        "canton": {
+          "abbreviation": "BS"
+        },
+        "party": {
+          "shortName": "PLD"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4325,
+        "firstName": "Isabelle",
+        "lastName": "Chassot",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4326,
+        "firstName": "Benjamin",
+        "lastName": "Fischer",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4327,
+        "firstName": "Raphaël",
+        "lastName": "Mahaim",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4329,
+        "firstName": "Daniel",
+        "lastName": "Ruch",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4331,
+        "firstName": "Marc",
+        "lastName": "Jost",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PEV"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4332,
+        "firstName": "Mathilde",
+        "lastName": "Crevoisier Crelier",
+        "canton": {
+          "abbreviation": "JU"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4333,
+        "firstName": "Andreas",
+        "lastName": "Meier",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4334,
+        "firstName": "Thomas",
+        "lastName": "Bläsi",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 4335,
+        "firstName": "Michael",
+        "lastName": "Götte",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10801,
+        "firstName": "Christoph",
+        "lastName": "Riner",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10802,
+        "firstName": "Benjamin",
+        "lastName": "Mühlemann",
+        "canton": {
+          "abbreviation": "GL"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10803,
+        "firstName": "Cyril",
+        "lastName": "Aellen",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10804,
+        "firstName": "Bettina",
+        "lastName": "Balmer",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10805,
+        "firstName": "Pascal",
+        "lastName": "Broulis",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10806,
+        "firstName": "Kris",
+        "lastName": "Vietze",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10807,
+        "firstName": "Simone",
+        "lastName": "Gianini",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10808,
+        "firstName": "Heinz",
+        "lastName": "Theiler",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10809,
+        "firstName": "Nadine",
+        "lastName": "Gobet",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10810,
+        "firstName": "Simon",
+        "lastName": "Michel",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10811,
+        "firstName": "Reto",
+        "lastName": "Nause",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10812,
+        "firstName": "Islam",
+        "lastName": "Alijaj",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10813,
+        "firstName": "Simona",
+        "lastName": "Brizzi",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10814,
+        "firstName": "Pius",
+        "lastName": "Kaufmann",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10815,
+        "firstName": "Regina",
+        "lastName": "Durrer-Knobel",
+        "canton": {
+          "abbreviation": "NW"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10816,
+        "firstName": "Dominik",
+        "lastName": "Blunschy",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10817,
+        "firstName": "Isabelle",
+        "lastName": "Chappuis ",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10818,
+        "firstName": "Nicole",
+        "lastName": "Barandun",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10819,
+        "firstName": "Yvonne",
+        "lastName": "Bürgin",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10820,
+        "firstName": "Jessica",
+        "lastName": "Jaccoud",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10821,
+        "firstName": "David",
+        "lastName": "Roth",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10822,
+        "firstName": "Ursula",
+        "lastName": "Zybach",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10823,
+        "firstName": "Estelle",
+        "lastName": "Revaz",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10824,
+        "firstName": "Anna",
+        "lastName": "Rosenwasser",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10825,
+        "firstName": "Brenda",
+        "lastName": "Tuosto",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10826,
+        "firstName": "Nina",
+        "lastName": "Schläfli",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10827,
+        "firstName": "Jean",
+        "lastName": "Tschopp",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10828,
+        "firstName": "Hasan",
+        "lastName": "Candan",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10829,
+        "firstName": "Martine",
+        "lastName": "Docourt",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10830,
+        "firstName": "Katja",
+        "lastName": "Stettler-Riem",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10831,
+        "firstName": "Martin",
+        "lastName": "Hübscher",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10832,
+        "firstName": "Thomas",
+        "lastName": "Knutti",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10833,
+        "firstName": "Nina",
+        "lastName": "Fehr Düsel",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10834,
+        "firstName": "Ernst",
+        "lastName": "Wandfluh",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10835,
+        "firstName": "Sylvain",
+        "lastName": "Freymond",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10836,
+        "firstName": "Nicolas",
+        "lastName": "Kolly",
+        "canton": {
+          "abbreviation": "FR"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10838,
+        "firstName": "Erich",
+        "lastName": "Vontobel",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "UDF"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10839,
+        "firstName": "Mauro",
+        "lastName": "Poggia",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "MCG"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10840,
+        "firstName": "Yvan",
+        "lastName": "Pahud",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10841,
+        "firstName": "Markus",
+        "lastName": "Schnyder",
+        "canton": {
+          "abbreviation": "GL"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10842,
+        "firstName": "Paolo",
+        "lastName": "Pamini",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10843,
+        "firstName": "Pascal",
+        "lastName": "Schmid",
+        "canton": {
+          "abbreviation": "TG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10844,
+        "firstName": "Roman",
+        "lastName": "Hug",
+        "canton": {
+          "abbreviation": "GR"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10845,
+        "firstName": "Roman",
+        "lastName": "Bürgi",
+        "canton": {
+          "abbreviation": "SZ"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10846,
+        "firstName": "Rémy",
+        "lastName": "Wyssmann",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10847,
+        "firstName": "Thomas",
+        "lastName": "Stettler",
+        "canton": {
+          "abbreviation": "JU"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10848,
+        "firstName": "Walter",
+        "lastName": "Gartmann",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10849,
+        "firstName": "Vroni",
+        "lastName": "Thalmann-Bieri",
+        "canton": {
+          "abbreviation": "LU"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10850,
+        "firstName": "Didier",
+        "lastName": "Calame",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10851,
+        "firstName": "Andrea",
+        "lastName": "Zryd",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 10852,
+        "firstName": "Hans Jörg",
+        "lastName": "Rüegsegger",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 11404,
+        "firstName": "Daniel",
+        "lastName": "Sormanni",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "MCG"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 11505,
+        "firstName": "Giorgio",
+        "lastName": "Fonio",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 11506,
+        "firstName": "Farah",
+        "lastName": "Rumy",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 11507,
+        "firstName": "Patrick",
+        "lastName": "Hässig",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 11508,
+        "firstName": "Maya",
+        "lastName": "Bally",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 14105,
+        "firstName": "Linda",
+        "lastName": "De Ventura",
+        "canton": {
+          "abbreviation": "SH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 14803,
+        "firstName": "Christian",
+        "lastName": "Glur",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 14809,
+        "firstName": "Ueli",
+        "lastName": "Schmezer",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 14810,
+        "firstName": "Fabienne",
+        "lastName": "Stämpfli",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "DETEC",
+              "name": "Département fédéral de l'environnement, des transports, de l'énergie et de la communication (DETEC)"
+            },
+            "function": {
+              "key": "1601003",
+              "name": "Suppléant/e"
+            }
+          },
+          {
+            "department": {
+              "abbreviation": "DDPS",
+              "name": "Département fédéral de la défense, de la protection de la population et des sports (DDPS)"
+            },
+            "function": {
+              "key": "1601001",
+              "name": "Conseillère fédérale / Conseiller fédéral"
+            }
+          }
+        ],
+        "id": 14904,
+        "firstName": "Martin",
+        "lastName": "Pfister",
+        "canton": null,
+        "party": {
+          "shortName": "M-E"
+        },
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 15004,
+        "firstName": "Benoît",
+        "lastName": "Gaillard",
+        "canton": {
+          "abbreviation": "VD"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 15304,
+        "firstName": "Clarence",
+        "lastName": "Chollet",
+        "canton": {
+          "abbreviation": "NE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 15601,
+        "firstName": "Severin",
+        "lastName": "Brüngger",
+        "canton": {
+          "abbreviation": "SH"
+        },
+        "party": {
+          "shortName": "PLR"
+        },
+        "council": {
+          "abbreviation": "CE"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [
+          {
+            "department": {
+              "abbreviation": "ChF",
+              "name": "Chancellerie fédérale"
+            },
+            "function": {
+              "key": "1601005",
+              "name": "Vice-chancelier/vice-chancelière"
+            }
+          }
+        ],
+        "id": 15703,
+        "firstName": "Rachel",
+        "lastName": "Salzmann",
+        "canton": null,
+        "party": null,
+        "council": null
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 16109,
+        "firstName": "Rudi",
+        "lastName": "Berli",
+        "canton": {
+          "abbreviation": "GE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 16706,
+        "firstName": "Edgar",
+        "lastName": "Bischof",
+        "canton": {
+          "abbreviation": "AR"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 16804,
+        "firstName": "Laura",
+        "lastName": "Gantenbein",
+        "canton": {
+          "abbreviation": "SO"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 16902,
+        "firstName": "Arbër",
+        "lastName": "Bullakaj",
+        "canton": {
+          "abbreviation": "SG"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 16905,
+        "firstName": "Loïc",
+        "lastName": "Dobler",
+        "canton": {
+          "abbreviation": "JU"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 17101,
+        "firstName": "Barbara",
+        "lastName": "Portmann",
+        "canton": {
+          "abbreviation": "AG"
+        },
+        "party": {
+          "shortName": "pvl"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 17201,
+        "firstName": "Miriam",
+        "lastName": "Locher",
+        "canton": {
+          "abbreviation": "BL"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 17301,
+        "firstName": "Michèle",
+        "lastName": "Dünki-Bättig",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "PSS"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 17401,
+        "firstName": "Anna-Béatrice",
+        "lastName": "Schmaltz",
+        "canton": {
+          "abbreviation": "ZH"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 17404,
+        "firstName": "Andrea",
+        "lastName": "de Meuron",
+        "canton": {
+          "abbreviation": "BE"
+        },
+        "party": {
+          "shortName": "VERT-E-S"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      },
+      {
+        "activeFederalCouncilMandates": [],
+        "id": 18110,
+        "firstName": "Roberta",
+        "lastName": "Soldati",
+        "canton": {
+          "abbreviation": "TI"
+        },
+        "party": {
+          "shortName": "UDC"
+        },
+        "council": {
+          "abbreviation": "CN"
+        }
+      }
+    ],
+    "party_mapping": {
+      "PSS": "PS",
+      "M-E": "Centre",
+      "VERT-E-S": "Verts",
+      "pvl": "PVL",
+      "PLR": "PLR",
+      "UDC": "UDC",
+      "PEV": "PEV",
+      "PLD": "PLR",
+      "Al": "Verts"
+    }
+  }
+}

@@ -5,14 +5,16 @@
  *   node tools/cli.ts links [--all]          tests every current URL of data/*.json      (npm run links)
  *   node tools/cli.ts seats --show           shows the columns of the OFS file            (npm run seats -- --show)
  *   node tools/cli.ts seats                  writes data/seats-national-council-2023.json (npm run seats)
+ *   node tools/cli.ts parliament             writes data/parliament-current.json        (npm run parliament)
  *
  * Console messages are in French: the maintainers read them in French.
  */
 import { readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { DATA_FILES, type AnySchema, type Referential, type Rule } from "../src/types.ts";
+import { DATA_FILES, PARLIAMENT_FUNCTIONS, type AnySchema, type Parliament, type ParliamentFile, type Referential, type Rule } from "../src/types.ts";
 import { TOOLS_PAGE_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -28,6 +30,7 @@ const HELP = `Outil local de la Boussole citoyenne.
   npm run seats -- --show              montre les colonnes du fichier de l'OFS
   npm run seats [-- --col-name N --col-seats N]
                                        écrit data/${SEATS_FILE}
+  npm run parliament                   écrit data/${DATA_FILES.parliament.file} (clé PARL_API_KEY ou ~/.config/civic-compass/env)
 
 Options communes : --data DOSSIER (par défaut data/).`;
 
@@ -240,6 +243,8 @@ function checkConsistency(d: Referential): string[] {
     if (!abbrs.has(k)) report.add(seatsAt, `parti « ${k} » absent des partis CH (abbr) de parties.json`);
   }
 
+  for (const e of checkParliament(d.parliament, abbrs)) report.add([`data/${DATA_FILES.parliament.file}`], e);
+
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
   const linked = (file: string, entries: { id: string; status: string }[], wanted: readonly string[], needVerified: boolean) => {
@@ -267,7 +272,8 @@ function cmdCheck(dataDir: string): number {
   const d = data as Referential;
   console.log(
     `Référentiel valide : ${d.territories.length} territoires, ${d.parties.length} partis, ${d.state_sites.length} sites officiels, ` +
-      `${d.tools.length} outils, ${d.ballot.items.length} objets en votation, ${d.seats.total} sièges (${d.seats.election}).`,
+      `${d.tools.length} outils, ${d.ballot.items.length} objets en votation, ${d.seats.total} sièges (${d.seats.election}), ` +
+      `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}).`,
   );
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));
@@ -617,6 +623,192 @@ async function cmdSeats(url: string, showColumns: boolean, colName: number | nul
 }
 
 /* ====================================================================== */
+/* parliament                                                              */
+/* ====================================================================== */
+
+/** Current federal composition, from the Parliament's API (ws.parl.ch). Research-0002, owner rulings 2 to 4 and 7. */
+const PARLIAMENT = {
+  endpoint: "https://ws.parl.ch/api/v1/persons",
+  apiDocs: "https://ws.parl.ch/doc/v3/api-docs",
+  termsPage: "https://www.parlament.ch/fr/%C3%BCber-das-parlament/faits-donnees-chifrees/open-data-web-services",
+  attribution: "Source : Services du Parlement de l'Assemblée fédérale, Berne",
+  license:
+    "Conditions des Services Web du Parlement : source « Services du Parlement de l'Assemblée fédérale, Berne » et date de téléchargement affichées, " +
+    "contenu des données inchangé, reproduction non présentée comme une publication officielle",
+  /** Fields asked for: name, council, party, canton and Federal Council function only (no photo, address or date of birth, ruling 7). */
+  include: [
+    "id",
+    "firstName",
+    "lastName",
+    "council.abbreviation",
+    "party.shortName",
+    "canton.abbreviation",
+    "activeFederalCouncilMandates.department.abbreviation",
+    "activeFederalCouncilMandates.department.name",
+    "activeFederalCouncilMandates.function.key",
+    "activeFederalCouncilMandates.function.name",
+  ],
+  pageSize: 300, // the API's maximum
+  keyFile: join(homedir(), ".config", "civic-compass", "env"),
+  /** Seats of each chamber and members of the Federal Council. */
+  sizes: { CN: 200, CE: 46, federalCouncil: 7 },
+};
+
+/**
+ * API party short name -> abbr of a CH party in parties.json (ruling 4: PLD of Basel-Stadt counts
+ * with the PLR, Al of Zug with the Greens, as the OFS does). MCG, Lega, UDF and "-" (no party)
+ * have no CH party on the site and stay as they are.
+ */
+const PARLIAMENT_PARTIES: Record<string, string> = {
+  PSS: "PS", "M-E": "Centre", "VERT-E-S": "Verts", pvl: "PVL", PLR: "PLR", UDC: "UDC", PEV: "PEV",
+  PLD: "PLR", Al: "Verts",
+};
+
+const FEDERAL_COUNCIL_FUNCTIONS: readonly string[] = [
+  PARLIAMENT_FUNCTIONS.president,
+  PARLIAMENT_FUNCTIONS.vicePresident,
+  PARLIAMENT_FUNCTIONS.federalCouncillor,
+];
+type Person = Parliament["persons"][number];
+const holds = (p: Person, fn: string) => p.activeFederalCouncilMandates.some((m) => m.function.key === fn);
+const isFederalCouncillor = (p: Person) => FEDERAL_COUNCIL_FUNCTIONS.some((fn) => holds(p, fn));
+
+function parliamentSummary(p: Parliament): string {
+  const n = (council: string) => p.persons.filter((x) => x.council?.abbreviation === council).length;
+  return `${n("CN")} au Conseil national, ${n("CE")} au Conseil des États, ${p.persons.filter(isFederalCouncillor).length} au Conseil fédéral`;
+}
+
+/** Rules on the generated file: sizes of the bodies, one President, Vice-President and Chancellor, known abbreviations. */
+function checkParliament(p: Parliament, chAbbrs: Set<string>): string[] {
+  const errors: string[] = [];
+  const ids = new Set<number>();
+  for (const x of p.persons) {
+    if (ids.has(x.id)) errors.push(`personne ${x.id} en double`);
+    ids.add(x.id);
+  }
+  for (const council of ["CN", "CE"] as const) {
+    const n = p.persons.filter((x) => x.council?.abbreviation === council).length;
+    if (n !== PARLIAMENT.sizes[council]) errors.push(`${n} membres actifs au ${council} au lieu de ${PARLIAMENT.sizes[council]}`);
+  }
+  const fc = p.persons.filter(isFederalCouncillor);
+  if (fc.length !== PARLIAMENT.sizes.federalCouncil) errors.push(`${fc.length} membres du Conseil fédéral au lieu de ${PARLIAMENT.sizes.federalCouncil}`);
+  for (const x of fc) {
+    const own = x.activeFederalCouncilMandates.filter((m) => FEDERAL_COUNCIL_FUNCTIONS.includes(m.function.key));
+    if (own.length !== 1) errors.push(`${x.firstName} ${x.lastName} : ${own.length} départements comme titulaire au lieu de 1`);
+    if (x.council) errors.push(`${x.firstName} ${x.lastName} : membre du Conseil fédéral et du ${x.council.abbreviation}`);
+  }
+  const roles: [string, string][] = [
+    [PARLIAMENT_FUNCTIONS.president, "président·e de la Confédération"],
+    [PARLIAMENT_FUNCTIONS.vicePresident, "vice-président·e de la Confédération"],
+    [PARLIAMENT_FUNCTIONS.chancellor, "chancelier·ère de la Confédération"],
+  ];
+  for (const [fn, label] of roles) {
+    const n = p.persons.filter((x) => holds(x, fn)).length;
+    if (n !== 1) errors.push(`${n} ${label} au lieu de 1`);
+  }
+  for (const [label, abbr] of Object.entries(p.party_mapping)) {
+    if (!chAbbrs.has(abbr)) errors.push(`party_mapping « ${label} » : parti « ${abbr} » absent des partis CH (abbr) de parties.json`);
+  }
+  return errors;
+}
+
+/** The key from the environment, else from the maintainer's file. Never printed, never written. */
+function parliamentApiKey(): string | null {
+  const fromEnv = process.env.PARL_API_KEY?.trim();
+  if (fromEnv) return fromEnv;
+  let text: string;
+  try {
+    text = readFileSync(PARLIAMENT.keyFile, "utf8");
+  } catch {
+    return null;
+  }
+  const m = /^\s*(?:export\s+)?PARL_API_KEY\s*=\s*["']?([^"'\s]+)["']?\s*$/m.exec(text);
+  return m?.[1] ?? null;
+}
+
+async function cmdParliament(dataDir: string): Promise<number> {
+  const key = parliamentApiKey();
+  if (!key) {
+    console.error(`Clé de l'API du Parlement introuvable : définissez PARL_API_KEY ou écrivez PARL_API_KEY=... dans ${PARLIAMENT.keyFile} (droits 600).`);
+    return 2;
+  }
+  const query = (page: number) => {
+    const url = new URL(PARLIAMENT.endpoint);
+    url.searchParams.set("lang", "fr");
+    url.searchParams.set("q", "eq(active,true)");
+    url.searchParams.set("include", PARLIAMENT.include.join(","));
+    url.searchParams.set("sort", "id:asc");
+    url.searchParams.set("size", String(PARLIAMENT.pageSize));
+    url.searchParams.set("page", String(page));
+    return url;
+  };
+  const persons: unknown[] = [];
+  for (let page = 0; ; page++) {
+    const url = query(page);
+    let body: { content?: unknown; page?: { hasNext?: unknown } };
+    try {
+      const res = await fetch(url, { headers: { "X-API-KEY": key, Accept: "application/json", "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(60_000) });
+      if (!res.ok) {
+        console.error(`Téléchargement impossible : ${res.status} ${res.statusText} (${url}). Rien n'est écrit.`);
+        return 2;
+      }
+      body = (await res.json()) as typeof body;
+    } catch (e) {
+      console.error(`Téléchargement impossible : ${(e as Error).message} (${url}). Rien n'est écrit.`);
+      return 2;
+    }
+    if (!Array.isArray(body.content)) {
+      console.error(`Réponse inattendue de l'API (pas de liste « content ») : rien n'est écrit.`);
+      return 1;
+    }
+    persons.push(...body.content);
+    if (body.page?.hasNext !== true) break;
+  }
+
+  const output = {
+    _readme:
+      "Généré par « npm run parliament » depuis l'API du Parlement (ws.parl.ch) : ne pas modifier à la main, relancer la commande. " +
+      "persons : la réponse de l'API telle quelle (champs demandés par include) ; party_mapping : correspondance, tenue à part, entre les partis de l'API et les partis CH de parties.json.",
+    parliament: {
+      request: `GET ${query(0)} (en-tête X-API-KEY)`,
+      api_docs: PARLIAMENT.apiDocs,
+      terms_page: PARLIAMENT.termsPage,
+      attribution: PARLIAMENT.attribution,
+      license: PARLIAMENT.license,
+      retrieved_on: new Date().toISOString().slice(0, 10),
+      persons,
+      party_mapping: PARLIAMENT_PARTIES,
+    },
+  };
+
+  // Same checks as `npm run check`, before writing: a file that would fail is never written.
+  const file = `data/${DATA_FILES.parliament.file}`;
+  const report = new Report();
+  checkFile(output, DATA_FILES.parliament.schema, file, report);
+  if (report.errors.length) {
+    console.error(report.errors.slice(0, 20).join("\n"));
+    console.error(`\nLa réponse de l'API ne suit pas src/types.ts (${report.errors.length} erreur(s)) : rien n'est écrit.`);
+    return 1;
+  }
+  const parliament = (output as unknown as ParliamentFile).parliament;
+  const parties = JSON.parse(readFileSync(join(dataDir, DATA_FILES.parties.file), "utf8")) as { parties: { territory: string; abbr: string }[] };
+  const errors = checkParliament(parliament, new Set(parties.parties.filter((p) => p.territory === "CH").map((p) => p.abbr)));
+  if (errors.length) {
+    console.error(errors.join("\n"));
+    console.error(`\nComposition inattendue : rien n'est écrit.`);
+    return 1;
+  }
+
+  const out = join(dataDir, DATA_FILES.parliament.file);
+  writeFileSync(out, JSON.stringify(output, null, 2) + "\n", "utf8");
+  console.log(`Écrit ${relative(ROOT, out)} : ${parliament.persons.length} personnes actives, ${parliamentSummary(parliament)}.`);
+  const members = parliament.persons.filter((x) => x.council);
+  const unmapped = [...new Set(members.map((x) => x.party?.shortName ?? "(aucun)"))].filter((l) => !(l in PARLIAMENT_PARTIES));
+  if (unmapped.length) console.log("Sans parti CH correspondant (normal pour les partis absents du site) :", unmapped.join(", "));
+  return 0;
+}
+
+/* ====================================================================== */
 
 function integerOption(v: string | undefined, flag: string): number | null {
   if (v === undefined) return null;
@@ -650,6 +842,8 @@ async function main(): Promise<number> {
       return cmdLinks(resolve(ROOT, values.data), values.all);
     case "seats":
       return cmdSeats(values.url, values.show, integerOption(values["col-name"], "--col-name"), integerOption(values["col-seats"], "--col-seats"));
+    case "parliament":
+      return cmdParliament(resolve(ROOT, values.data));
     default:
       console.error(`Commande inconnue « ${command} ».\n\n${HELP}`);
       return 2;

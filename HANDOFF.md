@@ -20,11 +20,11 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - Le site doit marcher par double clic sur `dist/index.html` : esbuild produit un script classique (iife, pas de `type="module"`) qui contient les données, sans aucun fetch. Les champs réservés aux mainteneurs (`left_right`, `_readme`) sont retirés du script.
 
 ## Fichiers
-- `data/` : référentiel édité à la main (`territories`, `parties`, `state-sites`, `tools`, `ballot` du 29.11.2026), avec pour chaque lien `status`, `checked_on`, `evidence` et `previous_urls`. `seats-national-council-2023.json` est généré par `npm run seats`, jamais modifié à la main.
+- `data/` : référentiel édité à la main (`territories`, `parties`, `state-sites`, `tools`, `ballot` du 29.11.2026), avec pour chaque lien `status`, `checked_on`, `evidence` et `previous_urls`. `seats-national-council-2023.json` est généré par `npm run seats` et `parliament-current.json` par `npm run parliament` (API du Parlement, clé hors du dépôt), jamais modifiés à la main.
 - `src/types.ts` : types et schémas du référentiel, partagés par le site et l'outil.
 - `src/site/` : `main.ts` (entrée), `app.ts` (routage, menu, carte, partis, aides, sites officiels), `ballot.ts` (page votation), `referential.ts` (lecture des données, liens vérifiés seulement), `links.ts` (ids des entrées liées par le site), `dom.ts`.
 - `index.html`, `css/site.css` (+ `css/designsystem.css` et `css/fonts` du DS).
-- `tools/cli.ts` : `check` (schémas, cohérences, avis sur l'ordre gauche-droite), `links` (URL actuelles ; redirection vers un autre domaine = erreur ; 403, 429, délai dépassé et exceptions de certificat `ACCEPTED_CERT_ISSUES` = à vérifier), `seats` (sièges OFS, lignes nationales seulement, total 200 obligatoire). `tools/build.ts` construit `dist/`.
+- `tools/cli.ts` : `check` (schémas, cohérences, avis sur l'ordre gauche-droite), `links` (URL actuelles ; redirection vers un autre domaine = erreur ; 403, 429, délai dépassé et exceptions de certificat `ACCEPTED_CERT_ISSUES` = à vérifier), `seats` (sièges OFS, lignes nationales seulement, total 200 obligatoire), `parliament` (composition actuelle depuis `ws.parl.ch` : réponse brute, correspondance des partis à part, 200 + 46 + 7 obligatoires). `tools/build.ts` construit `dist/`.
 - `.github/workflows/` : `links.yml` (`npm run check`, `npm run links`, à chaque push et chaque lundi) et `pages.yml` (`npm run build`, publie `dist/`).
 
 ## Documents

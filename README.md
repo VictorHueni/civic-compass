@@ -27,7 +27,7 @@ npm run build       # construit dist/ : index.html, css/, js/site.js
 data/*.json        référentiel : partis, sites officiels, outils, territoires, votation
 src/types.ts       types du référentiel, partagés par le site et l'outil
 src/site/*.ts      le site (modules TypeScript)
-tools/cli.ts       outil local : check, links, seats
+tools/cli.ts       outil local : check, links, seats, parliament
 tools/build.ts     construction de dist/
 index.html, css/   page et styles (Design System de la Confédération)
 dist/              site construit (non versionné)
@@ -67,11 +67,14 @@ npm run check                    # contrôle data/*.json : champs, types, id uni
 npm run links                    # teste les URL actuelles de data/*.json (--all : affiche aussi les liens OK)
 npm run seats -- --show          # montre les colonnes du fichier de l'OFS
 npm run seats                    # écrit data/seats-national-council-2023.json
+npm run parliament               # écrit data/parliament-current.json (clé de l'API du Parlement requise)
 ```
 
 `links` ne teste pas les `previous_urls`. Un lien est cassé s'il répond par une erreur, ou s'il redirige vers un autre domaine (par exemple un ancien domaine de parti renvoyé vers une page de recherche) : la commande échoue alors. Les erreurs passagères (réseau, délai dépassé, erreur 5xx) sont retentées avant d'être signalées. Les réponses 403 et 429 (sites qui bloquent les robots) sont à vérifier à la main et ne font pas échouer.
 
-Le fichier des sièges vient de l'OFS (opendata.swiss, élections au Conseil national 2023 ; utilisation libre, mention de la source obligatoire). La commande ne lit que les lignes nationales (`ebene_resultat = Schweiz`), refuse d'écrire si le total n'est pas 200, et produit `data/seats-national-council-2023.json` : il est commité, ne se modifie jamais à la main (relancer la commande), et `npm run check` vérifie qu'il fait toujours 200 sièges. Le site affiche les sièges sur la fiche des partis de la Confédération, avec la mention « Source : Office fédéral de la statistique (OFS) ». Si l'outil ne reconnaît pas les colonnes, relancez avec `--col-name N --col-seats N`. Pour les votations et le Parlement : voir Swissvotes (CSV) et api.openparldata.ch.
+Le fichier des sièges vient de l'OFS (opendata.swiss, élections au Conseil national 2023 ; utilisation libre, mention de la source obligatoire). La commande ne lit que les lignes nationales (`ebene_resultat = Schweiz`), refuse d'écrire si le total n'est pas 200, et produit `data/seats-national-council-2023.json` : il est commité, ne se modifie jamais à la main (relancer la commande), et `npm run check` vérifie qu'il fait toujours 200 sièges. Le site affiche les sièges sur la fiche des partis de la Confédération, avec la mention « Source : Office fédéral de la statistique (OFS) ». Si l'outil ne reconnaît pas les colonnes, relancez avec `--col-name N --col-seats N`. Pour les votations : voir Swissvotes (CSV).
+
+La composition actuelle des chambres fédérales et du Conseil fédéral vient de l'API du Parlement (`ws.parl.ch`, documentation publique sur https://ws.parl.ch/doc/v3/api-docs). L'API demande une clé personnelle : `npm run parliament` la lit dans la variable `PARL_API_KEY` ou dans `~/.config/civic-compass/env` (ligne `PARL_API_KEY=...`, droits 600), hors du dépôt ; elle n'est jamais écrite dans le dépôt, le fichier produit ni la console. La commande ne demande que le nom, le conseil, le parti, le canton et la fonction au Conseil fédéral, garde la réponse de l'API telle quelle (`persons`) et range à part la correspondance avec les partis CH (`party_mapping` : PLD compté avec le PLR, Al avec les Verts). Elle refuse d'écrire si le téléchargement échoue ou si la composition est inattendue ; `npm run check` vérifie ensuite 200 membres au Conseil national, 46 au Conseil des États, 7 au Conseil fédéral, un président, un vice-président et un chancelier de la Confédération, et des abréviations connues. Conditions d'utilisation : source « Services du Parlement de l'Assemblée fédérale, Berne » et date de téléchargement affichées avec chaque chiffre, données inchangées, site présenté comme non officiel. Comme le fichier des sièges, `data/parliament-current.json` est commité et ne se modifie jamais à la main.
 
 ## Design
 
