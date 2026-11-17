@@ -306,6 +306,22 @@ As a maintainer, I want the records kept by hand (cantonal governments, party pr
 - [ ] `npm run check` warns, never fails, for any such record checked more than 180 days ago, and lists them.
 - [ ] A cantonal government changes on the site only after the official result is published and checked (Fribourg: after the second round of 29 November 2026).
 
+### PRD-0001.US-19 · See the members of a party in a federal chamber
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to tap a party on the Confederation page to see who sits for it so that I find my canton's members of that party.
+
+**Acceptance Criteria:**
+- [ ] On `#institutions/ch`, each legend line of the National Council and of the Council of States is a button; tapping it, or the party's sector in the half-circle or the bar, opens the list of that group's members right under the legend; tapping it again closes it, and tapping another party replaces it. One group is open at a time per chamber.
+- [ ] The list shows "Prénom Nom (GE)", sorted by canton then by name; a member under a label other than the party's main one says so ("Paul Roux (BS, PLD)"), and "Autres" names each member's label ("sans parti" when the Parliament records none).
+- [ ] Each list counts as many members as its legend line has seats.
+- [ ] A Grand Conseil does not take this: the OFS table gives counts, not names.
+- [ ] The source line of the page covers the list; each button states whether its list is open (`aria-expanded`), and the half-circle stays decorative for screen readers.
+
 ## 5. Design Considerations
 
 - **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours: palette B2 (§8).

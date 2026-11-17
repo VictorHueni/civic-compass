@@ -269,6 +269,13 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .seat-legend li{display:flex;align-items:center;gap:8px}
 .seat-legend i{flex:none;width:12px;height:12px;border-radius:2px}
 .seat-legend span{flex:1}
+.seat-legend__btn{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;margin:0;padding:0 8px;border:1px solid var(--cc-border);border-radius:4px;background:none;font:inherit;color:inherit;text-align:left;cursor:pointer}
+.seat-legend__btn::after{content:"▾";flex:none;color:var(--cc-muted)}
+.seat-legend__btn[aria-expanded="true"]{background:var(--cc-surface);border-color:var(--cc-text)}
+.seat-legend__btn[aria-expanded="true"]::after{content:"▴"}
+.seat-arc path[data-group],.seat-bar span[data-group]{cursor:pointer}
+.seat-members{margin:12px 0 0}
+.seat-members h4{margin:0 0 4px}
 .source-box{margin:28px 0 0;padding:12px;background:var(--cc-surface);border-radius:6px;font-size:.85rem}
 .source-box p{margin:0 0 6px}.source-box p:last-child{margin:0}
 .note-box{margin:12px 0 6px;padding:10px 12px;background:var(--cc-surface);border-radius:6px;font-size:.85rem}

@@ -46,6 +46,7 @@ const SCREENS: Screen[] = [
   { name: "ui-14-party-card-ge", hash: "#parties/ge", steps: [...Array(2)].map(() => "document.getElementById('next').click()").concat(["document.getElementById('detail').scrollIntoView()", "window.scrollBy(0, -130)"]) },
   { name: "ui-15-institutions-ge-grand-council", hash: "#institutions/ge", steps: ["document.getElementById('t-grand-council').scrollIntoView()", "window.scrollBy(0, -70)"] },
   { name: "ui-16-institutions-ge-bern", hash: "#institutions/ge", steps: ["document.getElementById('t-canton-in-bern').scrollIntoView()", "window.scrollBy(0, -70)"] },
+  { name: "ui-17-institutions-ch-party-members", hash: "#institutions/ch", steps: ["document.querySelector('.seat-legend__btn[data-council=\"CN\"][data-group=\"PLR\"]').click()", "document.querySelector('.seat-legend__btn[data-council=\"CN\"][data-group=\"PLR\"]').scrollIntoView()", "window.scrollBy(0, -180)"] },
 ];
 
 const FRAMES = {
