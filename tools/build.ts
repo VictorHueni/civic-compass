@@ -15,7 +15,7 @@ const DIST = join(ROOT, "dist");
 rmSync(DIST, { recursive: true, force: true });
 
 /** Fields of data/*.json kept for the maintainers only: removed from the bundle, the site never reads them. */
-const MAINTAINER_ONLY = new Set(["_readme", "left_right"]);
+const MAINTAINER_ONLY = new Set(["_readme", "left_right", "request"]);
 const stripMaintainerFields: Plugin = {
   name: "strip-maintainer-fields",
   setup(b) {

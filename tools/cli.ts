@@ -16,6 +16,7 @@ import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
 import { DATA_FILES, PARLIAMENT_FUNCTIONS, type AnySchema, type Parliament, type ParliamentFile, type Referential, type Rule } from "../src/types.ts";
 import { TOOLS_PAGE_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
+import { holds, isFederalCouncillor, membersOf, ownMandates } from "../src/site/parliament.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const USER_AGENT = "Mozilla/5.0 (compatible; civic-compass-link-checker)";
@@ -664,18 +665,8 @@ const PARLIAMENT_PARTIES: Record<string, string> = {
   PLD: "PLR", Al: "Verts",
 };
 
-const FEDERAL_COUNCIL_FUNCTIONS: readonly string[] = [
-  PARLIAMENT_FUNCTIONS.president,
-  PARLIAMENT_FUNCTIONS.vicePresident,
-  PARLIAMENT_FUNCTIONS.federalCouncillor,
-];
-type Person = Parliament["persons"][number];
-const holds = (p: Person, fn: string) => p.activeFederalCouncilMandates.some((m) => m.function.key === fn);
-const isFederalCouncillor = (p: Person) => FEDERAL_COUNCIL_FUNCTIONS.some((fn) => holds(p, fn));
-
 function parliamentSummary(p: Parliament): string {
-  const n = (council: string) => p.persons.filter((x) => x.council?.abbreviation === council).length;
-  return `${n("CN")} au Conseil national, ${n("CE")} au Conseil des États, ${p.persons.filter(isFederalCouncillor).length} au Conseil fédéral`;
+  return `${membersOf(p, "CN").length} au Conseil national, ${membersOf(p, "CE").length} au Conseil des États, ${p.persons.filter(isFederalCouncillor).length} au Conseil fédéral`;
 }
 
 /** Rules on the generated file: sizes of the bodies, one President, Vice-President and Chancellor, known abbreviations. */
@@ -687,13 +678,13 @@ function checkParliament(p: Parliament, chAbbrs: Set<string>): string[] {
     ids.add(x.id);
   }
   for (const council of ["CN", "CE"] as const) {
-    const n = p.persons.filter((x) => x.council?.abbreviation === council).length;
+    const n = membersOf(p, council).length;
     if (n !== PARLIAMENT.sizes[council]) errors.push(`${n} membres actifs au ${council} au lieu de ${PARLIAMENT.sizes[council]}`);
   }
   const fc = p.persons.filter(isFederalCouncillor);
   if (fc.length !== PARLIAMENT.sizes.federalCouncil) errors.push(`${fc.length} membres du Conseil fédéral au lieu de ${PARLIAMENT.sizes.federalCouncil}`);
   for (const x of fc) {
-    const own = x.activeFederalCouncilMandates.filter((m) => FEDERAL_COUNCIL_FUNCTIONS.includes(m.function.key));
+    const own = ownMandates(x);
     if (own.length !== 1) errors.push(`${x.firstName} ${x.lastName} : ${own.length} départements comme titulaire au lieu de 1`);
     if (x.council) errors.push(`${x.firstName} ${x.lastName} : membre du Conseil fédéral et du ${x.council.abbreviation}`);
   }
