@@ -6,7 +6,7 @@ import { $, SVG_NS, escapeHtml as esc, host, normalize, swissDate } from "./dom.
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
 import { allCantons, ballot, cantonalGovernments, cantonalParliaments, cantons, federal, parliament, stateSiteUrl, tools, type Level } from "./referential.ts";
 import { cantonRow } from "./cantonal-parliaments.ts";
-import { cantonalStanding, governmentSources, siteName } from "./cantonal-standing.ts";
+import { NBSP, cantonalStanding, countOf, governmentSources, siteName } from "./cantonal-standing.ts";
 import { isFederalCouncillor, mainLabel, membersOf, partyLabel, partyMembers } from "./parliament.ts";
 import { presidencyFact } from "./presidency.ts";
 import type { CantonBallot } from "../types.ts";
@@ -282,7 +282,7 @@ function renderHemicycle(): void {
  * composition. Members elected under a regional label are named: "27 sièges, dont 1 PLD Bâle-Ville".
  */
 function federalStanding(abbr: string): [string, string][] {
-  const seatCount = (n: number) => (n ? n + (n > 1 ? " sièges" : " siège") : "Aucun siège");
+  const seatCount = (n: number) => (n ? countOf(n, "siège", "sièges") : "Aucun siège");
   const main = mainLabel(parliament, abbr);
   const chamber = (council: "CN" | "CE") => {
     const members = partyMembers(parliament, membersOf(parliament, council), abbr);
@@ -292,7 +292,7 @@ function federalStanding(abbr: string): [string, string][] {
       const key = partyLabel(m) + (m.canton ? " " + cantonName(m.canton.abbreviation) : "");
       regional.set(key, (regional.get(key) ?? 0) + 1);
     }
-    return seatCount(members.length) + (regional.size ? ", dont " + [...regional].map(([k, n]) => n + " " + k).join(", ") : "");
+    return seatCount(members.length) + (regional.size ? ", dont " + [...regional].map(([k, n]) => n + NBSP + k).join(", ") : "");
   };
   const councillors = partyMembers(parliament, parliament.persons.filter(isFederalCouncillor), abbr);
   return [
