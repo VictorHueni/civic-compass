@@ -68,12 +68,16 @@ const standing = (id: string, abbr: string, g: CantonalGovernment | null = gover
 test("a section of a CH party: government count, Grand Conseil seats with the year, the canton's federal seats", () => {
   const s = standing("ps-ge", "PS GE");
   assert.deepEqual(s.rows, [
-    ["Conseil d'État", "1 sur 4"],
+    ["Conseil d'État", "1 membre sur 4"],
     ["Grand Conseil (élection 2023)", "1 siège sur 100"],
     ["Conseil national (GE)", "2 sur 4"],
     ["Conseil des États (GE)", "1 sur 2"],
   ]);
   assert.deepEqual([s.government, s.grandCouncil, s.federal], [true, true, true]);
+});
+
+test("the government line names members, so it does not read as a rank (owner, 2026-11-17)", () => {
+  assert.deepEqual(standing("plr-ge", "PLR GE").rows[0], ["Conseil d'État", "2 membres sur 4"]);
 });
 
 test("a sourced zero is written out", () => {
