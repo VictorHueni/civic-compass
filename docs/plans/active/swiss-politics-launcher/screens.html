@@ -1,7 +1,7 @@
-<!-- summary: 9 screens · 4 pages, 1 sheet, 1 menu -->
+<!-- summary: 13 screens · 5 pages, 1 sheet, 1 menu -->
 <div class="block">
   <h2>What the voter sees</h2>
-  <p class="note">Four pages, one territory sheet and one menu, all at phone width (390 px), captured from the built site. Every page reads the territory chosen once (US-05) and shows only what concerns it. The copy is the real French copy of the site.</p>
+  <p class="note">Five pages, one territory sheet and one menu, all at phone width (390 px), captured from the built site. Every page reads the territory chosen once (US-05) and shows only what concerns it. The copy is the real French copy of the site.</p>
   <div class="scroll">
     <table>
       <thead><tr><th>Screen</th><th>Story</th><th>Address</th><th>Reads</th></tr></thead>
@@ -9,10 +9,11 @@
         <tr><td class="key">Ballot list</td><td>US-01</td><td class="nw"><span class="mono">#ballot/&lt;territory&gt;</span></td><td>ballot items, cantonal items of the territory</td></tr>
         <tr><td class="key">Ballot item, 3 tabs</td><td>US-02, US-03, US-04</td><td class="nw"><span class="mono">#ballot/&lt;territory&gt;</span></td><td>one ballot item, its sourced party recommendations, tool and state site URLs by id</td></tr>
         <tr><td class="key">Territory sheet</td><td>US-05</td><td class="nw">over any page</td><td>the 26 cantons, which are covered, which vote on a cantonal item</td></tr>
-        <tr><td class="key">Parties</td><td>US-06</td><td class="nw"><span class="mono">#parties/&lt;territory&gt;</span></td><td>parties of the territory, in file order</td></tr>
+        <tr><td class="key">Parties</td><td>US-06, US-15</td><td class="nw"><span class="mono">#parties/&lt;territory&gt;</span></td><td>parties of the territory, in file order; for a CH party, its federal members and seats from the Parliament's data</td></tr>
+        <tr><td class="key">Qui gouverne et qui siège</td><td>US-13, US-14 (federal members of a canton)</td><td class="nw"><span class="mono">#institutions/&lt;territory&gt;</span></td><td>the Parliament's data: Federal Council, both chambers; for a canton, its members in Bern and its Grand Conseil site</td></tr>
         <tr><td class="key">Decision aids</td><td>US-07</td><td class="nw"><span class="mono">#tools/&lt;territory&gt;</span></td><td>tools listed by id, the territory's voting page</td></tr>
         <tr><td class="key">Official sites</td><td>US-08</td><td class="nw"><span class="mono">#state/&lt;territory&gt;</span></td><td>state sites of the territory with a URL</td></tr>
-        <tr><td class="key">Menu</td><td>US-08</td><td class="nw">over any page</td><td>four state-site shortcuts for the territory</td></tr>
+        <tr><td class="key">Menu</td><td>US-08, US-13</td><td class="nw">over any page</td><td>the institutions page, then three state-site shortcuts for the territory</td></tr>
       </tbody>
     </table>
   </div>
@@ -55,6 +56,26 @@
 </div>
 
 <div class="block">
+  <h2>Party card of the Confederation (US-15)</h2>
+  <p class="note">A CH party's card adds three lines from the Parliament's data, current composition: its Federal Council members by name ("Aucun membre" otherwise), its National Council and Council of States seats. Members elected under a regional label are named with their canton ("dont 1 PLD Bâle-Ville", "dont 1 Al Zoug"). Under the card: "Élus : Services du Parlement de l'Assemblée fédérale, Berne, données du 17.11.2026". The presidency line comes with the hand-kept records (US-18); a cantonal section's card is unchanged for now.</p>
+  {{FIGURE:ui-13-party-card-ch|Phone screen of the card Parti libéral-radical: Position Centre droit, Conseil fédéral Ignazio Cassis and Karin Keller-Sutter, Conseil national 27 sièges dont 1 PLD Bâle-Ville, Conseil des États 12 sièges, the Parliament source line and a link Site du parti plr.ch|Card of the PLR, Confederation}}
+</div>
+
+<div class="block">
+  <h2>Qui gouverne et qui siège: Confederation (US-13)</h2>
+  <p class="note">The Federal Council first: the 7 members with party and department, the President then the Vice-President marked with the API's labels, the others by name, a summary by party, and the Federal Chancellor on a line of their own. Department and function names are shown as the Parliament gives them, unchanged.</p>
+  {{FIGURE:ui-10-institutions-ch|Phone screen "Qui gouverne et qui siège" for the Confederation: Conseil fédéral, 7 membres, with Guy Parmelin UDC marked Président/e de la Confédération and Ignazio Cassis PLR marked Vice-président/e, each with the full name of the department|Institutions, Confederation, Federal Council}}
+  <p class="note">Then the National Council as a half-circle proportional to its 200 seats and the Council of States as a bar of its 46 seats, both left to right in palette B2, each with a legend of seats per party. Parties without a colour of their own fold into "Autres", whose legend names them; regional labels are named ("PLR (dont 1 PLD)"). The charts are decorative for screen readers: the legend carries the figures. Under them, the Parliament's attribution with the download date, the statement that the site is not official, and a link to parlament.ch.</p>
+  {{FIGURE:ui-11-institutions-ch-chambers|Phone screen of the National Council: a half-circle of 200 seats in eight colours, Verts on the left and UDC on the right, 200 sièges in the centre, and a legend Verts (dont 1 Al) 23, PS 41, PVL 11, Centre 29, PEV 2, PLR (dont 1 PLD) 27, UDC 62, Autres (MCG 2, UDF 2, Lega 1) 5|Institutions, Confederation, National Council}}
+</div>
+
+<div class="block">
+  <h2>Qui gouverne et qui siège: a canton (US-14, first part)</h2>
+  <p class="note">For a canton, only what is sourced today: its members of the Council of States and of the National Council, by name, grouped by party from left to right, then the canton's Grand Conseil site when the referential has one. The Conseil d'État and the Grand Conseil sections come with US-14 and US-17; until then they are not shown, never as "unknown".</p>
+  {{FIGURE:ui-12-institutions-ge|Phone screen for Geneva: Les élus du canton de Genève à Berne, Conseil des États (2) Carlo Sommaruga PS and Mauro Poggia MCG, Conseil national (12) grouped by party, Verts, PS, Centre, PLR, UDC, MCG|Institutions, Geneva}}
+</div>
+
+<div class="block">
   <h2>Decision aids (US-07)</h2>
   <p class="note">Three steps: Comprendre, Comparer, Décider. Each tool shows its name, what it does and its host; the last step links the territory's voting page and the next ballot.</p>
   {{FIGURE:ui-07-tools|Phone screen "Aides à décider", step 1 Comprendre with cards for Vimentis, easyvote and Année politique suisse, each with a CH badge and its host|Decision aids, Geneva}}
@@ -68,8 +89,8 @@
 
 <div class="block">
   <h2>Menu (US-08)</h2>
-  <p class="note">A hamburger on a phone, open on a computer. Two groups: "Je veux..." (the three pages) and "Voir ce que fait l'État" (Lire une loi, Trouver un élu, Voir les résultats, Consulter les chiffres, Tous les sites), whose links follow the territory.</p>
-  {{FIGURE:ui-09-menu|Phone screen with the menu open: group Je veux with three page links, group Voir ce que fait l'État with four external shortcuts to ge.ch, ge.ch/grandconseil, ge.ch/elections and bfs.admin.ch, and Tous les sites|Menu, Geneva}}
+  <p class="note">A hamburger on a phone, open on a computer. Two groups: "Je veux..." (the three pages) and "Voir ce que fait l'État": "Qui gouverne et qui siège" (the institutions page, which replaced the external "Trouver un élu" link), then Lire une loi, Voir les résultats, Consulter les chiffres and Tous les sites, whose links follow the territory.</p>
+  {{FIGURE:ui-09-menu|Phone screen with the menu open: group Je veux with three page links, group Voir ce que fait l'État with Qui gouverne et qui siège, three external shortcuts to ge.ch, ge.ch/elections and bfs.admin.ch, and Tous les sites|Menu, Geneva}}
 </div>
 
 <div class="block">
@@ -86,6 +107,13 @@
         <li>Uncovered cantons stay on the map, marked "Bientôt" and disabled.<span class="refs"><span class="chip ref">PRD-0001.US-05</span></span></li>
         <li>Keyboard access to the half-circle, the map and the sheet, ARIA labels on sectors and tiles, focus returned on close.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
         <li>Editorial tone: airy, numbered lists, no long dash in any text.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+        <li>"Qui gouverne et qui siège" replaces the external "Trouver un élu" link in the menu.<span class="refs"><span class="chip ref">PRD-0001.US-13</span></span></li>
+        <li>Party colours follow palette B2, at most 8 per chart; a party keeps its colour on every page and the others fold into "Autres"; a chart always comes with its legend and figures.<span class="refs"><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The federal chambers show the current composition, the National Council as a half-circle proportional to its seats; the parties half-circle stays one equal sector per party.<span class="refs"><span class="chip ref">PRD-0001.US-13</span><span class="chip ref">Research-0002, ruling 1</span></span></li>
+        <li>Every figure from the Parliament carries its attribution and download date, and the page states the site is not official.<span class="refs"><span class="chip ref">PRD-0001.US-13</span><span class="chip ref">Research-0002, ruling 3</span></span></li>
+        <li>Names, party, canton and function only, for the Federal Council and a canton's members in Bern.<span class="refs"><span class="chip ref">Research-0002, ruling 7</span></span></li>
+        <li>PLD counts with the PLR and Al with the Greens, and the card or legend names them.<span class="refs"><span class="chip ref">PRD-0001.US-15</span><span class="chip ref">Research-0002, ruling 4</span></span></li>
+        <li>A section whose data is not sourced yet is not shown.<span class="refs"><span class="chip ref">PRD-0001.US-14</span></span></li>
       </ul>
     </section>
     <section class="open">
@@ -93,6 +121,8 @@
       <ul>
         <li>The exact countdown wording and the breakpoint where the menu unfolds.</li>
         <li>The order of the tools inside each step of the decision aids.</li>
+        <li>The order of the Federal Council members after the President and the Vice-President.</li>
+        <li>Whether tapping a party on the institutions half-circle lists its members (on the mockup, not in US-13).</li>
       </ul>
     </section>
   </div>

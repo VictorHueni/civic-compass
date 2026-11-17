@@ -4,25 +4,41 @@ title class-01: Modules of the site and of the tooling (PRD-0001)
 
 package "src/site (bundled into dist/js/site.js)" {
   class "main.ts" as main <<entry>> {
-    starts app and ballot
+    starts app, ballot, institutions
   }
   class "app.ts" as app {
     +start()
     +scope() : level, canton
     +onRender(listener)
-    +cantonName(code)
+    +cantonName(code), ofCanton(code)
     routing, menu, territory sheet
-    parties half-circle, aids, state sites
+    parties half-circle and card
+    aids, state sites
   }
   class "ballot.ts" as ballot {
     +start()
     ballot list, item page
     Comprendre / Comparer / Décider
   }
+  class "institutions.ts" as inst {
+    +start()
+    Federal Council, chambers
+    members of a canton in Bern
+  }
+  class "parliament.ts" as parl {
+    +membersOf(), isFederalCouncillor()
+    +seatGroups(), partyMembers()
+    +mainLabel(), ownMandates()
+    pure, no DOM, no data import
+  }
+  class "party-colours.ts" as colours {
+    +partyColour(abbr)
+    palette B2, "Autres"
+  }
   class "referential.ts" as ref {
     +federal : Level
     +cantons : Record<code, Canton>
-    +tools, ballot, allCantons
+    +tools, ballot, parliament
     +stateSiteUrl(id), toolUrl(id)
   }
   class "links.ts" as links {
@@ -30,21 +46,22 @@ package "src/site (bundled into dist/js/site.js)" {
     +TOOL_IDS, TOOLS_PAGE_IDS
   }
   class "dom.ts" as dom {
-    +$(), escapeHtml(), normalize(), host()
+    +$(), escapeHtml(), normalize()
+    +host(), swissDate()
   }
 }
 
 class "src/types.ts" as types {
   interfaces of the referential
   one schema per interface
-  +DATA_FILES
+  +DATA_FILES, PARLIAMENT_FUNCTIONS
 }
 
 package "tools (run by Node 26 from .ts)" {
   class "cli.ts" as cli {
     check : schema + cross checks
     links : test current URLs
-    seats : OFS 2023 seats
+    parliament : fetch ws.parl.ch
   }
   class "build.ts" as build {
     esbuild IIFE bundle
@@ -54,23 +71,30 @@ package "tools (run by Node 26 from .ts)" {
 
 class "data/*.json" as data <<referential>> {
   territories, parties, state-sites
-  tools, ballot
+  tools, ballot, parliament-current
 }
 
 main --> app
 main --> ballot
+main --> inst
 ballot --> app : scope(), onRender()
+inst --> app : scope(), onRender()
 app --> ref
 ballot --> ref
+inst --> ref
+app --> parl
+inst --> parl
+inst --> colours
 app --> links
 ballot --> links
-app --> dom
-ballot --> dom
+inst --> links
 ref --> types : types only
+parl --> types : types only
 ref ..> data : imported at build time
 cli --> types : schemas
 cli --> links : ids the site needs
-cli ..> data : reads
+cli --> parl : same reading as the site
+cli ..> data : reads, writes parliament-current
 build ..> main : bundles
 
 @enduml
