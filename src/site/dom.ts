@@ -15,6 +15,12 @@ export function normalize(s: string): string {
   return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+/** "2026-11-17" -> "17.11.2026" */
+export function swissDate(iso: string): string {
+  const [y, m, d] = iso.split("-");
+  return d + "." + m + "." + y;
+}
+
 /** "https://www.ge.ch/" -> "ge.ch" */
 export function host(url: string): string {
   return url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");

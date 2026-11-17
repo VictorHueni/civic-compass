@@ -64,3 +64,16 @@ export function seatGroups(parliament: Parliament, persons: ParliamentPerson[], 
   }
   return groups;
 }
+
+/** Persons mapped to the site party `abbr` (PLD and Al included with the PLR and the Greens). */
+export function partyMembers(parliament: Parliament, persons: ParliamentPerson[], abbr: string): ParliamentPerson[] {
+  return persons.filter((p) => parliament.party_mapping[partyLabel(p)] === abbr);
+}
+/** The API label most persons of the site party `abbr` carry ("PLR"); null when the party has nobody. The others are regional labels ("PLD"). */
+export function mainLabel(parliament: Parliament, abbr: string): string | null {
+  const counts = new Map<string, number>();
+  for (const p of partyMembers(parliament, parliament.persons, abbr)) counts.set(partyLabel(p), (counts.get(partyLabel(p)) ?? 0) + 1);
+  let best: string | null = null;
+  for (const [label, n] of counts) if (best === null || n > (counts.get(best) as number)) best = label;
+  return best;
+}

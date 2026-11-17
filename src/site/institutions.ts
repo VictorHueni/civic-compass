@@ -5,21 +5,16 @@
  * chambers (the part of US-14 already sourced); its government and parliament come with US-14.
  * Every figure carries the Parliament's attribution and the download date (terms of use).
  */
-import { $, escapeHtml as esc, host } from "./dom.ts";
+import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
 import { ofCanton, onRender, scope } from "./app.ts";
 import { STATE_SITE_IDS } from "./links.ts";
 import { cantons, federal, parliament, stateSiteUrl } from "./referential.ts";
 import { hasColour, partyColour } from "./party-colours.ts";
-import { holds, isFederalCouncillor, membersOf, ownMandates, partyLabel, seatGroups, type SeatGroup } from "./parliament.ts";
+import { holds, isFederalCouncillor, mainLabel, membersOf, ownMandates, partyLabel, seatGroups, type SeatGroup } from "./parliament.ts";
 import { PARLIAMENT_FUNCTIONS, type ParliamentPerson } from "../types.ts";
 
 /** CH parties with a colour of their own, from left to right; the others fold into "Autres". */
 const ORDER: string[] = federal.parties.map((p) => p.abbr).filter(hasColour);
-/** For each party of the site, its main API label nationally ("PLR"); the others are named ("dont 1 PLD"). */
-const MAIN_LABEL = new Map<string, string>();
-for (const g of seatGroups(parliament, parliament.persons, ORDER)) {
-  if (g.abbr !== null && g.labels[0]) MAIN_LABEL.set(g.abbr, g.labels[0][0]);
-}
 
 function labelName(label: string): string {
   return label === "-" ? "sans parti" : label;
@@ -29,19 +24,14 @@ function personParty(p: ParliamentPerson): string {
   const label = partyLabel(p);
   const abbr = parliament.party_mapping[label];
   if (abbr === undefined) return labelName(label);
-  const main = MAIN_LABEL.get(abbr);
-  return main === undefined || main === label ? abbr : abbr + " (" + label + ")";
+  const main = mainLabel(parliament, abbr);
+  return main === null || main === label ? abbr : abbr + " (" + label + ")";
 }
 function fullName(p: ParliamentPerson): string {
   return p.firstName + " " + p.lastName;
 }
 function byName(a: ParliamentPerson, b: ParliamentPerson): number {
   return a.lastName.localeCompare(b.lastName, "fr") || a.firstName.localeCompare(b.firstName, "fr");
-}
-/** "2026-11-17" -> "17.11.2026" */
-function swissDate(iso: string): string {
-  const [y, m, d] = iso.split("-");
-  return d + "." + m + "." + y;
 }
 function seatWord(n: number): string {
   return n > 1 ? "sièges" : "siège";
@@ -50,7 +40,7 @@ function seatWord(n: number): string {
 /* ---------- Seats: legend, half-circle, bar ---------- */
 function groupName(g: SeatGroup): string {
   if (g.abbr === null) return "Autres (" + g.labels.map(([l, n]) => labelName(l) + " " + n).join(", ") + ")";
-  const others = g.labels.filter(([l]) => l !== MAIN_LABEL.get(g.abbr as string));
+  const others = g.labels.filter(([l]) => l !== mainLabel(parliament, g.abbr as string));
   return others.length ? g.abbr + " (dont " + others.map(([l, n]) => n + " " + l).join(", ") + ")" : g.abbr;
 }
 function legend(groups: SeatGroup[]): string {

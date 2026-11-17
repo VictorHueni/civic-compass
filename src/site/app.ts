@@ -2,9 +2,10 @@
  * Routing, menu, territory picker (canton map), parties hemicycle, decision aids and official sites.
  * The ballot page (ballot.ts) and the institutions page (institutions.ts) re-render through onRender().
  */
-import { $, SVG_NS, escapeHtml as esc, host, normalize } from "./dom.ts";
+import { $, SVG_NS, escapeHtml as esc, host, normalize, swissDate } from "./dom.ts";
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
-import { allCantons, ballot, cantons, federal, nationalSeats, seats as seatsInfo, stateSiteUrl, tools, type Level } from "./referential.ts";
+import { allCantons, ballot, cantons, federal, parliament, stateSiteUrl, tools, type Level } from "./referential.ts";
+import { isFederalCouncillor, mainLabel, membersOf, partyLabel, partyMembers } from "./parliament.ts";
 import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
@@ -273,26 +274,48 @@ function renderHemicycle(): void {
   g2.textContent = "Droite →";
 }
 
+/**
+ * Federal Council members, National Council and Council of States seats of a CH party, current
+ * composition. Members elected under a regional label are named: "27 sièges, dont 1 PLD Bâle-Ville".
+ */
+function federalStanding(abbr: string): [string, string][] {
+  const seatCount = (n: number) => (n ? n + (n > 1 ? " sièges" : " siège") : "Aucun siège");
+  const main = mainLabel(parliament, abbr);
+  const chamber = (council: "CN" | "CE") => {
+    const members = partyMembers(parliament, membersOf(parliament, council), abbr);
+    const regional = new Map<string, number>();
+    for (const m of members) {
+      if (partyLabel(m) === main) continue;
+      const key = partyLabel(m) + (m.canton ? " " + cantonName(m.canton.abbreviation) : "");
+      regional.set(key, (regional.get(key) ?? 0) + 1);
+    }
+    return seatCount(members.length) + (regional.size ? ", dont " + [...regional].map(([k, n]) => n + " " + k).join(", ") : "");
+  };
+  const councillors = partyMembers(parliament, parliament.persons.filter(isFederalCouncillor), abbr);
+  return [
+    ["Conseil fédéral", councillors.length ? councillors.map((m) => m.firstName + " " + m.lastName).join(", ") : "Aucun membre"],
+    ["Conseil national", chamber("CN")],
+    ["Conseil des États", chamber("CE")],
+  ];
+}
+
 function renderDetail(): void {
   const list = partyList();
   const p = list[index];
   if (!p) return;
   const facts: [string, string][] = [["Position", p.position]];
   // A fact is shown only once it has a source (PRD-0001 goal 2).
-  const seatCount = (n: number) => (n ? n + (n > 1 ? " sièges" : " siège") : "Aucun siège");
   const founded = p.facts?.founded?.source ? p.facts.founded.value : null;
-  const fcSeats = p.facts?.federal_council_seats?.source ? p.facts.federal_council_seats.value : null;
-  // National Council seats are a national result: shown for the parties of the Confederation only.
-  const ncSeats = p.territory === "CH" ? nationalSeats(p.abbr) : null;
   if (founded !== null) facts.push(["Fondé en", String(founded)]);
-  if (ncSeats !== null) facts.push([seatsInfo.election, seatCount(ncSeats)]);
-  if (fcSeats !== null) facts.push(["Conseil fédéral", seatCount(fcSeats)]);
+  // A party of the Confederation: who sits for it today, from the Parliament's data (US-15).
+  const federalRows = p.territory === "CH" ? federalStanding(p.abbr) : [];
+  facts.push(...federalRows);
   const dl = facts.map((f) => '<div class="fact-sheet__row"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
-  // The terms of use of the OFS data require the source next to the figure.
-  const source =
-    ncSeats !== null
-      ? '<p class="fact-sheet__source"><a href="' + esc(seatsInfo.dataset_page) + '" target="_blank" rel="noopener noreferrer">' + esc(seatsInfo.attribution) + "</a>, " + esc(seatsInfo.election.toLowerCase()) + ".</p>"
-      : "";
+  // The terms of use of the Parliament's data require the source and the download date next to the figures.
+  const source = federalRows.length
+    ? '<p class="fact-sheet__source">Élus : <a href="' + esc(stateSiteUrl(STATE_SITE_IDS.parliament)) + '" target="_blank" rel="noopener noreferrer">' +
+      esc(parliament.attribution.replace(/^Source : /, "")) + "</a>, données du " + swissDate(parliament.retrieved_on) + ".</p>"
+    : "";
   let link: string;
   if (p.url) {
     link = '<a class="fact-sheet__link" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(host(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
