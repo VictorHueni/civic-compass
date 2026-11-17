@@ -1,6 +1,6 @@
 /*
- * The lines of a cantonal party's card (PRD-0001 US-15): its members in the canton's government (count out of
- * the total), its Grand Conseil seats at the latest election (OFS, with the year), and the canton's National
+ * The lines of a cantonal party's card (PRD-0001 US-15): its members in the canton's government ("2 membres
+ * sur 7"), its Grand Conseil seats at the latest election (OFS, with the year), and the canton's National
  * Council and Council of States seats it holds (Parliament, current composition).
  *
  * A line appears only when its data is sourced: a canton without a government kept by hand, or a party without
@@ -68,7 +68,8 @@ export function cantonalStanding(
 
   if (government && government.members.length) {
     const n = government.members.filter((m) => m.party === party.id).length;
-    rows.push([government.body, (n ? String(n) : "Aucun membre") + " sur " + government.members.length]);
+    // "2 membres sur 7", never "2 sur 7": next to the rank in the half-circle ("3 sur 7"), a bare count reads as one (owner, 2026-11-17).
+    rows.push([government.body, (n ? n + (n > 1 ? " membres" : " membre") : "Aucun membre") + " sur " + government.members.length]);
     out.government = true;
   }
 
