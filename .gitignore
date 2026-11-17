@@ -1,2 +1,5 @@
 node_modules/
 dist/
+
+# Session handoffs (agent-handoff skill): local working state, never committed
+var/handoffs/
