@@ -55,3 +55,85 @@ export function cantonSeats(p: CantonalParliaments, code: string, row: CantonalP
   parties.sort((a, b) => b.seats - a.seats);
   return { year, total, parties };
 }
+
+/** OFS column -> abbr of the CH party it counts, for a column without a party of the canton (NE "Le Centre"). */
+const OFS_TO_CH: Record<string, string> = { PLR: "PLR", PS: "PS", UDC: "UDC", "Le Centre": "Centre", "VERT-E-S": "Verts", PVL: "PVL", PEV: "PEV" };
+/** The OFS column of the parties the table counts under "Autres". */
+export const OTHERS_COLUMN = "Autres";
+/** Name of the OFS "Autres" column's seats inside the grey group. */
+export const OTHER_LISTS = "autres listes";
+
+export interface CouncilGroup {
+  /** "party": a CH party colour (abbr); "eighth": the 8th colour; "others": grey. */
+  tone: "party" | "eighth" | "others";
+  /** The CH abbr whose colour the group takes ("PLR"), null for "eighth" and "others". */
+  abbr: string | null;
+  /** The name shown: "PLR", "MCG"; for "others", every part with its seats ("LJS 10", "autres listes 5"). */
+  name: string;
+  parts: [string, number][];
+  seats: number;
+}
+
+/** A canton party's abbr without the canton ("PLR GE" -> "PLR", "POP VD" -> "POP"). */
+export function siteAbbr(abbr: string, code: string): string {
+  return abbr.endsWith(" " + code) ? abbr.slice(0, -code.length - 1) : abbr;
+}
+
+/**
+ * Seats of a Grand Conseil grouped for its half-circle, from left to right (PRD-0001 §8, palette B2 and its 8th colour):
+ * a party counted with a CH party that has a colour takes it; the largest of the others takes the 8th colour;
+ * the rest, and the OFS "Autres", fold into one grey group at the end.
+ *
+ * `cantonParties` are the canton's parties in the order of parties.json (left to right); `colouredOrder`
+ * the CH abbrs that have a colour, from left to right.
+ */
+export function councilGroups(
+  p: CantonalParliaments,
+  code: string,
+  row: CantonalParliamentRow,
+  cantonParties: readonly { id: string; abbr: string }[],
+  colouredOrder: readonly string[],
+): CouncilGroup[] {
+  const chOf = (abbr: string) => (colouredOrder.includes(abbr) ? abbr : null);
+  const items = cantonSeats(p, code, row).parties.map((x) => {
+    const at = cantonParties.findIndex((c) => c.id === x.partyId);
+    const name = at >= 0 ? siteAbbr(cantonParties[at].abbr, code) : (OFS_TO_CH[x.column] ?? x.column);
+    const abbr = x.column === OTHERS_COLUMN && at < 0 ? null : chOf(name);
+    let rank = at;
+    if (at < 0 && abbr) {
+      // A CH party the canton has no entry for: before the first canton party further right.
+      const next = cantonParties.findIndex((c) => colouredOrder.indexOf(chOf(siteAbbr(c.abbr, code)) ?? "") > colouredOrder.indexOf(abbr));
+      rank = (next < 0 ? cantonParties.length : next) - 0.5;
+    }
+    return { name, abbr, rank, seats: x.seats, other: x.column === OTHERS_COLUMN && at < 0 };
+  });
+  const free = items.filter((x) => !x.abbr && !x.other).sort((a, b) => b.seats - a.seats || a.rank - b.rank);
+  const eighth = free[0];
+  const groups: (CouncilGroup & { rank: number })[] = items
+    .filter((x) => x.abbr || x === eighth)
+    .map((x) => ({ tone: x.abbr ? "party" : "eighth", abbr: x.abbr, name: x.name, parts: [[x.name, x.seats]], seats: x.seats, rank: x.rank }) as CouncilGroup & { rank: number })
+    .sort((a, b) => a.rank - b.rank);
+  const rest = items.filter((x) => !x.abbr && x !== eighth).sort((a, b) => Number(a.other) - Number(b.other) || b.seats - a.seats);
+  const out: CouncilGroup[] = groups.map(({ rank: _, ...g }) => g);
+  if (rest.length) {
+    out.push({
+      tone: "others",
+      abbr: null,
+      name: "Autres",
+      parts: rest.map((x) => [x.other ? OTHER_LISTS : x.name, x.seats]),
+      seats: rest.reduce((n, x) => n + x.seats, 0),
+    });
+  }
+  return out;
+}
+
+/** The OFS note naming the lists counted as "Autres" in a canton ("FR: La Broye c'est vous 1 mandat; ..."), without the canton code. */
+export function othersNote(p: CantonalParliaments, code: string): string | null {
+  const start = p.notes.findIndex((n) => /^4\)/.test(n.trim()));
+  if (start < 0) return null;
+  for (const n of p.notes.slice(start + 1)) {
+    if (/^\d+\)/.test(n.trim())) break;
+    if (n.startsWith(code + ":")) return n.slice(code.length + 1).trim();
+  }
+  return null;
+}

@@ -2,9 +2,10 @@
  * Tests of the reading of data/cantonal-parliaments.json (src/site/cantonal-parliaments.ts). Run: npm test.
  */
 import { strict as assert } from "node:assert";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { cantonRow, cantonSeats, plainLabel, seatCount } from "../src/site/cantonal-parliaments.ts";
-import type { CantonalParliaments, Party, Territory } from "../src/types.ts";
+import { cantonRow, cantonSeats, councilGroups, othersNote, plainLabel, seatCount } from "../src/site/cantonal-parliaments.ts";
+import type { CantonalParliaments, CantonalParliamentsFile, PartiesFile, Party, Territory } from "../src/types.ts";
 import { checkCantonalParliaments, extractTable, unmappedSeats } from "./cantonal-parliaments.ts";
 import type { Sheet } from "./xlsx.ts";
 
@@ -135,4 +136,36 @@ test("checkCantonalParliaments reports a missing canton, a wrong total or sum, a
     "party_mapping ZH : pas un canton couvert",
   ]);
   assert.deepEqual(checkCantonalParliaments(file([ge("50", "40", "90"), ju]), territories, parties), ["GE : total 90 au lieu de 100 sièges"]);
+});
+
+/* ---------- Grand Conseil half-circle groups, on the committed data (src/site/cantonal-parliaments.ts) ---------- */
+
+const data = JSON.parse(readFileSync(new URL("../data/cantonal-parliaments.json", import.meta.url), "utf8")) as CantonalParliamentsFile;
+const allParties = (JSON.parse(readFileSync(new URL("../data/parties.json", import.meta.url), "utf8")) as PartiesFile).parties;
+const COLOURED = ["Verts", "PS", "PVL", "Centre", "PEV", "PLR", "UDC"];
+const NAMES: Record<string, string> = { GE: "Genève", VD: "Vaud", VS: "Valais", NE: "Neuchâtel", JU: "Jura", FR: "Fribourg" };
+function groupsOf(code: string): string[] {
+  const cp = data.cantonal_parliaments;
+  const row = cantonRow(cp, NAMES[code]);
+  assert.ok(row);
+  return councilGroups(cp, code, row, allParties.filter((p) => p.territory === code), COLOURED).map(
+    (g) => `${g.tone}:${g.name}${g.parts.length > 1 || g.tone === "others" ? "(" + g.parts.map(([l, n]) => l + " " + n).join(", ") + ")" : ""} ${g.seats}`,
+  );
+}
+
+test("councilGroups orders the parties from left to right, gives the 8th colour to the largest party without one, folds the rest", () => {
+  assert.deepEqual(groupsOf("GE"), ["party:Verts 15", "party:PS 18", "party:Centre 9", "party:PLR 22", "eighth:MCG 14", "party:UDC 12", "others:Autres(LJS 10) 10"]);
+  assert.deepEqual(groupsOf("VD"), ["eighth:POP 3", "party:Verts 25", "party:PS 32", "party:PVL 11", "party:PLR 50", "party:UDC 23", "others:Autres(Sol. 1, autres listes 5) 6"]);
+  assert.deepEqual(groupsOf("VS"), ["party:Verts 8", "party:PS 19", "party:Centre 49", "party:PLR 27", "party:UDC 26", "others:Autres(autres listes 1) 1"]);
+  // NE has no Centre entry in parties.json: the OFS column keeps the Centre colour, between PVL and PLR.
+  assert.deepEqual(groupsOf("NE"), ["eighth:POP 8", "party:Verts 15", "party:PS 27", "party:PVL 5", "party:Centre 3", "party:PLR 30", "party:UDC 12"]);
+  assert.deepEqual(groupsOf("JU"), ["party:Verts 4", "party:PS 16", "party:Centre 17", "eighth:PCSI 5", "party:PLR 6", "party:UDC 11", "others:Autres(CS-POP 1) 1"]);
+  assert.deepEqual(groupsOf("FR"), ["party:Verts 10", "party:PS 23", "eighth:CG-PCS 3", "party:PVL 2", "party:Centre 26", "party:PLR 18", "party:UDC 25", "others:Autres(autres listes 3) 3"]);
+});
+
+test("othersNote gives the OFS note on the lists counted as Autres", () => {
+  const cp = data.cantonal_parliaments;
+  assert.equal(othersNote(cp, "FR"), "La Broye c'est vous 1 mandat; DAS · WAS 2 mandats");
+  assert.equal(othersNote(cp, "VS"), "Entremont Autrement 1 mandat");
+  assert.equal(othersNote(cp, "JU"), null);
 });
