@@ -1,5 +1,7 @@
 @startuml
 !include _theme.puml
+' Dots in the package names are not namespaces.
+set separator none
 title class-01: Modules of the site and of the tooling (PRD-0001)
 
 package "src/site (bundled into dist/js/site.js)" {
@@ -13,6 +15,7 @@ package "src/site (bundled into dist/js/site.js)" {
     +cantonName(code), ofCanton(code)
     routing, menu, territory sheet
     parties half-circle and card
+    (presidency, federal and cantonal lines)
     aids, state sites
   }
   class "ballot.ts" as ballot {
@@ -23,13 +26,28 @@ package "src/site (bundled into dist/js/site.js)" {
   class "institutions.ts" as inst {
     +start()
     Federal Council, chambers
-    members of a canton in Bern
+    a canton: government, Grand Conseil,
+    members in Bern
   }
   class "parliament.ts" as parl {
     +membersOf(), isFederalCouncillor()
     +seatGroups(), partyMembers()
     +mainLabel(), ownMandates()
     pure, no DOM, no data import
+  }
+  class "cantonal-parliaments.ts" as cparl {
+    +cantonRow(), cantonSeats()
+    +councilGroups(), othersNote()
+    pure, OFS file reading
+  }
+  class "cantonal-standing.ts" as standing {
+    +cantonalStanding()
+    +governmentSources(), siteName()
+    pure, cantonal card lines
+  }
+  class "presidency.ts" as pres {
+    +presidencyFact(), namesText()
+    pure, presidency line
   }
   class "party-colours.ts" as colours {
     +partyColour(abbr)
@@ -62,6 +80,21 @@ package "tools (run by Node 26 from .ts)" {
     check : schema + cross checks
     links : test current URLs
     parliament : fetch ws.parl.ch
+    cantonal-parliaments : fetch OFS
+  }
+  class "cantonal-parliaments.ts" as tcparl {
+    +extractTable()
+    +checkCantonalParliaments()
+    column mapping, sizes
+  }
+  class "xlsx.ts" as xlsx {
+    +readWorkbook()
+    Node built-ins only
+  }
+  class "cantonal-governments.ts\nparty-presidencies.ts" as handkept {
+    +checkCantonalGovernments()
+    +checkPresidencies()
+    +isStale() : 180 days
   }
   class "build.ts" as build {
     esbuild IIFE bundle
@@ -72,6 +105,7 @@ package "tools (run by Node 26 from .ts)" {
 class "data/*.json" as data <<referential>> {
   territories, parties, state-sites
   tools, ballot, parliament-current
+  cantonal-parliaments, cantonal-governments
 }
 
 main --> app
@@ -84,6 +118,10 @@ ballot --> ref
 inst --> ref
 app --> parl
 inst --> parl
+app --> standing
+app --> pres
+inst --> cparl
+standing --> cparl
 inst --> colours
 app --> links
 ballot --> links
@@ -94,7 +132,12 @@ ref ..> data : imported at build time
 cli --> types : schemas
 cli --> links : ids the site needs
 cli --> parl : same reading as the site
-cli ..> data : reads, writes parliament-current
+cli --> tcparl
+cli --> handkept
+tcparl --> cparl : same reading as the site
+cli --> xlsx
+handkept --> pres : names
+cli ..> data : reads, writes the generated files
 build ..> main : bundles
 
 @enduml

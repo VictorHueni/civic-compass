@@ -1,4 +1,4 @@
-<!-- summary: 13 screens · 5 pages, 1 sheet, 1 menu -->
+<!-- summary: 16 screens · 5 pages, 1 sheet, 1 menu -->
 <div class="block">
   <h2>What the voter sees</h2>
   <p class="note">Five pages, one territory sheet and one menu, all at phone width (390 px), captured from the built site. Every page reads the territory chosen once (US-05) and shows only what concerns it. The copy is the real French copy of the site.</p>
@@ -9,8 +9,8 @@
         <tr><td class="key">Ballot list</td><td>US-01</td><td class="nw"><span class="mono">#ballot/&lt;territory&gt;</span></td><td>ballot items, cantonal items of the territory</td></tr>
         <tr><td class="key">Ballot item, 3 tabs</td><td>US-02, US-03, US-04</td><td class="nw"><span class="mono">#ballot/&lt;territory&gt;</span></td><td>one ballot item, its sourced party recommendations, tool and state site URLs by id</td></tr>
         <tr><td class="key">Territory sheet</td><td>US-05</td><td class="nw">over any page</td><td>the 26 cantons, which are covered, which vote on a cantonal item</td></tr>
-        <tr><td class="key">Parties</td><td>US-06, US-15</td><td class="nw"><span class="mono">#parties/&lt;territory&gt;</span></td><td>parties of the territory, in file order; for a CH party, its federal members and seats from the Parliament's data</td></tr>
-        <tr><td class="key">Qui gouverne et qui siège</td><td>US-13, US-14 (federal members of a canton)</td><td class="nw"><span class="mono">#institutions/&lt;territory&gt;</span></td><td>the Parliament's data: Federal Council, both chambers; for a canton, its members in Bern and its Grand Conseil site</td></tr>
+        <tr><td class="key">Parties</td><td>US-06, US-15</td><td class="nw"><span class="mono">#parties/&lt;territory&gt;</span></td><td>parties of the territory, in file order; the presidency kept by hand; for a CH party, its federal members and seats from the Parliament's data; for a cantonal section, its seats in the canton's government, Grand Conseil and federal delegation</td></tr>
+        <tr><td class="key">Qui gouverne et qui siège</td><td>US-13, US-14</td><td class="nw"><span class="mono">#institutions/&lt;territory&gt;</span></td><td>the Parliament's data: Federal Council, both chambers; for a canton, its government kept by hand, its Grand Conseil from the OFS, its members in Bern and its Grand Conseil site</td></tr>
         <tr><td class="key">Decision aids</td><td>US-07</td><td class="nw"><span class="mono">#tools/&lt;territory&gt;</span></td><td>tools listed by id, the territory's voting page</td></tr>
         <tr><td class="key">Official sites</td><td>US-08</td><td class="nw"><span class="mono">#state/&lt;territory&gt;</span></td><td>state sites of the territory with a URL</td></tr>
         <tr><td class="key">Menu</td><td>US-08, US-13</td><td class="nw">over any page</td><td>the institutions page, then three state-site shortcuts for the territory</td></tr>
@@ -51,14 +51,20 @@
 
 <div class="block">
   <h2>Parties (US-06)</h2>
-  <p class="note">One sector per party, left to right in the order of the data file, the chosen party and its rank in the centre. The card shows the name, a line of description, the position, the facts that have a source, and the party site, or a search link when no site is known. Facts without a source are not shown: on 2026-11-16 none has one, so no card shows them.</p>
-  {{FIGURE:ui-06-parties|Phone screen with territory Genève: half-circle of nine Geneva parties, PS selected (3 sur 9), arrow buttons Plus à gauche and Plus à droite, and the card of PS Genève with its position Centre gauche and a link Site du parti ps-ge.ch|Parties of Geneva, card of the third party}}
+  <p class="note">One sector per party, left to right in the order of the data file, the chosen party and its rank in the centre. The card shows the name, a line of description, the position, the facts that have a source, the lines of who sits for the party (next blocks), and the party site, or a search link when no site is known. A fact without a source is not shown: the founding years still have none, so no card shows them.</p>
+  {{FIGURE:ui-06-parties|Phone screen with territory Genève: half-circle of nine Geneva parties, PS selected (3 sur 9), arrow buttons Plus à gauche and Plus à droite, and the top of the card of PS Genève: Position Gauche, Présidence Amanda Gavilanes et Cyril Mizrahi, Conseil d'État 2 sur 7, Grand Conseil (élection 2023) 18 sièges sur 100|Parties of Geneva, card of the third party}}
 </div>
 
 <div class="block">
   <h2>Party card of the Confederation (US-15)</h2>
-  <p class="note">A CH party's card adds three lines from the Parliament's data, current composition: its Federal Council members by name ("Aucun membre" otherwise), its National Council and Council of States seats. Members elected under a regional label are named with their canton ("dont 1 PLD Bâle-Ville", "dont 1 Al Zoug"). Under the card: "Élus : Services du Parlement de l'Assemblée fédérale, Berne, données du 17.11.2026". The presidency line comes with the hand-kept records (US-18); a cantonal section's card is unchanged for now.</p>
-  {{FIGURE:ui-13-party-card-ch|Phone screen of the card Parti libéral-radical: Position Centre droit, Conseil fédéral Ignazio Cassis and Karin Keller-Sutter, Conseil national 27 sièges dont 1 PLD Bâle-Ville, Conseil des États 12 sièges, the Parliament source line and a link Site du parti plr.ch|Card of the PLR, Confederation}}
+  <p class="note">Right after the position, the presidency: the name, or the names of a co-presidency ("A et B"), kept by hand from the party's own site. Then three lines from the Parliament's data, current composition: its Federal Council members by name ("Aucun membre" otherwise), its National Council and Council of States seats. Members elected under a regional label are named with their canton ("dont 1 PLD Bâle-Ville", "dont 1 Al Zoug"). Under the card, the sources: "Présidence : plr.ch, vérifié le 17.11.2026. Élus : Services du Parlement de l'Assemblée fédérale, Berne, données du 17.11.2026". A party whose site names nobody (PST-POP, solidaritéS) shows no presidency line.</p>
+  {{FIGURE:ui-13-party-card-ch|Phone screen of the card Parti libéral-radical: Position Centre droit, Présidence Susanne Vincenz-Stauffacher et Benjamin Mühlemann, Conseil fédéral Ignazio Cassis and Karin Keller-Sutter, Conseil national 27 sièges dont 1 PLD Bâle-Ville, Conseil des États 12 sièges, the presidency and Parliament source line and a link Site du parti plr.ch|Card of the PLR, Confederation}}
+</div>
+
+<div class="block">
+  <h2>Party card of a canton (US-15)</h2>
+  <p class="note">A cantonal section's card follows mockup board 4: the presidency, then its seats in the canton's government as a count only ("2 sur 7"; the line takes the body's own name, "Gouvernement" in the Jura), in the Grand Conseil with the election year ("18 sièges sur 100"), and among the canton's members of the National Council and the Council of States ("3 sur 12", "1 sur 2"). A sourced zero is written out ("Aucun siège sur 100"); a line without data is not shown: a party the OFS does not count separately, Fribourg's government until it is recorded. The sources under the card name one link per site.</p>
+  {{FIGURE:ui-14-party-card-ge|Phone screen of the card PS Genève: Position Gauche, Présidence Amanda Gavilanes et Cyril Mizrahi, Conseil d'État 2 sur 7, Grand Conseil (élection 2023) 18 sièges sur 100, Conseil national (GE) 3 sur 12, Conseil des États (GE) 1 sur 2, then a source line naming ps-ge.ch, ge.ch, the OFS and the Parliament with their dates, and a link Site du parti ps-ge.ch|Card of PS Genève}}
 </div>
 
 <div class="block">
@@ -70,9 +76,13 @@
 </div>
 
 <div class="block">
-  <h2>Qui gouverne et qui siège: a canton (US-14, first part)</h2>
-  <p class="note">For a canton, only what is sourced today: its members of the Council of States and of the National Council, by name, grouped by party from left to right, then the canton's Grand Conseil site when the referential has one. The Conseil d'État and the Grand Conseil sections come with US-14 and US-17; until then they are not shown, never as "unknown".</p>
-  {{FIGURE:ui-12-institutions-ge|Phone screen for Geneva: Les élus du canton de Genève à Berne, Conseil des États (2) Carlo Sommaruga PS and Mauro Poggia MCG, Conseil national (12) grouped by party, Verts, PS, Centre, PLR, UDC, MCG|Institutions, Geneva}}
+  <h2>Qui gouverne et qui siège: a canton (US-14)</h2>
+  <p class="note">First the government, kept by hand: its name in the canton, a summary by party, then each member with party, department and, for the president and vice-president, the role as the official page writes it. The sources name one link per site with the oldest check date. Fribourg shows no government until its new Conseil d'État, elected on 29 November 2026, is published and recorded.</p>
+  {{FIGURE:ui-12-institutions-ge|Phone screen for Geneva: Qui gouverne et qui siège, Conseil d'État, 7 membres : 2 PS, 2 PLR, 1 Verts, 1 Centre, 1 LJS, then Anne Hiltpold PLR with her department and Présidente du Conseil d'Etat in red, Carole-Anne Kast PS Vice-présidente du Conseil d'Etat, Nathalie Fontanet PLR, Thierry Apothéloz PS, Pierre Maudet LJS|Institutions, Geneva, Conseil d'État}}
+  <p class="note">Then the Grand Conseil as elected: a half-circle proportional to its seats, labelled with the election year from the OFS table, left to right in palette B2. The canton-only party with the most seats takes the eighth colour, magenta (MCG in Geneva); the others fold into "Autres", named in the legend. A note says the composition may have changed since the election, and the OFS is named with the table and its download date.</p>
+  {{FIGURE:ui-15-institutions-ge-grand-council|Phone screen of the Grand Conseil of Geneva: 100 sièges, résultat de l'élection de 2023, a half-circle in seven colours with 100 sièges in the centre, a legend Verts 15, PS 18, Centre 9, PLR 22, MCG 14, UDC 12, Autres (LJS 10) 10, and a note that the composition may have changed|Institutions, Geneva, Grand Conseil}}
+  <p class="note">Last, the canton's members of the Council of States and of the National Council, by name, grouped by party from left to right, then the canton's Grand Conseil site when the referential has one.</p>
+  {{FIGURE:ui-16-institutions-ge-bern|Phone screen for Geneva: the end of the Grand Conseil legend and its OFS source, then Les élus du canton de Genève à Berne, Conseil des États (2) Carlo Sommaruga PS and Mauro Poggia MCG, Conseil national (12) grouped by party, Verts, PS, Centre|Institutions, Geneva, members in Bern}}
 </div>
 
 <div class="block">
@@ -114,6 +124,10 @@
         <li>Names, party, canton and function only, for the Federal Council and a canton's members in Bern.<span class="refs"><span class="chip ref">Research-0002, ruling 7</span></span></li>
         <li>PLD counts with the PLR and Al with the Greens, and the card or legend names them.<span class="refs"><span class="chip ref">PRD-0001.US-15</span><span class="chip ref">Research-0002, ruling 4</span></span></li>
         <li>A section whose data is not sourced yet is not shown.<span class="refs"><span class="chip ref">PRD-0001.US-14</span></span></li>
+        <li>A Grand Conseil is shown as elected, labelled with the election year, with a note that its composition may have changed; in each one the canton-only party with the most seats takes the eighth colour.<span class="refs"><span class="chip ref">PRD-0001.US-14</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>A cantonal party's card shows its government seats as a count, its Grand Conseil seats with the election year and its share of the canton's federal delegation; a sourced zero is written out, a line without data is absent.<span class="refs"><span class="chip ref">PRD-0001.US-15</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The presidency line comes right after the position, names a co-presidency "A et B", and its source and check date are named under the card.<span class="refs"><span class="chip ref">PRD-0001.US-15</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>Fribourg's government stays hidden until the official result is published and checked.<span class="refs"><span class="chip ref">PRD-0001.US-18</span></span></li>
       </ul>
     </section>
     <section class="open">

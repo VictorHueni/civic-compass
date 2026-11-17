@@ -43,6 +43,9 @@ const SCREENS: Screen[] = [
   { name: "ui-11-institutions-ch-chambers", hash: "#institutions/ch", steps: ["document.getElementById('t-national-council').scrollIntoView()", "window.scrollBy(0, -70)"] },
   { name: "ui-12-institutions-ge", hash: "#institutions/ge", steps: ["window.scrollTo(0, 60)"] },
   { name: "ui-13-party-card-ch", hash: "#parties/ch", steps: [...Array(7)].map(() => "document.getElementById('next').click()").concat(["document.getElementById('detail').scrollIntoView()", "window.scrollBy(0, -130)"]) },
+  { name: "ui-14-party-card-ge", hash: "#parties/ge", steps: [...Array(2)].map(() => "document.getElementById('next').click()").concat(["document.getElementById('detail').scrollIntoView()", "window.scrollBy(0, -130)"]) },
+  { name: "ui-15-institutions-ge-grand-council", hash: "#institutions/ge", steps: ["document.getElementById('t-grand-council').scrollIntoView()", "window.scrollBy(0, -70)"] },
+  { name: "ui-16-institutions-ge-bern", hash: "#institutions/ge", steps: ["document.getElementById('t-canton-in-bern').scrollIntoView()", "window.scrollBy(0, -70)"] },
 ];
 
 const FRAMES = {

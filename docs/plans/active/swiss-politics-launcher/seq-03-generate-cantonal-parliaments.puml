@@ -1,0 +1,48 @@
+@startuml
+!include _theme.puml
+title seq-03: Maintainer refreshes the cantonal parliaments (US-17)
+
+actor "Maintainer" as dev
+participant "tools/cli.ts\ncantonal-parliaments" as cli
+participant "OFS asset API\ndam-api.bfs.admin.ch" as dam
+participant "tools/xlsx.ts" as xlsx
+database "data/\ncantonal-parliaments.json" as file
+
+dev -> cli : npm run cantonal-parliaments
+activate cli
+cli -> dam : GET /hub/api/dam/assets\norderNr=je-f-17.02.05.01.03, language=fr
+dam --> cli : versions of the table
+alt not exactly one CURRENT version
+  cli --> dev : message, exit 1, nothing written
+end
+cli -> dam : GET /hub/api/dam/assets/<damId>
+dam --> cli : terms of use
+alt terms are not OPEN-BY
+  cli --> dev : message, exit 1, nothing written
+end
+cli -> dam : GET /hub/api/dam/assets/<damId>/master
+dam --> cli : workbook (xlsx)
+alt a download fails
+  cli --> dev : message, exit 2, nothing written
+end
+cli -> xlsx : readWorkbook
+xlsx --> cli : sheets, cells as text
+cli -> cli : extractTable: sheet "actuel ...",\ncolumns, rows of the covered cantons, notes
+alt the table cannot be read
+  cli --> dev : message, exit 1, nothing written
+end
+cli -> cli : wrap: request, asset, title, attribution,\nretrieved_on, table as read, party_mapping apart
+cli -> cli : schema of src/types.ts,\nthen checkCantonalParliaments: one row per\ncovered canton, totals equal the sizes,\nseats add up, mapped parties of the canton
+alt a check fails
+  cli --> dev : each error, exit 1, nothing written
+end
+cli -> file : write
+cli --> dev : year and size per canton,\nseats without a party on the site
+deactivate cli
+
+note over dev, file
+  Then npm run check applies the same rules,
+  npm run build bundles the file into the site.
+end note
+
+@enduml
