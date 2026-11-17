@@ -4,6 +4,7 @@
  *   node tools/cli.ts check                 validates data/*.json against src/types.ts   (npm run check)
  *   node tools/cli.ts links [--all]          tests every current URL of data/*.json      (npm run links)
  *   node tools/cli.ts parliament             writes data/parliament-current.json        (npm run parliament)
+ *   node tools/cli.ts cantonal-parliaments   writes data/cantonal-parliaments.json      (npm run cantonal-parliaments)
  *
  * Console messages are in French: the maintainers read them in French.
  */
@@ -12,9 +13,30 @@ import { homedir } from "node:os";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
-import { DATA_FILES, PARLIAMENT_FUNCTIONS, type AnySchema, type Parliament, type ParliamentFile, type Referential, type Rule } from "../src/types.ts";
+import {
+  DATA_FILES,
+  PARLIAMENT_FUNCTIONS,
+  type AnySchema,
+  type CantonalParliamentsFile,
+  type Parliament,
+  type ParliamentFile,
+  type PartiesFile,
+  type Referential,
+  type Rule,
+  type TerritoriesFile,
+} from "../src/types.ts";
 import { TOOLS_PAGE_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
 import { holds, isFederalCouncillor, membersOf, ownMandates } from "../src/site/parliament.ts";
+import {
+  CANTONAL_PARLIAMENTS,
+  CANTONAL_PARTIES,
+  cantonalSummary,
+  checkCantonalParliaments,
+  coveredCantons,
+  extractTable,
+  unmappedSeats,
+} from "./cantonal-parliaments.ts";
+import { readWorkbook } from "./xlsx.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const USER_AGENT = "Mozilla/5.0 (compatible; civic-compass-link-checker)";
@@ -24,6 +46,7 @@ const HELP = `Outil local de la Boussole citoyenne.
   npm run check                        contrôle data/*.json (types de src/types.ts, ids, territoires, statuts)
   npm run links [-- --all]             teste les URL actuelles de data/*.json (--all : affiche aussi les liens OK)
   npm run parliament                   écrit data/${DATA_FILES.parliament.file} (clé PARL_API_KEY ou ~/.config/civic-compass/env)
+  npm run cantonal-parliaments         écrit data/${DATA_FILES.cantonal_parliaments.file} (tableau OFS ${CANTONAL_PARLIAMENTS.orderNr})
 
 Options communes : --data DOSSIER (par défaut data/).`;
 
@@ -229,6 +252,9 @@ function checkConsistency(d: Referential): string[] {
   });
 
   for (const e of checkParliament(d.parliament, abbrs)) report.add([`data/${DATA_FILES.parliament.file}`], e);
+  for (const e of checkCantonalParliaments(d.cantonal_parliaments, d.territories, d.parties)) {
+    report.add([`data/${DATA_FILES.cantonal_parliaments.file}`], e);
+  }
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -258,7 +284,8 @@ function cmdCheck(dataDir: string): number {
   console.log(
     `Référentiel valide : ${d.territories.length} territoires, ${d.parties.length} partis, ${d.state_sites.length} sites officiels, ` +
       `${d.tools.length} outils, ${d.ballot.items.length} objets en votation, ` +
-      `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}).`,
+      `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}), ` +
+      `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}).`,
   );
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));
@@ -629,6 +656,99 @@ async function cmdParliament(dataDir: string): Promise<number> {
 }
 
 /* ====================================================================== */
+/* cantonal-parliaments                                                    */
+/* ====================================================================== */
+
+async function fetchOk(url: string, accept: string): Promise<Response> {
+  const res = await fetch(url, { headers: { Accept: accept, "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(60_000) });
+  if (!res.ok) throw new Error(`${res.status} ${res.statusText} (${url})`);
+  return res;
+}
+
+type DamAsset = {
+  ids?: { damId?: unknown };
+  bfs?: { lifecycleGroup?: unknown };
+  description?: { categorization?: { termsOfUse?: { code?: unknown }[] } };
+};
+
+/** Seats per party at the latest election of each covered cantonal parliament, from the OFS (Research-0002 Q4, owner rulings 1, 5 and 6). */
+async function cmdCantonalParliaments(dataDir: string): Promise<number> {
+  const read = <T,>(key: keyof typeof DATA_FILES) => JSON.parse(readFileSync(join(dataDir, DATA_FILES[key].file), "utf8")) as T;
+  const { territories } = read<TerritoriesFile>("territories");
+  const { parties } = read<PartiesFile>("parties");
+
+  // The OFS keeps one current version of the table and marks the older ones as redundant.
+  let damId: number;
+  let workbook: Buffer;
+  try {
+    const search = (await (await fetchOk(CANTONAL_PARLIAMENTS.search, "application/json")).json()) as { data?: DamAsset[] };
+    const current = (search.data ?? []).filter((a) => a.bfs?.lifecycleGroup === "CURRENT");
+    if (current.length !== 1 || typeof current[0].ids?.damId !== "number") {
+      console.error(`${current.length} version(s) courante(s) du tableau ${CANTONAL_PARLIAMENTS.orderNr} au lieu de 1 : rien n'est écrit.`);
+      return 1;
+    }
+    damId = current[0].ids.damId;
+    const asset = (await (await fetchOk(CANTONAL_PARLIAMENTS.asset(damId), "application/json")).json()) as DamAsset;
+    const terms = (asset.description?.categorization?.termsOfUse ?? []).map((t) => t.code);
+    if (terms.length !== 1 || terms[0] !== CANTONAL_PARLIAMENTS.terms) {
+      console.error(`Conditions d'utilisation du tableau changées (${terms.join(", ") || "aucune"} au lieu de ${CANTONAL_PARLIAMENTS.terms}) : rien n'est écrit.`);
+      return 1;
+    }
+    workbook = Buffer.from(await (await fetchOk(CANTONAL_PARLIAMENTS.master(damId), "*/*")).arrayBuffer());
+  } catch (e) {
+    console.error(`Téléchargement impossible : ${(e as Error).message}. Rien n'est écrit.`);
+    return 2;
+  }
+
+  let table;
+  try {
+    table = extractTable(readWorkbook(workbook), coveredCantons(territories, parties).map((t) => t.name));
+  } catch (e) {
+    console.error(`Tableau OFS illisible : ${(e as Error).message}. Rien n'est écrit.`);
+    return 1;
+  }
+
+  const output: CantonalParliamentsFile = {
+    _readme:
+      "Généré par « npm run cantonal-parliaments » depuis le tableau OFS je-f-17.02.05.01.03 : ne pas modifier à la main, relancer la commande. " +
+      "columns, rows et notes : le tableau tel quel (résultats au jour de l'élection, sans les changements de groupe ultérieurs) ; " +
+      "party_mapping : correspondance, tenue à part, entre les colonnes de l'OFS et les partis du canton dans parties.json.",
+    cantonal_parliaments: {
+      request: `GET ${CANTONAL_PARLIAMENTS.search}`,
+      asset_url: CANTONAL_PARLIAMENTS.master(damId),
+      title: table.title,
+      table: table.table,
+      sheet: table.sheet,
+      attribution: CANTONAL_PARLIAMENTS.attribution,
+      license: CANTONAL_PARLIAMENTS.license,
+      retrieved_on: new Date().toISOString().slice(0, 10),
+      columns: table.columns,
+      rows: table.rows,
+      notes: table.notes,
+      party_mapping: CANTONAL_PARTIES,
+    },
+  };
+
+  // Same checks as `npm run check`, before writing: a file that would fail is never written.
+  const report = new Report();
+  checkFile(output, DATA_FILES.cantonal_parliaments.schema, `data/${DATA_FILES.cantonal_parliaments.file}`, report);
+  const p = output.cantonal_parliaments;
+  const errors = [...report.errors, ...checkCantonalParliaments(p, territories, parties)];
+  if (errors.length) {
+    console.error(errors.join("\n"));
+    console.error(`\nTableau inattendu : rien n'est écrit.`);
+    return 1;
+  }
+
+  const out = join(dataDir, DATA_FILES.cantonal_parliaments.file);
+  writeFileSync(out, JSON.stringify(output, null, 2) + "\n", "utf8");
+  console.log(`Écrit ${relative(ROOT, out)} : ${cantonalSummary(p, territories, parties)}, tableau ${p.table} « ${p.sheet} ».`);
+  const unmapped = unmappedSeats(p, territories, parties);
+  if (unmapped.length) console.log("Sièges sans parti du canton sur le site (affichés sous le libellé de l'OFS) :\n" + unmapped.join("\n"));
+  return 0;
+}
+
+/* ====================================================================== */
 
 async function main(): Promise<number> {
   const { values, positionals } = parseArgs({
@@ -651,6 +771,8 @@ async function main(): Promise<number> {
       return cmdLinks(resolve(ROOT, values.data), values.all);
     case "parliament":
       return cmdParliament(resolve(ROOT, values.data));
+    case "cantonal-parliaments":
+      return cmdCantonalParliaments(resolve(ROOT, values.data));
     default:
       console.error(`Commande inconnue « ${command} ».\n\n${HELP}`);
       return 2;

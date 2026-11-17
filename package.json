@@ -12,7 +12,9 @@
     "build": "node tools/build.ts",
     "check": "tsc -p tsconfig.json && tsc -p tools/tsconfig.json && node tools/cli.ts check",
     "links": "node tools/cli.ts links",
-    "parliament": "node tools/cli.ts parliament"
+    "parliament": "node tools/cli.ts parliament",
+    "cantonal-parliaments": "node tools/cli.ts cantonal-parliaments",
+    "test": "node --test tools/*.test.ts"
   },
   "devDependencies": {
     "@types/node": "26.6.6",
