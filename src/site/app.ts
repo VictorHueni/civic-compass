@@ -4,7 +4,9 @@
  */
 import { $, SVG_NS, escapeHtml as esc, host, normalize, swissDate } from "./dom.ts";
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
-import { allCantons, ballot, cantons, federal, parliament, stateSiteUrl, tools, type Level } from "./referential.ts";
+import { allCantons, ballot, cantonalGovernments, cantonalParliaments, cantons, federal, parliament, stateSiteUrl, tools, type Level } from "./referential.ts";
+import { cantonRow } from "./cantonal-parliaments.ts";
+import { cantonalStanding, governmentSources, siteName } from "./cantonal-standing.ts";
 import { isFederalCouncillor, mainLabel, membersOf, partyLabel, partyMembers } from "./parliament.ts";
 import type { CantonBallot } from "../types.ts";
 
@@ -299,6 +301,30 @@ function federalStanding(abbr: string): [string, string][] {
   ];
 }
 
+/** The terms of use of the Parliament's data require the source and the download date next to the figures. */
+function parliamentSource(): string {
+  return '<a href="' + esc(stateSiteUrl(STATE_SITE_IDS.parliament)) + '" target="_blank" rel="noopener noreferrer">' +
+    esc(parliament.attribution.replace(/^Source : /, "")) + "</a>, données du " + swissDate(parliament.retrieved_on);
+}
+
+/** Adds the lines of a party of a canton to `facts`; returns the line naming their sources ("" when none). */
+function cantonalLines(p: { id: string; abbr: string; territory: string }, facts: [string, string][]): string {
+  const code = p.territory;
+  const government = cantonalGovernments.find((g) => g.canton === code);
+  const row = cantonRow(cantonalParliaments, cantons[code]?.name ?? "");
+  const standing = cantonalStanding(p, code, government, cantonalParliaments, row, parliament);
+  facts.push(...standing.rows);
+  const parts: string[] = [];
+  if (standing.government && government) {
+    const checked = government.members.map((m) => m.checked_on).sort()[0];
+    parts.push(esc(government.body) + " : " + governmentSources(government).map((u) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(siteName(u)) + "</a>").join(", ") +
+      ", vérifié le " + swissDate(checked));
+  }
+  if (standing.grandCouncil) parts.push("Grand Conseil : " + esc(cantonalParliaments.attribution.replace(/^Source : /, "")) + ", données du " + swissDate(cantonalParliaments.retrieved_on));
+  if (standing.federal) parts.push("Élus fédéraux : " + parliamentSource());
+  return parts.length ? '<p class="fact-sheet__source">' + parts.join(". ") + ".</p>" : "";
+}
+
 function renderDetail(): void {
   const list = partyList();
   const p = list[index];
@@ -307,15 +333,17 @@ function renderDetail(): void {
   // A fact is shown only once it has a source (PRD-0001 goal 2).
   const founded = p.facts?.founded?.source ? p.facts.founded.value : null;
   if (founded !== null) facts.push(["Fondé en", String(founded)]);
-  // A party of the Confederation: who sits for it today, from the Parliament's data (US-15).
-  const federalRows = p.territory === "CH" ? federalStanding(p.abbr) : [];
-  facts.push(...federalRows);
+  // Who sits for the party today (US-15): a party of the Confederation from the Parliament's data;
+  // a party of a canton also from its government (kept by hand) and its Grand Conseil (OFS).
+  let source = "";
+  if (p.territory === "CH") {
+    const federalRows = federalStanding(p.abbr);
+    facts.push(...federalRows);
+    if (federalRows.length) source = '<p class="fact-sheet__source">Élus : ' + parliamentSource() + ".</p>";
+  } else {
+    source = cantonalLines(p, facts);
+  }
   const dl = facts.map((f) => '<div class="fact-sheet__row"><dt>' + esc(f[0]) + "</dt><dd>" + esc(f[1]) + "</dd></div>").join("");
-  // The terms of use of the Parliament's data require the source and the download date next to the figures.
-  const source = federalRows.length
-    ? '<p class="fact-sheet__source">Élus : <a href="' + esc(stateSiteUrl(STATE_SITE_IDS.parliament)) + '" target="_blank" rel="noopener noreferrer">' +
-      esc(parliament.attribution.replace(/^Source : /, "")) + "</a>, données du " + swissDate(parliament.retrieved_on) + ".</p>"
-    : "";
   let link: string;
   if (p.url) {
     link = '<a class="fact-sheet__link" href="' + esc(p.url) + '" target="_blank" rel="noopener noreferrer"><span>Site du parti<small>' + esc(host(p.url)) + '</small></span><span aria-hidden="true">↗</span></a>';
