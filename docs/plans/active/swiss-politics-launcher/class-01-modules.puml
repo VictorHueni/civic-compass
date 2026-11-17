@@ -25,7 +25,8 @@ package "src/site (bundled into dist/js/site.js)" {
   }
   class "institutions.ts" as inst {
     +start()
-    Federal Council, chambers
+    Federal Council, chambers,
+    a party's members on tap
     a canton: government, Grand Conseil,
     members in Bern
   }
@@ -33,6 +34,7 @@ package "src/site (bundled into dist/js/site.js)" {
     +membersOf(), isFederalCouncillor()
     +seatGroups(), partyMembers()
     +mainLabel(), ownMandates()
+    +groupMembers(), memberLine()
     pure, no DOM, no data import
   }
   class "cantonal-parliaments.ts" as cparl {

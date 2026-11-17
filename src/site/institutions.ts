@@ -4,6 +4,7 @@
  * and the Council of States, current composition. A canton (US-14): its government (kept by hand,
  * each member sourced; no section until a canton has one), its Grand Conseil as elected (OFS, year
  * of the election) and its members of the two federal chambers. Every figure carries its source and date.
+ * On the Confederation page, a legend line of a chamber, or its sector, lists that group's members (US-19).
  */
 import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
 import { ofCanton, onRender, scope } from "./app.ts";
@@ -12,7 +13,7 @@ import { cantonalGovernments, cantonalParliaments, cantons, federal, parliament,
 import { EIGHTH_COLOUR, OTHERS_COLOUR, hasColour, partyColour } from "./party-colours.ts";
 import { OTHER_LISTS, cantonRow, cantonSeats, councilGroups, othersNote, siteAbbr, type CouncilGroup } from "./cantonal-parliaments.ts";
 import { governmentSources, siteName } from "./cantonal-standing.ts";
-import { holds, isFederalCouncillor, mainLabel, membersOf, ownMandates, partyLabel, seatGroups, type SeatGroup } from "./parliament.ts";
+import { groupMembers, holds, isFederalCouncillor, mainLabel, memberLine, membersOf, ownMandates, partyLabel, seatGroups, type Council, type SeatGroup } from "./parliament.ts";
 import { PARLIAMENT_FUNCTIONS, type ParliamentPerson } from "../types.ts";
 
 /** CH parties with a colour of their own, from left to right; the others fold into "Autres". */
@@ -50,14 +51,25 @@ interface Slice {
   colour: string;
   name: string;
   seats: number;
+  /** A federal group whose members a tap lists (US-19): its key and chamber. */
+  members?: { key: string; council: Council };
 }
-function federalSlices(groups: SeatGroup[]): Slice[] {
-  return groups.map((g) => ({ colour: partyColour(g.abbr), name: groupName(g), seats: g.seats }));
+/** The key of "Autres" in a legend button; the other keys are the CH parties' abbr. */
+const OTHERS_KEY = "autres";
+function federalSlices(groups: SeatGroup[], council: Council): Slice[] {
+  return groups.map((g) => ({ colour: partyColour(g.abbr), name: groupName(g), seats: g.seats, members: { key: g.abbr ?? OTHERS_KEY, council } }));
+}
+/** The attributes a tap on a sector or a legend line reads. */
+function groupAttrs(g: Slice): string {
+  return g.members ? ' data-council="' + g.members.council + '" data-group="' + esc(g.members.key) + '"' : "";
 }
 function legend(slices: Slice[]): string {
+  const line = (g: Slice) => '<i style="background:' + g.colour + '" aria-hidden="true"></i><span>' + esc(g.name) + "</span><b>" + g.seats + "</b>";
+  const council = slices[0]?.members?.council;
+  if (!council) return '<ul class="seat-legend">' + slices.map((g) => "<li>" + line(g) + "</li>").join("") + "</ul>";
   return '<ul class="seat-legend">' +
-    slices.map((g) => '<li><i style="background:' + g.colour + '" aria-hidden="true"></i><span>' + esc(g.name) + "</span><b>" + g.seats + "</b></li>").join("") +
-    "</ul>";
+    slices.map((g) => '<li><button type="button" class="seat-legend__btn"' + groupAttrs(g) + ' aria-expanded="false" aria-controls="members-' + council + '">' + line(g) + "</button></li>").join("") +
+    '</ul><div class="seat-members" id="members-' + council + '" aria-live="polite" hidden></div>';
 }
 
 const CX = 180, CY = 176, R = 168, r = 92;
@@ -65,7 +77,7 @@ function arcPoint(radius: number, deg: number): string {
   const a = (deg * Math.PI) / 180;
   return (CX + radius * Math.cos(a)).toFixed(1) + " " + (CY - radius * Math.sin(a)).toFixed(1);
 }
-/** Sectors proportional to the seats, from left (180°) to right (0°). Decorative: the legend carries the figures. */
+/** Sectors proportional to the seats, from left (180°) to right (0°). Decorative: the legend carries the figures and the buttons. */
 function halfCircle(slices: Slice[], total: number): string {
   let done = 0;
   let paths = "";
@@ -73,7 +85,7 @@ function halfCircle(slices: Slice[], total: number): string {
     const a0 = 180 - (done / total) * 180;
     done += g.seats;
     const a1 = 180 - (done / total) * 180;
-    paths += '<path fill="' + g.colour + '" d="M' + arcPoint(R, a0) + " A" + R + " " + R + " 0 0 1 " + arcPoint(R, a1) +
+    paths += '<path fill="' + g.colour + '"' + groupAttrs(g) + ' d="M' + arcPoint(R, a0) + " A" + R + " " + R + " 0 0 1 " + arcPoint(R, a1) +
       " L" + arcPoint(r, a1) + " A" + r + " " + r + " 0 0 0 " + arcPoint(r, a0) + ' Z"></path>';
   }
   return '<svg class="seat-arc" viewBox="0 0 360 186" aria-hidden="true" focusable="false">' + paths +
@@ -81,7 +93,7 @@ function halfCircle(slices: Slice[], total: number): string {
     '<text x="' + CX + '" y="' + (CY - 6) + '" text-anchor="middle" class="seat-arc__unit">' + seatWord(total) + "</text></svg>";
 }
 function seatBar(slices: Slice[]): string {
-  return '<div class="seat-bar" aria-hidden="true">' + slices.map((g) => '<span style="flex:' + g.seats + ";background:" + g.colour + '"></span>').join("") + "</div>";
+  return '<div class="seat-bar" aria-hidden="true">' + slices.map((g) => "<span" + groupAttrs(g) + ' style="flex:' + g.seats + ";background:" + g.colour + '"></span>').join("") + "</div>";
 }
 
 /* ---------- Sections ---------- */
@@ -111,19 +123,22 @@ function federalCouncil(): string {
     (chancellor && chancellorFn ? '<p class="mini">' + esc(chancellorFn.function.name) + " : " + esc(fullName(chancellor)) + " (" + esc(personParty(chancellor)) + ").</p>" : "") +
     "</section>";
 }
+const TAP_HINT = "Touchez un parti pour voir ses élus.";
 function nationalCouncil(): string {
   const members = membersOf(parliament, "CN");
   const groups = seatGroups(parliament, members, ORDER);
+  const slices = federalSlices(groups, "CN");
   return '<section class="inst-section" aria-labelledby="t-national-council"><h3 id="t-national-council">Conseil national</h3>' +
-    '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite.</p>" +
-    halfCircle(federalSlices(groups), members.length) + legend(federalSlices(groups)) + "</section>";
+    '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite. " + TAP_HINT + "</p>" +
+    halfCircle(slices, members.length) + legend(slices) + "</section>";
 }
 function councilOfStates(): string {
   const members = membersOf(parliament, "CE");
   const groups = seatGroups(parliament, members, ORDER);
+  const slices = federalSlices(groups, "CE");
   return '<section class="inst-section" aria-labelledby="t-council-of-states"><h3 id="t-council-of-states">Conseil des États</h3>' +
-    '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite.</p>" +
-    seatBar(federalSlices(groups)) + legend(federalSlices(groups)) + "</section>";
+    '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite. " + TAP_HINT + "</p>" +
+    seatBar(slices) + legend(slices) + "</section>";
 }
 
 /* ---------- A canton's government (kept by hand) ---------- */
@@ -221,7 +236,35 @@ function render(): void {
   $("institutions").innerHTML = html + sources();
 }
 
+/** Opens the members of a group under its chamber's legend, or closes them when that group is open (US-19). */
+function toggleGroup(council: Council, key: string, fromSector: boolean): void {
+  const box = document.getElementById("members-" + council);
+  if (!box) return;
+  const buttons = [...document.querySelectorAll<HTMLButtonElement>('.seat-legend__btn[data-council="' + council + '"]')];
+  const button = buttons.find((b) => b.dataset.group === key);
+  if (!button) return;
+  const open = button.getAttribute("aria-expanded") !== "true";
+  for (const b of buttons) b.setAttribute("aria-expanded", String(open && b === button));
+  if (!open) {
+    box.hidden = true;
+    box.innerHTML = "";
+    return;
+  }
+  const members = groupMembers(parliament, membersOf(parliament, council), key === OTHERS_KEY ? null : key, ORDER);
+  const name = button.querySelector("span")?.textContent ?? "";
+  box.innerHTML = "<h4>" + esc(name) + " (" + members.length + ")</h4>" +
+    '<ul class="members members--compact">' + members.map((m) => '<li class="member">' + esc(memberLine(m)) + "</li>").join("") + "</ul>";
+  box.hidden = false;
+  // A sector sits above the legend: bring the list into view; a legend line is already next to it.
+  if (fromSector) box.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
 export function start(): void {
   onRender(render);
   render();
+  $("institutions").addEventListener("click", (e) => {
+    const target = (e.target as Element).closest<HTMLElement | SVGElement>("[data-council][data-group]");
+    if (!target) return;
+    toggleGroup(target.dataset.council as Council, target.dataset.group ?? "", !target.classList.contains("seat-legend__btn"));
+  });
 }

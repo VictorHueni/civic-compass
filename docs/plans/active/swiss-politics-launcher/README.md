@@ -2,7 +2,7 @@
 type: Slice Design Sheet
 title: "Swiss politics launcher"
 eyebrow: "Boussole citoyenne (civic-compass) · slice design sheet"
-description: "A static launcher for Swiss politics: the next ballot, the parties from left to right, who governs and sits, decision aids and official sites, fed by a sourced JSON referential and the Parliament's open data. One slice covers the whole site: 16 screens, no HTTP API of its own, 18 modules, 8 data files."
+description: "A static launcher for Swiss politics: the next ballot, the parties from left to right, who governs and sits, decision aids and official sites, fed by a sourced JSON referential and the Parliament's open data. One slice covers the whole site: 17 screens, no HTTP API of its own, 18 modules, 8 data files."
 tags: [slice-design, civic-compass]
 timestamp: 2026-11-17T18:00:00Z
 status: draft

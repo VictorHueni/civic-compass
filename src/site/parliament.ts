@@ -41,6 +41,12 @@ export interface SeatGroup {
   labels: [string, number][];
 }
 
+/** The seat group of a person: the site party its label maps to when that party is in `order`, else null ("Autres"). */
+function groupOf(parliament: Parliament, p: ParliamentPerson, order: readonly string[]): string | null {
+  const mapped = parliament.party_mapping[partyLabel(p)];
+  return mapped !== undefined && order.includes(mapped) ? mapped : null;
+}
+
 /**
  * Seats by party of the site, in the order of `order` (the CH parties from left to right), then
  * "Autres" for every label without a party in `order`. A party with no seat is left out.
@@ -49,8 +55,7 @@ export function seatGroups(parliament: Parliament, persons: ParliamentPerson[], 
   const byGroup = new Map<string | null, Map<string, number>>();
   for (const p of persons) {
     const label = partyLabel(p);
-    const mapped = parliament.party_mapping[label];
-    const key = mapped !== undefined && order.includes(mapped) ? mapped : null;
+    const key = groupOf(parliament, p, order);
     const labels = byGroup.get(key) ?? new Map<string, number>();
     labels.set(label, (labels.get(label) ?? 0) + 1);
     byGroup.set(key, labels);
@@ -76,4 +81,31 @@ export function mainLabel(parliament: Parliament, abbr: string): string | null {
   let best: string | null = null;
   for (const [label, n] of counts) if (best === null || n > (counts.get(best) as number)) best = label;
   return best;
+}
+
+/** One member in the list a legend line opens. */
+export interface GroupMember {
+  name: string;
+  canton: string;
+  /** The API label when it is not the party's main one ("PLD"), always for "Autres"; null otherwise. */
+  label: string | null;
+}
+
+/**
+ * The members of one seat group of `seatGroups` (abbr null: "Autres"), for the list a legend line of a
+ * federal chamber opens (PRD-0001 US-19): by canton, then by name.
+ */
+export function groupMembers(parliament: Parliament, persons: ParliamentPerson[], abbr: string | null, order: readonly string[]): GroupMember[] {
+  const main = abbr === null ? null : mainLabel(parliament, abbr);
+  const canton = (p: ParliamentPerson) => p.canton?.abbreviation ?? "";
+  return persons
+    .filter((p) => groupOf(parliament, p, order) === abbr)
+    .sort((a, b) => canton(a).localeCompare(canton(b)) || a.lastName.localeCompare(b.lastName, "fr") || a.firstName.localeCompare(b.firstName, "fr"))
+    .map((p) => ({ name: p.firstName + " " + p.lastName, canton: canton(p), label: partyLabel(p) === main ? null : partyLabel(p) }));
+}
+
+/** "Eva Keller (GE)", "Paul Roux (BS, PLD)", "Max Frei (SH, sans parti)". */
+export function memberLine(m: GroupMember): string {
+  const label = m.label === null ? "" : ", " + (m.label === "-" ? "sans parti" : m.label);
+  return m.name + " (" + m.canton + label + ")";
 }
