@@ -63,7 +63,7 @@ const parliament = {
 } as unknown as Parliament;
 
 const standing = (id: string, abbr: string, g: CantonalGovernment | null = government) =>
-  cantonalStanding({ id, abbr }, "GE", g ?? undefined, table, row, parliament);
+  cantonalStanding({ id, abbr }, "GE", "Grand Conseil", g ?? undefined, table, row, parliament);
 
 test("a section of a CH party: government count, Grand Conseil seats with the year, the canton's federal seats", () => {
   const s = standing("ps-ge", "PS GE");
@@ -78,6 +78,11 @@ test("a section of a CH party: government count, Grand Conseil seats with the ye
 
 test("the government line names members, so it does not read as a rank (owner, 2026-11-17)", () => {
   assert.deepEqual(standing("plr-ge", "PLR GE").rows[0], ["Conseil d'État", "2 membres sur 4"]);
+});
+
+test("the parliament line takes the canton's own name for its parliament (Jura: Parlement)", () => {
+  const s = cantonalStanding({ id: "ps-ge", abbr: "PS GE" }, "GE", "Parlement", undefined, table, row, parliament);
+  assert.deepEqual(s.rows[0], ["Parlement (élection 2023)", "1 siège sur 100"]);
 });
 
 test("a sourced zero is written out", () => {
@@ -114,12 +119,12 @@ test("no sourced data, no line: a party without an OFS number, a canton without 
   assert.deepEqual([s.government, s.grandCouncil, s.federal], [false, false, true]);
   const noMembers = standing("ps-ge", "PS GE", { ...government, members: [] });
   assert.equal(noMembers.government, false);
-  const noRow = cantonalStanding({ id: "ps-ge", abbr: "PS GE" }, "GE", undefined, table, undefined, parliament);
+  const noRow = cantonalStanding({ id: "ps-ge", abbr: "PS GE" }, "GE", "Grand Conseil", undefined, table, undefined, parliament);
   assert.equal(noRow.grandCouncil, false);
 });
 
 test("a canton with no federal member of a chamber shows no line for it", () => {
-  const s = cantonalStanding({ id: "ps-ju", abbr: "PS JU" }, "JU", undefined, table, undefined, parliament);
+  const s = cantonalStanding({ id: "ps-ju", abbr: "PS JU" }, "JU", "Parlement", undefined, table, undefined, parliament);
   assert.deepEqual(s.rows, []);
   assert.equal(s.federal, false);
 });

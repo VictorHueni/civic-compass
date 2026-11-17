@@ -78,6 +78,8 @@ export interface Level {
 }
 export interface Canton extends Level {
   name: string;
+  /** The canton's own name for its parliament ("Grand Conseil", "Parlement"); `npm run check` requires it for a covered canton. */
+  parliament: string;
   note: string;
 }
 
@@ -90,7 +92,7 @@ export const federal: Level = { parties: partiesOf("CH"), stateSites: stateSites
 export const cantons: Record<string, Canton> = {};
 for (const t of territories) {
   if (t.code === "CH" || !partiesOf(t.code).length) continue;
-  cantons[t.code] = { name: t.name, note: t.note || "", parties: partiesOf(t.code), stateSites: stateSitesOf(t.code) };
+  cantons[t.code] = { name: t.name, parliament: t.parliament || "", note: t.note || "", parties: partiesOf(t.code), stateSites: stateSitesOf(t.code) };
 }
 
 /** Verified decision aids, in the order of data/tools.json. */

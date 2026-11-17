@@ -313,7 +313,7 @@ function cantonalLines(p: { id: string; abbr: string; territory: string }, facts
   const code = p.territory;
   const government = cantonalGovernments.find((g) => g.canton === code);
   const row = cantonRow(cantonalParliaments, cantons[code]?.name ?? "");
-  const standing = cantonalStanding(p, code, government, cantonalParliaments, row, parliament);
+  const standing = cantonalStanding(p, code, cantons[code]?.parliament ?? "", government, cantonalParliaments, row, parliament);
   facts.push(...standing.rows);
   const parts: string[] = [];
   if (standing.government && government) {
@@ -321,7 +321,7 @@ function cantonalLines(p: { id: string; abbr: string; territory: string }, facts
     parts.push(esc(government.body) + " : " + governmentSources(government).map((u) => '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(siteName(u)) + "</a>").join(", ") +
       ", vérifié le " + swissDate(checked));
   }
-  if (standing.grandCouncil) parts.push("Grand Conseil : " + esc(cantonalParliaments.attribution.replace(/^Source : /, "")) + ", données du " + swissDate(cantonalParliaments.retrieved_on));
+  if (standing.grandCouncil) parts.push(esc(cantons[code]?.parliament ?? "") + " : " + esc(cantonalParliaments.attribution.replace(/^Source : /, "")) + ", données du " + swissDate(cantonalParliaments.retrieved_on));
   if (standing.federal) parts.push("Élus fédéraux : " + parliamentSource());
   return parts;
 }

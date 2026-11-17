@@ -78,11 +78,14 @@ const LINK_ENTRY_SCHEMA: Schema<LinkEntry> = {
 export interface Territory {
   code: string;
   name: string;
+  /** The canton's own name for its parliament ("Grand Conseil", "Parlement" in the Jura); required for a covered canton. */
+  parliament?: string;
   note?: string;
 }
 export const TERRITORY_SCHEMA: Schema<Territory> = {
   code: { kind: "string" },
   name: { kind: "string" },
+  parliament: { kind: "string", optional: true },
   note: { kind: "string", optional: true },
 };
 

@@ -170,7 +170,7 @@ function grandCouncilSection(code: string, name: string): string {
   const slices = groups.map(councilSlice);
   const others = othersNote(cantonalParliaments, code);
   const hasOtherLists = groups.some((g) => g.parts.some(([l]) => l === OTHER_LISTS));
-  return '<section class="inst-section" aria-labelledby="t-grand-council"><h3 id="t-grand-council">Grand Conseil</h3>' +
+  return '<section class="inst-section" aria-labelledby="t-grand-council"><h3 id="t-grand-council">' + esc(cantons[code]?.parliament ?? "") + "</h3>" +
     '<p class="panel__desc">' + total + " " + seatWord(total) + ", résultat de l'élection de " + year + ", de gauche à droite.</p>" +
     halfCircle(slices, total) + legend(slices) +
     (others && hasOtherLists ? '<p class="mini">Autres listes selon l\'OFS : ' + esc(others) + ".</p>" : "") +

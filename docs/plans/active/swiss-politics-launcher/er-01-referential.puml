@@ -6,6 +6,7 @@ entity Territory {
   * code : string <<PK>> (CH or canton)
   --
   * name : string
+  parliament : string (covered cantons)
   note : string
 }
 
