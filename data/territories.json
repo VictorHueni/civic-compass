@@ -32,14 +32,12 @@
     {
       "code": "FR",
       "name": "Fribourg",
-      "parliament": "Grand Conseil",
-      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+      "parliament": "Grand Conseil"
     },
     {
       "code": "GE",
       "name": "Genève",
-      "parliament": "Grand Conseil",
-      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+      "parliament": "Grand Conseil"
     },
     {
       "code": "GL",
@@ -52,8 +50,7 @@
     {
       "code": "JU",
       "name": "Jura",
-      "parliament": "Parlement",
-      "note": "Liste des principaux partis, à compléter avec la composition du Parlement."
+      "parliament": "Parlement"
     },
     {
       "code": "LU",
@@ -62,8 +59,7 @@
     {
       "code": "NE",
       "name": "Neuchâtel",
-      "parliament": "Grand Conseil",
-      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+      "parliament": "Grand Conseil"
     },
     {
       "code": "NW",
@@ -104,14 +100,12 @@
     {
       "code": "VD",
       "name": "Vaud",
-      "parliament": "Grand Conseil",
-      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+      "parliament": "Grand Conseil"
     },
     {
       "code": "VS",
       "name": "Valais",
-      "parliament": "Grand Conseil",
-      "note": "Liste des principaux partis, à compléter avec la composition du Grand Conseil."
+      "parliament": "Grand Conseil"
     },
     {
       "code": "ZG",
