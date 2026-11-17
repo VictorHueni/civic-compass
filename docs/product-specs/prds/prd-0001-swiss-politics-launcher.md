@@ -308,7 +308,7 @@ As a maintainer, I want the records kept by hand (cantonal governments, party pr
 
 ## 5. Design Considerations
 
-- **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours in it are provisional (§8).
+- **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours: palette B2 (§8).
 - **Mobile first.** The voter's device is a phone; the menu folds into a hamburger on a phone and is open on a computer.
 - **Look.** The Swiss Confederation design system (MIT licence), without its coat of arms or logos; the site states it is independent and not official.
 - **Editorial tone.** Airy layout, numbered lists, no coloured "AI-looking" cards; no long dash in any text.
@@ -344,7 +344,7 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-- **Party colours.** The institutions half-circles need one colour per party; the mockup's colours are provisional. Which palette, and should it follow each party's own colour?
+No question is left open on 2026-11-17.
 
 Settled on 2026-11-16 by the owner:
 
@@ -354,6 +354,7 @@ Settled on 2026-11-16 by the owner:
 - **Analytics.** None for the MVP: no counter, no third-party script. Visit measurement comes later with dedicated SEO work.
 - **Left-right order.** It stays indicative and every party stays on the half-circle. For the national parties and their cantonal sections it rests on the Chapel Hill Expert Survey 2024 (`lrgen`), kept in the data as an aid and not shown; the footer names the survey. Parties the survey does not cover are placed by hand. The PS label becomes "Gauche" (its score, 1.67, is next to the Greens'). See `docs/architecture/research/0001-left-right-placement-sources.md`.
 - **Institutions (Research-0002, eight rulings).** Election result for cantonal parliaments, current composition for the federal chambers; the new Parliament API; terms of use with three safeguards; PLD and Al counted with PLR and the Greens; an xlsx reader in the tool; Fribourg shown with its November 2026 election; names for small bodies only; a 180-day staleness warning. Everything goes in this PRD (US-13 to US-18), no separate PRD.
+- **Party colours (2026-11-17), palette B2 of the mockup.** Verts `#eda100`, PS `#e34948`, PVL `#6250d6`, Centre `#eb6834`, PEV `#1baf7a`, PLR `#2a78d6`, UDC `#008300`, Autres `#898781`. It passes the colour checks (colour-blind separation, normal vision); yellow and aqua are light on white, so the legend and labels stay mandatory. A party keeps its colour on every page; at most 8 colours per half-circle, smaller parties fold into "Autres"; canton-only parties (MCG, LJS, EàG...) get the 8th colour or "Autres", settled with the cantonal parliaments (US-14).
 - **Timeouts** are listed for a manual check and never fail the run, locally or in CI (US-11), because some Swiss sites do not answer servers abroad.
 
 ## 9. Open Items
