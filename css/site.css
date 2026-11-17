@@ -271,5 +271,6 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .seat-legend span{flex:1}
 .source-box{margin:28px 0 0;padding:12px;background:var(--cc-surface);border-radius:6px;font-size:.85rem}
 .source-box p{margin:0 0 6px}.source-box p:last-child{margin:0}
+.note-box{margin:12px 0 6px;padding:10px 12px;background:var(--cc-surface);border-radius:6px;font-size:.85rem}
 #institutions .fact-sheet__link{margin-top:12px}
 @media (min-width:600px){.seat-legend{grid-template-columns:repeat(2,minmax(0,1fr))}}

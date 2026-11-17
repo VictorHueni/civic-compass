@@ -1,15 +1,16 @@
 /*
  * Page "Qui gouverne et qui siège" (#institutions/<territory>), PRD-0001 US-13.
  * Confederation: the Federal Council, the National Council (half-circle proportional to the seats)
- * and the Council of States, current composition. A canton: its members of the two federal
- * chambers (the part of US-14 already sourced); its government and parliament come with US-14.
- * Every figure carries the Parliament's attribution and the download date (terms of use).
+ * and the Council of States, current composition. A canton (US-14): its Grand Conseil as elected
+ * (OFS, year of the election) and its members of the two federal chambers; its government comes
+ * with the hand-kept records. Every figure carries its source and date (Parliament terms of use).
  */
 import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
 import { ofCanton, onRender, scope } from "./app.ts";
 import { STATE_SITE_IDS } from "./links.ts";
-import { cantons, federal, parliament, stateSiteUrl } from "./referential.ts";
-import { hasColour, partyColour } from "./party-colours.ts";
+import { cantonalParliaments, cantons, federal, parliament, stateSiteUrl } from "./referential.ts";
+import { EIGHTH_COLOUR, OTHERS_COLOUR, hasColour, partyColour } from "./party-colours.ts";
+import { OTHER_LISTS, cantonRow, cantonSeats, councilGroups, othersNote, type CouncilGroup } from "./cantonal-parliaments.ts";
 import { holds, isFederalCouncillor, mainLabel, membersOf, ownMandates, partyLabel, seatGroups, type SeatGroup } from "./parliament.ts";
 import { PARLIAMENT_FUNCTIONS, type ParliamentPerson } from "../types.ts";
 
@@ -43,9 +44,18 @@ function groupName(g: SeatGroup): string {
   const others = g.labels.filter(([l]) => l !== mainLabel(parliament, g.abbr as string));
   return others.length ? g.abbr + " (dont " + others.map(([l, n]) => n + " " + l).join(", ") + ")" : g.abbr;
 }
-function legend(groups: SeatGroup[]): string {
+/** What a legend line and a sector need: colour, name, seats. */
+interface Slice {
+  colour: string;
+  name: string;
+  seats: number;
+}
+function federalSlices(groups: SeatGroup[]): Slice[] {
+  return groups.map((g) => ({ colour: partyColour(g.abbr), name: groupName(g), seats: g.seats }));
+}
+function legend(slices: Slice[]): string {
   return '<ul class="seat-legend">' +
-    groups.map((g) => '<li><i style="background:' + partyColour(g.abbr) + '" aria-hidden="true"></i><span>' + esc(groupName(g)) + "</span><b>" + g.seats + "</b></li>").join("") +
+    slices.map((g) => '<li><i style="background:' + g.colour + '" aria-hidden="true"></i><span>' + esc(g.name) + "</span><b>" + g.seats + "</b></li>").join("") +
     "</ul>";
 }
 
@@ -55,22 +65,22 @@ function arcPoint(radius: number, deg: number): string {
   return (CX + radius * Math.cos(a)).toFixed(1) + " " + (CY - radius * Math.sin(a)).toFixed(1);
 }
 /** Sectors proportional to the seats, from left (180°) to right (0°). Decorative: the legend carries the figures. */
-function halfCircle(groups: SeatGroup[], total: number): string {
+function halfCircle(slices: Slice[], total: number): string {
   let done = 0;
   let paths = "";
-  for (const g of groups) {
+  for (const g of slices) {
     const a0 = 180 - (done / total) * 180;
     done += g.seats;
     const a1 = 180 - (done / total) * 180;
-    paths += '<path fill="' + partyColour(g.abbr) + '" d="M' + arcPoint(R, a0) + " A" + R + " " + R + " 0 0 1 " + arcPoint(R, a1) +
+    paths += '<path fill="' + g.colour + '" d="M' + arcPoint(R, a0) + " A" + R + " " + R + " 0 0 1 " + arcPoint(R, a1) +
       " L" + arcPoint(r, a1) + " A" + r + " " + r + " 0 0 0 " + arcPoint(r, a0) + ' Z"></path>';
   }
   return '<svg class="seat-arc" viewBox="0 0 360 186" aria-hidden="true" focusable="false">' + paths +
     '<text x="' + CX + '" y="' + (CY - 26) + '" text-anchor="middle" class="seat-arc__total">' + total + "</text>" +
     '<text x="' + CX + '" y="' + (CY - 6) + '" text-anchor="middle" class="seat-arc__unit">' + seatWord(total) + "</text></svg>";
 }
-function seatBar(groups: SeatGroup[]): string {
-  return '<div class="seat-bar" aria-hidden="true">' + groups.map((g) => '<span style="flex:' + g.seats + ";background:" + partyColour(g.abbr) + '"></span>').join("") + "</div>";
+function seatBar(slices: Slice[]): string {
+  return '<div class="seat-bar" aria-hidden="true">' + slices.map((g) => '<span style="flex:' + g.seats + ";background:" + g.colour + '"></span>').join("") + "</div>";
 }
 
 /* ---------- Sections ---------- */
@@ -105,14 +115,39 @@ function nationalCouncil(): string {
   const groups = seatGroups(parliament, members, ORDER);
   return '<section class="inst-section" aria-labelledby="t-national-council"><h3 id="t-national-council">Conseil national</h3>' +
     '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite.</p>" +
-    halfCircle(groups, members.length) + legend(groups) + "</section>";
+    halfCircle(federalSlices(groups), members.length) + legend(federalSlices(groups)) + "</section>";
 }
 function councilOfStates(): string {
   const members = membersOf(parliament, "CE");
   const groups = seatGroups(parliament, members, ORDER);
   return '<section class="inst-section" aria-labelledby="t-council-of-states"><h3 id="t-council-of-states">Conseil des États</h3>' +
     '<p class="panel__desc">' + members.length + " " + seatWord(members.length) + ", composition actuelle, de gauche à droite.</p>" +
-    seatBar(groups) + legend(groups) + "</section>";
+    seatBar(federalSlices(groups)) + legend(federalSlices(groups)) + "</section>";
+}
+
+/* ---------- A canton's Grand Conseil (OFS, latest election) ---------- */
+function councilSlice(g: CouncilGroup): Slice {
+  const colour = g.tone === "party" ? partyColour(g.abbr) : g.tone === "eighth" ? EIGHTH_COLOUR : OTHERS_COLOUR;
+  const onlyLists = g.parts.length === 1 && g.parts[0][0] === OTHER_LISTS;
+  const name = g.tone === "others" && !onlyLists ? "Autres (" + g.parts.map(([l, n]) => l + " " + n).join(", ") + ")" : g.name;
+  return { colour, name, seats: g.seats };
+}
+function grandCouncilSection(code: string, name: string): string {
+  const row = cantonRow(cantonalParliaments, name);
+  if (!row) return "";
+  const { year, total } = cantonSeats(cantonalParliaments, code, row);
+  if (year === null || total === null) return "";
+  const groups = councilGroups(cantonalParliaments, code, row, cantons[code]?.parties ?? [], ORDER);
+  const slices = groups.map(councilSlice);
+  const others = othersNote(cantonalParliaments, code);
+  const hasOtherLists = groups.some((g) => g.parts.some(([l]) => l === OTHER_LISTS));
+  return '<section class="inst-section" aria-labelledby="t-grand-council"><h3 id="t-grand-council">Grand Conseil</h3>' +
+    '<p class="panel__desc">' + total + " " + seatWord(total) + ", résultat de l'élection de " + year + ", de gauche à droite.</p>" +
+    halfCircle(slices, total) + legend(slices) +
+    (others && hasOtherLists ? '<p class="mini">Autres listes selon l\'OFS : ' + esc(others) + ".</p>" : "") +
+    '<p class="note-box">Le résultat de l\'élection est affiché tel quel, avec son année. La composition peut avoir changé depuis : changements de parti, indépendants.</p>' +
+    '<p class="mini">' + esc(cantonalParliaments.attribution) + ", tableau " + esc(cantonalParliaments.table) + ", données du " + swissDate(cantonalParliaments.retrieved_on) + ".</p>" +
+    "</section>";
 }
 
 /** Members of one chamber for a canton, grouped by party from left to right. */
@@ -143,7 +178,8 @@ function render(): void {
     html += '<p class="panel__desc">Le gouvernement et le Parlement de la Confédération, aujourd\'hui.</p>' + federalCouncil() + nationalCouncil() + councilOfStates();
   } else {
     const of = ofCanton(sc.canton);
-    html += '<p class="panel__desc">Les élus du canton ' + esc(of) + " aux Chambres fédérales, aujourd'hui.</p>" +
+    html += '<p class="panel__desc">Le parlement du canton ' + esc(of) + " et ses élus à Berne.</p>" +
+      grandCouncilSection(sc.canton, cantons[sc.canton]?.name ?? "") +
       '<section class="inst-section" aria-labelledby="t-canton-in-bern"><h3 id="t-canton-in-bern">Les élus du canton ' + esc(of) + " à Berne</h3>" +
       cantonMembers(sc.canton, "CE", "Conseil des États") + cantonMembers(sc.canton, "CN", "Conseil national") + "</section>";
     const grandCouncil = cantons[sc.canton]?.stateSites.find((s) => s.name.toLowerCase().includes("grand conseil"));
