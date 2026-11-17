@@ -70,8 +70,8 @@ test("a section of a CH party: government count, Grand Conseil seats with the ye
   assert.deepEqual(s.rows, [
     ["Conseil d'État", "1\u00a0membre sur\u00a04"],
     ["Grand Conseil (élection 2023)", "1\u00a0siège sur\u00a0100"],
-    ["Conseil national (GE)", "2 sur\u00a04"],
-    ["Conseil des États (GE)", "1 sur\u00a02"],
+    ["Conseil national (GE)", "2\u00a0sièges sur\u00a04"],
+    ["Conseil des États (GE)", "1\u00a0siège sur\u00a02"],
   ]);
   assert.deepEqual([s.government, s.grandCouncil, s.federal], [true, true, true]);
 });
@@ -98,8 +98,8 @@ test("a party of the canton only takes the federal members whose label is its ab
   assert.deepEqual(standing("mcg-ge", "MCG").rows, [
     ["Conseil d'État", "Aucun membre sur\u00a04"],
     ["Grand Conseil (élection 2023)", "14\u00a0sièges sur\u00a0100"],
-    ["Conseil national (GE)", "1 sur\u00a04"],
-    ["Conseil des États (GE)", "1 sur\u00a02"],
+    ["Conseil national (GE)", "1\u00a0siège sur\u00a04"],
+    ["Conseil des États (GE)", "1\u00a0siège sur\u00a02"],
   ]);
   const mcg = sitsFor(parliament, { id: "mcg-ge", abbr: "MCG" }, "GE");
   const ps = sitsFor(parliament, { id: "ps-ge", abbr: "PS GE" }, "GE");
