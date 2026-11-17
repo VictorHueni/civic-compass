@@ -111,6 +111,7 @@ export function checkCantonalParliaments(p: CantonalParliaments, territories: Te
     for (const col of Object.keys(row.cells)) if (!p.columns.includes(col)) errors.push(`ligne « ${row.label} » : colonne « ${col} » absente de columns`);
   }
   for (const t of covered) {
+    if (!t.parliament?.trim()) errors.push(`${t.code} : nom du parlement absent (champ parliament de territories.json)`);
     const size = CANTONAL_PARLIAMENTS.sizes[t.code];
     const row = cantonRow(p, t.name);
     if (size === undefined) errors.push(`${t.code} : taille du parlement inconnue (CANTONAL_PARLIAMENTS.sizes, tools/cantonal-parliaments.ts)`);

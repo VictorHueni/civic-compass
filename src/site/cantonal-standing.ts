@@ -58,6 +58,8 @@ export function sitsFor(parliament: Parliament, party: CantonParty, code: string
 export function cantonalStanding(
   party: CantonParty,
   code: string,
+  /** The canton's own name for its parliament: "Grand Conseil", "Parlement" in the Jura. */
+  parliamentName: string,
   government: CantonalGovernment | undefined,
   parliaments: CantonalParliaments,
   row: CantonalParliamentRow | undefined,
@@ -77,7 +79,7 @@ export function cantonalStanding(
     const { year, total } = cantonSeats(parliaments, code, row);
     const n = grandCouncilSeats(parliaments, code, row, party.id);
     if (year !== null && total !== null && n !== null) {
-      rows.push(["Grand Conseil (élection " + year + ")", (n ? seats(n) : "Aucun siège") + " sur " + total]);
+      rows.push([parliamentName + " (élection " + year + ")", (n ? seats(n) : "Aucun siège") + " sur " + total]);
       out.grandCouncil = true;
     }
   }

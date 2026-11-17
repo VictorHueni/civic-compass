@@ -102,8 +102,8 @@ test("extractTable fails clearly when the sheet or the year and total columns ar
 
 const territories: Territory[] = [
   { code: "CH", name: "Confédération" },
-  { code: "GE", name: "Genève" },
-  { code: "JU", name: "Jura" },
+  { code: "GE", name: "Genève", parliament: "Grand Conseil" },
+  { code: "JU", name: "Jura", parliament: "Parlement" },
   { code: "ZH", name: "Zurich" },
 ];
 const party = (id: string, territory: string) => ({ id, territory }) as Party;
@@ -136,6 +136,13 @@ test("checkCantonalParliaments reports a missing canton, a wrong total or sum, a
     "party_mapping ZH : pas un canton couvert",
   ]);
   assert.deepEqual(checkCantonalParliaments(file([ge("50", "40", "90"), ju]), territories, parties), ["GE : total 90 au lieu de 100 sièges"]);
+});
+
+test("checkCantonalParliaments requires the parliament's own name for each covered canton", () => {
+  const unnamed = territories.map((t) => (t.code === "JU" ? { code: "JU", name: "Jura" } : t));
+  assert.deepEqual(checkCantonalParliaments(file([ge("60", "40", "100"), ju]), unnamed, parties), [
+    "JU : nom du parlement absent (champ parliament de territories.json)",
+  ]);
 });
 
 /* ---------- Grand Conseil half-circle groups, on the committed data (src/site/cantonal-parliaments.ts) ---------- */
