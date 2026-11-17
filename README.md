@@ -44,6 +44,7 @@ Les données sont des fichiers JSON dans `data/`, pas du code :
 - `data/tools.json` : outils d'aide à la décision.
 - `data/territories.json` : la Confédération et les 26 cantons.
 - `data/ballot.json` : le prochain scrutin, ses objets (`items`) et les mots d'ordre sourcés (`parties`, valeurs `yes` ou `no`, clés = `abbr` des partis CH).
+- `data/cantonal-governments.json` : le gouvernement de chaque canton couvert, tenu à la main. Pour chaque membre : nom, parti (`id` d'un parti du canton), département et présidence comme la page officielle les écrit, la page officielle (`source`), la page qui nomme son parti (`party_source` : page officielle, résultat d'élection ou page du parti) et la date `checked_on`. Un canton absent n'affiche pas de gouvernement (Fribourg jusqu'à la publication du Conseil d'État élu au second tour du 29.11.2026). `npm run check` exige le bon nombre de membres et des partis du canton, et avertit sans échouer pour toute fiche vérifiée il y a plus de 180 jours.
 
 Chaque lien porte un `status` (`verified`, `to_confirm`, `not_found` avec `url: null`), une date `checked_on`, une preuve `evidence` (par exemple le titre de la page) et la liste `previous_urls` des adresses abandonnées (`url`, `seen_on`, `note`), gardées pour mémoire. La forme exacte de chaque fichier est décrite par `src/types.ts`.
 

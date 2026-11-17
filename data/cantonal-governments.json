@@ -1,0 +1,296 @@
+{
+  "_readme": "Tenu à la main. Pour chaque membre : nom, parti (id de parties.json, parti du canton), département et présidence comme la page officielle les écrit, page officielle (source), page qui nomme le parti (party_source) et date de vérification. Un canton absent n'affiche pas de gouvernement (Fribourg jusqu'à la publication du nouveau Conseil d'État, second tour du 29.11.2026). npm run check avertit au-delà de 180 jours. Après modification : npm run check puis npm run links.",
+  "cantonal_governments": [
+    {
+      "canton": "GE",
+      "body": "Conseil d'État",
+      "members": [
+        {
+          "name": "Anne Hiltpold",
+          "party": "plr-ge",
+          "department": "Département de l'instruction publique, de la formation et de la jeunesse (DIP)",
+          "role": "Présidente du Conseil d'Etat",
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Carole-Anne Kast",
+          "party": "ps-ge",
+          "department": "Département des institutions et du numérique (DIN)",
+          "role": "Vice-présidente du Conseil d'Etat",
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Nathalie Fontanet",
+          "party": "plr-ge",
+          "department": "Département des finances, des ressources humaines et des affaires extérieures (DF)",
+          "role": null,
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Thierry Apothéloz",
+          "party": "ps-ge",
+          "department": "Département de la cohésion sociale (DCS)",
+          "role": null,
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Pierre Maudet",
+          "party": "ljs-ge",
+          "department": "Département de la santé et des mobilités (DSM)",
+          "role": null,
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Delphine Bachmann",
+          "party": "centre-ge",
+          "department": "Département de l'économie, de l'emploi, et de l'énergie (DEE)",
+          "role": null,
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Nicolas Walder",
+          "party": "verts-ge",
+          "department": "Département du territoire (DT)",
+          "role": null,
+          "source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "party_source": "https://www.ge.ch/document/conseil-etat-legislature-2023-2028",
+          "checked_on": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "canton": "VD",
+      "body": "Conseil d'État",
+      "members": [
+        {
+          "name": "Christelle Luisier Brodard",
+          "party": "plr-vd",
+          "department": "Département des finances, du territoire et du sport (DFTS)",
+          "role": "Présidente du Conseil d'État",
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/dfts/cheffe-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Valérie Dittli",
+          "party": "centre-vd",
+          "department": "Département de l'agriculture, de la durabilité et du climat et du numérique (DADN)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/dadn/cheffe-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Isabelle Moret",
+          "party": "plr-vd",
+          "department": "Département de l'économie, de l'innovation, de l'emploi et du patrimoine (DEIEP)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/deiep/cheffe-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Frédéric Borloz",
+          "party": "plr-vd",
+          "department": "Département de l'enseignement et de la formation professionnelle (DEF)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/def/chef-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Nuria Gorrite",
+          "party": "ps-vd",
+          "department": "Département des institutions, de la culture, des infrastructures et des ressources humaines (DICIRH)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/dicirh/cheffe-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Vassilis Venizelos",
+          "party": "verts-vd",
+          "department": "Département de la jeunesse, de l'environnement et de la sécurité (DJES)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://www.vd.ch/djes/chef-de-departement",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Roger Nordmann",
+          "party": "ps-vd",
+          "department": "Département de la santé et de l'action sociale (DSAS)",
+          "role": null,
+          "source": "https://www.vd.ch/ce",
+          "party_source": "https://ps-vd.ch/conseil-detat/",
+          "checked_on": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "canton": "VS",
+      "body": "Conseil d'État",
+      "members": [
+        {
+          "name": "Christophe Darbellay",
+          "party": "centre-vs",
+          "department": "Département de l'économie et de la formation",
+          "role": "Président du Conseil d'Etat",
+          "source": "https://www.vs.ch/web/gouvernement",
+          "party_source": "https://www.vs.ch/web/gouvernement/cd",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Franz Ruppen",
+          "party": "udc-vs",
+          "department": "Département de la mobilité, du territoire et de l'environnement",
+          "role": "Vice-président du Conseil d'Etat",
+          "source": "https://www.vs.ch/web/gouvernement",
+          "party_source": "https://www.vs.ch/web/gouvernement/fru",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Stéphane Ganzer",
+          "party": "plr-vs",
+          "department": "Département de la sécurité, des institutions et du sport",
+          "role": null,
+          "source": "https://www.vs.ch/web/gouvernement",
+          "party_source": "https://www.vs.ch/web/gouvernement/stephane-ganzer",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Franziska Biner",
+          "party": "centre-vs",
+          "department": "Département des finances et de l'énergie",
+          "role": null,
+          "source": "https://www.vs.ch/web/gouvernement",
+          "party_source": "https://www.vs.ch/web/gouvernement/franziska-biner",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Mathias Reynard",
+          "party": "ps-vs",
+          "department": "Département de la santé, des affaires sociales et de la culture",
+          "role": null,
+          "source": "https://www.vs.ch/web/gouvernement",
+          "party_source": "https://www.vs.ch/web/gouvernement/mr",
+          "checked_on": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "canton": "NE",
+      "body": "Conseil d'État",
+      "members": [
+        {
+          "name": "Frédéric Mairy",
+          "party": "ps-ne",
+          "department": "Département de la santé, de la jeunesse et des sports (DSJS)",
+          "role": "Président du Conseil d'État",
+          "source": "https://www.ne.ch/autorites/conseil-etat",
+          "party_source": "https://www.ne.ch/autorites/conseil-etat",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Laurent Favre",
+          "party": "plr-ne",
+          "department": "Département du développement territorial et de l'environnement (DDTE)",
+          "role": "Vice-président du Conseil d'État",
+          "source": "https://www.ne.ch/autorites/conseil-etat",
+          "party_source": "https://www.ne.ch/autorites/conseil-etat",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Florence Nater",
+          "party": "ps-ne",
+          "department": "Département de l'économie et de la cohésion sociale (DECS)",
+          "role": null,
+          "source": "https://www.ne.ch/autorites/conseil-etat",
+          "party_source": "https://www.ne.ch/autorites/conseil-etat",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Crystel Graf",
+          "party": "plr-ne",
+          "department": "Département de la formation et des finances (DFFI)",
+          "role": null,
+          "source": "https://www.ne.ch/autorites/conseil-etat",
+          "party_source": "https://www.ne.ch/autorites/conseil-etat",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Céline Vara",
+          "party": "verts-ne",
+          "department": "Département de la sécurité, de la digitalisation et de la culture (DSDC)",
+          "role": null,
+          "source": "https://www.ne.ch/autorites/conseil-etat",
+          "party_source": "https://www.ne.ch/autorites/conseil-etat",
+          "checked_on": "2026-11-17"
+        }
+      ]
+    },
+    {
+      "canton": "JU",
+      "body": "Gouvernement",
+      "members": [
+        {
+          "name": "Rosalie Beuret Siess",
+          "party": "ps-ju",
+          "department": "Département des finances (DFI)",
+          "role": "Présidente du Gouvernement",
+          "source": "https://www.jura.ch/GVT",
+          "party_source": "https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Election-cantonale-resultats-du-2e-tour.html",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Stéphane Theurillat",
+          "party": "centre-ju",
+          "department": "Département de l'économie et de la santé (DES)",
+          "role": "Vice-président du Gouvernement",
+          "source": "https://www.jura.ch/GVT",
+          "party_source": "https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Election-cantonale-resultats-du-2e-tour.html",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Raphaël Ciocchi",
+          "party": "ps-ju",
+          "department": "Département de la formation, du numérique et des sports (DFNS)",
+          "role": null,
+          "source": "https://www.jura.ch/GVT",
+          "party_source": "https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Election-cantonale-resultats-du-2e-tour.html",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Valentin Zuber",
+          "party": "ps-ju",
+          "department": "Département de la cohésion sociale, de la justice et de la police (DSJP)",
+          "role": null,
+          "source": "https://www.jura.ch/GVT",
+          "party_source": "https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Election-cantonale-resultats-du-2e-tour.html",
+          "checked_on": "2026-11-17"
+        },
+        {
+          "name": "Jean-Paul Lachat",
+          "party": "centre-ju",
+          "department": "Département de l'environnement et de la culture (DEC)",
+          "role": null,
+          "source": "https://www.jura.ch/GVT",
+          "party_source": "https://www.jura.ch/fr/Autorites/Administration/CHA/SIC/Centre-medias/Communiques-2025/Election-cantonale-resultats-du-2e-tour.html",
+          "checked_on": "2026-11-17"
+        }
+      ]
+    }
+  ]
+}
