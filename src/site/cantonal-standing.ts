@@ -28,8 +28,19 @@ export interface CantonalStanding {
   federal: boolean;
 }
 
-function seats(n: number): string {
-  return n + (n > 1 ? " sièges" : " siège");
+/**
+ * A no-break space keeps a figure with its word on a narrow card: "14 sièges sur 100" wraps as "14 sièges /
+ * sur 100", never "14 sièges sur / 100" (owner, 2026-11-17). Names keep their own break points ("Bâle-Ville").
+ */
+export const NBSP = "\u00a0";
+
+/** "1 siège", "14 sièges", with a no-break space. */
+export function countOf(n: number, one: string, many: string): string {
+  return n + NBSP + (n > 1 ? many : one);
+}
+
+function outOf(total: number): string {
+  return " sur" + NBSP + total;
 }
 
 /** Seats of a party in its Grand Conseil, from the OFS columns mapped to it; null when no column holds a number for it. */
@@ -71,7 +82,7 @@ export function cantonalStanding(
   if (government && government.members.length) {
     const n = government.members.filter((m) => m.party === party.id).length;
     // "2 membres sur 7", never "2 sur 7": next to the rank in the half-circle ("3 sur 7"), a bare count reads as one (owner, 2026-11-17).
-    rows.push([government.body, (n ? n + (n > 1 ? " membres" : " membre") : "Aucun membre") + " sur " + government.members.length]);
+    rows.push([government.body, (n ? countOf(n, "membre", "membres") : "Aucun membre") + outOf(government.members.length)]);
     out.government = true;
   }
 
@@ -79,7 +90,7 @@ export function cantonalStanding(
     const { year, total } = cantonSeats(parliaments, code, row);
     const n = grandCouncilSeats(parliaments, code, row, party.id);
     if (year !== null && total !== null && n !== null) {
-      rows.push([parliamentName + " (élection " + year + ")", (n ? seats(n) : "Aucun siège") + " sur " + total]);
+      rows.push([parliamentName + " (élection " + year + ")", (n ? countOf(n, "siège", "sièges") : "Aucun siège") + outOf(total)]);
       out.grandCouncil = true;
     }
   }
@@ -89,7 +100,7 @@ export function cantonalStanding(
     const members = membersOf(parliament, council).filter((p) => p.canton?.abbreviation === code);
     if (!members.length) return;
     const n = members.filter(holds).length;
-    rows.push([label + " (" + code + ")", (n ? String(n) : "Aucun siège") + " sur " + members.length]);
+    rows.push([label + " (" + code + ")", (n ? String(n) : "Aucun siège") + outOf(members.length)]);
     out.federal = true;
   };
   chamber("CN", "Conseil national");

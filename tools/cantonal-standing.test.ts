@@ -68,38 +68,38 @@ const standing = (id: string, abbr: string, g: CantonalGovernment | null = gover
 test("a section of a CH party: government count, Grand Conseil seats with the year, the canton's federal seats", () => {
   const s = standing("ps-ge", "PS GE");
   assert.deepEqual(s.rows, [
-    ["Conseil d'État", "1 membre sur 4"],
-    ["Grand Conseil (élection 2023)", "1 siège sur 100"],
-    ["Conseil national (GE)", "2 sur 4"],
-    ["Conseil des États (GE)", "1 sur 2"],
+    ["Conseil d'État", "1\u00a0membre sur\u00a04"],
+    ["Grand Conseil (élection 2023)", "1\u00a0siège sur\u00a0100"],
+    ["Conseil national (GE)", "2 sur\u00a04"],
+    ["Conseil des États (GE)", "1 sur\u00a02"],
   ]);
   assert.deepEqual([s.government, s.grandCouncil, s.federal], [true, true, true]);
 });
 
 test("the government line names members, so it does not read as a rank (owner, 2026-11-17)", () => {
-  assert.deepEqual(standing("plr-ge", "PLR GE").rows[0], ["Conseil d'État", "2 membres sur 4"]);
+  assert.deepEqual(standing("plr-ge", "PLR GE").rows[0], ["Conseil d'État", "2\u00a0membres sur\u00a04"]);
 });
 
 test("the parliament line takes the canton's own name for its parliament (Jura: Parlement)", () => {
   const s = cantonalStanding({ id: "ps-ge", abbr: "PS GE" }, "GE", "Parlement", undefined, table, row, parliament);
-  assert.deepEqual(s.rows[0], ["Parlement (élection 2023)", "1 siège sur 100"]);
+  assert.deepEqual(s.rows[0], ["Parlement (élection 2023)", "1\u00a0siège sur\u00a0100"]);
 });
 
 test("a sourced zero is written out", () => {
   assert.deepEqual(standing("pvl-ge", "PVL GE").rows, [
-    ["Conseil d'État", "Aucun membre sur 4"],
-    ["Grand Conseil (élection 2023)", "Aucun siège sur 100"],
-    ["Conseil national (GE)", "Aucun siège sur 4"],
-    ["Conseil des États (GE)", "Aucun siège sur 2"],
+    ["Conseil d'État", "Aucun membre sur\u00a04"],
+    ["Grand Conseil (élection 2023)", "Aucun siège sur\u00a0100"],
+    ["Conseil national (GE)", "Aucun siège sur\u00a04"],
+    ["Conseil des États (GE)", "Aucun siège sur\u00a02"],
   ]);
 });
 
 test("a party of the canton only takes the federal members whose label is its abbr (MCG)", () => {
   assert.deepEqual(standing("mcg-ge", "MCG").rows, [
-    ["Conseil d'État", "Aucun membre sur 4"],
-    ["Grand Conseil (élection 2023)", "14 sièges sur 100"],
-    ["Conseil national (GE)", "1 sur 4"],
-    ["Conseil des États (GE)", "1 sur 2"],
+    ["Conseil d'État", "Aucun membre sur\u00a04"],
+    ["Grand Conseil (élection 2023)", "14\u00a0sièges sur\u00a0100"],
+    ["Conseil national (GE)", "1 sur\u00a04"],
+    ["Conseil des États (GE)", "1 sur\u00a02"],
   ]);
   const mcg = sitsFor(parliament, { id: "mcg-ge", abbr: "MCG" }, "GE");
   const ps = sitsFor(parliament, { id: "ps-ge", abbr: "PS GE" }, "GE");
@@ -113,8 +113,8 @@ test("no sourced data, no line: a party without an OFS number, a canton without 
   assert.equal(grandCouncilSeats(table, "GE", row, "eag-ge"), null);
   const s = standing("eag-ge", "EàG", null);
   assert.deepEqual(s.rows, [
-    ["Conseil national (GE)", "Aucun siège sur 4"],
-    ["Conseil des États (GE)", "Aucun siège sur 2"],
+    ["Conseil national (GE)", "Aucun siège sur\u00a04"],
+    ["Conseil des États (GE)", "Aucun siège sur\u00a02"],
   ]);
   assert.deepEqual([s.government, s.grandCouncil, s.federal], [false, false, true]);
   const noMembers = standing("ps-ge", "PS GE", { ...government, members: [] });
