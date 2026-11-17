@@ -354,6 +354,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Maryam Yunus Ebener"
+          ],
+          "source": "https://verts-ge.ch/presidence/",
+          "evidence": "Maryam Yunus Ebener Présidente des Vert-e-s genevois-es",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -376,6 +386,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Amanda Gavilanes",
+            "Cyril Mizrahi"
+          ],
+          "source": "https://ps-ge.ch/comite-directeur",
+          "evidence": "Amanda Gavilanes Co-Présidente Cyril Mizrahi Co-Président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -404,6 +425,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Aurélien Barakat"
+          ],
+          "source": "https://ge.pvl.swiss/parti/personnes/presidence-comite/",
+          "evidence": "Président PVL Ge Aurélien Barakat Président PVL Genève et conseiller municipal VdG",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -426,6 +457,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Jean-Marc Guinchard"
+          ],
+          "source": "https://ge.le-centre.ch/home/notre-equipe/",
+          "evidence": "Jean-Marc Guinchard Présidence, Grand Conseil Présidence Député",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -446,6 +487,14 @@
           "value": 2023,
           "source": null,
           "checked_on": null
+        },
+        "presidency": {
+          "names": [
+            "Florence Florenza-Decurtins"
+          ],
+          "source": "https://ljs-ge.ch/le-comite/",
+          "evidence": "Florence Florenza-Decurtins Présidente Simon Brandt Vice-président",
+          "checked_on": "2026-11-17"
         }
       }
     },
@@ -469,6 +518,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Pierre Nicollier"
+          ],
+          "source": "https://www.plr-ge.ch/parti/organes/presidence",
+          "evidence": "Pierre Nicollier Président Mohamed Atiek Vice-président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -519,6 +578,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Lionel Dugerdil"
+          ],
+          "source": "https://www.udc-ge.ch/parti/",
+          "evidence": "Lionel Dugerdil Président UDC Genève Député au Grand Conseil",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -533,7 +602,17 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : POP-Vaud / Parti Ouvrier Populaire Vaudois",
-      "previous_urls": []
+      "previous_urls": [],
+      "facts": {
+        "presidency": {
+          "names": [
+            "Julien Schwab"
+          ],
+          "source": "https://popvaud.ch/organisation/",
+          "evidence": "Julien Schwab – Lausanne-Lavaux Oron – Président du POP Vaud",
+          "checked_on": "2026-11-17"
+        }
+      }
     },
     {
       "id": "verts-vd",
@@ -555,6 +634,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Rebecca Joly"
+          ],
+          "source": "https://vert-e-s-vd.ch/bureau",
+          "evidence": "Rebecca Joly Présidente Députée, Ouest lausannois",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -577,6 +666,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Oriane Sarrasin"
+          ],
+          "source": "https://ps-vd.ch/les-organes/",
+          "evidence": "Présidence Oriane Sarrasin Présidente - Députée (arrondissement Ouest lausannois)",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -599,6 +698,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Olivier Bolomey"
+          ],
+          "source": "https://vd.pvl.swiss/parti/personnes/personnalites/",
+          "evidence": "Président PVL Vaud Olivier Bolomey Président du PVL-VD",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -621,6 +730,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Giancarlo Sergi"
+          ],
+          "source": "https://vd.le-centre.ch/notre-equipe/presidence/",
+          "evidence": "Lors de son Assemblée générale du 19 mai 2026, Le Centre Vaud a élu M. Giancarlo Sergi à la présidence du parti cantonal.",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -643,6 +762,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Florence Bettschart-Narbel"
+          ],
+          "source": "https://www.plr-vd.ch/parti/organes/direction",
+          "evidence": "Florence Bettschart-Narbel Présidente du parti",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -665,6 +794,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Sylvain Freymond"
+          ],
+          "source": "https://www.udc-vaud.ch/direction-du-parti/",
+          "evidence": "Direction du parti Sylvain Freymond Président du parti",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -687,6 +826,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Brigitte Wolf",
+            "Philippe Cina"
+          ],
+          "source": "https://verts-vs.ch/le-parti/organisation",
+          "evidence": "Brigitte Wolf Co-Présidente des Vert·e·s Valais … Cina Philippe Co-président des Vert·e·s Valais",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -731,6 +881,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Lysiane Tissières-Premand"
+          ],
+          "source": "https://vs.le-centre.ch/membres-du-comite-directeur/",
+          "evidence": "Lysiane Tissières-Premand Comité directeur Présidente du Centre Valais romand",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -753,6 +913,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Vincent Pravato"
+          ],
+          "source": "https://www.plrvs.ch/parti/praesidium",
+          "evidence": "Vincent Pravato Président Nicole Luggen Vice-présidente",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -775,6 +945,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Donald Moos"
+          ],
+          "source": "https://www.udc-valais.ch/parti/comite-executif/",
+          "evidence": "UDC VALAIS ROMAND Comité exécutif Président Donald Moos",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -789,7 +969,18 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : Accueil - PoP neuchâtelois",
-      "previous_urls": []
+      "previous_urls": [],
+      "facts": {
+        "presidency": {
+          "names": [
+            "Nicolas Turtschi",
+            "Sabrina Vollers"
+          ],
+          "source": "https://pop-ne.ch/quest-ce-que-le-pop-parti-ouvrier-et-populaire/",
+          "evidence": "bureau cantonal Nicolas Turtschi Co-Président Sabrina Vollers Co-Présidente",
+          "checked_on": "2026-11-17"
+        }
+      }
     },
     {
       "id": "sol-ne",
@@ -825,6 +1016,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Cloé Dutoit"
+          ],
+          "source": "https://verts-ne.ch/les-vert-e-s-neuchatelois-es/presidence",
+          "evidence": "Depuis le 18 juin 2025, Cloé Dutoit et Barbara Blanc assurent respectivement le mandat de présidente et de vice-présidente.",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -847,6 +1048,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Marinette Matthey",
+            "Emil Margot"
+          ],
+          "source": "https://www.psn.ch/le-parti/la-presidence",
+          "evidence": "La présidence du PSN est composée de deux coprésident·es, Marinette Matthey et Emil Margot",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -875,6 +1087,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Maxime Auchlin"
+          ],
+          "source": "https://ne.pvl.swiss/parti/personnes/presidence-comite/",
+          "evidence": "Président PVL NE Maxime Auchlin Député",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -897,6 +1119,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Gregory Huguelet-Meystre"
+          ],
+          "source": "https://www.plrn.ch/personnes/presidence-du-plrn",
+          "evidence": "Présidence du PLRN 8 Gregory Huguelet-Meystre Président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -919,6 +1151,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Loïc Frey",
+            "Jean-Pierre Brechbühler"
+          ],
+          "source": "https://www.udc-ne.ch/medienmitteilungen/ludc-neuchatel-elit-une-nouvelle-direction-et-arrete-ses-mots-dordre-pour-les-votations-federales-du-27-septembre/",
+          "evidence": "27. août 2026 … l’assemblée générale a décidé de mettre en place une coprésidence composée des députés Loïc Frey et Jean-Pierre Brechbühler.",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -955,6 +1198,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Sonia Burri-Schmassmann",
+            "Léonard Paget"
+          ],
+          "source": "https://verts-jura.ch/presentation/bureau",
+          "evidence": "Burri-Schmassmann Sonia Soyhières – Coprésidente … Paget Léonard Moutier – Coprésident",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -977,6 +1231,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "ps-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Leo Beuret"
+          ],
+          "source": "https://www.psju.ch/comite-directeur/",
+          "evidence": "Membres du Comité directeur Leo Beuret Président du PSJ",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -999,6 +1263,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Mathieu Cerf"
+          ],
+          "source": "https://ju.le-centre.ch/notre-equipe/",
+          "evidence": "Mathieu Cerf Parti Président-e",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1013,7 +1287,17 @@
       "status": "verified",
       "checked_on": "2026-11-16",
       "evidence": "Titre de la page : PCSI | (la page dit « Le Parti Chrétien Social Indépendant (PCSI)... pour un Jura autonome »)",
-      "previous_urls": []
+      "previous_urls": [],
+      "facts": {
+        "presidency": {
+          "names": [
+            "Sophie Guenot-Vallat"
+          ],
+          "source": "https://www.pcsi.ch/le-parti/le-comite/",
+          "evidence": "Le comité Sophie Guenot-Vallat Présidente",
+          "checked_on": "2026-11-17"
+        }
+      }
     },
     {
       "id": "plr-ju",
@@ -1035,6 +1319,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Martin Braichet"
+          ],
+          "source": "https://www.plrj.ch/parti/presidence",
+          "evidence": "Présidence 1 Martin Braichet Présidence",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1057,6 +1351,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "udc-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Alain Koller"
+          ],
+          "source": "https://www.udc-ju.ch/parti/comite-directeur/",
+          "evidence": "Comité Directeur Président Alain Koller",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1079,6 +1383,17 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "verts-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Léo Sapia",
+            "Pascal Känzig"
+          ],
+          "source": "https://verts-fr.ch/les-vert-e-s-fribourg/parti/bureau",
+          "evidence": "Léo Sapia Co-président … Pascal Känzig Co-président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1121,7 +1436,17 @@
           "seen_on": "2026-11-16",
           "note": "redirige vers https://cg-fribourg.ch/"
         }
-      ]
+      ],
+      "facts": {
+        "presidency": {
+          "names": [
+            "Sophie Tritten"
+          ],
+          "source": "https://cg-fribourg.ch/comite-cantonal-kantonaler-vorstand/",
+          "evidence": "Sophie Tritten , Gibloux : députée, présidente/Grossrätin, Präsidentin (élue en 2018, réélue en 2022)",
+          "checked_on": "2026-11-17"
+        }
+      }
     },
     {
       "id": "pvl-fr",
@@ -1149,6 +1474,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "pvl-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Mathias Rossi"
+          ],
+          "source": "https://fr.pvl.swiss/parti/comite/",
+          "evidence": "Mathias Rossi Président PVL Fribourg",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1171,6 +1506,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "centre-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Damiano Lepori"
+          ],
+          "source": "https://fr.le-centre.ch/personnes/",
+          "evidence": "Damiano Lepori Présidence Président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
@@ -1193,6 +1538,16 @@
         "source": "https://github.com/chesdata/chesdata.github.io/releases/download/ches-europe/CHES_2024_final_v2.csv",
         "checked_on": "2026-11-16",
         "inherited_from": "plr-ch"
+      },
+      "facts": {
+        "presidency": {
+          "names": [
+            "Alexandre Vonlanthen"
+          ],
+          "source": "https://www.plrf.ch/partei/vorstand",
+          "evidence": "Alexandre Vonlanthen Président du parti Président",
+          "checked_on": "2026-11-17"
+        }
       }
     },
     {
