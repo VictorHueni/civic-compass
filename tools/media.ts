@@ -3,8 +3,20 @@
  * "what npm run check says about the media" of docs/plans/active/transparency-media/ (API tab).
  * Messages are in French: the maintainers read them in French.
  */
+import { createHash } from "node:crypto";
+import { normalize } from "../src/site/text.ts";
 import type { Holding, MediaOwnership, Territory } from "../src/types.ts";
 import { isStale } from "./cantonal-governments.ts";
+
+/**
+ * The fingerprint of a name removed on request (US-24, PRD-0001 §8): SHA-256, in hexadecimal, of the name in lower
+ * case, without accents, spaces collapsed. The file keeps it instead of the name, so that the check can refuse the
+ * name if a later update brings it back. Its two limits (§8): someone who already suspects a name can test it, and
+ * the name stays in the git history of the versions before the removal.
+ */
+export function fingerprint(name: string): string {
+  return createHash("sha256").update(normalize(name).trim().replace(/\s+/g, " ")).digest("hex");
+}
 
 /** Rounds a sum of percentages to two decimals, as the shares are published. */
 const percent = (n: number): number => Math.round(n * 100) / 100;
@@ -53,6 +65,15 @@ export function checkMedia(m: MediaOwnership, territories: Territory[]): string[
   for (const c of m.companies) {
     const total = publishedTotal(m.holdings.filter((h) => h.held === c.id));
     if (total > 100) errors.push(`${c.id} : les parts publiées font ${total} % (plus de 100 %)`);
+  }
+
+  // Removals (US-24): a removed holder keeps no name; no named holder may match a removed name. Messages name the
+  // id only, never the name, so that the check's output does not repeat a name that was asked out.
+  const removed = new Set(m.holders.flatMap((h) => (h.removal ? [h.removal.fingerprint] : [])));
+  for (const h of m.holders) {
+    if (h.removal && h.name) errors.push(`${h.id} : un nom et un retrait (un détenteur retiré ne garde pas son nom)`);
+    if (!h.removal && !h.name) errors.push(`${h.id} : ni nom ni retrait`);
+    if (h.name && removed.has(fingerprint(h.name))) errors.push(`${h.id} : ce nom a été retiré à la demande de la personne ; ne pas le remettre`);
   }
 
   const measured = new Set<string>();

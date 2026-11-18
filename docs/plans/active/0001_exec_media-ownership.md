@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 17
+**Current Increment:** 18
 
 ## Increment Plan
 
@@ -513,7 +513,7 @@ Done notes (2026-11-18):
 
 ### Increment 17: The name fingerprint and its check rule
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (row "A named person matches the fingerprint of a removal"), database tab (Removal), PRD-0001 US-24 and §8 (2026-11-18).
 
@@ -538,6 +538,12 @@ Test gate:
 Exit criteria:
 
 1. A removed person cannot come back under a name without failing the check.
+
+Done notes (2026-11-18):
+
+1. `fingerprint` reuses the site's `normalize` (`src/site/text.ts`), then trims and collapses spaces: plain SHA-256, no salt, as PRD-0001 §8 rules. Every named holder is compared with every removal.
+2. The check's messages name the holder's id only, never a name, so that its output (CI logs included) does not repeat a name asked out.
+3. `media-fingerprint` reads the name on standard input by default, so that it stays out of the shell history; a name given as argument is accepted too. The api tab lists it as an eighth contract.
 
 ### Increment 18: "actionnaire privé" on the page
 

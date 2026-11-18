@@ -1,4 +1,4 @@
-<!-- summary: no HTTP API · 7 contracts · 2 decision tables -->
+<!-- summary: no HTTP API · 8 contracts · 2 decision tables -->
 <div class="block">
   <h2>Contracts</h2>
   <p class="note">The site is static and has no API of its own. What the slice adds are files, one command, one read of an outside source and one address: each side reads them as below. The site fetches nothing at run time; the data is embedded at build time (US-12).</p>
@@ -8,6 +8,7 @@
       <tbody>
         <tr><td class="key"><span class="mono">data/media.json</span></td><td>The media, companies, other holders, holdings and fög values, kept by hand (next block)</td><td>maintainer → check, build, site</td><td>JSON file, schema in <span class="mono">src/types.ts</span></td></tr>
         <tr><td class="key"><span class="mono">npm run check</span></td><td>Fails or warns on the media rules (decision table below)</td><td>maintainer, CI</td><td>command, exit 0 or 1</td></tr>
+        <tr><td class="key"><span class="mono">node tools/cli.ts media-fingerprint</span></td><td>Reads a name on standard input (kept out of the shell history) and prints its fingerprint with the normalisation the check uses, to record a removal</td><td>maintainer → file</td><td>command, exit 0, or 2 without a name</td></tr>
         <tr><td class="key"><span class="mono">npm run media-register</span></td><td>Reads each publisher's UID in the commercial register and reports differences; never edits the hand-kept file</td><td>maintainer → register → file</td><td>command, exit 0, 1 or 2</td></tr>
         <tr><td class="key">Zefix linked data</td><td>Name, legal form, seat and status (active, in liquidation, deleted) of a company by UID</td><td>command → <span class="mono">lindas.admin.ch</span></td><td>SPARQL over HTTPS, no credentials; "OGD Open use. Must provide the source."</td></tr>
         <tr><td class="key"><span class="mono">data/media-register.json</span></td><td>What the register returned, unchanged, with the request and the download date</td><td>command → maintainer, check</td><td>JSON file, generated, never edited</td></tr>
