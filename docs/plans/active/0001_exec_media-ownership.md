@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 13
+**Current Increment:** 14
 
 ## Increment Plan
 
@@ -376,7 +376,7 @@ Done notes (2026-11-18):
 
 ### Increment 13: The geometry of Soleil
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`sunburst.ts`).
 
@@ -397,6 +397,11 @@ Test gate:
 Exit criteria:
 
 1. The geometry cases pass; the module has no DOM.
+
+Done notes (2026-11-18):
+
+1. `arcs(rings, size)` returns each sector with its SVG path, its parent and the kind of its top owner (for the colour); a lone sector is a full ring, drawn as one closed path. Ring radii and label thresholds follow the approved mockup: centre 6 to 13 % of the radius (no label), owners 13 to 40 % (label from 14°), media 40 to 97 % (label from 4°).
+2. `labelled(arc)` gives the position, rotation (within ±90°, so text never reads upside down), anchor and room of a radial label; the page shortens a name that does not fit.
 
 ### Increment 14: Réseau, Soleil, the switch and the search
 
