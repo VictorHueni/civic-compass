@@ -268,3 +268,14 @@ test("checkMedia fails on a holder with neither name nor removal, and on a holde
   assert.ok(errors.some((e) => /removed_1/.test(e) && /nom et un retrait/.test(e)), errors.join("\n"));
   assert.ok(errors.every((e) => !/Bernard/.test(e)), "no message prints a removed name");
 });
+
+test("checkMedia fails on a removed holder whose id is not neutral: an id such as p_bernard_b would keep the name", () => {
+  const f = withRemoval();
+  const h = f.media_ownership.holders.find((x) => x.id === "removed_1") as Holder;
+  h.id = "p_bernard_b";
+  for (const x of f.media_ownership.holdings) if (x.holder === "removed_1") x.holder = "p_bernard_b";
+  const errors = checkMedia(f.media_ownership, TERRITORIES);
+  assert.equal(errors.length, 1, errors.join("\n"));
+  assert.match(errors[0], /removed_/);
+  assert.doesNotMatch(errors[0], /bernard/i, "the message does not repeat the id that holds the name");
+});

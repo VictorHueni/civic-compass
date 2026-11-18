@@ -544,6 +544,7 @@ Done notes (2026-11-18):
 1. `fingerprint` reuses the site's `normalize` (`src/site/text.ts`), then trims and collapses spaces: plain SHA-256, no salt, as PRD-0001 §8 rules. Every named holder is compared with every removal.
 2. The check's messages name the holder's id only, never a name, so that its output (CI logs included) does not repeat a name asked out.
 3. `media-fingerprint` reads the name on standard input by default, so that it stays out of the shell history; a name given as argument is accepted too. The api tab lists it as an eighth contract.
+4. Found while writing increment 19: a holder's id often holds the name (`p_barbier_mueller`), and would keep it in the file, the built script and the page's attributes after a removal. The check now requires a removed holder's id to be neutral (`removed_N`); its message points at the removal by the start of its fingerprint, not by the id.
 
 ### Increment 18: "actionnaire privé" on the page
 

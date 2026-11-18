@@ -71,6 +71,10 @@ export function checkMedia(m: MediaOwnership, territories: Territory[]): string[
   // id only, never the name, so that the check's output does not repeat a name that was asked out.
   const removed = new Set(m.holders.flatMap((h) => (h.removal ? [h.removal.fingerprint] : [])));
   for (const h of m.holders) {
+    if (h.removal && !/^removed_\d+$/.test(h.id)) {
+      // The id may hold the name: the message points at the removal by the start of its fingerprint instead.
+      errors.push(`détenteur retiré (empreinte ${h.removal.fingerprint.slice(0, 12)}…) : son id doit être neutre, removed_1, removed_2…, dans holders et ses participations`);
+    }
     if (h.removal && h.name) errors.push(`${h.id} : un nom et un retrait (un détenteur retiré ne garde pas son nom)`);
     if (!h.removal && !h.name) errors.push(`${h.id} : ni nom ni retrait`);
     if (h.name && removed.has(fingerprint(h.name))) errors.push(`${h.id} : ce nom a été retiré à la demande de la personne ; ne pas le remettre`);
