@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 19
+**Current Increment:** 20
 
 ## Increment Plan
 
@@ -580,7 +580,7 @@ Done notes (2026-11-18):
 
 ### Increment 19: The removal procedure for the maintainer
 
-**Status:** pending
+**Status:** done
 
 Sheet: PRD-0001 US-24 (handled within 30 days).
 
@@ -602,6 +602,12 @@ Test gate:
 Exit criteria:
 
 1. A maintainer can handle a request from the README alone.
+
+Done notes (2026-11-18):
+
+1. README: `data/media.json` joins the list of data files (it was missing), `media-fingerprint` joins the tool's commands, and a section "Médias : corrections et retraits" gives the 30-day procedure: answer, correct with a source, or remove a name in five steps (fingerprint from standard input, `removal` record, neutral `removed_N` id, check and build, no name in commits, PRs or issues), with the two limits of §8 to tell the person.
+2. CLAUDE.md points agents at that section and forbids a removed name anywhere, ids and commit messages included.
+3. Gate: `npm run check` valid; `npm run links` 0 broken (238 OK, 4 to check by hand). The sheet re-renders `PASS: no findings` with the new contract and is republished (version 5).
 
 ### Increment 20: Reading the register
 
@@ -707,5 +713,5 @@ Exit criteria:
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | done | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
-| M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
+| M5: Removal (US-24) | 17-19 | done | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
 | M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |
