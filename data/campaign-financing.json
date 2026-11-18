@@ -1,0 +1,575 @@
+{
+  "_readme": "Généré par « npm run campaign-financing » depuis les exports du Contrôle fédéral des finances (CDF, politikfinanzierung.efk.admin.ch), un par objet de data/ballot.json (financing_id) : ne pas modifier à la main, relancer la commande. Budgets déclarés avant le vote et libéralités de plus de 15 000 francs, montants en CHF tels que publiés. D'une personne qui donne, seuls le prénom et le nom sont gardés ; un donateur retiré à sa demande (data/donor-removals.json) devient « removed ». disclaimer : l'avertissement du CDF, repris tel quel.",
+  "campaign_financing": {
+    "source_page": "https://politikfinanzierung.efk.admin.ch/app/fr/",
+    "disclaimer": "Le CDF souligne qu'il publie les données telles qu'elles lui ont été transmises. Par conséquent, il ne garantit pas l'exactitude des données (art 15 al. 1 Ofipo). Les actrices et acteurs soumis à l'obligation de déclarer sont responsables de l'exactitude des données transmises.",
+    "retrieved_on": "2026-11-18",
+    "items": [
+      {
+        "ballot_item": "avs",
+        "financing_id": 33,
+        "request": "https://politikfinanzierung.efk.admin.ch/api/frontend/latest/fr/downloads/financings/33?with_budget=true",
+        "declared_on": "2026-11-10",
+        "campaigns": [
+          {
+            "actor_id": 42,
+            "actor": "Union Démocratique du Centre (UDC)",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 125000,
+            "money_donations": 125000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 0
+          },
+          {
+            "actor_id": 374,
+            "actor": "Union syndicale suisse (USS)",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 225000,
+            "money_donations": 50000,
+            "in_kind_donations": 25000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 150000
+          },
+          {
+            "actor_id": 43,
+            "actor": "PLR.Les Libéraux-Radicaux",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 889590,
+            "money_donations": 549590,
+            "in_kind_donations": 40000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 300000
+          },
+          {
+            "actor_id": 8,
+            "actor": "Sozialdemokratische Partei der Schweiz",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 356000,
+            "money_donations": 350000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 6000,
+            "own_funds": 0
+          },
+          {
+            "actor_id": 465,
+            "actor": "Centre Patronal",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 60000,
+            "money_donations": 0,
+            "in_kind_donations": 10000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 50000
+          },
+          {
+            "actor_id": 408,
+            "actor": "Syndicat suisse des services publics (SSP)",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 54221.27,
+            "money_donations": 1000,
+            "in_kind_donations": 19077.27,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 34144
+          }
+        ],
+        "donations": [
+          {
+            "id": 4651,
+            "actor_id": 42,
+            "donor": {
+              "type": "company",
+              "name": "Swiss Life AG"
+            },
+            "value": 75000,
+            "kind": "money",
+            "given_on": "2026-09-28"
+          },
+          {
+            "id": 4652,
+            "actor_id": 42,
+            "donor": {
+              "type": "company",
+              "name": "Swissmem"
+            },
+            "value": 50000,
+            "kind": "money",
+            "given_on": "2026-10-14"
+          },
+          {
+            "id": 4639,
+            "actor_id": 374,
+            "donor": {
+              "type": "company",
+              "name": "Schweizerischer Gewerkschaftsbund"
+            },
+            "value": 25000,
+            "kind": "in_kind",
+            "given_on": "2026-08-20"
+          },
+          {
+            "id": 4664,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Zürcher Handelskammer"
+            },
+            "value": 40000,
+            "kind": "money",
+            "given_on": "2026-09-15"
+          },
+          {
+            "id": 4665,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Buru Holding AG"
+            },
+            "value": 25000,
+            "kind": "money",
+            "given_on": "2026-09-25"
+          },
+          {
+            "id": 4666,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Swissmem"
+            },
+            "value": 50000,
+            "kind": "money",
+            "given_on": "2026-09-11"
+          },
+          {
+            "id": 4667,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Bonny Stiftung für die Freiheit"
+            },
+            "value": 40000,
+            "kind": "money",
+            "given_on": "2026-09-16"
+          },
+          {
+            "id": 4668,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Swiss Life AG"
+            },
+            "value": 25000,
+            "kind": "money",
+            "given_on": "2026-10-09"
+          },
+          {
+            "id": 4669,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Aktionskomitee für Freiheit und Verantwortung"
+            },
+            "value": 250000,
+            "kind": "money",
+            "given_on": "2026-10-12"
+          },
+          {
+            "id": 4670,
+            "actor_id": 43,
+            "donor": {
+              "type": "person",
+              "first_name": "Philip",
+              "name": "Mosimann"
+            },
+            "value": 25000,
+            "kind": "money",
+            "given_on": "2026-08-31"
+          },
+          {
+            "id": 4671,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Swiss Life AG"
+            },
+            "value": 50000,
+            "kind": "money",
+            "given_on": "2026-09-28"
+          },
+          {
+            "id": 4672,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "Birkhäuser+GBC AG"
+            },
+            "value": 40000,
+            "kind": "in_kind",
+            "given_on": "2026-10-14"
+          },
+          {
+            "id": 4673,
+            "actor_id": 43,
+            "donor": {
+              "type": "company",
+              "name": "auto-schweiz"
+            },
+            "value": 40000,
+            "kind": "money",
+            "given_on": "2026-10-15"
+          }
+        ]
+      },
+      {
+        "ballot_item": "feux",
+        "financing_id": 34,
+        "request": "https://politikfinanzierung.efk.admin.ch/api/frontend/latest/fr/downloads/financings/34?with_budget=true",
+        "declared_on": "2026-10-16",
+        "campaigns": [
+          {
+            "actor_id": 463,
+            "actor": "Verein für eine Einschränkung von Feuerwerk",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 525000,
+            "money_donations": 455000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 70000
+          },
+          {
+            "actor_id": 466,
+            "actor": "Protection Suisse des Animaux PSA",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 350000,
+            "money_donations": 150000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 200000
+          },
+          {
+            "actor_id": 468,
+            "actor": "Pro Feuerwerk",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 100000,
+            "money_donations": 100000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 0
+          }
+        ],
+        "donations": [
+          {
+            "id": 4662,
+            "actor_id": 463,
+            "donor": {
+              "type": "company",
+              "name": "Schweizer Tierschutz STS"
+            },
+            "value": 150000,
+            "kind": "money",
+            "given_on": "2026-10-01"
+          },
+          {
+            "id": 4663,
+            "actor_id": 463,
+            "donor": {
+              "type": "company",
+              "name": "VIER PFOTEN"
+            },
+            "value": 210000,
+            "kind": "money",
+            "given_on": "2026-10-01"
+          },
+          {
+            "id": 4635,
+            "actor_id": 468,
+            "donor": {
+              "type": "company",
+              "name": "Schweizerische Koordinationsstelle Feuerwerk"
+            },
+            "value": 20000,
+            "kind": "money",
+            "given_on": "2026-07-10"
+          },
+          {
+            "id": 4640,
+            "actor_id": 468,
+            "donor": {
+              "type": "company",
+              "name": "Bugano AG"
+            },
+            "value": 25000,
+            "kind": "money",
+            "given_on": "2026-09-30"
+          }
+        ]
+      },
+      {
+        "ballot_item": "couples",
+        "financing_id": 35,
+        "request": "https://politikfinanzierung.efk.admin.ch/api/frontend/latest/fr/downloads/financings/35?with_budget=true",
+        "declared_on": "2026-11-10",
+        "campaigns": [
+          {
+            "actor_id": 439,
+            "actor": "JA zur Individualbesteuerung",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 150000,
+            "money_donations": 130000,
+            "in_kind_donations": 20000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 0
+          },
+          {
+            "actor_id": 59,
+            "actor": "Le Centre",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 150000,
+            "money_donations": 10000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 140000
+          },
+          {
+            "actor_id": 242,
+            "actor": "FDP.Die Liberalen Frauen Schweiz",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 151000,
+            "money_donations": 150000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 1000
+          }
+        ],
+        "donations": [
+          {
+            "id": 4629,
+            "actor_id": 439,
+            "donor": {
+              "type": "company",
+              "name": "Zürcher Handelskammer"
+            },
+            "value": 20000,
+            "kind": "money",
+            "given_on": "2026-09-15"
+          },
+          {
+            "id": 4630,
+            "actor_id": 439,
+            "donor": {
+              "type": "company",
+              "name": "alliance F"
+            },
+            "value": 20000,
+            "kind": "money",
+            "given_on": "2026-10-06"
+          },
+          {
+            "id": 4631,
+            "actor_id": 439,
+            "donor": {
+              "type": "company",
+              "name": "FDP.Die Liberalen"
+            },
+            "value": 50000,
+            "kind": "money",
+            "given_on": "2026-10-06"
+          },
+          {
+            "id": 4681,
+            "actor_id": 242,
+            "donor": {
+              "type": "person",
+              "first_name": "Carolina",
+              "name": "Mülller-Möhl"
+            },
+            "value": 150000,
+            "kind": "money",
+            "given_on": "2026-10-28"
+          }
+        ]
+      },
+      {
+        "ballot_item": "armes",
+        "financing_id": 36,
+        "request": "https://politikfinanzierung.efk.admin.ch/api/frontend/latest/fr/downloads/financings/36?with_budget=true",
+        "declared_on": "2026-11-18",
+        "campaigns": [
+          {
+            "actor_id": 328,
+            "actor": "Swissmem",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 750000,
+            "money_donations": 250000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 500000
+          },
+          {
+            "actor_id": 435,
+            "actor": "Allianz Sicherheit Schweiz",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 2190000,
+            "money_donations": 1470000,
+            "in_kind_donations": 20000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 700000
+          },
+          {
+            "actor_id": 467,
+            "actor": "Offiziersgesellschaft des Kantons St.Gallen",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "yes",
+            "total": 112500,
+            "money_donations": 100000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 12500
+          },
+          {
+            "actor_id": 464,
+            "actor": "Référendum sur le matériel de guerre",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 218000,
+            "money_donations": 177000,
+            "in_kind_donations": 18000,
+            "events": 0,
+            "sales": 0,
+            "own_funds": 23000
+          },
+          {
+            "actor_id": 8,
+            "actor": "Sozialdemokratische Partei der Schweiz",
+            "actor_type": "Personne morale ou société de personnes",
+            "side": "no",
+            "total": 362000,
+            "money_donations": 350000,
+            "in_kind_donations": 0,
+            "events": 0,
+            "sales": 12000,
+            "own_funds": 0
+          }
+        ],
+        "donations": [
+          {
+            "id": 4623,
+            "actor_id": 328,
+            "donor": {
+              "type": "company",
+              "name": "Economiesuisse"
+            },
+            "value": 250000,
+            "kind": "money",
+            "given_on": "2026-09-01"
+          },
+          {
+            "id": 4627,
+            "actor_id": 435,
+            "donor": {
+              "type": "company",
+              "name": "Swissmem"
+            },
+            "value": 200000,
+            "kind": "money",
+            "given_on": "2026-06-08"
+          },
+          {
+            "id": 4628,
+            "actor_id": 435,
+            "donor": {
+              "type": "company",
+              "name": "economiesuisse"
+            },
+            "value": 1250000,
+            "kind": "money",
+            "given_on": "2026-07-06"
+          },
+          {
+            "id": 4636,
+            "actor_id": 435,
+            "donor": {
+              "type": "company",
+              "name": "Zürcher Handelskammer"
+            },
+            "value": 20000,
+            "kind": "money",
+            "given_on": "2026-10-07"
+          },
+          {
+            "id": 4632,
+            "actor_id": 467,
+            "donor": {
+              "type": "company",
+              "name": "Kantonale St.Gallische Winkelriedstiftung"
+            },
+            "value": 100000,
+            "kind": "money",
+            "given_on": "2026-09-28"
+          },
+          {
+            "id": 4682,
+            "actor_id": 464,
+            "donor": {
+              "type": "company",
+              "name": "Gruppe für eine Schweiz ohne Armee"
+            },
+            "value": 40000,
+            "kind": "money",
+            "given_on": "2026-10-12"
+          },
+          {
+            "id": 4683,
+            "actor_id": 464,
+            "donor": {
+              "type": "company",
+              "name": "Gruppe für eine Schweiz ohne Armee (GSoA)"
+            },
+            "value": 18000,
+            "kind": "in_kind",
+            "given_on": "2026-05-11"
+          },
+          {
+            "id": 4684,
+            "actor_id": 464,
+            "donor": {
+              "type": "company",
+              "name": "Gruppe für eine Schweiz ohne Armee"
+            },
+            "value": 72000,
+            "kind": "money",
+            "given_on": "2026-11-07"
+          }
+        ]
+      }
+    ]
+  }
+}

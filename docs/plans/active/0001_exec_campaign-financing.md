@@ -37,14 +37,14 @@ Principles:
 5. **Keep only what is shown.** The generated file, public in the repository, keeps a person's first name and name, never the commune, the « Suisse de l'étranger » flag or anything else the CDF publishes about them (US-27, PRD-0001 §3).
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
-**Overall Status:** pending
-**Current Increment:** --
+**Overall Status:** in progress
+**Current Increment:** 06 (M1 done)
 
 ## Increment Plan
 
 ### Increment 01: The XLSX reader accepts a workbook without shared strings
 
-**Status:** pending
+**Status:** done
 
 Scope:
 
@@ -68,7 +68,9 @@ Exit criteria:
 
 ### Increment 02: Types, schemas and the CDF id of each ballot item
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the donor is a tagged union on `type` (`{ type: "company", name }`, `{ type: "person", first_name, name }`, `{ type: "removed" }`), checked by a new `variant` schema rule (`tools/schema.ts`), so the schema itself refuses a person's commune or a donor that is both; a campaign keeps the CDF's six receipt columns (`total`, `money_donations`, `in_kind_donations`, `events`, `sales`, `own_funds`) instead of a derived `from_donations`; campaigns and donations carry the CDF's `actor_id` (a donation's receiver) and a donation its CDF `id`; `given_on` is required (every donation of the four exports has a date); the removals reuse `Removal` (`DonorRemovalsFile.donor_removals`).
 
 Scope:
 
@@ -94,7 +96,9 @@ Exit criteria:
 
 ### Increment 03: Reading one CDF workbook
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the export's sheet 2 headers are the CDF's full labels (« Nom de l'auteur/e de la libéralité », « Valeur (en CHF) », « Date d'octroi de la libéralité »…), checked column by column, extra columns refused; `readFinancing` returns `left_out` (the declarations it counted and left out) and `null` when the export holds no budget declaration; the fixtures were downloaded again on 2026-11-19, their sheets identical to the copies of 2026-11-18.
 
 Scope:
 
@@ -118,7 +122,9 @@ Exit criteria:
 
 ### Increment 04: The `campaign-financing` command and its generated file
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the disclaimer is fetched with the exports, from the portal's texts (`/api/frontend/v1/translations`, key `FE|Information|Campaign financing`), never typed; a removal matches « Prénom Nom » or « Nom Prénom »; the first real run wrote 4 items, 17 committees, 29 donations (2 by persons).
 
 Scope:
 
@@ -148,7 +154,9 @@ Prediction:
 
 ### Increment 05: The financing rules of `npm run check`
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the removal match (both orders of the names) lives in `tools/financing.ts` (`removalOf`), shared by the command and the check; the summary line follows the check's other dates (« financement des campagnes au 2026-11-18 : 4 objets, 17 comités, 29 dons », the retrieval date in UTC as the other commands write it).
 
 Scope:
 
@@ -321,6 +329,6 @@ Exit criteria:
 
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| M1: Generated data (US-28) | 01-05 | pending | `npm run campaign-financing` writes the budgets and donations of the four items of 29.11.2026 from the CDF; `npm run check` enforces their rules; no page yet | `npm test && npm run campaign-financing && npm run check && npm run links` | 4 items, 29 donations; a failed fetch writes nothing; a stale file fails the check | `feat(financing): …`, PR "feat(financing): generate campaign financing from the Federal Audit Office" |
+| M1: Generated data (US-28) | 01-05 | done | `npm run campaign-financing` writes the budgets and donations of the four items of 29.11.2026 from the CDF; `npm run check` enforces their rules; no page yet | `npm test && npm run campaign-financing && npm run check && npm run links` | 4 items, 29 donations; a failed fetch writes nothing; a stale file fails the check | `feat(financing): …`, PR "feat(financing): generate campaign financing from the Federal Audit Office" |
 | M2: The step (US-26) | 06-08 | pending | « Suivre l'argent » on each ballot item, with the error report | `npm test && npm run check && npm run build`, from disk at 360 px | Item 33 matches the mockup; works offline | PR "feat(financing): follow the money behind each ballot item" |
 | M3: Donors' rights (US-27) | 09-11 | pending | Removal by fingerprint applied and enforced; the procedure written; the slice closed in the PRD | `npm test && npm run check` | A removed donor cannot come back; criteria ticked | PR "feat(financing): remove a named donor on request" |

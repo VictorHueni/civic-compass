@@ -4,7 +4,8 @@
  *
  * It reads what the OFS tables need: the zip container (stored or deflated entries, no zip64, no
  * encryption), the sheet list, shared and inline strings, and each cell's text as written in the
- * file (a number stays the text of its <v>, a formula gives its cached value). Styles, dates and
+ * file (a number stays the text of its <v>, a formula gives its cached value); the shared strings
+ * part may be absent when every text is inline. Styles, dates and
  * merged cells are ignored. Anything else it does not understand makes it throw, never guess.
  */
 import { crc32, inflateRawSync } from "node:zlib";
@@ -97,8 +98,12 @@ export function readWorkbook(buf: Buffer): Sheet[] {
     const path = target.startsWith("/") ? target.slice(1) : `xl/${target}`;
     targets.set(attr(tag, "Id") ?? "", { type: (attr(tag, "Type") ?? "").split("/").pop() ?? "", path });
   }
-  const sharedPath = [...targets.values()].find((t) => t.type === "sharedStrings")?.path ?? "xl/sharedStrings.xml";
-  const shared = [...part(files, sharedPath).matchAll(/<si>([\s\S]*?)<\/si>|<si\/>/g)].map((m) => stringItem(m[1] ?? ""));
+  // The shared strings part is optional (a workbook may keep every text inline, as the Federal Audit Office's
+  // exports do); once the relationships declare it, it must be there.
+  const declared = [...targets.values()].find((t) => t.type === "sharedStrings")?.path;
+  const sharedPath = declared ?? "xl/sharedStrings.xml";
+  const sharedXml = declared || files.has(sharedPath) ? part(files, sharedPath) : "";
+  const shared = [...sharedXml.matchAll(/<si>([\s\S]*?)<\/si>|<si\/>/g)].map((m) => stringItem(m[1] ?? ""));
 
   return [...part(files, "xl/workbook.xml").matchAll(/<sheet\s[^>]*>/g)].map(([tag]) => {
     const name = attr(tag, "name") ?? "";
