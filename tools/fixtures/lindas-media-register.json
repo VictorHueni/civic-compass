@@ -1,0 +1,812 @@
+{
+ "head": {
+  "vars": [
+   "uid",
+   "name",
+   "form",
+   "seat"
+  ]
+ },
+ "results": {
+  "bindings": [
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE105836696"
+    },
+    "name": {
+     "type": "literal",
+     "value": "TX Group AG"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Zürich"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106034966"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Tamedia Publications romandes SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Lausanne"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE396664102"
+    },
+    "name": {
+     "type": "literal",
+     "value": "RTS Radio Télévision Suisse, succursale de la Société suisse de radiodiffusion et télévision"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Succursale suisse inscrite au registre du commerce"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Ecublens (VD)"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106824626"
+    },
+    "name": {
+     "type": "literal",
+     "value": "CH Regionalmedien AG"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Aarau"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE103959721"
+    },
+    "name": {
+     "type": "literal",
+     "value": "ESH Médias Editions SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Sion"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE105861286"
+    },
+    "name": {
+     "type": "literal",
+     "value": "SNP Société Neuchâteloise de Presse SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Neuchâtel"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE103365013"
+    },
+    "name": {
+     "type": "literal",
+     "value": "TV LEMAN BLEU SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Carouge (GE)"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE102733947"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Le Temps SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE403630234"
+    },
+    "name": {
+     "type": "literal",
+     "value": "St-Paul Médias SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Fribourg"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE107467173"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Editions D + P S.A."
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Delémont"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE114666950"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Vaud-Fribourg TV SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Lausanne"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE104153471"
+    },
+    "name": {
+     "type": "literal",
+     "value": "CANAL ALPHA SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Cortaillod"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE113664888"
+    },
+    "name": {
+     "type": "literal",
+     "value": "RADIO CHABLAIS SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Monthey"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE113952896"
+    },
+    "name": {
+     "type": "literal",
+     "value": "RFJ SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Delémont"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE284172783"
+    },
+    "name": {
+     "type": "literal",
+     "value": "RTN SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Laténa"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE113952844"
+    },
+    "name": {
+     "type": "literal",
+     "value": "BNJ Suisse SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Delémont"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE103606524"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Radio Lac SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE108411459"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Radio LFM SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Crissier"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE108465857"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Radio One FM SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106061845"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Radio Rhône SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Sion"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106493475"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Rouge SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Crissier"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106259494"
+    },
+    "name": {
+     "type": "literal",
+     "value": "RADIO FRIBOURG SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Villars-sur-Glâne"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE105820465"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Freiburger Nachrichten AG"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Fribourg"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE217728826"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Nouvelle Agence Economique et Financière SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Echandens"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE226474346"
+    },
+    "name": {
+     "type": "literal",
+     "value": "MEDIAparc SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Villars-sur-Glâne"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE106557709"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Radio Rottu Oberwallis AG"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Visp"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE409973833"
+    },
+    "name": {
+     "type": "literal",
+     "value": "CH Media Holding AG"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Aarau"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE109560406"
+    },
+    "name": {
+     "type": "literal",
+     "value": "ESH Editions Suisses Holding SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Neuchâtel"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE382325467"
+    },
+    "name": {
+     "type": "literal",
+     "value": "St-Paul Holding SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Fribourg"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE108954582"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Groupe E SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Granges-Paccot"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE103179083"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Démocrate Media Holding SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Val Terbi"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE100709168"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Mystik SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Cortaillod"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE379633626"
+    },
+    "name": {
+     "type": "literal",
+     "value": "BNJ Media Holding SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Rossemaison"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE107344323"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Media One Group SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE113902562"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Unicast SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Lausanne"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE100842382"
+    },
+    "name": {
+     "type": "literal",
+     "value": "AEVIS VICTORIA SA"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Société anonyme"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Fribourg"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE359118195"
+    },
+    "name": {
+     "type": "literal",
+     "value": "pomona media partner genossenschaft"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Coopérative"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Visp"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE103172980"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Nouvelle association du Courrier"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Association"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE102978667"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Schweizerische Radio- und Fernsehgesellschaft"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Association"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Bern"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE298602703"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Fondation Aventinus"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Fondation"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Genève"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE101196774"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Soeurs de l'Oeuvre de Saint-Paul société coopérative"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Coopérative"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Fribourg"
+    }
+   },
+   {
+    "uid": {
+     "type": "literal",
+     "value": "CHE113961599"
+    },
+    "name": {
+     "type": "literal",
+     "value": "Centre Patronal"
+    },
+    "form": {
+     "xml:lang": "fr",
+     "type": "literal",
+     "value": "Association"
+    },
+    "seat": {
+     "type": "literal",
+     "value": "Paudex"
+    }
+   }
+  ]
+ }
+}

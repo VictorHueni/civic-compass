@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 20
+**Current Increment:** 21
 
 ## Increment Plan
 
@@ -611,7 +611,7 @@ Done notes (2026-11-18):
 
 ### Increment 20: Reading the register
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (register command, Zefix contract), code tab (`tools/media-register.ts`), PRD-0001 US-25.
 
@@ -633,6 +633,13 @@ Test gate:
 Exit criteria:
 
 1. The comparison cases pass on the recorded answer.
+
+Done notes (2026-11-18):
+
+1. The linked register has no status property and holds active companies only (checked on 2026-11-18): a UID it does not list is reported as deleted or wrong, and "in liquidation" is read from the end of the legal name ("… en liquidation", as the register writes it).
+2. The query joins on the UID's value (`?id schema:value "CHE103365013"`): 42 UIDs answer in about 120 ms, where filtering the identifiers' IRIs timed out (504 after 180 s). It reads `schema:legalName` (one per company), not `schema:name`, which has translations ("TX Group Ltd", "TX Group SA").
+3. Legal forms are compared through the register's French names mapped to the file's (Société anonyme = SA, Coopérative = société coopérative, Succursale suisse… = succursale). Terms and dataset come from the dataset's own linked data (`foj-zefix`, `Provide-the-Source`).
+4. On the recorded answer, the real file shows no difference: the companies were read from the register in increments 04 and 05.
 
 ### Increment 21: The `media-register` command and its generated file
 
