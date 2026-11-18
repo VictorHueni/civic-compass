@@ -2,7 +2,9 @@
 import { start as startApp } from "./app.ts";
 import { start as startBallot } from "./ballot.ts";
 import { start as startInstitutions } from "./institutions.ts";
+import { start as startMedia } from "./media.ts";
 
 startApp();
 startBallot();
 startInstitutions();
+startMedia();

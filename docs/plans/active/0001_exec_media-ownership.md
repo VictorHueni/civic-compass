@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 07
+**Current Increment:** 11
 
 ## Increment Plan
 
@@ -205,7 +205,7 @@ Prediction:
 
 ### Increment 07: The lines of a medium's card
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab, decision table "the lines of a medium's card and list entry" (Éditeur, Propriétaire, disputes, Au sommet); code tab (`media-model.ts`).
 
@@ -230,7 +230,7 @@ Exit criteria:
 
 ### Increment 08: The media data in the bundle
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`referential.ts`, `tools/build.ts`).
 
@@ -257,7 +257,7 @@ Exit criteria:
 
 ### Increment 09: The Transparence menu and the media page shell
 
-**Status:** pending
+**Status:** done
 
 Sheet: screens tab (ui-01), code tab (`app.ts`).
 
@@ -284,7 +284,7 @@ Exit criteria:
 
 ### Increment 10: The lists by genre, the card and the error report
 
-**Status:** pending
+**Status:** done
 
 Sheet: screens tab (ui-04, ui-06 list part, ui-07), api tab (card lines, `mailto:` contract).
 
@@ -651,7 +651,7 @@ Exit criteria:
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | M1: Checked data file (US-23) | 01-06 | in-progress | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
-| M2: List and card (US-20) | 07-10 | pending | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
+| M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | pending | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
 | M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |

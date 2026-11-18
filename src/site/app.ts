@@ -13,10 +13,10 @@ import type { CantonBallot } from "../types.ts";
 
 export type LevelKind = "federal" | "canton";
 /** Route segments: #<page>/<territory>, territory "ch" or a canton code in lower case. */
-const PAGES = ["ballot", "parties", "tools", "state", "institutions"] as const;
+const PAGES = ["ballot", "parties", "tools", "state", "institutions", "media"] as const;
 type Page = (typeof PAGES)[number];
 /** Id of the block of each page in index.html. */
-const PAGE_IDS: Record<Page, string> = { ballot: "page-ballot", parties: "page-parties", tools: "page-tools", state: "page-state", institutions: "page-institutions" };
+const PAGE_IDS: Record<Page, string> = { ballot: "page-ballot", parties: "page-parties", tools: "page-tools", state: "page-state", institutions: "page-institutions", media: "page-media" };
 /** French routes used until 2026-11-16, still accepted so old links and bookmarks keep working. */
 const LEGACY_PAGES: Record<string, Page> = { votation: "ballot", partis: "parties", aides: "tools", etat: "state" };
 /** Territory segment of the Confederation; "federal" is its legacy spelling. */
@@ -116,6 +116,9 @@ function updateBar(): void {
   PAGES.forEach((p) => {
     $(PAGE_IDS[p]).hidden = p !== page;
   });
+  // The media page shows every medium of French-speaking Switzerland: no territory to choose there (US-21, owner 2026-11-17).
+  const bar = document.querySelector<HTMLElement>(".scope-bar");
+  if (bar) bar.hidden = page === "media";
 }
 function apply(kind: LevelKind, code: string | null): void {
   level = kind;
