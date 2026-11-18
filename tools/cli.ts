@@ -228,7 +228,8 @@ const ATTEMPTS = 3;
 const BACKOFF_MS = [1_000, 3_000];
 
 /**
- * blocked: 403/429, the site refuses robots. unreachable: no answer in time after every attempt
+ * blocked: 403/429, or a page that redirects to itself until the visitor holds a cookie (24heures.ch,
+ * tdg.ch): the site refuses robots. unreachable: no answer in time after every attempt
  * (some Swiss sites do not answer servers abroad, such as CI runners). Both are listed for a manual
  * check and do not fail the run; a refused connection, a DNS error or a 404 do.
  */
@@ -294,6 +295,18 @@ function sameAddress(a: string, b: string): boolean {
 }
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** True when the page answers with a redirect to its own address: a cookie wall for robots, not a dead link. */
+async function redirectsToItself(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { redirect: "manual", signal: AbortSignal.timeout(TIMEOUT_MS), headers: { "User-Agent": USER_AGENT } });
+    await res.body?.cancel().catch(() => {});
+    const location = res.headers.get("location");
+    return res.status >= 300 && res.status < 400 && location !== null && sameAddress(new URL(location, url).href, url);
+  } catch {
+    return false;
+  }
+}
+
 /** A transient failure (network error, timeout, 5xx) is retried before the link is called broken. */
 async function checkLink(url: string): Promise<LinkResult> {
   let last: LinkResult = { url, verdict: "broken", status: 0, note: "" };
@@ -327,6 +340,9 @@ async function checkLink(url: string): Promise<LinkResult> {
       const host = new URL(url).hostname;
       if (/^ERR_TLS_CERT|CERT_/.test(err.cause?.code ?? "") && host in ACCEPTED_CERT_ISSUES) {
         return { url, verdict: "blocked", status: 0, note: `certificat HTTPS invalide, exception acceptée : ${ACCEPTED_CERT_ISSUES[host]}` };
+      }
+      if (/redirect count exceeded/i.test(`${err.message} ${err.cause?.message ?? ""}`) && (await redirectsToItself(url))) {
+        return { url, verdict: "blocked", status: 0, note: "la page se redirige vers elle-même tant que le visiteur n'a pas de cookie, à vérifier à la main" };
       }
       if (timedOut) {
         last = { url, verdict: "unreachable", status: 0, note: `pas de réponse en ${TIMEOUT_MS / 1000} s après ${attempt + 1} essai(s), à vérifier à la main` };

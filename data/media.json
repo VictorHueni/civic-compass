@@ -1,10 +1,1518 @@
 {
-  "_readme": "Tenu à la main (PRD-0001 US-23). Les médias de Suisse romande, leurs éditeurs, leurs propriétaires et l'indice du fög. Le Medienmonitor Schweiz (Publicom pour l'OFCOM) est lu à la main dans le navigateur, en HTML seulement : aucun téléchargement, aucun script ne le lit ; réutilisation « nur unter Quellenangabe ». Les éditeurs sont relevés au registre du commerce (zefix.ch) et sur la page d'impressum du média. L'indice du fög est cité, pas reproduit (« Copyright fög »). Chaque fait porte sa source et sa date de vérification ; une part non publiée vaut null, jamais une estimation. Quand deux sources se contredisent, les participations concernées portent la même clé dispute et une note ; leur part ne compte qu'une fois dans la règle des 100 %. Une personne est nommée avec son nom et sa part seulement ; après une demande de retrait, le nom est supprimé et seule son empreinte reste (removal). npm run check contrôle ce fichier. Conception : docs/plans/active/transparency-media/.",
+  "_readme": "Tenu à la main (PRD-0001 US-23). Les médias de Suisse romande, leurs éditeurs, leurs propriétaires et l'indice du fög. Le Medienmonitor Schweiz (Publicom pour l'OFCOM) est lu à la main dans le navigateur, en HTML seulement : aucun téléchargement, aucun script ne le lit ; réutilisation « nur unter Quellenangabe ». Les éditeurs sont relevés au registre du commerce (données liées de Zefix sur register.ld.admin.ch, et avis de la FOSC sur amtsblattportal.ch) et sur la page du média qui les nomme (impressum, conditions générales). Le registre décide du nom et de l'existence d'une société : une société renommée porte son nom actuel, avec une note qui donne le nom du Medienmonitor ; une société radiée par fusion est remplacée par celle qui l'a reprise. Le Medienmonitor reste la source des parts, entre sociétés qui existent encore. Une société que le registre ne connaît pas garde le nom du Medienmonitor, un siège null et une note. Les régions sont les cantons de l'espace médiatique où le Medienmonitor range le média (Genève ; Vaud, Fribourg, Valais ; Arc jurassien : Neuchâtel, Jura). L'indice du fög est cité, pas reproduit (« Copyright fög »). Chaque fait porte sa source et sa date de vérification ; une part non publiée vaut null, jamais une estimation. Quand deux sources se contredisent, les participations concernées portent la même clé dispute et une note ; leur part ne compte qu'une fois dans la règle des 100 %. Une personne est nommée avec son nom et sa part seulement ; après une demande de retrait, le nom est supprimé et seule son empreinte reste (removal). npm run check contrôle ce fichier. Conception : docs/plans/active/transparency-media/.",
   "media_ownership": {
-    "media": [],
-    "companies": [],
-    "holders": [],
-    "holdings": [],
+    "media": [
+      {
+        "id": "m_24heures",
+        "name": "24 heures",
+        "genre": "press",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "tamedia_romandes",
+        "publisher_source": "https://www.24heures.ch/impressum-24-heures-154248400196",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_tdg",
+        "name": "Tribune de Genève",
+        "genre": "press",
+        "regions": [
+          "GE"
+        ],
+        "publisher": "tamedia_romandes",
+        "publisher_source": "https://www.tdg.ch/impressum-tribune-de-geneve-929104286452",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_matin_dimanche",
+        "name": "Le Matin Dimanche",
+        "genre": "press",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "tamedia_romandes",
+        "publisher_source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18",
+        "note": "Aucune page du média ne nomme son éditeur (lu le 18.11.2026) : l'éditeur est la société que nomment le Medienmonitor et le registre du commerce."
+      },
+      {
+        "id": "m_lematin",
+        "name": "lematin.ch",
+        "genre": "online",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "tx_group",
+        "publisher_source": "https://www.lematin.ch/impressum",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18",
+        "note": "L'impressum dit « Edité par TX Group SA » ; le Medienmonitor range lematin.ch sous Tamedia Publications romandes SA."
+      },
+      {
+        "id": "m_20minutes",
+        "name": "20 minutes",
+        "genre": "online",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "tx_group",
+        "publisher_source": "https://www.20min.ch/fr/impressum",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18",
+        "note": "L'impressum dit « Edité par TX Group SA » ; le Medienmonitor range la marque 20 Minuten sous Tamedia Publikationen Deutschschweiz AG. L'édition imprimée a cessé fin 2025 (Medienmonitor)."
+      },
+      {
+        "id": "m_la_1ere",
+        "name": "La 1ère",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_espace_2",
+        "name": "Espace 2",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_couleur_3",
+        "name": "Couleur 3",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_option_musique",
+        "name": "Option Musique",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rts_1",
+        "name": "RTS 1",
+        "genre": "television",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rts_2",
+        "name": "RTS 2",
+        "genre": "television",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rts_ch",
+        "name": "rts.ch",
+        "genre": "online",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "rts",
+        "publisher_source": "https://www.rts.ch/entreprise/a-propos/8994021-conditions-generales.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_watson",
+        "name": "watson",
+        "genre": "online",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "ch_regionalmedien",
+        "publisher_source": "https://www.watson.ch/fr/o/agb",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/chmedia/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_nouvelliste",
+        "name": "Le Nouvelliste",
+        "genre": "press",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "esh_medias_editions",
+        "publisher_source": "https://www.lenouvelliste.ch/pages/impressum/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18",
+        "note": "L'impressum nomme encore Le Nouvelliste SA, l'ancien nom d'ESH Médias Editions SA."
+      },
+      {
+        "id": "m_arcinfo",
+        "name": "Arcinfo",
+        "genre": "press",
+        "regions": [
+          "NE",
+          "JU"
+        ],
+        "publisher": "snp",
+        "publisher_source": "https://www.arcinfo.ch/pages/impressum/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_la_cote",
+        "name": "La Côte",
+        "genre": "press",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "esh_medias_editions",
+        "publisher_source": "https://www.lacote.ch/pages/conditions-generales-sur-la-cote/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_leman_bleu",
+        "name": "Léman Bleu",
+        "genre": "television",
+        "regions": [
+          "GE"
+        ],
+        "publisher": "tv_leman_bleu",
+        "publisher_source": "https://www.lemanbleu.ch/fr/Services/Contact/Vous-avez-une-critique-un-commentaire-ou-vous-souhaitez-nous-contacter.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_le_temps",
+        "name": "Le Temps",
+        "genre": "press",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "le_temps_sa",
+        "publisher_source": "https://www.letemps.ch/impressum",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_la_liberte",
+        "name": "La Liberté",
+        "genre": "press",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "st_paul_medias",
+        "publisher_source": "https://www.laliberte.ch/pages/impressum-84040",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_le_courrier",
+        "name": "Le Courrier",
+        "genre": "press",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "nac",
+        "publisher_source": "https://lecourrier.ch/nac/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_lqj",
+        "name": "Le Quotidien Jurassien",
+        "genre": "press",
+        "regions": [
+          "NE",
+          "JU"
+        ],
+        "publisher": "editions_dp",
+        "publisher_source": "https://www.lqj.ch/pages/conditions-generales-4740",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_la_tele",
+        "name": "La Télé",
+        "genre": "television",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "vaud_fribourg_tv",
+        "publisher_source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Aucune page du média ne nomme son éditeur (lu le 18.11.2026) : l'éditeur est la société que nomment le Medienmonitor et le registre du commerce."
+      },
+      {
+        "id": "m_canal9",
+        "name": "Canal 9",
+        "genre": "television",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "canal9_assoc",
+        "publisher_source": "https://canal9.ch/wp-content/uploads/Rapport-annuel-2025-FRA-1.pdf",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_canal_alpha",
+        "name": "Canal Alpha",
+        "genre": "television",
+        "regions": [
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "canal_alpha",
+        "publisher_source": "https://canalalpha.ch/legal/mentions-legales",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_radio_chablais",
+        "name": "Radio Chablais",
+        "genre": "radio",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_chablais",
+        "publisher_source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Aucune page du média ne nomme son éditeur (lu le 18.11.2026) : l'éditeur est la société que nomment le Medienmonitor et le registre du commerce."
+      },
+      {
+        "id": "m_rfj",
+        "name": "RFJ",
+        "genre": "radio",
+        "regions": [
+          "NE",
+          "JU"
+        ],
+        "publisher": "rfj_sa",
+        "publisher_source": "https://www.rfj.ch/rfj/Radio/Contact.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rtn",
+        "name": "RTN",
+        "genre": "radio",
+        "regions": [
+          "NE",
+          "JU"
+        ],
+        "publisher": "rtn_sa",
+        "publisher_source": "https://www.rtn.ch/rtn/Radio/Contact.html",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Le Medienmonitor rattache RTN à BNJ FM SA (aujourd'hui RFJ SA) ; la page de la radio nomme RTN SA."
+      },
+      {
+        "id": "m_grrif",
+        "name": "GRRIF",
+        "genre": "radio",
+        "regions": [
+          "NE",
+          "JU"
+        ],
+        "publisher": "bnj_suisse",
+        "publisher_source": "https://www.grrif.ch/mediation/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_radio_lac",
+        "name": "Radio Lac",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_lac",
+        "publisher_source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Aucune page du média ne nomme son éditeur (lu le 18.11.2026) : l'éditeur est la société que nomment le Medienmonitor et le registre du commerce."
+      },
+      {
+        "id": "m_lfm",
+        "name": "LFM",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_lfm",
+        "publisher_source": "https://www.lfm.ch/conditions-generales/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_one_fm",
+        "name": "One FM",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_one_fm",
+        "publisher_source": "https://www.onefm.ch/conditions-generales/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rhone_fm",
+        "name": "Rhône FM",
+        "genre": "radio",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_rhone",
+        "publisher_source": "https://www.rhonefm.ch/contact/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_rouge",
+        "name": "Rouge FM",
+        "genre": "radio",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "rouge_sa",
+        "publisher_source": "https://rouge.ch/contacter-la-radio/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "La radio se présente aujourd'hui sous le nom « Rouge »."
+      },
+      {
+        "id": "m_radiofr",
+        "name": "RadioFr.",
+        "genre": "radio",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_fribourg",
+        "publisher_source": "https://www.radiofr.ch/fr/legal/mentions",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_freiburger_nachrichten",
+        "name": "Freiburger Nachrichten",
+        "genre": "press",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "freiburger_nachrichten",
+        "publisher_source": "https://unternehmen.freiburger-nachrichten.ch/impressum",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_agefi",
+        "name": "L'AGEFI",
+        "genre": "press",
+        "regions": [
+          "GE",
+          "VD",
+          "FR",
+          "VS",
+          "NE",
+          "JU"
+        ],
+        "publisher": "agefi",
+        "publisher_source": "https://agefi.com/cgv",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_frapp",
+        "name": "frapp.ch",
+        "genre": "online",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "mediaparc",
+        "publisher_source": "https://frapp.ch/fr/pages/impressum",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "m_radio_rottu",
+        "name": "Radio Rottu Oberwallis",
+        "genre": "radio",
+        "regions": [
+          "VD",
+          "FR",
+          "VS"
+        ],
+        "publisher": "radio_rottu",
+        "publisher_source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Aucune page du média ne nomme son éditeur (lu le 18.11.2026) : l'éditeur est la société que nomment le Medienmonitor et le registre du commerce."
+      }
+    ],
+    "companies": [
+      {
+        "id": "tx_group",
+        "name": "TX Group AG",
+        "legal_form": "SA",
+        "seat": "Zürich",
+        "uid": "CHE-105.836.696",
+        "source": "https://register.ld.admin.ch/zefix/company/319406",
+        "checked_on": "2026-11-18",
+        "note": "« TX Group SA » dans les impressums romands."
+      },
+      {
+        "id": "tamedia_romandes",
+        "name": "Tamedia Publications romandes SA",
+        "legal_form": "SA",
+        "seat": "Lausanne",
+        "uid": "CHE-106.034.966",
+        "source": "https://register.ld.admin.ch/zefix/company/262942",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "rts",
+        "name": "RTS Radio Télévision Suisse, succursale de la Société suisse de radiodiffusion et télévision",
+        "legal_form": "succursale",
+        "seat": "Ecublens (VD)",
+        "uid": "CHE-396.664.102",
+        "source": "https://register.ld.admin.ch/zefix/company/612885",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "ch_regionalmedien",
+        "name": "CH Regionalmedien AG",
+        "legal_form": "SA",
+        "seat": "Aarau",
+        "uid": "CHE-106.824.626",
+        "source": "https://register.ld.admin.ch/zefix/company/443232",
+        "checked_on": "2026-11-18",
+        "note": "Le Medienmonitor place watson sous Fixxpunkt AG, radiée en 2023 : ses actifs et passifs sont passés à CH Regionalmedien AG par fusion (FOSC du 19.06.2023)."
+      },
+      {
+        "id": "esh_medias_editions",
+        "name": "ESH Médias Editions SA",
+        "legal_form": "SA",
+        "seat": "Sion",
+        "uid": "CHE-103.959.721",
+        "source": "https://register.ld.admin.ch/zefix/company/16631",
+        "checked_on": "2026-11-18",
+        "note": "Nommée Le Nouvelliste SA jusqu'en 2022 (« Éditions Le Nouvelliste SA » dans le Medienmonitor) ; a repris Etablissements Ed. Cherix SA, éditeur de La Côte selon le Medienmonitor, radiée par fusion (FOSC du 22.07.2022)."
+      },
+      {
+        "id": "snp",
+        "name": "SNP Société Neuchâteloise de Presse SA",
+        "legal_form": "SA",
+        "seat": "Neuchâtel",
+        "uid": "CHE-105.861.286",
+        "source": "https://register.ld.admin.ch/zefix/company/462907",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "tv_leman_bleu",
+        "name": "TV LEMAN BLEU SA",
+        "legal_form": "SA",
+        "seat": "Carouge (GE)",
+        "uid": "CHE-103.365.013",
+        "source": "https://register.ld.admin.ch/zefix/company/351916",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "le_temps_sa",
+        "name": "Le Temps SA",
+        "legal_form": "SA",
+        "seat": "Genève",
+        "uid": "CHE-102.733.947",
+        "source": "https://register.ld.admin.ch/zefix/company/417110",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "st_paul_medias",
+        "name": "St-Paul Médias SA",
+        "legal_form": "SA",
+        "seat": "Fribourg",
+        "uid": "CHE-403.630.234",
+        "source": "https://register.ld.admin.ch/zefix/company/1517023",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "editions_dp",
+        "name": "Editions D + P S.A.",
+        "legal_form": "SA",
+        "seat": "Delémont",
+        "uid": "CHE-107.467.173",
+        "source": "https://register.ld.admin.ch/zefix/company/316104",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "vaud_fribourg_tv",
+        "name": "Vaud-Fribourg TV SA",
+        "legal_form": "SA",
+        "seat": "Lausanne",
+        "uid": "CHE-114.666.950",
+        "source": "https://register.ld.admin.ch/zefix/company/932612",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "canal_alpha",
+        "name": "CANAL ALPHA SA",
+        "legal_form": "SA",
+        "seat": "Cortaillod",
+        "uid": "CHE-104.153.471",
+        "source": "https://register.ld.admin.ch/zefix/company/423854",
+        "checked_on": "2026-11-18",
+        "note": "« Canal Alpha Plus SA » dans le Medienmonitor."
+      },
+      {
+        "id": "radio_chablais",
+        "name": "RADIO CHABLAIS SA",
+        "legal_form": "SA",
+        "seat": "Monthey",
+        "uid": "CHE-113.664.888",
+        "source": "https://register.ld.admin.ch/zefix/company/874181",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "rfj_sa",
+        "name": "RFJ SA",
+        "legal_form": "SA",
+        "seat": "Delémont",
+        "uid": "CHE-113.952.896",
+        "source": "https://register.ld.admin.ch/zefix/company/891504",
+        "checked_on": "2026-11-18",
+        "note": "Nommée BNJ FM SA jusqu'en 2025, comme dans le Medienmonitor (FOSC du 20.02.2025)."
+      },
+      {
+        "id": "rtn_sa",
+        "name": "RTN SA",
+        "legal_form": "SA",
+        "seat": "Laténa",
+        "uid": "CHE-284.172.783",
+        "source": "https://register.ld.admin.ch/zefix/company/1585935",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "bnj_suisse",
+        "name": "BNJ Suisse SA",
+        "legal_form": "SA",
+        "seat": "Delémont",
+        "uid": "CHE-113.952.844",
+        "source": "https://register.ld.admin.ch/zefix/company/891499",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ARC FM SA jusqu'en 2020, comme dans le Medienmonitor (FOSC du 03.03.2020)."
+      },
+      {
+        "id": "radio_lac",
+        "name": "Radio Lac SA",
+        "legal_form": "SA",
+        "seat": "Genève",
+        "uid": "CHE-103.606.524",
+        "source": "https://register.ld.admin.ch/zefix/company/142130",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "radio_lfm",
+        "name": "Radio LFM SA",
+        "legal_form": "SA",
+        "seat": "Crissier",
+        "uid": "CHE-108.411.459",
+        "source": "https://register.ld.admin.ch/zefix/company/453223",
+        "checked_on": "2026-11-18",
+        "note": "« Radio Lausanne FM S.A. » dans le Medienmonitor."
+      },
+      {
+        "id": "radio_one_fm",
+        "name": "Radio One FM SA",
+        "legal_form": "SA",
+        "seat": "Genève",
+        "uid": "CHE-108.465.857",
+        "source": "https://register.ld.admin.ch/zefix/company/375710",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "radio_rhone",
+        "name": "Radio Rhône SA",
+        "legal_form": "SA",
+        "seat": "Sion",
+        "uid": "CHE-106.061.845",
+        "source": "https://register.ld.admin.ch/zefix/company/238235",
+        "checked_on": "2026-11-18",
+        "note": "Actionnariat dispersé (« Streubesitz ») selon le Medienmonitor."
+      },
+      {
+        "id": "rouge_sa",
+        "name": "Rouge SA",
+        "legal_form": "SA",
+        "seat": "Crissier",
+        "uid": "CHE-106.493.475",
+        "source": "https://register.ld.admin.ch/zefix/company/217369",
+        "checked_on": "2026-11-18",
+        "note": "Nommée Rouge FM SA jusqu'en 2019, comme dans le Medienmonitor (FOSC du 03.05.2019)."
+      },
+      {
+        "id": "radio_fribourg",
+        "name": "RADIO FRIBOURG SA",
+        "legal_form": "SA",
+        "seat": "Villars-sur-Glâne",
+        "uid": "CHE-106.259.494",
+        "source": "https://register.ld.admin.ch/zefix/company/142123",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "freiburger_nachrichten",
+        "name": "Freiburger Nachrichten AG",
+        "legal_form": "SA",
+        "seat": "Fribourg",
+        "uid": "CHE-105.820.465",
+        "source": "https://register.ld.admin.ch/zefix/company/62683",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "agefi",
+        "name": "Nouvelle Agence Economique et Financière SA",
+        "legal_form": "SA",
+        "seat": "Echandens",
+        "uid": "CHE-217.728.826",
+        "source": "https://register.ld.admin.ch/zefix/company/1310434",
+        "checked_on": "2026-11-18",
+        "note": "« AGEFI, Société de l'Agence Economique et Financière S.A. (Agefi SA) » dans le Medienmonitor."
+      },
+      {
+        "id": "mediaparc",
+        "name": "MEDIAparc SA",
+        "legal_form": "SA",
+        "seat": "Villars-sur-Glâne",
+        "uid": "CHE-226.474.346",
+        "source": "https://register.ld.admin.ch/zefix/company/1438376",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "radio_rottu",
+        "name": "Radio Rottu Oberwallis AG",
+        "legal_form": "SA",
+        "seat": "Visp",
+        "uid": "CHE-106.557.709",
+        "source": "https://register.ld.admin.ch/zefix/company/228461",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "ch_media_holding",
+        "name": "CH Media Holding AG",
+        "legal_form": "SA",
+        "seat": "Aarau",
+        "uid": "CHE-409.973.833",
+        "source": "https://register.ld.admin.ch/zefix/company/1481333",
+        "checked_on": "2026-11-18",
+        "note": "A repris BT Holding AG, radiée par fusion (FOSC du 13.06.2024), que le Medienmonitor nomme encore parmi les détenteurs de Fixxpunkt AG."
+      },
+      {
+        "id": "esh",
+        "name": "ESH Editions Suisses Holding SA",
+        "legal_form": "SA",
+        "seat": "Neuchâtel",
+        "uid": "CHE-109.560.406",
+        "source": "https://register.ld.admin.ch/zefix/company/672714",
+        "checked_on": "2026-11-18",
+        "note": "Propriétaires non publiés : « Das Unternehmen publiziert Informationen nur sehr restriktiv » (Medienmonitor)."
+      },
+      {
+        "id": "rhone_medias",
+        "name": "Rhône Médias SA",
+        "legal_form": "SA",
+        "seat": null,
+        "uid": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ainsi par le Medienmonitor ; introuvable au registre du commerce le 18.11.2026."
+      },
+      {
+        "id": "st_paul_holding",
+        "name": "St-Paul Holding SA",
+        "legal_form": "SA",
+        "seat": "Fribourg",
+        "uid": "CHE-382.325.467",
+        "source": "https://register.ld.admin.ch/zefix/company/1024186",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "groupe_e",
+        "name": "Groupe E SA",
+        "legal_form": "SA",
+        "seat": "Granges-Paccot",
+        "uid": "CHE-108.954.582",
+        "source": "https://register.ld.admin.ch/zefix/company/60936",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "democrate_media_holding",
+        "name": "Démocrate Media Holding SA",
+        "legal_form": "SA",
+        "seat": "Val Terbi",
+        "uid": "CHE-103.179.083",
+        "source": "https://register.ld.admin.ch/zefix/company/138712",
+        "checked_on": "2026-11-18",
+        "note": "« Groupe Démocrate Media Holding SA » dans le Medienmonitor."
+      },
+      {
+        "id": "mystik",
+        "name": "Mystik SA",
+        "legal_form": "SA",
+        "seat": "Cortaillod",
+        "uid": "CHE-100.709.168",
+        "source": "https://register.ld.admin.ch/zefix/company/197705",
+        "checked_on": "2026-11-18",
+        "note": "Nommée TVP Télé-Vidéo Production S.A. jusqu'en 2019, « Télé-Vidéo Production SA » dans le Medienmonitor (FOSC du 03.07.2019)."
+      },
+      {
+        "id": "bnj_media_holding",
+        "name": "BNJ Media Holding SA",
+        "legal_form": "SA",
+        "seat": "Rossemaison",
+        "uid": "CHE-379.633.626",
+        "source": "https://register.ld.admin.ch/zefix/company/1246905",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "media_one_group",
+        "name": "Media One Group SA",
+        "legal_form": "SA",
+        "seat": "Genève",
+        "uid": "CHE-107.344.323",
+        "source": "https://register.ld.admin.ch/zefix/company/271265",
+        "checked_on": "2026-11-18",
+        "note": "Nommée OVERSHOP HOLDING SA jusqu'au 18.09.2026, comme dans le Medienmonitor (FOSC du 18.09.2026)."
+      },
+      {
+        "id": "unicast",
+        "name": "Unicast SA",
+        "legal_form": "SA",
+        "seat": "Lausanne",
+        "uid": "CHE-113.902.562",
+        "source": "https://register.ld.admin.ch/zefix/company/888764",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "imprimerie_st_paul",
+        "name": "Imprimerie St-Paul",
+        "legal_form": "SA",
+        "seat": null,
+        "uid": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ainsi par le Medienmonitor ; introuvable au registre du commerce le 18.11.2026."
+      },
+      {
+        "id": "glasson",
+        "name": "Les Fils A. Glasson SA",
+        "legal_form": "SA",
+        "seat": null,
+        "uid": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ainsi par le Medienmonitor ; introuvable au registre du commerce le 18.11.2026."
+      },
+      {
+        "id": "nordmann_si",
+        "name": "Nordmann SI SA",
+        "legal_form": "SA",
+        "seat": null,
+        "uid": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ainsi par le Medienmonitor ; introuvable au registre du commerce le 18.11.2026."
+      },
+      {
+        "id": "aevis",
+        "name": "AEVIS VICTORIA SA",
+        "legal_form": "SA",
+        "seat": "Fribourg",
+        "uid": "CHE-100.842.382",
+        "source": "https://register.ld.admin.ch/zefix/company/458994",
+        "checked_on": "2026-11-18",
+        "note": "« AEVIS Holding » dans le Medienmonitor."
+      },
+      {
+        "id": "pomona",
+        "name": "pomona media partner genossenschaft",
+        "legal_form": "société coopérative",
+        "seat": "Visp",
+        "uid": "CHE-359.118.195",
+        "source": "https://register.ld.admin.ch/zefix/company/1546612",
+        "checked_on": "2026-11-18",
+        "note": "« pomona media partner ag » dans le Medienmonitor."
+      }
+    ],
+    "holders": [
+      {
+        "id": "nac",
+        "name": "Nouvelle association du Courrier",
+        "kind": "association",
+        "legal_form": "association",
+        "seat": "Genève",
+        "uid": "CHE-103.172.980",
+        "source": "https://register.ld.admin.ch/zefix/company/128067",
+        "checked_on": "2026-11-18",
+        "note": "Membres non nommés : « Streubesitz » (propriété dispersée) selon le Medienmonitor."
+      },
+      {
+        "id": "canal9_assoc",
+        "name": "Association Canal 9",
+        "kind": "association",
+        "legal_form": "association",
+        "seat": "Sierre",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Non inscrite au registre du commerce. Le rapport annuel 2025 de Canal 9 parle de « notre association », dirigée par un comité de communes et de régions."
+      },
+      {
+        "id": "tx_founding_family",
+        "name": "Famille fondatrice de TX Group",
+        "kind": "family",
+        "source": "https://report.tx.group/2025/ar/en/group-structure-and-shareholders",
+        "checked_on": "2026-11-18",
+        "note": "Pool d'actionnaires de la famille fondatrice (convention d'actionnaires), selon le rapport annuel 2025 de TX Group."
+      },
+      {
+        "id": "srg_ssr",
+        "name": "Schweizerische Radio- und Fernsehgesellschaft",
+        "kind": "association",
+        "legal_form": "association",
+        "seat": "Bern",
+        "uid": "CHE-102.978.667",
+        "source": "https://register.ld.admin.ch/zefix/company/342806",
+        "checked_on": "2026-11-18",
+        "note": "SRG SSR, Société suisse de radiodiffusion et télévision : « privatrechtlich organisierter, föderalistischer Verein » (Medienmonitor)."
+      },
+      {
+        "id": "wanner_family",
+        "name": "Famille Wanner",
+        "kind": "family",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/chmedia/",
+        "checked_on": "2026-11-18",
+        "note": "« Michael, Florian und Anna Wanner erwerben die Anteile ihres Vaters » (Medienmonitor, 20.11.2025)."
+      },
+      {
+        "id": "p_barbier_mueller",
+        "name": "Stéphane Barbier-Mueller",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_hersant",
+        "name": "Philippe Hersant",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "ville_geneve",
+        "name": "Ville de Genève",
+        "kind": "public",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "aventinus",
+        "name": "Fondation Aventinus",
+        "kind": "association",
+        "legal_form": "fondation",
+        "seat": "Genève",
+        "uid": "CHE-298.602.703",
+        "source": "https://register.ld.admin.ch/zefix/company/1411387",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "soeurs_st_paul",
+        "name": "Soeurs de l'Oeuvre de Saint-Paul société coopérative",
+        "kind": "association",
+        "legal_form": "société coopérative",
+        "seat": "Fribourg",
+        "uid": "CHE-101.196.774",
+        "source": "https://register.ld.admin.ch/zefix/company/223191",
+        "checked_on": "2026-11-18",
+        "note": "« Paulus-Schwestern » dans le Medienmonitor ; congrégation religieuse."
+      },
+      {
+        "id": "bcf",
+        "name": "Banque cantonale de Fribourg",
+        "kind": "public",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "« Freiburger Kantonalbank » dans le Medienmonitor."
+      },
+      {
+        "id": "p_piller",
+        "name": "Damien Piller",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "lausanne",
+        "name": "Commune de Lausanne",
+        "kind": "public",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "centre_patronal",
+        "name": "Centre Patronal",
+        "kind": "association",
+        "legal_form": "association",
+        "seat": "Paudex",
+        "uid": "CHE-113.961.599",
+        "source": "https://register.ld.admin.ch/zefix/company/891921",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_bertrand",
+        "name": "Jean-Luc Bertrand",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_wolfrath",
+        "name": "Fabien Wolfrath",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "association_chablais",
+        "name": "Association du Chablais",
+        "kind": "association",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Nommée ainsi par le Medienmonitor ; introuvable au registre du commerce le 18.11.2026."
+      },
+      {
+        "id": "communes_chablais",
+        "name": "28 communes du Chablais",
+        "kind": "public",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_antoine_de_raemy",
+        "name": "Antoine de Raemy",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_rivollet",
+        "name": "Francis Rivollet",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_alexandre_de_raemy",
+        "name": "Alexandre De Raemy",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_roger",
+        "name": "Louis-Pierre Roger",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_de_marignac",
+        "name": "Thierry De Marignac",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "id": "p_brett",
+        "name": "David Brett",
+        "kind": "person",
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      }
+    ],
+    "holdings": [
+      {
+        "holder": "tx_founding_family",
+        "held": "tx_group",
+        "share": 66.84,
+        "source": "https://report.tx.group/2025/ar/en/group-structure-and-shareholders",
+        "checked_on": "2026-11-18",
+        "note": "Total des membres de la convention d'actionnaires au 31.12.2025."
+      },
+      {
+        "holder": "tx_group",
+        "held": "tamedia_romandes",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/txgroup/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "srg_ssr",
+        "held": "rts",
+        "share": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/srgssr/",
+        "checked_on": "2026-11-18",
+        "note": "La RTS est une succursale de la SSR, non une société détenue par des parts."
+      },
+      {
+        "holder": "wanner_family",
+        "held": "ch_media_holding",
+        "share": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/chmedia/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "ch_media_holding",
+        "held": "ch_regionalmedien",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/chmedia/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "esh",
+        "held": "rhone_medias",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "rhone_medias",
+        "held": "esh_medias_editions",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "esh",
+        "held": "snp",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "esh",
+        "held": "tv_leman_bleu",
+        "share": 24.66,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/esh/",
+        "checked_on": "2026-11-18",
+        "dispute": "tvlb-24.66",
+        "note": "La page ESH du Medienmonitor attribue cette part de 24,66 % à ESH Médias ; la page « autres marques » l'attribue à Philippe Hersant."
+      },
+      {
+        "holder": "p_hersant",
+        "held": "tv_leman_bleu",
+        "share": 24.66,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "dispute": "tvlb-24.66",
+        "note": "La page ESH du Medienmonitor attribue cette part de 24,66 % à ESH Médias ; la page « autres marques » l'attribue à Philippe Hersant."
+      },
+      {
+        "holder": "p_barbier_mueller",
+        "held": "tv_leman_bleu",
+        "share": 50.75,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "ville_geneve",
+        "held": "tv_leman_bleu",
+        "share": 17.06,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "aventinus",
+        "held": "le_temps_sa",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Le Medienmonitor attribue la marque Le Temps à 100 % à la « Stiftung Aventinus »."
+      },
+      {
+        "holder": "st_paul_holding",
+        "held": "st_paul_medias",
+        "share": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Le Medienmonitor rattache La Liberté à St-Paul Holding SA ; il ne nomme pas St-Paul Médias SA, et le registre ne publie pas le lien."
+      },
+      {
+        "holder": "soeurs_st_paul",
+        "held": "st_paul_holding",
+        "share": 70,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "bcf",
+        "held": "st_paul_holding",
+        "share": 15,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "groupe_e",
+        "held": "st_paul_holding",
+        "share": 15,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "democrate_media_holding",
+        "held": "editions_dp",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Une lettre de RJB SA à l'OFCOM (29.09.2025) décrit d'autres actionnaires pour Le Quotidien Jurassien ; non réconcilié."
+      },
+      {
+        "holder": "p_piller",
+        "held": "vaud_fribourg_tv",
+        "share": 46.71,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "lausanne",
+        "held": "vaud_fribourg_tv",
+        "share": 21.85,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "centre_patronal",
+        "held": "vaud_fribourg_tv",
+        "share": 7.02,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "mystik",
+        "held": "canal_alpha",
+        "share": 61,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_bertrand",
+        "held": "canal_alpha",
+        "share": 9,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_wolfrath",
+        "held": "canal_alpha",
+        "share": 5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "association_chablais",
+        "held": "radio_chablais",
+        "share": 98,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "communes_chablais",
+        "held": "radio_chablais",
+        "share": 2,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "bnj_media_holding",
+        "held": "rfj_sa",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "bnj_media_holding",
+        "held": "bnj_suisse",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_antoine_de_raemy",
+        "held": "media_one_group",
+        "share": 100,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "media_one_group",
+        "held": "radio_lac",
+        "share": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18",
+        "note": "Le site de Radio Lac nomme « Media One Group, groupe de médias auquel appartient Radio Lac » ; le Medienmonitor rattache la radio à Overshop Holding SA, l'ancien nom."
+      },
+      {
+        "holder": "media_one_group",
+        "held": "radio_lfm",
+        "share": 72.73,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_rivollet",
+        "held": "radio_lfm",
+        "share": 10,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_alexandre_de_raemy",
+        "held": "radio_lfm",
+        "share": 5.05,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_roger",
+        "held": "radio_lfm",
+        "share": 5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_de_marignac",
+        "held": "radio_lfm",
+        "share": 5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "media_one_group",
+        "held": "radio_one_fm",
+        "share": 71.05,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_rivollet",
+        "held": "radio_one_fm",
+        "share": 10,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_roger",
+        "held": "radio_one_fm",
+        "share": 7.5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_de_marignac",
+        "held": "radio_one_fm",
+        "share": 5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "unicast",
+        "held": "rouge_sa",
+        "share": 94.12,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_brett",
+        "held": "rouge_sa",
+        "share": 5.88,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "p_piller",
+        "held": "radio_fribourg",
+        "share": 47,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "imprimerie_st_paul",
+        "held": "radio_fribourg",
+        "share": 15,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "glasson",
+        "held": "radio_fribourg",
+        "share": 9,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "nordmann_si",
+        "held": "radio_fribourg",
+        "share": 5,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "aevis",
+        "held": "agefi",
+        "share": 49,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      },
+      {
+        "holder": "pomona",
+        "held": "radio_rottu",
+        "share": null,
+        "source": "https://www.medienmonitor-schweiz.ch/beteiligungen/uebrige-beteiligungen/",
+        "checked_on": "2026-11-18"
+      }
+    ],
     "fog": {
       "edition": {
         "label": "Tonalité de la couverture des votations fédérales, fög / Université de Zurich",
@@ -14,9 +1522,50 @@
         "scale_max": 100,
         "average": -4,
         "source": "https://www.foeg.uzh.ch/dam/jcr:33f99533-ff1a-4594-9d10-5fe0b3afb8f0/SRG_Rolle_2026_2.pdf",
-        "checked_on": "2026-11-17"
+        "checked_on": "2026-11-18"
       },
-      "values": []
+      "values": [
+        {
+          "medium": "m_matin_dimanche",
+          "measured_as": "Le Matin Dimanche",
+          "value": -11
+        },
+        {
+          "medium": "m_lematin",
+          "measured_as": "lematin.ch",
+          "value": -9
+        },
+        {
+          "medium": "m_tdg",
+          "measured_as": "tdg.ch",
+          "value": -7
+        },
+        {
+          "medium": "m_le_temps",
+          "measured_as": "letemps.ch",
+          "value": -6
+        },
+        {
+          "medium": "m_24heures",
+          "measured_as": "24heures.ch",
+          "value": -5
+        },
+        {
+          "medium": "m_20minutes",
+          "measured_as": "20minutes.ch",
+          "value": -3
+        },
+        {
+          "medium": "m_rts_1",
+          "measured_as": "RTS",
+          "value": -2
+        },
+        {
+          "medium": "m_rts_ch",
+          "measured_as": "RTS",
+          "value": -2
+        }
+      ]
     }
   }
 }

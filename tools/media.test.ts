@@ -45,8 +45,9 @@ function schemaErrors(content: unknown): string[] {
   return report.errors;
 }
 
-test("the media schema accepts a valid file, with a removed holder and a disputed holding", () => {
+test("the media schema accepts a valid file, with a removed holder, a disputed holding and a company the register does not know", () => {
   const f = mediaFile();
+  f.media_ownership.companies.push({ id: "co_x", name: "X SA", legal_form: "SA", seat: null, uid: null, source: SRC, checked_on: DAY });
   f.media_ownership.holders.push({
     id: "removed_1",
     kind: "person",

@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 04
+**Current Increment:** 07
 
 ## Increment Plan
 
@@ -116,7 +116,7 @@ Exit criteria:
 
 ### Increment 04: Media and their publishers, read by hand
 
-**Status:** pending
+**Status:** done
 
 Sheet: database tab (row counts, the note on the 85 links), api tab ("Éditeur" line).
 
@@ -147,7 +147,7 @@ Prediction:
 
 ### Increment 05: Owners and holdings, read by hand
 
-**Status:** pending
+**Status:** done
 
 Sheet: database tab (holders, holdings), PRD-0001 US-20 and US-24 (a person with name and share only).
 
@@ -178,7 +178,7 @@ Prediction:
 
 ### Increment 06: The fög values
 
-**Status:** pending
+**Status:** done
 
 Sheet: database tab (FogValue), PRD-0001 US-22.
 
@@ -650,7 +650,7 @@ Exit criteria:
 
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| M1: Checked data file (US-23) | 01-06 | pending | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
+| M1: Checked data file (US-23) | 01-06 | in-progress | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
 | M2: List and card (US-20) | 07-10 | pending | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | pending | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
