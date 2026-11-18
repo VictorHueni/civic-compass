@@ -16,7 +16,6 @@ export const STATE_SITE_IDS = {
 /** Entries of data/tools.json linked directly. */
 export const TOOL_IDS = {
   easyvote: "easyvote",
-  vimentis: "vimentis",
   smartvote: "smartvote",
   smartmonitor: "smartmonitor",
   swissvotes: "swissvotes",
@@ -24,6 +23,6 @@ export const TOOL_IDS = {
 
 /** Entries of data/tools.json listed on the "Aides à décider" page, shown in the order of tools.json. */
 export const TOOLS_PAGE_IDS = {
-  understand: ["easyvote", "vimentis", "annee-politique-suisse"],
+  understand: ["easyvote", "annee-politique-suisse"],
   compare: ["smartvote", "smartmonitor", "politpro", "swissvotes"],
 } as const;

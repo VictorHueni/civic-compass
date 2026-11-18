@@ -72,7 +72,7 @@ As a voter, I want a plain summary of what a yes and a no change for one object 
 
 **Acceptance Criteria:**
 - [ ] The "Comprendre" tab shows "Si vous votez OUI" and "Si vous votez NON", the Federal Council and Parliament recommendation when recorded, and the note "Résumé indicatif. La brochure officielle fait foi."
-- [ ] It links the object's official page and the official brochure (PDF), plus easyvote and Vimentis.
+- [ ] It links the object's official page and the official brochure (PDF), plus easyvote.
 - [ ] No summary text is published without the object's official page as source.
 
 ### PRD-0001.US-03 · Compare party positions on an object
@@ -142,7 +142,7 @@ As a voter, I want to see the parties of my territory ordered from left to right
 As a voter, I want the independent decision tools grouped by what they help with so that I pick the right one quickly.
 
 **Acceptance Criteria:**
-- [ ] `#tools` groups the tools in three steps: "Comprendre" (easyvote, Vimentis, Année politique suisse), "Comparer" (smartvote, smartmonitor, PolitPro, Swissvotes), "Décider" (the territory's voting page and the next ballot).
+- [ ] `#tools` groups the tools in three steps: "Comprendre" (easyvote, Année politique suisse), "Comparer" (smartvote, smartmonitor, PolitPro, Swissvotes), "Décider" (the territory's voting page and the next ballot).
 - [ ] Each tool shows its name, one line on what it does, and its host name; only tools whose link is verified are listed.
 
 ### PRD-0001.US-08 · Find official sites
@@ -464,6 +464,7 @@ No question is left open on 2026-11-18.
 Settled on 2026-11-18 by the owner, raised while writing the media slice design sheet (`docs/plans/active/transparency-media/`):
 
 - **A disputed share counts once (US-23).** When sources give the same share to two holders, the disagreeing holdings carry one shared dispute key and a note naming the sources; both holders are still shown (US-20), but the more-than-100 % rule counts the share once. Without this, TV Léman Bleu SA sums to 117.13 % (50.75 + 24.66 + 24.66 + 17.06) and fails the check on the very case US-20 requires.
+- **Vimentis is not linked (US-02, US-07).** Its French section (vimentis.ch/fr/) still shows the ballots of 27 September 2020, while only its German section follows the 2026 ballots; a French-speaking voter would get outdated or German explanations. easyvote and Année politique suisse explain the objects in French. The entry stays in `data/tools.json` as `to_confirm`, with the reason, to restore if the French section is kept up to date again.
 - **A removal keeps no name (US-24).** The removal record holds a fingerprint of the person's name (SHA-256 of the name in lower case, without accents, spaces collapsed), the date and the reason, never the name, so the public repository does not keep it in `data/media.json`. The check compares each named person against the recorded fingerprints. Two limits stay: someone who already suspects a name can test it against the fingerprint, and the name remains in the git history of the versions before the removal.
 
 Settled on 2026-11-16 by the owner:

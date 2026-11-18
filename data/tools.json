@@ -36,9 +36,9 @@
       "name": "Vimentis",
       "description": "Explications neutres des grands sujets politiques.",
       "url": "https://vimentis.ch",
-      "status": "verified",
+      "status": "to_confirm",
       "checked_on": "2026-11-18",
-      "evidence": "Titre de la page : Vimentis - Neutral über Schweizer Politik informieren",
+      "evidence": "Retiré du site par le mainteneur le 2026-11-18 : la version française (https://vimentis.ch/fr/) présente encore les votations du 27 septembre 2020, seule la version allemande suit les votations de 2026. À rétablir si la version française est de nouveau tenue à jour.",
       "previous_urls": [
         {
           "url": "https://www.vimentis.ch",

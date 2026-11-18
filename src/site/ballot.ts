@@ -79,7 +79,7 @@ function renderStep(): void {
       (o.federal_council ? '<p class="recommendation">Conseil fédéral et Parlement : <b>' + (o.federal_council === "yes" ? "OUI" : "NON") + "</b></p>" : '<p class="recommendation">Recommandation du Conseil fédéral : voir la brochure officielle.</p>') +
       '<p class="mini">Résumé indicatif. La brochure officielle fait foi.</p>' +
       link(o.url, "Page officielle de l'objet", "admin.ch") + link(ballot.brochure, "Brochure officielle (PDF)", "Explications du Conseil fédéral") +
-      link(toolUrl(TOOL_IDS.easyvote), "easyvote", "Expliqué simplement") + link(toolUrl(TOOL_IDS.vimentis), "Vimentis", "Explications neutres");
+      link(toolUrl(TOOL_IDS.easyvote), "easyvote", "Expliqué simplement");
   } else if (step === 1) {
     h = '<p class="mini">Mots d\'ordre des partis nationaux. Seuls ceux retrouvés dans une source sont indiqués, les autres sont à confirmer sur le site du parti.</p>' +
       '<div id="mini-hemi" class="hemicycle hemicycle--mini"></div><div id="mini-detail" class="mini-detail" aria-live="polite"></div>' +
