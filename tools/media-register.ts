@@ -8,6 +8,8 @@
  *
  * Messages are in French: the maintainers read them in French.
  */
+import { join } from "node:path";
+import { DATA_FILES, type MediaOwnership, type MediaRegisterFile } from "../src/types.ts";
 
 export const ENDPOINT = "https://lindas.admin.ch/query";
 /** The dataset and its terms, as the register's linked data declares them (dcterms:rights). */
@@ -115,4 +117,53 @@ export function compare(entities: Registered[], entries: RegisterEntry[]): strin
     if (LIQUIDATION.test(r.name)) report.push(`${at} : en liquidation selon le registre`);
   }
   return report;
+}
+
+/** What the command needs from the outside, so that the tests can replace the network and the disk. */
+export interface RegisterDeps {
+  fetch: typeof fetch;
+  /** YYYY-MM-DD. */
+  today: string;
+  write: (path: string, content: string) => void;
+  log: (line: string) => void;
+}
+
+const README =
+  "Généré par « npm run media-register » depuis les données liées du registre du commerce (Zefix sur lindas.admin.ch) : " +
+  "ne pas modifier à la main, relancer la commande. companies : la réponse du registre telle quelle, une entrée par IDE de data/media.json. " +
+  "La commande signale les différences avec data/media.json et ne le modifie jamais : le mainteneur le corrige à la main, sources à l'appui.";
+
+/**
+ * `npm run media-register`: asks the register for every UID of data/media.json, writes its answer to
+ * data/media-register.json and prints what differs. Exit 0: no difference; 1: differences listed; 2: the fetch
+ * failed, nothing written. data/media.json is only read.
+ */
+export async function runMediaRegister(m: MediaOwnership, dataDir: string, deps: RegisterDeps): Promise<number> {
+  const entities = [...m.companies, ...m.holders].filter((e) => e.uid);
+  const uids = entities.map((e) => e.uid as string);
+  const url = requestUrl(uids);
+  let entries: RegisterEntry[];
+  try {
+    const r = await deps.fetch(url, { headers: { accept: "application/sparql-results+json" } });
+    if (!r.ok) throw new Error(`le registre répond ${r.status}`);
+    entries = readAnswer(await r.json());
+  } catch (e) {
+    deps.log(`Échec : ${(e as Error).message}. Rien écrit. Requête : GET ${ENDPOINT} (${uids.length} IDE).`);
+    return 2;
+  }
+  const file: MediaRegisterFile = {
+    _readme: README,
+    media_register: { request: url, dataset: DATASET, attribution: ATTRIBUTION, terms: TERMS, terms_url: TERMS_URL, retrieved_on: deps.today, companies: entries },
+  };
+  const path = join(dataDir, DATA_FILES.media_register.file);
+  deps.write(path, JSON.stringify(file, null, 2) + "\n");
+  deps.log(`Écrit data/${DATA_FILES.media_register.file} : ${entries.length} sociétés pour ${uids.length} IDE (${ATTRIBUTION} ; ${TERMS}).`);
+  const report = compare(entities, entries);
+  if (!report.length) {
+    deps.log("Aucune différence avec data/media.json.");
+    return 0;
+  }
+  deps.log(`${report.length} différence(s) avec data/media.json, à corriger à la main avec une source :`);
+  for (const line of report) deps.log("  " + line);
+  return 1;
 }

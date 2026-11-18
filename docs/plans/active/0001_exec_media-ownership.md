@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 21
+**Current Increment:** 22
 
 ## Increment Plan
 
@@ -643,7 +643,7 @@ Done notes (2026-11-18):
 
 ### Increment 21: The `media-register` command and its generated file
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (contracts `npm run media-register`, `data/media-register.json`), seq-02.
 
@@ -675,6 +675,12 @@ Exit criteria:
 Prediction:
 
 1. `data/media-register.json` is created; `data/media.json` is unchanged.
+
+Done notes (2026-11-18):
+
+1. `runMediaRegister` in `tools/media-register.ts` holds the command, with the network, the date and the disk passed in, because `tools/cli.ts` runs on import; `cmdMediaRegister` only wires them. Exit 0 without difference, 1 with differences listed, 2 when the fetch fails (network, HTTP status or an answer that is not a SPARQL result), nothing written.
+2. The generated file keeps the request as one GET address (`request`, so that `npm run links` tests it and anyone can run it again), the dataset and terms addresses as the register's linked data declares them, the attribution, the terms "OGD Open use. Must provide the source.", `retrieved_on` and the 42 companies as returned. The licence page the dataset also names (bj.admin.ch) answers 404 and is not kept.
+3. Run by hand on 2026-11-18: 42 companies for 42 UIDs, no difference; `data/media.json` unchanged (same checksum). `npm run check` valid; `npm run links` 245 links, the 3 new ones OK, vimentis.ch 502 (known, unrelated).
 
 ### Increment 22: Close the slice
 

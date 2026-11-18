@@ -14,6 +14,7 @@
     "links": "node tools/cli.ts links",
     "parliament": "node tools/cli.ts parliament",
     "cantonal-parliaments": "node tools/cli.ts cantonal-parliaments",
+    "media-register": "node tools/cli.ts media-register",
     "test": "node --test tools/*.test.ts"
   },
   "devDependencies": {

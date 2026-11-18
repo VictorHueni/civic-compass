@@ -1,0 +1,265 @@
+{
+  "_readme": "Généré par « npm run media-register » depuis les données liées du registre du commerce (Zefix sur lindas.admin.ch) : ne pas modifier à la main, relancer la commande. companies : la réponse du registre telle quelle, une entrée par IDE de data/media.json. La commande signale les différences avec data/media.json et ne le modifie jamais : le mainteneur le corrige à la main, sources à l'appui.",
+  "media_register": {
+    "request": "https://lindas.admin.ch/query?query=PREFIX%20schema%3A%20%3Chttp%3A%2F%2Fschema.org%2F%3E%0ASELECT%20%3Fuid%20%3Fname%20%3Fform%20%3Fseat%20WHERE%20%7B%0A%20%20VALUES%20%3Fuid%20%7B%20%22CHE105836696%22%20%22CHE106034966%22%20%22CHE396664102%22%20%22CHE106824626%22%20%22CHE103959721%22%20%22CHE105861286%22%20%22CHE103365013%22%20%22CHE102733947%22%20%22CHE403630234%22%20%22CHE107467173%22%20%22CHE114666950%22%20%22CHE104153471%22%20%22CHE113664888%22%20%22CHE113952896%22%20%22CHE284172783%22%20%22CHE113952844%22%20%22CHE103606524%22%20%22CHE108411459%22%20%22CHE108465857%22%20%22CHE106061845%22%20%22CHE106493475%22%20%22CHE106259494%22%20%22CHE105820465%22%20%22CHE217728826%22%20%22CHE226474346%22%20%22CHE106557709%22%20%22CHE409973833%22%20%22CHE109560406%22%20%22CHE382325467%22%20%22CHE108954582%22%20%22CHE103179083%22%20%22CHE100709168%22%20%22CHE379633626%22%20%22CHE107344323%22%20%22CHE113902562%22%20%22CHE100842382%22%20%22CHE359118195%22%20%22CHE103172980%22%20%22CHE102978667%22%20%22CHE298602703%22%20%22CHE101196774%22%20%22CHE113961599%22%20%7D%0A%20%20%3Fid%20schema%3Avalue%20%3Fuid%20.%0A%20%20%3Fc%20schema%3Aidentifier%20%3Fid%20%3B%20a%20%3Chttps%3A%2F%2Fschema.ld.admin.ch%2FZefixOrganisation%3E%20%3B%20schema%3AlegalName%20%3Fname%20%3B%0A%20%20%20%20%20schema%3AadditionalType%20%3Flf%20%3B%20%3Chttps%3A%2F%2Fschema.ld.admin.ch%2Fmunicipality%3E%20%3Fm%20.%0A%20%20OPTIONAL%20%7B%20%3Flf%20schema%3Aname%20%3Fform%20.%20FILTER(lang(%3Fform)%20%3D%20%22fr%22)%20%7D%0A%20%20OPTIONAL%20%7B%20%3Fm%20schema%3Aname%20%3Fseat%20%7D%0A%7D",
+    "dataset": "https://register.ld.admin.ch/.well-known/dataset/foj-zefix",
+    "attribution": "Zefix, Index central des raisons de commerce, Office fédéral de la justice, données liées LINDAS",
+    "terms": "OGD Open use. Must provide the source.",
+    "terms_url": "https://ld.admin.ch/vocabulary/TermsOfUse/Provide-the-Source",
+    "retrieved_on": "2026-11-18",
+    "companies": [
+      {
+        "uid": "CHE-105.836.696",
+        "name": "TX Group AG",
+        "legal_form": "Société anonyme",
+        "seat": "Zürich"
+      },
+      {
+        "uid": "CHE-106.034.966",
+        "name": "Tamedia Publications romandes SA",
+        "legal_form": "Société anonyme",
+        "seat": "Lausanne"
+      },
+      {
+        "uid": "CHE-396.664.102",
+        "name": "RTS Radio Télévision Suisse, succursale de la Société suisse de radiodiffusion et télévision",
+        "legal_form": "Succursale suisse inscrite au registre du commerce",
+        "seat": "Ecublens (VD)"
+      },
+      {
+        "uid": "CHE-106.824.626",
+        "name": "CH Regionalmedien AG",
+        "legal_form": "Société anonyme",
+        "seat": "Aarau"
+      },
+      {
+        "uid": "CHE-103.959.721",
+        "name": "ESH Médias Editions SA",
+        "legal_form": "Société anonyme",
+        "seat": "Sion"
+      },
+      {
+        "uid": "CHE-105.861.286",
+        "name": "SNP Société Neuchâteloise de Presse SA",
+        "legal_form": "Société anonyme",
+        "seat": "Neuchâtel"
+      },
+      {
+        "uid": "CHE-103.365.013",
+        "name": "TV LEMAN BLEU SA",
+        "legal_form": "Société anonyme",
+        "seat": "Carouge (GE)"
+      },
+      {
+        "uid": "CHE-102.733.947",
+        "name": "Le Temps SA",
+        "legal_form": "Société anonyme",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-403.630.234",
+        "name": "St-Paul Médias SA",
+        "legal_form": "Société anonyme",
+        "seat": "Fribourg"
+      },
+      {
+        "uid": "CHE-107.467.173",
+        "name": "Editions D + P S.A.",
+        "legal_form": "Société anonyme",
+        "seat": "Delémont"
+      },
+      {
+        "uid": "CHE-114.666.950",
+        "name": "Vaud-Fribourg TV SA",
+        "legal_form": "Société anonyme",
+        "seat": "Lausanne"
+      },
+      {
+        "uid": "CHE-104.153.471",
+        "name": "CANAL ALPHA SA",
+        "legal_form": "Société anonyme",
+        "seat": "Cortaillod"
+      },
+      {
+        "uid": "CHE-113.664.888",
+        "name": "RADIO CHABLAIS SA",
+        "legal_form": "Société anonyme",
+        "seat": "Monthey"
+      },
+      {
+        "uid": "CHE-113.952.896",
+        "name": "RFJ SA",
+        "legal_form": "Société anonyme",
+        "seat": "Delémont"
+      },
+      {
+        "uid": "CHE-284.172.783",
+        "name": "RTN SA",
+        "legal_form": "Société anonyme",
+        "seat": "Laténa"
+      },
+      {
+        "uid": "CHE-113.952.844",
+        "name": "BNJ Suisse SA",
+        "legal_form": "Société anonyme",
+        "seat": "Delémont"
+      },
+      {
+        "uid": "CHE-103.606.524",
+        "name": "Radio Lac SA",
+        "legal_form": "Société anonyme",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-108.411.459",
+        "name": "Radio LFM SA",
+        "legal_form": "Société anonyme",
+        "seat": "Crissier"
+      },
+      {
+        "uid": "CHE-108.465.857",
+        "name": "Radio One FM SA",
+        "legal_form": "Société anonyme",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-106.061.845",
+        "name": "Radio Rhône SA",
+        "legal_form": "Société anonyme",
+        "seat": "Sion"
+      },
+      {
+        "uid": "CHE-106.493.475",
+        "name": "Rouge SA",
+        "legal_form": "Société anonyme",
+        "seat": "Crissier"
+      },
+      {
+        "uid": "CHE-106.259.494",
+        "name": "RADIO FRIBOURG SA",
+        "legal_form": "Société anonyme",
+        "seat": "Villars-sur-Glâne"
+      },
+      {
+        "uid": "CHE-105.820.465",
+        "name": "Freiburger Nachrichten AG",
+        "legal_form": "Société anonyme",
+        "seat": "Fribourg"
+      },
+      {
+        "uid": "CHE-217.728.826",
+        "name": "Nouvelle Agence Economique et Financière SA",
+        "legal_form": "Société anonyme",
+        "seat": "Echandens"
+      },
+      {
+        "uid": "CHE-226.474.346",
+        "name": "MEDIAparc SA",
+        "legal_form": "Société anonyme",
+        "seat": "Villars-sur-Glâne"
+      },
+      {
+        "uid": "CHE-106.557.709",
+        "name": "Radio Rottu Oberwallis AG",
+        "legal_form": "Société anonyme",
+        "seat": "Visp"
+      },
+      {
+        "uid": "CHE-409.973.833",
+        "name": "CH Media Holding AG",
+        "legal_form": "Société anonyme",
+        "seat": "Aarau"
+      },
+      {
+        "uid": "CHE-109.560.406",
+        "name": "ESH Editions Suisses Holding SA",
+        "legal_form": "Société anonyme",
+        "seat": "Neuchâtel"
+      },
+      {
+        "uid": "CHE-382.325.467",
+        "name": "St-Paul Holding SA",
+        "legal_form": "Société anonyme",
+        "seat": "Fribourg"
+      },
+      {
+        "uid": "CHE-108.954.582",
+        "name": "Groupe E SA",
+        "legal_form": "Société anonyme",
+        "seat": "Granges-Paccot"
+      },
+      {
+        "uid": "CHE-103.179.083",
+        "name": "Démocrate Media Holding SA",
+        "legal_form": "Société anonyme",
+        "seat": "Val Terbi"
+      },
+      {
+        "uid": "CHE-100.709.168",
+        "name": "Mystik SA",
+        "legal_form": "Société anonyme",
+        "seat": "Cortaillod"
+      },
+      {
+        "uid": "CHE-379.633.626",
+        "name": "BNJ Media Holding SA",
+        "legal_form": "Société anonyme",
+        "seat": "Rossemaison"
+      },
+      {
+        "uid": "CHE-107.344.323",
+        "name": "Media One Group SA",
+        "legal_form": "Société anonyme",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-113.902.562",
+        "name": "Unicast SA",
+        "legal_form": "Société anonyme",
+        "seat": "Lausanne"
+      },
+      {
+        "uid": "CHE-100.842.382",
+        "name": "AEVIS VICTORIA SA",
+        "legal_form": "Société anonyme",
+        "seat": "Fribourg"
+      },
+      {
+        "uid": "CHE-359.118.195",
+        "name": "pomona media partner genossenschaft",
+        "legal_form": "Coopérative",
+        "seat": "Visp"
+      },
+      {
+        "uid": "CHE-103.172.980",
+        "name": "Nouvelle association du Courrier",
+        "legal_form": "Association",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-102.978.667",
+        "name": "Schweizerische Radio- und Fernsehgesellschaft",
+        "legal_form": "Association",
+        "seat": "Bern"
+      },
+      {
+        "uid": "CHE-298.602.703",
+        "name": "Fondation Aventinus",
+        "legal_form": "Fondation",
+        "seat": "Genève"
+      },
+      {
+        "uid": "CHE-101.196.774",
+        "name": "Soeurs de l'Oeuvre de Saint-Paul société coopérative",
+        "legal_form": "Coopérative",
+        "seat": "Fribourg"
+      },
+      {
+        "uid": "CHE-113.961.599",
+        "name": "Centre Patronal",
+        "legal_form": "Association",
+        "seat": "Paudex"
+      }
+    ]
+  }
+}

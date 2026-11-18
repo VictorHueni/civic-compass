@@ -633,6 +633,45 @@ export const MEDIA_OWNERSHIP_SCHEMA: Schema<MediaOwnership> = {
   fog: { kind: "object", schema: FOG_SCHEMA },
 };
 
+/* ---------- The commercial register's answer for the media publishers (generated) ---------- */
+
+/** One company as the register's linked data returned it (PRD-0001 US-25). */
+export interface RegisterCompany {
+  /** CHE-123.456.789. */
+  uid: string;
+  name: string;
+  /** The legal form as the register names it in French. */
+  legal_form: string;
+  seat: string | null;
+}
+const REGISTER_COMPANY_SCHEMA: Schema<RegisterCompany> = {
+  uid: { kind: "string" },
+  name: { kind: "string" },
+  legal_form: { kind: "string" },
+  seat: { kind: "string", nullable: true },
+};
+
+/** Written by `npm run media-register`, never by hand: what the register returned, with the request and the date. */
+export interface MediaRegister {
+  /** The SPARQL request as one GET address, to run it again. */
+  request: string;
+  dataset: string;
+  attribution: string;
+  terms: string;
+  terms_url: string;
+  retrieved_on: string;
+  companies: RegisterCompany[];
+}
+const MEDIA_REGISTER_SCHEMA: Schema<MediaRegister> = {
+  request: { kind: "url" },
+  dataset: { kind: "url" },
+  attribution: { kind: "string" },
+  terms: { kind: "string" },
+  terms_url: { kind: "url" },
+  retrieved_on: { kind: "date" },
+  companies: { kind: "list", item: { kind: "object", schema: REGISTER_COMPANY_SCHEMA } },
+};
+
 /* ---------- Files in data/ ---------- */
 
 /** Every file wraps its content in one key, next to a free note for editors (`_readme`). */
@@ -671,6 +710,10 @@ export interface CantonalGovernmentsFile {
 export interface MediaFile {
   _readme: string;
   media_ownership: MediaOwnership;
+}
+export interface MediaRegisterFile {
+  _readme: string;
+  media_register: MediaRegister;
 }
 
 const list =(schema: AnySchema) => ({ kind: "list", item: { kind: "object", schema } }) as const;
@@ -716,6 +759,10 @@ export const DATA_FILES = {
     file: "media.json",
     schema: { _readme: { kind: "string" }, media_ownership: { kind: "object", schema: MEDIA_OWNERSHIP_SCHEMA } } satisfies Schema<MediaFile>,
   },
+  media_register: {
+    file: "media-register.json",
+    schema: { _readme: { kind: "string" }, media_register: { kind: "object", schema: MEDIA_REGISTER_SCHEMA } } satisfies Schema<MediaRegisterFile>,
+  },
 } as const;
 
 /** The whole referential, once loaded. */
@@ -729,4 +776,5 @@ export interface Referential {
   cantonal_parliaments: CantonalParliaments;
   cantonal_governments: CantonalGovernment[];
   media_ownership: MediaOwnership;
+  media_register: MediaRegister;
 }
