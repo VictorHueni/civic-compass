@@ -39,7 +39,7 @@ A Swiss voter who wants to prepare a ballot has to assemble the picture from a d
 - **Names of cantonal parliament members.** Cantonal parliaments show seats per party from the latest election only (US-14); listing their 60 to 150 members by name, or tracking changes since the election, is out of scope.
 - **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them. A media owner who is a person is shown with name and share only, as the source publishes them, under the conditions of US-24 (owner, 2026-11-17).
 - **A measurement of media leaning of the site's own.** The site shows the fög index for the titles it covers and nothing for the others; rating articles itself, or collecting visitors' reports, needs its own method and a backend (Research-0003, ruling 1).
-- **Lobbies (phase 2 of the transparency area).** Links to Lobbywatch come in later stories of this PRD, after Research-0004.
+- **Lobbies (phase 2 of the transparency area).** Links to Lobbywatch come in later stories of this PRD, after [Research-0004](../../architecture/research/0004-lobby-and-influence-sources.md) (draft, 2026-11-18).
 - **Any backend, account, tracking or personal data.** The site is static; the only stored state is the last territory chosen, in the visitor's own browser.
 
 ## 4. User Stories
