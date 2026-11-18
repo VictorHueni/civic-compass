@@ -487,7 +487,8 @@ export interface Company {
   name: string;
   /** SA, Sàrl, AG... as the register writes it. */
   legal_form: string;
-  seat: string;
+  /** null when the register does not know the company that the Medienmonitor names (owner, 2026-11-18). */
+  seat: string | null;
   /** CHE-123.456.789 when known. */
   uid: string | null;
   source: string;
@@ -498,7 +499,7 @@ const COMPANY_SCHEMA: Schema<Company> = {
   id: { kind: "string" },
   name: { kind: "string" },
   legal_form: { kind: "string" },
-  seat: { kind: "string" },
+  seat: { kind: "string", nullable: true },
   uid: { kind: "string", nullable: true },
   source: { kind: "url" },
   checked_on: { kind: "date" },
