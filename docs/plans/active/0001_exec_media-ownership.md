@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 09
+**Current Increment:** 10
 
 ## Increment Plan
 
@@ -257,7 +257,7 @@ Exit criteria:
 
 ### Increment 09: The Transparence menu and the media page shell
 
-**Status:** pending
+**Status:** done
 
 Sheet: screens tab (ui-01), code tab (`app.ts`).
 

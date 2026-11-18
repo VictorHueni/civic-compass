@@ -138,6 +138,8 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .menu small{color:var(--cc-muted);font-size:.82rem}
 .menu a[aria-current="page"] b{color:var(--cc-accent)}
 .scope-bar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--cc-border);padding:8px 0}
+.scope-bar[hidden]{display:none}
+.menu a.menu__soon{opacity:.55;cursor:default}
 .scope-btn{width:100%;min-height:48px;display:flex;align-items:center;gap:8px;padding:0 14px;border:1px solid var(--color-secondary-300,#b6bec5);border-radius:6px;background:var(--cc-surface);font:inherit;color:var(--cc-text);cursor:pointer}
 .scope-btn__l{font-size:.78rem;color:var(--cc-muted);text-transform:uppercase;letter-spacing:.04em}
 .scope-btn__v{flex:1;text-align:left;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
