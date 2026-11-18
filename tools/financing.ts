@@ -5,7 +5,8 @@
  * donations above CHF 15,000). The export is checked by column name; anything it does not expect makes it throw
  * « réponse inattendue du CDF », never guess. Of a person who gave, only first name and name are kept (PRD-0001 §3).
  */
-import type { Campaign, Donation, Donor, FinancedItem, Recommendation } from "../src/types.ts";
+import type { Ballot, Campaign, CampaignFinancing, Donation, Donor, FinancedItem, Recommendation, Removal } from "../src/types.ts";
+import { fingerprint } from "./media.ts";
 import type { Sheet } from "./xlsx.ts";
 
 function unexpected(what: string): Error {
@@ -171,4 +172,50 @@ export function readFinancing(sheets: Sheet[]): ReadFinancing | null {
   }
   if (declaredOn === null) return null;
   return { declared_on: declaredOn, campaigns, donations, left_out: leftOut };
+}
+
+/**
+ * The removal a named person matches, if any. Both orders of the names are tried (« Prénom Nom », « Nom Prénom »):
+ * the request may write either.
+ */
+export function removalOf(donor: Donor, removed: Set<string>): string | undefined {
+  if (donor.type !== "person") return undefined;
+  return [fingerprint(`${donor.first_name} ${donor.name}`), fingerprint(`${donor.name} ${donor.first_name}`)].find((f) => removed.has(f));
+}
+
+/**
+ * The rules of npm run check for data/campaign-financing.json: its items are exactly the ballot's items with a CDF id
+ * (a past ballot's file fails, so that its donors leave the site with it, US-27); no named donor matches a removal
+ * (the message gives the start of the fingerprint, never the name); every donation's receiver has a campaign in its item.
+ */
+export function checkFinancing(f: CampaignFinancing, b: Ballot, removals: Removal[]): string[] {
+  const errors: string[] = [];
+  const rerun = "relancer npm run campaign-financing";
+  const wanted = new Map(b.items.filter((i) => i.financing_id !== null).map((i) => [i.id, i.financing_id]));
+  for (const item of f.items) {
+    if (wanted.get(item.ballot_item) !== item.financing_id) {
+      errors.push(`objet ${item.ballot_item} (CDF ${item.financing_id}) absent de data/ballot.json ou d'un autre id : fichier d'un autre scrutin, ${rerun}`);
+    }
+  }
+  for (const [id, financingId] of wanted) {
+    if (!f.items.some((i) => i.ballot_item === id)) errors.push(`objet ${id} (CDF ${financingId}) de data/ballot.json absent : ${rerun}`);
+  }
+  const removed = new Set(removals.map((r) => r.fingerprint));
+  for (const item of f.items) {
+    const actors = new Set(item.campaigns.map((c) => c.actor_id));
+    for (const d of item.donations) {
+      const at = `objet ${item.ballot_item}, libéralité ${d.id}`;
+      const match = removalOf(d.donor, removed);
+      if (match) errors.push(`${at} : ce donateur a été retiré à sa demande (empreinte ${match.slice(0, 12)}…) ; ${rerun}, ne pas le remettre à la main`);
+      if (!actors.has(d.actor_id)) errors.push(`${at} : reçue par l'acteur ${d.actor_id}, sans campagne dans cet objet`);
+    }
+  }
+  return errors;
+}
+
+/** « au 2026-11-19 : 4 objets, 17 comités, 29 dons ». */
+export function financingSummary(f: CampaignFinancing): string {
+  const committees = f.items.reduce((n, i) => n + i.campaigns.length, 0);
+  const donations = f.items.reduce((n, i) => n + i.donations.length, 0);
+  return `au ${f.retrieved_on} : ${f.items.length} objets, ${committees} comités, ${donations} dons`;
 }

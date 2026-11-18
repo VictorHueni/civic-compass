@@ -11,8 +11,7 @@
  */
 import { join } from "node:path";
 import { DATA_FILES, type Ballot, type CampaignFinancingFile, type Donation, type FinancedItem, type Removal } from "../src/types.ts";
-import { readFinancing } from "./financing.ts";
-import { fingerprint } from "./media.ts";
+import { readFinancing, removalOf } from "./financing.ts";
 import { readWorkbook } from "./xlsx.ts";
 
 const PORTAL = "https://politikfinanzierung.efk.admin.ch";
@@ -74,16 +73,11 @@ async function unnamedItems(b: Ballot, deps: FinancingDeps): Promise<string[]> {
   }
 }
 
-/**
- * A person's donation whose name matches a removal becomes « removed », keeping value, receiver and date. Both
- * orders of the names are tried (« Prénom Nom », « Nom Prénom »): the request may write either.
- */
+/** A person's donation whose name matches a removal becomes « removed », keeping value, receiver and date. */
 function applyRemovals(donations: Donation[], removed: Set<string>): { donations: Donation[]; count: number } {
   let count = 0;
   const out = donations.map((d) => {
-    if (d.donor.type !== "person") return d;
-    const { first_name, name } = d.donor;
-    if (!removed.has(fingerprint(`${first_name} ${name}`)) && !removed.has(fingerprint(`${name} ${first_name}`))) return d;
+    if (!removalOf(d.donor, removed)) return d;
     count++;
     return { ...d, donor: { type: "removed" as const } };
   });

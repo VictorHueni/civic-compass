@@ -42,6 +42,7 @@ import { checkPresidencies, stalePresidencies } from "./party-presidencies.ts";
 import { checkMedia, fingerprint, mediaSummary, staleMedia } from "./media.ts";
 import { runMediaRegister } from "./media-register.ts";
 import { runCampaignFinancing } from "./campaign-financing.ts";
+import { checkFinancing, financingSummary } from "./financing.ts";
 import { readWorkbook } from "./xlsx.ts";
 import { checkFile, entryLabel, isPlainObject, Report } from "./schema.ts";
 
@@ -155,6 +156,7 @@ function checkConsistency(d: Referential): string[] {
   }
   for (const e of checkPresidencies(d.parties)) report.add(["data/parties.json"], e);
   for (const e of checkMedia(d.media_ownership, d.territories)) report.add([`data/${DATA_FILES.media_ownership.file}`], e);
+  for (const e of checkFinancing(d.campaign_financing, d.ballot, d.donor_removals)) report.add([`data/${DATA_FILES.campaign_financing.file}`], e);
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -188,7 +190,8 @@ function cmdCheck(dataDir: string): number {
       `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}), ` +
       `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}), ` +
       `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}), ` +
-      `médias (${mediaSummary(d.media_ownership)}).`,
+      `médias (${mediaSummary(d.media_ownership)}), ` +
+      `financement des campagnes ${financingSummary(d.campaign_financing)}.`,
   );
   const today = new Date().toISOString().slice(0, 10);
   const stale = staleMembers(d.cantonal_governments, today);

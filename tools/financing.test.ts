@@ -4,8 +4,9 @@
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { DATA_FILES, type CampaignFinancingFile } from "../src/types.ts";
-import { excelDate, readFinancing } from "./financing.ts";
+import { DATA_FILES, type BallotFile, type CampaignFinancingFile, type DonorRemovalsFile } from "../src/types.ts";
+import { checkFinancing, excelDate, financingSummary, readFinancing } from "./financing.ts";
+import { fingerprint } from "./media.ts";
 import { checkFile, Report } from "./schema.ts";
 import { readWorkbook, type Sheet } from "./xlsx.ts";
 
@@ -223,4 +224,51 @@ test("readFinancing gives null when the export holds no budget declaration", () 
   const sheets = fixture(35);
   for (const s of sheets) for (const r of [...s.rows.keys()]) if (r > 1) s.rows.delete(r);
   assert.equal(readFinancing(sheets), null);
+});
+
+/* ---------- The rules of npm run check (increment 05) ---------- */
+
+function real() {
+  const read = <T>(file: string) => JSON.parse(readFileSync(new URL(`../data/${file}`, import.meta.url), "utf8")) as T;
+  return {
+    financing: read<CampaignFinancingFile>(DATA_FILES.campaign_financing.file).campaign_financing,
+    ballot: read<BallotFile>(DATA_FILES.ballot.file).ballot,
+    removals: read<DonorRemovalsFile>(DATA_FILES.donor_removals.file).donor_removals,
+  };
+}
+
+test("checkFinancing passes on the real files, and the summary counts items, committees and donations", () => {
+  const { financing, ballot, removals } = real();
+  assert.deepEqual(checkFinancing(financing, ballot, removals), []);
+  assert.match(financingSummary(financing), /^au \d{4}-\d{2}-\d{2} : 4 objets, 17 comités, 29 dons$/);
+});
+
+test("checkFinancing fails when the generated items are not exactly the ballot's items with a CDF id", () => {
+  const { financing, ballot, removals } = real();
+  // Another vote in data/ballot.json, the command not rerun: the old donors must not stay on the site.
+  const next = { ...ballot, items: ballot.items.map((i) => ({ ...i, id: `${i.id}_2027`, financing_id: (i.financing_id ?? 0) + 10 })) };
+  const stale = checkFinancing(financing, next, removals);
+  assert.ok(stale.some((e) => /avs/.test(e) && /npm run campaign-financing/.test(e)), JSON.stringify(stale));
+  assert.ok(stale.some((e) => /avs_2027/.test(e)), JSON.stringify(stale));
+  const fewer = { ...financing, items: financing.items.slice(1) };
+  assert.ok(checkFinancing(fewer, ballot, removals).some((e) => /avs/.test(e)));
+});
+
+test("checkFinancing fails on a named donor whose name was removed, without printing the name", () => {
+  const { financing, ballot } = real();
+  const person = financing.items.flatMap((i) => i.donations).find((d) => d.donor.type === "person")?.donor;
+  assert.ok(person && person.type === "person");
+  const print = fingerprint(`${person.first_name} ${person.name}`);
+  const errors = checkFinancing(financing, ballot, [{ fingerprint: print, date: "2026-11-19", reason: "person_request" }]);
+  assert.equal(errors.length, 1, JSON.stringify(errors));
+  assert.ok(errors[0].includes(print.slice(0, 12)));
+  assert.ok(!errors[0].includes(person.name) && !errors[0].includes(person.first_name));
+});
+
+test("checkFinancing fails on a donation whose receiver has no campaign in its item", () => {
+  const { financing, ballot, removals } = real();
+  const item = financing.items[0];
+  const odd = { ...financing, items: [{ ...item, donations: [{ ...item.donations[0], actor_id: 999999 }, ...item.donations.slice(1)] }, ...financing.items.slice(1)] };
+  const errors = checkFinancing(odd, ballot, removals);
+  assert.ok(errors.some((e) => /999999/.test(e) && new RegExp(String(item.donations[0].id)).test(e)), JSON.stringify(errors));
 });
