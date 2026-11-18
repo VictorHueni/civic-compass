@@ -1,0 +1,92 @@
+@startuml
+!include _theme.puml
+title er-01: The media data in data/media.json and data/media-register.json (PRD-0001 US-20 to US-25)
+
+entity Medium {
+  * id : string <<PK>>
+  --
+  * name : string
+  * genre : press | radio | television | online
+  * regions : list of region names
+  * publisher : string <<FK>>
+    (Company, or an association
+    or foundation Holder)
+  * publisher_source : url (imprint)
+  * source : url
+  * checked_on : date
+}
+
+entity Company {
+  * id : string <<PK>>
+  --
+  * name : string (as in the register)
+  * legal_form : string (SA, Sàrl...)
+  * seat : string
+  uid : CHE-... or null
+  * source : url
+  * checked_on : date
+}
+
+entity Holder {
+  * id : string <<PK>>
+  --
+  * name : string
+  * kind : person | family | public |\nassociation (or foundation)
+  legal_form, seat, uid :\nassociation or foundation only
+  * source : url
+  * checked_on : date
+}
+
+entity Holding {
+  * holder : string <<FK>>\n(Company or Holder)
+  * held : string <<FK>> (Company)
+  --
+  share : number or null
+  * source : url
+  * checked_on : date
+  disputed : boolean
+  note : string (when disputed)
+}
+
+entity Removal {
+  * date : date
+  * reason : "demande de la personne"
+  --
+  (how the person is identified:
+  raised with the owner)
+}
+
+entity FogEdition {
+  * label, period : string
+  * ballots : integer (61)
+  * scale : -100 to +100
+  * average : number (-4)
+  * source : url
+  * checked_on : date
+}
+
+entity FogValue {
+  * medium : string <<FK>>
+  * measured_as : string (e.g. 24heures.ch)
+  * value : number
+}
+
+entity RegisterEntry <<generated>> {
+  * uid : string
+  --
+  name, legal_form, seat : string
+  status : active | liquidation | deleted
+  retrieved_on : date
+}
+
+Medium }o--o| Company : publisher
+Medium }o--o| Holder : publisher (association\nor foundation)
+Holding }o--|| Company : held
+Holding }o--o| Company : holder (a company)
+Holding }o--o| Holder : holder (a person, family,\npublic body, association)
+Holder ||--o| Removal : may carry
+Medium ||--o| FogValue : measured
+FogValue }o--|| FogEdition : of
+RegisterEntry |o--o| Company : same UID
+
+@enduml
