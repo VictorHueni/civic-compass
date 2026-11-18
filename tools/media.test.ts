@@ -5,7 +5,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import { DATA_FILES, type Holder, type Holding, type MediaFile, type Territory } from "../src/types.ts";
-import { checkMedia, mediaSummary, staleMedia } from "./media.ts";
+import { checkMedia, fingerprint, mediaSummary, staleMedia } from "./media.ts";
 import { checkFile, Report } from "./schema.ts";
 
 const SRC = "https://example.org/source";
@@ -219,4 +219,63 @@ test("staleMedia lists every fact checked more than 180 days before today, and o
 
 test("mediaSummary counts the entries of each list for the line of npm run check", () => {
   assert.equal(mediaSummary(mediaFile().media_ownership), "1 médias, 1 sociétés, 1 autres détenteurs, 1 participations, 1 valeurs du fög");
+});
+
+test("fingerprint is the SHA-256 hex of the name in lower case, without accents, spaces collapsed", () => {
+  const f = fingerprint("Éric  Dupont");
+  assert.match(f, /^[0-9a-f]{64}$/);
+  assert.equal(f, fingerprint("eric dupont"));
+  assert.equal(f, fingerprint("  ERIC\tDupont "));
+  assert.notEqual(f, fingerprint("Eric Dupond"));
+  assert.equal(fingerprint("a"), "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "plain SHA-256, no salt");
+});
+
+/** The valid file with one removal: the person behind it asked for "Bernard B" to be taken out. */
+function withRemoval(): MediaFile {
+  const f = mediaFile();
+  f.media_ownership.holders.push({
+    id: "removed_1",
+    kind: "person",
+    source: SRC,
+    checked_on: DAY,
+    removal: { fingerprint: fingerprint("Bernard B"), date: DAY, reason: "person_request" },
+  });
+  f.media_ownership.holdings.push({ holder: "removed_1", held: "co_a", share: 10, source: SRC, checked_on: DAY });
+  return f;
+}
+
+test("checkMedia accepts a removed holder: no name, a removal record", () => {
+  assert.deepEqual(checkMedia(withRemoval().media_ownership, TERRITORIES), []);
+});
+
+test("checkMedia fails when a named holder matches the fingerprint of a removal, and does not print the name", () => {
+  const f = withRemoval();
+  f.media_ownership.holders.push({ id: "p_back", name: "bernard  b", kind: "person", source: SRC, checked_on: DAY });
+  const errors = checkMedia(f.media_ownership, TERRITORIES);
+  assert.equal(errors.length, 1);
+  assert.match(errors[0], /p_back/);
+  assert.match(errors[0], /retiré/);
+  assert.doesNotMatch(errors[0], /bernard/i);
+});
+
+test("checkMedia fails on a holder with neither name nor removal, and on a holder with both", () => {
+  const f = withRemoval();
+  f.media_ownership.holders.push({ id: "p_nameless", kind: "person", source: SRC, checked_on: DAY });
+  const both = f.media_ownership.holders.find((h) => h.id === "removed_1") as Holder;
+  both.name = "Bernard B";
+  const errors = checkMedia(f.media_ownership, TERRITORIES);
+  assert.ok(errors.some((e) => /p_nameless/.test(e) && /ni nom ni retrait/.test(e)), errors.join("\n"));
+  assert.ok(errors.some((e) => /removed_1/.test(e) && /nom et un retrait/.test(e)), errors.join("\n"));
+  assert.ok(errors.every((e) => !/Bernard/.test(e)), "no message prints a removed name");
+});
+
+test("checkMedia fails on a removed holder whose id is not neutral: an id such as p_bernard_b would keep the name", () => {
+  const f = withRemoval();
+  const h = f.media_ownership.holders.find((x) => x.id === "removed_1") as Holder;
+  h.id = "p_bernard_b";
+  for (const x of f.media_ownership.holdings) if (x.holder === "removed_1") x.holder = "p_bernard_b";
+  const errors = checkMedia(f.media_ownership, TERRITORIES);
+  assert.equal(errors.length, 1, errors.join("\n"));
+  assert.match(errors[0], /removed_/);
+  assert.doesNotMatch(errors[0], /bernard/i, "the message does not repeat the id that holds the name");
 });

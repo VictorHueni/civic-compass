@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 17
+**Current Increment:** 20
 
 ## Increment Plan
 
@@ -513,7 +513,7 @@ Done notes (2026-11-18):
 
 ### Increment 17: The name fingerprint and its check rule
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (row "A named person matches the fingerprint of a removal"), database tab (Removal), PRD-0001 US-24 and §8 (2026-11-18).
 
@@ -539,9 +539,16 @@ Exit criteria:
 
 1. A removed person cannot come back under a name without failing the check.
 
+Done notes (2026-11-18):
+
+1. `fingerprint` reuses the site's `normalize` (`src/site/text.ts`), then trims and collapses spaces: plain SHA-256, no salt, as PRD-0001 §8 rules. Every named holder is compared with every removal.
+2. The check's messages name the holder's id only, never a name, so that its output (CI logs included) does not repeat a name asked out.
+3. `media-fingerprint` reads the name on standard input by default, so that it stays out of the shell history; a name given as argument is accepted too. The api tab lists it as an eighth contract.
+4. Found while writing increment 19: a holder's id often holds the name (`p_barbier_mueller`), and would keep it in the file, the built script and the page's attributes after a removal. The check now requires a removed holder's id to be neutral (`removed_N`); its message points at the removal by the start of its fingerprint, not by the id.
+
 ### Increment 18: "actionnaire privé" on the page
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (row "A holder is a person who asked for removal").
 
@@ -565,9 +572,15 @@ Exit criteria:
 
 1. A removal fixture shows no name anywhere on the page.
 
+Done notes (2026-11-18):
+
+1. `hasCard(id)` in `media-model.ts` is false for a holder removed on request; the page then writes it as plain "actionnaire privé" (no link), ignores a tap on its node or sector, and leaves it out of the search's names. `bridges()` leaves it out, so that the list does not single out one "actionnaire privé" across several chains; `rings()` keeps the media under it, so that the outer ring stays complete.
+2. The node keeps the label "actionnaire privé", as the api tab's row ("actionnaire privé" with the share, no name) says, rather than no label at all: an unlabelled shape would read as missing data.
+3. Exit criterion checked on a copy of the repository where Stéphane Barbier-Mueller is removed (fingerprint from `media-fingerprint`): `npm run check` valid, the name is in neither built script, nor the page text of Réseau, Soleil, the cards of TV LEMAN BLEU SA and Léman Bleu, nor the search's names; Léman Bleu reads "actionnaire privé (50,75 %)". Putting the name back under another id fails the check with "ce nom a été retiré à la demande de la personne", without printing it.
+
 ### Increment 19: The removal procedure for the maintainer
 
-**Status:** pending
+**Status:** done
 
 Sheet: PRD-0001 US-24 (handled within 30 days).
 
@@ -589,6 +602,12 @@ Test gate:
 Exit criteria:
 
 1. A maintainer can handle a request from the README alone.
+
+Done notes (2026-11-18):
+
+1. README: `data/media.json` joins the list of data files (it was missing), `media-fingerprint` joins the tool's commands, and a section "Médias : corrections et retraits" gives the 30-day procedure: answer, correct with a source, or remove a name in five steps (fingerprint from standard input, `removal` record, neutral `removed_N` id, check and build, no name in commits, PRs or issues), with the two limits of §8 to tell the person.
+2. CLAUDE.md points agents at that section and forbids a removed name anywhere, ids and commit messages included.
+3. Gate: `npm run check` valid; `npm run links` 0 broken (238 OK, 4 to check by hand). The sheet re-renders `PASS: no findings` with the new contract and is republished (version 5).
 
 ### Increment 20: Reading the register
 
@@ -694,5 +713,5 @@ Exit criteria:
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | done | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
-| M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
+| M5: Removal (US-24) | 17-19 | done | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
 | M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |

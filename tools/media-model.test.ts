@@ -7,7 +7,7 @@
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { bridges, cardLines, chainTop, fogBox, mainHolder, reach, rings, search } from "../src/site/media-model.ts";
+import { bridges, cardLines, chainTop, fogBox, hasCard, mainHolder, reach, rings, search } from "../src/site/media-model.ts";
 import type { Company, Holder, Holding, MediaFile, MediaOwnership, Medium } from "../src/types.ts";
 
 const SRC = "https://example.org/mm";
@@ -308,4 +308,35 @@ test("on the real data/media.json, the seven measured titles and RTS's two outle
   }
   assert.deepEqual(shown, { m_matin_dimanche: "−11", m_lematin: "−9", m_tdg: "−7", m_le_temps: "−6", m_24heures: "−5", m_20minutes: "−3", m_rts_1: "−2", m_rts_ch: "−2" });
   assert.equal(fogBox(m, "m_la_liberte").measured, false);
+});
+
+/** The fixture with a person who asked for removal: no name, a removal record, two holdings kept. */
+function withRemoved(): MediaOwnership {
+  const m = fixture();
+  m.holders.push({ id: "anon", kind: "person", source: SRC, checked_on: DAY, removal: { fingerprint: "0".repeat(64), date: DAY, reason: "person_request" } });
+  m.holdings.push(holding("anon", "lonely", 60), holding("anon", "pub", null));
+  return m;
+}
+
+test("a holder removed on request shows as « actionnaire privé » with its share, never a name", () => {
+  const m = withRemoved();
+  assert.equal(line(m, "m_alone", "Propriétaire")?.text, "actionnaire privé (60 %)");
+  assert.equal(line(m, "m_tx", "Propriétaire")?.text, "Group AG (100 %), actionnaire privé");
+});
+
+test("a removed holder has no card, is not found by the search, and is not in « Ils relient plusieurs médias »", () => {
+  const m = withRemoved();
+  assert.equal(hasCard(m, "anon"), false);
+  for (const id of ["m_tx", "pub", "barbier", "assoc"]) assert.equal(hasCard(m, id), true, id);
+  assert.equal(hasCard(m, "nobody"), false);
+  assert.deepEqual(reach(m, "anon"), ["m_tx", "m_tx2", "m_alone"], "it still reaches three media");
+  assert.ok(!bridges(m).some((b) => b.id === "anon"));
+  assert.equal(search(m, "actionnaire privé"), null);
+});
+
+test("Soleil keeps the media under a removed top owner: the outer ring stays complete", () => {
+  const m = withRemoved();
+  const people = rings(m).find((r) => r.kind === "people");
+  assert.deepEqual(people?.owners.find((o) => o.id === "anon"), { id: "anon", media: ["m_alone"] });
+  assert.equal(rings(m).flatMap((r) => r.owners.flatMap((o) => o.media)).length, m.media.length);
 });

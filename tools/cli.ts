@@ -36,7 +36,7 @@ import {
 } from "./cantonal-parliaments.ts";
 import { checkCantonalGovernments, governmentsSummary, staleMembers, STALE_AFTER_DAYS } from "./cantonal-governments.ts";
 import { checkPresidencies, stalePresidencies } from "./party-presidencies.ts";
-import { checkMedia, mediaSummary, staleMedia } from "./media.ts";
+import { checkMedia, fingerprint, mediaSummary, staleMedia } from "./media.ts";
 import { readWorkbook } from "./xlsx.ts";
 import { checkFile, entryLabel, isPlainObject, Report } from "./schema.ts";
 
@@ -49,6 +49,7 @@ const HELP = `Outil local de la Boussole citoyenne.
   npm run links [-- --all]             teste les URL actuelles de data/*.json (--all : affiche aussi les liens OK)
   npm run parliament                   écrit data/${DATA_FILES.parliament.file} (clé PARL_API_KEY ou ~/.config/civic-compass/env)
   npm run cantonal-parliaments         écrit data/${DATA_FILES.cantonal_parliaments.file} (tableau OFS ${CANTONAL_PARLIAMENTS.orderNr})
+  node tools/cli.ts media-fingerprint  lit un nom sur l'entrée standard et affiche son empreinte, pour un retrait (US-24)
 
 Options communes : --data DOSSIER (par défaut data/).`;
 
@@ -673,6 +674,29 @@ async function cmdCantonalParliaments(dataDir: string): Promise<number> {
 }
 
 /* ====================================================================== */
+/* media-fingerprint                                                       */
+/* ====================================================================== */
+
+/**
+ * Prints the fingerprint of a removed name, with the normalisation the check uses (tools/media.ts). The name is read
+ * from standard input, so that it stays out of the shell history; a name given as argument is accepted too.
+ */
+async function cmdMediaFingerprint(arg: string | undefined): Promise<number> {
+  let name = arg;
+  if (name === undefined) {
+    const chunks: Buffer[] = [];
+    for await (const c of process.stdin) chunks.push(c as Buffer);
+    name = Buffer.concat(chunks).toString("utf8");
+  }
+  if (!name.trim()) {
+    console.error("Aucun nom lu : tapez le nom puis Ctrl+D, ou : printf '%s' 'Prénom Nom' | node tools/cli.ts media-fingerprint");
+    return 2;
+  }
+  console.log(fingerprint(name));
+  return 0;
+}
+
+/* ====================================================================== */
 
 async function main(): Promise<number> {
   const { values, positionals } = parseArgs({
@@ -697,6 +721,8 @@ async function main(): Promise<number> {
       return cmdParliament(resolve(ROOT, values.data));
     case "cantonal-parliaments":
       return cmdCantonalParliaments(resolve(ROOT, values.data));
+    case "media-fingerprint":
+      return cmdMediaFingerprint(positionals[1]);
     default:
       console.error(`Commande inconnue « ${command} ».\n\n${HELP}`);
       return 2;

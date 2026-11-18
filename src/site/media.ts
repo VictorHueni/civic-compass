@@ -7,7 +7,7 @@
  * writes it. The drawings come from the second script, media-graph.ts, added on first opening of the page.
  */
 import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
-import { bridges, cardLines, fogBox, formatShare, rings, search, type CardLine, type SourceRef, type TopKind } from "./media-model.ts";
+import { bridges, cardLines, fogBox, formatShare, hasCard, rings, search, type CardLine, type SourceRef, type TopKind } from "./media-model.ts";
 import { onRender } from "./app.ts";
 import { mediaOwnership as m } from "./referential.ts";
 import type { Holding, MediaGenre } from "../types.ts";
@@ -134,7 +134,7 @@ function holdingRow(h: Holding, other: string, withNote: boolean): string {
   const share = h.share === null ? "part non publiée" : formatShare(h.share);
   const disputed = h.dispute === undefined ? "" : ", sources en désaccord";
   return (
-    "<li>" + goButton(other, nameOf(other)) + '<span class="media-share">' + esc(share + disputed) + "</span>" +
+    "<li>" + (hasCard(m, other) ? goButton(other, nameOf(other)) : '<span class="media-private">' + esc(nameOf(other)) + "</span>") + '<span class="media-share">' + esc(share + disputed) + "</span>" +
     (withNote && h.note ? '<p class="media-line__note">' + esc(h.note) + "</p>" : "") +
     sourcesLine([{ url: h.source, checked_on: h.checked_on }]) + "</li>"
   );
@@ -164,6 +164,7 @@ function ownerCard(id: string): string {
 
 /** Opens the card of a medium, a company or a holder, and brings it into view. */
 export function showCard(id: string): void {
+  if (!hasCard(m, id)) return; // a holder removed on request has no card (US-24)
   const card = $("media-card");
   card.innerHTML = m.media.some((x) => x.id === id) ? mediumCard(id) : ownerCard(id);
   card.scrollIntoView({ block: "start" });
@@ -209,6 +210,7 @@ function bridgesHtml(): string {
 
 function render(): void {
   const options = names()
+    .filter((e) => hasCard(m, e.id))
     .sort((a, b) => a.name.localeCompare(b.name, "fr"))
     .map((e) => '<option value="' + esc(e.name) + '"></option>')
     .join("");
