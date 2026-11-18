@@ -8,6 +8,7 @@ import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
 import { cardLines, formatShare, type CardLine, type SourceRef } from "./media-model.ts";
 import { mediaOwnership as m } from "./referential.ts";
 import type { Holding, MediaGenre } from "../types.ts";
+import type { MediaGraph } from "./media-graph.ts";
 
 /** The error and removal address of the owner (PRD-0001 §8): an e-mail keeps a removal request private. */
 const REPORT_ADDRESS = "huni.victor@gmail.com";
@@ -140,6 +141,28 @@ function render(): void {
     '<p class="scope-note">Sources : <a href="https://www.medienmonitor-schweiz.ch/beteiligungen/" target="_blank" rel="noopener noreferrer">Medienmonitor Schweiz</a> (Publicom pour l\'OFCOM), qui ne garantit ni l\'exhaustivité ni l\'exactitude de ses données ; ' +
     'registre du commerce (<a href="https://register.ld.admin.ch/" target="_blank" rel="noopener noreferrer">données liées de Zefix</a> et FOSC) et page de chaque média pour les éditeurs ; ' +
     '<a href="' + esc(m.fog.edition.source) + '" target="_blank" rel="noopener noreferrer">fög, Université de Zurich</a> pour la tonalité des votations.</p>';
+}
+
+let graphScript: Promise<MediaGraph> | null = null;
+
+/**
+ * Adds js/media-graph.js (Cytoscape and the drawings) to the page once, and resolves with the functions it
+ * registers. A classic script added by the page, so that it also loads from disk (file://). A failed load can be
+ * retried.
+ */
+export function loadGraph(): Promise<MediaGraph> {
+  graphScript ??= new Promise<MediaGraph>((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "js/media-graph.js";
+    script.onload = () => (window.civicMediaGraph ? resolve(window.civicMediaGraph) : reject(new Error("js/media-graph.js n'a rien enregistré")));
+    script.onerror = () => {
+      graphScript = null;
+      script.remove();
+      reject(new Error("js/media-graph.js n'a pas pu être chargé"));
+    };
+    document.head.appendChild(script);
+  });
+  return graphScript;
 }
 
 export function start(): void {

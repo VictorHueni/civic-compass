@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 11
+**Current Increment:** 12
 
 ## Increment Plan
 
@@ -311,7 +311,7 @@ Exit criteria:
 
 ### Increment 11: The graph libraries and the second script
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`tools/build.ts`, `package.json`), PRD-0001 §8 (graph libraries).
 
@@ -336,6 +336,13 @@ Test gate:
 Exit criteria:
 
 1. `dist/js/site.js` does not contain Cytoscape; `dist/js/media-graph.js` does.
+
+Done notes (2026-11-18):
+
+1. `cytoscape` 3.35.0 and `cytoscape-fcose` 2.2.0 pinned; their MIT licences and those of `cose-base` and `layout-base` copied to `dist/licenses/`.
+2. `js/media-graph.js` is minified (1400 KB unminified, 564 KB minified; the libraries make most of it); `js/site.js` stays as it was, 222 KB.
+3. The global registers `network` now; Soleil's drawing joins it in increment 14, once the rings it draws exist (increment 12). Soleil's SVG code lives in this second script, as the code tab lists it ("the two drawings"), which settles that item "left to the implementation".
+4. `loadGraph()` in `media.ts` adds the script once and can retry after a failed load. Smoke load from disk with every http(s) request blocked: the script registers `civicMediaGraph`, fcose lays out three nodes, no console error.
 
 ### Increment 12: Reach, bridges and rings
 
@@ -650,7 +657,7 @@ Exit criteria:
 
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| M1: Checked data file (US-23) | 01-06 | in-progress | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
+| M1: Checked data file (US-23) | 01-06 | done | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | pending | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |

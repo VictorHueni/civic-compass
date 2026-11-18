@@ -15,7 +15,7 @@ Un « gros lanceur » pour la politique suisse : prochaine votation, partis de g
 - Aucun fait sans source : un fait de parti (fondation, sièges au Conseil fédéral) n'est affiché qu'avec sa source et sa date ; les 18 faits actuels sont masqués faute de source.
 - Classement gauche-droite indicatif et éditorial, tous les partis restent dans l'hémicycle. Pour les partis nationaux et leurs sections, il s'appuie sur la CHES 2024 (`lrgen`), gardée dans les données comme aide, jamais affichée, citée en pied de page. Étiquette du PS : « Gauche ».
 - Mots d'ordre : uniquement depuis une source primaire du parti national (site, communiqué, assemblée des délégués), recoupés avec Swissvotes ; valeurs oui, non ou liberté de vote. Un sondage n'est jamais une source.
-- Tout en TypeScript (site et outil), sans dépendance d'exécution. Dépendances de développement épinglées : typescript, esbuild, @types/node. Node 26 exécute directement `tools/*.ts`.
+- Tout en TypeScript (site et outil). Dépendances de développement épinglées : typescript, esbuild, @types/node. Seules dépendances d'exécution, épinglées et incluses dans le second script `js/media-graph.js` : cytoscape et cytoscape-fcose (PRD-0001 §8). Node 26 exécute directement `tools/*.ts`.
 - Code en anglais (fichiers, identifiants, classes CSS, id, clés JSON, valeurs d'énumération) ; textes du site et messages de l'outil en français. Pas de tiret long dans les textes.
 - Le site doit marcher par double clic sur `dist/index.html` : esbuild produit un script classique (iife, pas de `type="module"`) qui contient les données, sans aucun fetch. Les champs réservés aux mainteneurs (`left_right`, `_readme`) sont retirés du script.
 
