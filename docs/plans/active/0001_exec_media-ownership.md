@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 18
+**Current Increment:** 19
 
 ## Increment Plan
 
@@ -547,7 +547,7 @@ Done notes (2026-11-18):
 
 ### Increment 18: "actionnaire privé" on the page
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (row "A holder is a person who asked for removal").
 
@@ -570,6 +570,12 @@ Test gate:
 Exit criteria:
 
 1. A removal fixture shows no name anywhere on the page.
+
+Done notes (2026-11-18):
+
+1. `hasCard(id)` in `media-model.ts` is false for a holder removed on request; the page then writes it as plain "actionnaire privé" (no link), ignores a tap on its node or sector, and leaves it out of the search's names. `bridges()` leaves it out, so that the list does not single out one "actionnaire privé" across several chains; `rings()` keeps the media under it, so that the outer ring stays complete.
+2. The node keeps the label "actionnaire privé", as the api tab's row ("actionnaire privé" with the share, no name) says, rather than no label at all: an unlabelled shape would read as missing data.
+3. Exit criterion checked on a copy of the repository where Stéphane Barbier-Mueller is removed (fingerprint from `media-fingerprint`): `npm run check` valid, the name is in neither built script, nor the page text of Réseau, Soleil, the cards of TV LEMAN BLEU SA and Léman Bleu, nor the search's names; Léman Bleu reads "actionnaire privé (50,75 %)". Putting the name back under another id fails the check with "ce nom a été retiré à la demande de la personne", without printing it.
 
 ### Increment 19: The removal procedure for the maintainer
 

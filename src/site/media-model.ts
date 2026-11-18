@@ -71,6 +71,14 @@ export function mainHolder(m: MediaOwnership, id: string): string | null {
   return first && first.share !== null ? first.holder : null;
 }
 
+/**
+ * Whether `id` opens a card: a medium, a company or a named holder. A holder removed on request (US-24) has no card
+ * of its own; it appears only as "actionnaire privé" with its share in the cards of what it holds.
+ */
+export function hasCard(m: MediaOwnership, id: string): boolean {
+  return m.media.some((x) => x.id === id) || m.companies.some((c) => c.id === id) || m.holders.some((h) => h.id === id && !h.removal);
+}
+
 /** The ids from `id` up through each main holder, `id` first; stops before an id already met. */
 function chain(m: MediaOwnership, id: string): string[] {
   const ids = [id];
@@ -148,10 +156,13 @@ function byName(m: MediaOwnership, a: string, b: string): number {
   return nameOf(m, a).localeCompare(nameOf(m, b), "fr");
 }
 
-/** The people and families that reach at least two media, the most media first, then by name. Never a company. */
+/**
+ * The people and families that reach at least two media, the most media first, then by name. Never a company, nor
+ * a person removed on request (US-24): the list would single out the one "actionnaire privé" in several chains.
+ */
 export function bridges(m: MediaOwnership): Bridge[] {
   return m.holders
-    .filter((h) => h.kind === "person" || h.kind === "family")
+    .filter((h) => (h.kind === "person" || h.kind === "family") && !h.removal)
     .map((h) => ({ id: h.id, media: reach(m, h.id) }))
     .filter((b) => b.media.length >= 2)
     .sort((a, b) => b.media.length - a.media.length || byName(m, a.id, b.id));

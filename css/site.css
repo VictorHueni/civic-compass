@@ -352,3 +352,4 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .fog-scale__mark{position:absolute;top:5px;width:4px;height:16px;border-radius:2px;background:var(--cc-accent);transform:translateX(-50%)}
 .fog-scale__mark--average{top:8px;height:10px;width:3px;background:var(--cc-muted)}
 .media-entry__badge{display:inline-block;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--cc-surface);font-family:Font-Regular,Hind,Fallback-font,sans-serif;font-size:.78rem;color:var(--cc-muted);vertical-align:middle}
+.media-private{font-style:italic}
