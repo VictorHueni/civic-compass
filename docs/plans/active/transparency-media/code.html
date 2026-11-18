@@ -71,12 +71,12 @@
       </ul>
     </section>
     <section class="open">
-      <span class="chip open">Left to the implementation</span>
+      <span class="chip open">Left to the implementation, answered by the build</span>
       <ul>
-        <li>How the second script receives the data and the callback (a global set by the first script, or the data embedded in both).</li>
-        <li>How <span class="mono">media.ts</span> is split between lists, card and switch.</li>
-        <li>Whether Soleil's SVG code lives in the second script or the first; the size budget of each script.</li>
-        <li>Whether the offline run becomes an automated test.</li>
+        <li>How the second script receives the data and the callback (a global set by the first script, or the data embedded in both). <b>Built:</b> the second script registers <span class="mono">window.civicMediaGraph</span>; the data stays in the first and is handed over with each call and its callback.</li>
+        <li>How <span class="mono">media.ts</span> is split between lists, card and switch. <b>Built:</b> one module writes the page, the card, the switch and the loader; what it shows comes from <span class="mono">media-model.ts</span>.</li>
+        <li>Whether Soleil's SVG code lives in the second script or the first; the size budget of each script. <b>Built:</b> in the second, with Cytoscape; <span class="mono">site.js</span> 233 KB, <span class="mono">media-graph.js</span> 570 KB minified.</li>
+        <li>Whether the offline run becomes an automated test. <b>Not yet:</b> it is run by hand with Chromium (increments 14 and 15); automating it needs a browser in CI.</li>
       </ul>
     </section>
   </div>
