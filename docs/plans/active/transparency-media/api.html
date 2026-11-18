@@ -1,0 +1,128 @@
+<!-- summary: no HTTP API · 7 contracts · 2 decision tables -->
+<div class="block">
+  <h2>Contracts</h2>
+  <p class="note">The site is static and has no API of its own. What the slice adds are files, one command, one read of an outside source and one address: each side reads them as below. The site fetches nothing at run time; the data is embedded at build time (US-12).</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Name</th><th>What it does</th><th>Direction</th><th>Carrier</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">data/media.json</span></td><td>The media, companies, other holders, holdings and fög values, kept by hand (next block)</td><td>maintainer → check, build, site</td><td>JSON file, schema in <span class="mono">src/types.ts</span></td></tr>
+        <tr><td class="key"><span class="mono">npm run check</span></td><td>Fails or warns on the media rules (decision table below)</td><td>maintainer, CI</td><td>command, exit 0 or 1</td></tr>
+        <tr><td class="key"><span class="mono">npm run media-register</span></td><td>Reads each publisher's UID in the commercial register and reports differences; never edits the hand-kept file</td><td>maintainer → register → file</td><td>command, exit 0, 1 or 2</td></tr>
+        <tr><td class="key">Zefix linked data</td><td>Name, legal form, seat and status (active, in liquidation, deleted) of a company by UID</td><td>command → <span class="mono">lindas.admin.ch</span></td><td>SPARQL over HTTPS, no credentials; "OGD Open use. Must provide the source."</td></tr>
+        <tr><td class="key"><span class="mono">data/media-register.json</span></td><td>What the register returned, unchanged, with the request and the download date</td><td>command → maintainer, check</td><td>JSON file, generated, never edited</td></tr>
+        <tr><td class="key"><span class="mono">mailto:</span> error report</td><td>Opens the voter's mail program to <span class="mono">huni.victor@gmail.com</span>, subject "Médias : &lt;name&gt;"</td><td>voter → owner</td><td>link; the address also shown as text</td></tr>
+        <tr><td class="key"><span class="mono">js/media-graph.js</span></td><td>The graph views, loaded only when the media page opens</td><td>site → second script</td><td>classic script added to the page, works from <span class="mono">file://</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>The hand-kept file: what each side reads</h2>
+  <p class="note">One file, four lists and the fög edition (US-23). Every fact carries its source URL and <span class="mono">checked_on</span>. The site reads names, kinds, shares and sources; the check reads everything; the maintainer-only notes are removed from the bundle as <span class="mono">_readme</span> is today. Database tab for the fields.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>List</th><th>Holds</th><th>Read by the site for</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">media</span></td><td>Name, genre (presse, radio, télévision, en ligne), regions, publisher (a company, or an association or foundation that publishes itself) with the imprint page that names it, a fög value when measured</td><td>The lists, the card, the outer ring, the "Éditeur" line</td></tr>
+        <tr><td class="key"><span class="mono">companies</span></td><td>Name, legal form, seat, UID when known, source</td><td>The "Éditeur" line (name, legal form, seat), the nodes</td></tr>
+        <tr><td class="key"><span class="mono">holders</span></td><td>People, families, public bodies, associations or foundations (these with legal form, seat and UID when known), with source; a removal record for a person who asked, holding a fingerprint of the name, never the name</td><td>The nodes, the "Propriétaire" line, "Ils relient plusieurs médias"</td></tr>
+        <tr><td class="key"><span class="mono">holdings</span></td><td>Holder (company or holder), held company, share or none, source, <span class="mono">checked_on</span>, a dispute key shared by the holdings that disagree, with a note</td><td>The arrows, the shares, the chain up to the top owner</td></tr>
+        <tr><td class="key"><span class="mono">fog</span></td><td>The edition: label, number of ballots, period, scale, media average, source, <span class="mono">checked_on</span></td><td>The "Tonalité des votations" box</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Decision table: the lines of a medium's card and list entry</h2>
+  <p class="note">The specification decides where the mockup differs: the mockup writes "Propriétaire non publié" and labels the publisher "Détenu par"; the site shows no line and labels it "Éditeur" (US-20).</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>When</th><th>The site shows</th><th>Story</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Always</td><td>"Éditeur": the publisher's name, legal form and seat as the register names them, with the register and the imprint as sources</td><td>US-20</td></tr>
+        <tr><td class="key">A source names holders of the publisher</td><td>"Propriétaire": each holder with its share when published, joined by commas</td><td>US-20</td></tr>
+        <tr><td class="key">No source names a holder</td><td>No "Propriétaire" line, never "inconnu" or a guess</td><td>US-20</td></tr>
+        <tr><td class="key">Two holdings flagged as disputed</td><td>Both holders, each with "(sources en désaccord)", and the note naming both sources</td><td>US-20</td></tr>
+        <tr><td class="key">The chain goes above the holders</td><td>"Au sommet": the holder of the largest published share, followed up to the top</td><td>US-21</td></tr>
+        <tr><td class="key">A holder is a person who asked for removal</td><td>"actionnaire privé" with the share, no name; no card of its own</td><td>US-24</td></tr>
+        <tr><td class="key">The fög measures the title</td><td>"Tonalité des votations": value, scale, ballots and period, media average, "Ce n'est pas une position politique du média", source and date</td><td>US-22</td></tr>
+        <tr><td class="key">The fög does not measure the title</td><td>"Pas de mesure du fög pour ce média"</td><td>US-22</td></tr>
+        <tr><td class="key">Medium, person or family</td><td>"Signaler une erreur ou demander un retrait"</td><td>US-24</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Decision table: what <span class="mono">npm run check</span> says about the media</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>When</th><th>Result</th><th>Story</th></tr></thead>
+      <tbody>
+        <tr><td class="key">The file does not match its schema</td><td>Fails, naming the field</td><td>US-23</td></tr>
+        <tr><td class="key">A holding names a holder or a company that does not exist</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">Published shares in one company add up to more than 100 %, a disputed share counting once</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">A dispute key is on one holding only, or on holdings of different companies, or a disputed holding has no note</td><td>Fails</td><td>US-20, US-23</td></tr>
+        <tr><td class="key">A medium, company, holder, holding or fög value has no source</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">A medium has no publisher, or its publisher is neither a company nor an association or foundation</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">A named person matches the fingerprint of a removal</td><td>Fails</td><td>US-24</td></tr>
+        <tr><td class="key">A holding or a fög value was checked more than 180 days ago</td><td>Warns, never fails</td><td>US-23</td></tr>
+        <tr><td class="key">The generated register file disagrees with a company (name, legal form, seat, status)</td><td>Reported by <span class="mono">media-register</span>; the check does not fail on it</td><td>US-25</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><b>Settled by the owner (2026-11-18).</b> A disputed share counts once in the sum. Léman Bleu gives the same 24,66 % to two holders: counted once, TV Léman Bleu SA sums to 92,47 %; counted twice it would reach 117,13 % and fail the case US-20 requires.</p>
+</div>
+
+<div class="block">
+  <h2>The register command</h2>
+  <div class="msgs">
+    <div class="msg">
+      <h3>Reads</h3>
+      <pre>for each company with a UID in data/media.json:
+  name, legal form, seat, status
+from the commercial register's linked data
+on lindas.admin.ch (SPARQL, no key)</pre>
+    </div>
+    <div class="msg">
+      <h3>Writes and reports</h3>
+      <pre>data/media-register.json
+  request, terms, attribution, retrieved_on
+  companies as returned, by UID
+report: name, legal form or seat differs;
+  in liquidation; deleted
+a failed fetch writes nothing (exit 2)</pre>
+    </div>
+  </div>
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>No HTTP API and no fetch at run time: the media data is embedded at build time.<span class="refs"><span class="chip ref">PRD-0001 §6</span><span class="chip ref">PRD-0001.US-12</span></span></li>
+        <li>One hand-kept file holds media, companies, holders and holdings; its schema lives in <span class="mono">src/types.ts</span>.<span class="refs"><span class="chip ref">PRD-0001.US-23</span></span></li>
+        <li>Medienmonitor is read by hand; no script scrapes it, and the file says so.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">Research-0003</span></span></li>
+        <li>The register is read by UID from Zefix linked data, without credentials, into a generated file; the command never edits the hand-kept file and a failed fetch writes nothing.<span class="refs"><span class="chip ref">PRD-0001.US-25</span></span></li>
+        <li>Staleness after 180 days warns, never fails.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">PRD-0001.US-18</span></span></li>
+        <li>No "Propriétaire" line without a source; disputed holdings show both holders, and their share counts once in the 100 % rule.<span class="refs"><span class="chip ref">PRD-0001.US-20</span><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">Research-0003, ruling 2</span></span></li>
+        <li>Errors and removals go to the owner's address by e-mail, not to a public issue.<span class="refs"><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The page names Medienmonitor (Publicom for OFCOM), the register and the fög as its sources.<span class="refs"><span class="chip ref">PRD-0001.US-20</span><span class="chip ref">PRD-0001 §6</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>The names of the file, the command and the second script: the sheet's are working names.</li>
+        <li>The SPARQL query itself and how many UIDs it asks for at once.</li>
+        <li>Whether the address of the media page keeps a territory segment.</li>
+        <li>Whether the check also reads the generated register file once it exists.</li>
+      </ul>
+    </section>
+  </div>
+</div>

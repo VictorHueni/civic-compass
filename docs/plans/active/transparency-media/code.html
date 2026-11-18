@@ -1,0 +1,83 @@
+<!-- summary: 11 modules · 3 diagrams · 5 checks -->
+<div class="block">
+  <h2>What each module gains</h2>
+  <p class="note">The slice follows the site's rules: TypeScript, English names, pure modules with no DOM and no data import for whatever computes what a page shows, so <span class="mono">node --test</span> and the check load them directly. New modules are marked "new"; the others gain what is listed.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Module</th><th>Gains</th><th>Tested by</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">src/types.ts</span></td><td>The interfaces and schemas of the media file (medium, company, holder, holding, fög edition and value, removal) and of the generated register file; both join the list of data files.</td><td><span class="mono">tsc</span>; used by <span class="mono">check</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/media-model.ts</span> (new)</td><td>Pure reading of the media data: the lines of a card (Éditeur, Propriétaire, Au sommet, disputed holders, "actionnaire privé"), the holder of the largest published share and the chain to the top, the media each holder reaches, "Ils relient plusieurs médias", the rings of Soleil, accent-free search.</td><td><span class="mono">tools/media-model.test.ts</span>, on fixtures and on the real file</td></tr>
+        <tr><td class="key"><span class="mono">src/site/media.ts</span> (new)</td><td>The media page in the main script: the lists by genre, the card, the fög box, the error report, the search, the Réseau / Soleil switch; on first opening, adds <span class="mono">js/media-graph.js</span> to the page and hands it the data and a "show card" callback.</td><td>Screens captured at 390 px and read against the data; <span class="mono">tsc</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/media-graph.ts</span> (new, second entry)</td><td>The two drawings: Réseau with Cytoscape.js and the fcose layout, Soleil as SVG paths from the rings of <span class="mono">media-model.ts</span>; pan and zoom inside the box; a tap calls back the card.</td><td>Opening <span class="mono">dist/index.html</span> from disk with no network; screens</td></tr>
+        <tr><td class="key"><span class="mono">src/site/sunburst.ts</span> (new)</td><td>Pure geometry of Soleil: the arc of each sector, which sectors are large enough for a label, the label's angle.</td><td><span class="mono">tools/sunburst.test.ts</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/app.ts</span></td><td>A <span class="mono">"media"</span> page in <span class="mono">PAGES</span> and its block id; the territory bar hidden on that page; the menu's Transparence group.</td><td>Screens; <span class="mono">tsc</span></td></tr>
+        <tr><td class="key"><span class="mono">src/site/referential.ts</span></td><td>Imports <span class="mono">data/media.json</span> at build time and leaves out a removed person's name.</td><td><span class="mono">check</span> guarantees the shapes it trusts</td></tr>
+        <tr><td class="key"><span class="mono">tools/media.ts</span> (new)</td><td>The rules on the media file (decision table of the API tab): references, sums of shares (a disputed share once), sources, publishers, removals (the name fingerprint with <span class="mono">node:crypto</span>); the staleness notice, with <span class="mono">isStale</span> reused from <span class="mono">tools/cantonal-governments.ts</span>.</td><td><span class="mono">tools/media.test.ts</span>, on deliberately broken copies</td></tr>
+        <tr><td class="key"><span class="mono">tools/media-register.ts</span> (new)</td><td>The register read: the query by UID, the reading of the answer, the comparison with the hand-kept companies.</td><td><span class="mono">tools/media-register.test.ts</span> on a recorded answer; one run by hand against <span class="mono">lindas.admin.ch</span></td></tr>
+        <tr><td class="key"><span class="mono">tools/cli.ts</span></td><td>The media rules in <span class="mono">check</span>; a <span class="mono">media-register</span> command (exit 2 on a failed fetch, nothing written).</td><td>Run on broken data and with the network cut</td></tr>
+        <tr><td class="key"><span class="mono">tools/build.ts</span></td><td>A second esbuild entry, <span class="mono">media-graph.ts</span> into <span class="mono">dist/js/media-graph.js</span>, as a classic script like the first; the removed names and maintainer notes stripped from the bundle.</td><td>Size of both scripts printed; opening <span class="mono">dist/index.html</span> from disk</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note"><span class="mono">index.html</span> gains the menu group and the page block, <span class="mono">css/site.css</span> the classes of the page, the card and the legend. <span class="mono">package.json</span> gains <span class="mono">cytoscape</span> and <span class="mono">cytoscape-fcose</span> as the site's first runtime dependencies, pinned exactly, and the <span class="mono">media-register</span> script. Reused unchanged: <span class="mono">dom.ts</span> (escaping, search, Swiss date), the Confederation design system.</p>
+</div>
+
+<div class="block">
+  <h2>How the modules depend on each other</h2>
+  {{FIGURE:class-01-media-modules|Module diagram: main.ts starts app and media; media.ts reads the territory hook of app, the media data from referential, and media-model; on first opening media.ts loads the second script media-graph.ts, which uses Cytoscape and fcose for Réseau and sunburst.ts with media-model for Soleil, and calls back media.ts to show a card; referential imports data/media.json with its types from src/types.ts; tools/cli.ts check runs the rules of tools/media.ts, which uses media-model and isStale; tools/cli.ts media-register uses tools/media-register.ts, which reads lindas.admin.ch and writes data/media-register.json; tools/build.ts bundles two entries|Main script, second script and tooling}}
+</div>
+
+<div class="block">
+  <h2>One run: open the media page, tap a medium</h2>
+  {{FIGURE:seq-01-open-media-page|Sequence diagram: the voter taps Médias in the menu; app shows the media block, hides the territory bar and sets the address; media.ts renders the lists and the empty card from the embedded data; the first time, it adds js/media-graph.js to the page, which draws Réseau in its box; the voter taps a node; the graph calls back media.ts, which renders the card from media-model: Éditeur, Propriétaire, fög box or no measure, error report|PRD-0001.US-20, US-21, US-22}}
+</div>
+
+<div class="block">
+  <h2>One run: check the publishers against the register</h2>
+  {{FIGURE:seq-02-media-register|Sequence diagram: the maintainer runs npm run media-register; the command reads the companies with a UID from data/media.json; it asks the Zefix linked data on lindas.admin.ch for their name, legal form, seat and status; if the fetch fails it reports and exits 2 with nothing written; otherwise it writes data/media-register.json with the request, terms, attribution and date, then lists each company whose name, legal form or seat differs, or that is in liquidation or deleted; it never edits data/media.json|PRD-0001.US-25}}
+</div>
+
+<div class="block">
+  <h2>How it is checked</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Check</th><th>What it proves</th><th>Where it runs</th></tr></thead>
+      <tbody>
+        <tr><td class="key"><span class="mono">tsc</span> on two configurations</td><td>The site, the second script and the tooling compile; the media schemas match their interfaces</td><td><span class="mono">npm run check</span>, CI</td></tr>
+        <tr><td class="key">Unit tests</td><td>The card lines, the chain to the top, the bridges and the rings (<span class="mono">media-model</span>), the sector geometry (<span class="mono">sunburst</span>), the media rules and the register reading</td><td><span class="mono">npm test</span>, CI</td></tr>
+        <tr><td class="key">Referential check</td><td>The media file matches its schema and the rules of the API tab; stale facts are listed</td><td><span class="mono">npm run check</span>, CI</td></tr>
+        <tr><td class="key">Offline run</td><td><span class="mono">dist/index.html</span> opened from disk with the network cut: both views draw, the card opens, the rest of the site is unchanged</td><td>By hand at each change of the graph script</td></tr>
+        <tr><td class="key">Screens read back</td><td>The seven screens of the first tab, captured from the built site at 390 px, match the data file</td><td>By hand; <span class="mono">capture-screens.ts</span> pointed at <span class="mono">dist/</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">As elsewhere in the site, the code that writes HTML and drives the drawing is checked by eye on the screens; what it shows is computed by the pure modules, which are unit-tested.</p>
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>Réseau uses Cytoscape.js with the fcose layout, installed with npm and bundled at build time: the site's first runtime dependencies.<span class="refs"><span class="chip ref">PRD-0001 §6</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>Soleil is drawn by the site's own SVG code, as the half-circles are; ECharts is not used.<span class="refs"><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The graph code is a second script, loaded only when the media page opens, so the rest of the site keeps its weight.<span class="refs"><span class="chip ref">PRD-0001 §8</span><span class="chip ref">PRD-0001.US-21</span></span></li>
+        <li>Everything works from <span class="mono">dist/index.html</span> with no network: both scripts are classic scripts, not ES modules.<span class="refs"><span class="chip ref">PRD-0001 §6</span><span class="chip ref">PRD-0001 goal 4</span></span></li>
+        <li>The site and the check read the media data through the same pure module, so a rule holds in both.<span class="refs"><span class="chip ref">PRD-0001 §6</span></span></li>
+        <li>The 180-day staleness rule is the one shared by every hand-kept record.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">PRD-0001.US-18</span></span></li>
+        <li>No script reads Medienmonitor; the register is read by a maintainer command, never by the site.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">PRD-0001.US-25</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>How the second script receives the data and the callback (a global set by the first script, or the data embedded in both).</li>
+        <li>How <span class="mono">media.ts</span> is split between lists, card and switch.</li>
+        <li>Whether Soleil's SVG code lives in the second script or the first; the size budget of each script.</li>
+        <li>Whether the offline run becomes an automated test.</li>
+      </ul>
+    </section>
+  </div>
+</div>

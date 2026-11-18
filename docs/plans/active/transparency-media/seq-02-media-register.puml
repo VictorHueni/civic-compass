@@ -1,0 +1,29 @@
+@startuml
+!include _theme.puml
+title seq-02: Maintainer checks the publishers against the register (US-25)
+
+actor "Maintainer" as dev
+participant "tools/cli.ts\nmedia-register" as cli
+database "data/\nmedia.json" as hand
+participant "Zefix linked data\nlindas.admin.ch" as lindas
+database "data/\nmedia-register.json" as gen
+
+dev -> cli : npm run media-register
+activate cli
+cli -> hand : read companies with a UID
+cli -> lindas : SPARQL by UID (no credentials):\nname, legal form, seat, status
+alt fetch fails
+  cli --> dev : status and request,\nexit 2, nothing written
+end
+lindas --> cli : one entry per UID
+cli -> gen : write: request, terms,\nattribution, retrieved_on,\nentries as returned
+cli -> cli : compare with the hand-kept companies
+cli --> dev : companies whose name, legal form\nor seat differs, in liquidation,\ndeleted, or unknown UID
+deactivate cli
+
+note over dev, gen
+  The command never edits data/media.json:
+  the maintainer corrects it by hand, then runs npm run check.
+end note
+
+@enduml

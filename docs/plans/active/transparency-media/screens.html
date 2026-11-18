@@ -1,0 +1,90 @@
+<!-- summary: 7 screens · 1 page, 1 menu group -->
+<div class="block">
+  <h2>What the voter sees</h2>
+  <p class="note">One new page, "À qui appartiennent les médias", reached from a new "Transparence" group of the menu. The screens are captured from the owner-approved mockup v3 at phone width (390 px), with its data read on Medienmonitor on 2026-11-17. The mockup shows a "Maquette" banner and draws Soleil with ECharts; the site has neither (next tabs). The copy is the mockup's French copy.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Screen</th><th>Story</th><th>Address</th><th>Reads</th></tr></thead>
+      <tbody>
+        <tr><td class="key">Menu, group Transparence</td><td>US-20</td><td class="nw">over any page</td><td>nothing: two fixed entries, "Médias" and "Lobbies (bientôt)" disabled</td></tr>
+        <tr><td class="key">Médias, view Réseau</td><td>US-21</td><td class="nw"><span class="mono">#media</span></td><td>every medium, company and holder, every holding with its share; loads the graph script</td></tr>
+        <tr><td class="key">Médias, view Soleil</td><td>US-21</td><td class="nw"><span class="mono">#media</span></td><td>the same data, each medium under the holder of its largest published share, up to the top of the chain</td></tr>
+        <tr><td class="key">Card of a holder, sources in disagreement</td><td>US-20, US-24</td><td class="nw"><span class="mono">#media</span></td><td>one company or holder: who holds it, what it holds, the notes of disputed holdings, sources and dates</td></tr>
+        <tr><td class="key">Card of a medium with a fög value</td><td>US-20, US-22</td><td class="nw"><span class="mono">#media</span></td><td>one medium: publisher and owners, the fög value with its edition and the media average</td></tr>
+        <tr><td class="key">Ils relient plusieurs médias, Tous les médias</td><td>US-20, US-21</td><td class="nw"><span class="mono">#media</span></td><td>people and families in the chain of two media or more; every medium by genre with its Éditeur, Propriétaire and top owner</td></tr>
+        <tr><td class="key">Signaler une erreur</td><td>US-24</td><td class="nw"><span class="mono">#media</span></td><td>the error address and what to write</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The territory bar is hidden on this page: it always shows every medium of French-speaking Switzerland (US-21). Reused unchanged: the header, the menu button, the card style of the parties page, the source line and the footer.</p>
+</div>
+
+<div class="block">
+  <h2>Menu: the Transparence group (US-20)</h2>
+  <p class="note">A third group between "Je veux..." and "Voir ce que fait l'État": "Savoir à qui appartiennent les médias" (short label "Médias", a "nouveau" badge) and "Voir les lobbies (bientôt)", greyed, not focusable, until phase 2.</p>
+  {{FIGURE:ui-01-menu-transparence|Phone screen with the menu open: group Je veux with three entries, then group Transparence with Savoir à qui appartiennent les médias in red with a nouveau badge and Voir les lobbies (bientôt) in grey, then the group Voir ce que fait l'État|Menu with the Transparence group}}
+</div>
+
+<div class="block">
+  <h2>Médias: Réseau (US-21)</h2>
+  <p class="note">A switch Réseau / Soleil, a line on how to use the view, a search by name (media, company or person) with its list of names. Réseau shows every holder, minority holders included: an arrow from owner to owned with the share, a dashed arrow where sources disagree. One shape and colour per kind (media red, company grey, person or family violet, public body blue, association or foundation green), named in the legend. The graph pans and zooms by touch inside its box; the page itself never scrolls sideways.</p>
+  {{FIGURE:ui-02-media-network|Phone screen: switch with Réseau selected, a hint, a search field with a Voir button, and a tall box with the ownership network: red media boxes, grey companies, violet ellipses for people, blue diamonds for public bodies, green boxes for associations, linked by arrows with shares; a legend under it|Réseau, the whole network}}
+</div>
+
+<div class="block">
+  <h2>Médias: Soleil (US-21)</h2>
+  <p class="note">Three rings: in the centre the kind of top owner (colour only, no label), in the middle the top owner, at the edge the media. Labels only on the outer rings and only on sectors large enough to read; the owner found large central labels unreadable on a phone. Tapping a sector zooms in; the centre zooms out. The legend names the colours of the kinds.</p>
+  {{FIGURE:ui-03-media-sun|Phone screen: switch with Soleil selected, a sunburst whose outer ring names the media, the middle ring their top owners such as SRG SSR, Damien Piller, BNJ Media, and a thin unlabeled centre ring coloured by kind; legend Personne ou famille, Association fondation, Société sans propriétaire publié|Soleil, three rings}}
+</div>
+
+<div class="block">
+  <h2>Card: when sources disagree (US-20, US-24)</h2>
+  <p class="note">Tapping a node, a sector or a name in a list opens the same card. For a company: "Détenu par" with each holder and its share as published, "part non publiée" otherwise; "Détient"; how many media it reaches; the source and its check date. When two sources give the same share to two holders (Léman Bleu: 24,66 % to ESH Médias on one Medienmonitor page, to Philippe Hersant on another), both are listed, each with a note saying the sources disagree. A person is shown with name and share only.</p>
+  {{FIGURE:ui-04-media-card-disputed|Card of the company TV Léman Bleu SA: Détenu par Editions Suisses Holding SA 24,66 % with a note that one Medienmonitor page attributes this share to ESH Médias and another to Philippe Hersant; Philippe Hersant 24,66 % with the matching note; Stéphane Barbier-Mueller 50,75 %; Ville de Genève 17,06 %; Détient Léman Bleu, part non publiée; source Medienmonitor Schweiz checked on 17.11.2026|Card of TV Léman Bleu SA}}
+</div>
+
+<div class="block">
+  <h2>Card: the fög index (US-22)</h2>
+  <p class="note">"Tonalité des votations": the value on a scale from −100 to +100 with a marker, then what it measures in the fög's own words (61 federal ballots, 2018 to 2025, centre-left to centre-right proposals), the media average (−4) and "Ce n'est pas une position politique du média", with its source and date. A title the fög does not measure says "Pas de mesure du fög pour ce média". The words "gauche" and "droite" never appear as a badge.</p>
+  {{FIGURE:ui-05-media-card-fog|Card of 24 heures, Média Presse: Détenu par Tamedia Publications Romandes SA, part non publiée; box Tonalité des votations with the value -5 on a scale from -100 to +100, the explanation, the media average -4, the sentence that it is not a political position, source fög checked on 17.11.2026|Card of 24 heures}}
+</div>
+
+<div class="block">
+  <h2>Lists: who links several media, every medium (US-20, US-21)</h2>
+  <p class="note">"Ils relient plusieurs médias": the people and families present in the ownership chain of at least two media, with how many; each opens its card. "Tous les médias": every title grouped by genre (presse, radio, télévision, en ligne), with its "Éditeur", a "Propriétaire" line only when a source names one ("non publié" in the mockup, see the API tab), "Au sommet" when the chain goes higher, and a "fög" badge when the fög measures it. This list is how keyboard and screen-reader users reach every fact the drawing shows.</p>
+  {{FIGURE:ui-06-media-bridges-list|Phone screen: Ils relient plusieurs médias with chips Famille fondatrice de TX Group 5, Damien Piller 2, Antoine de Raemy 3, Francis Rivollet 2, Louis-Pierre Roger 2, Thierry De Marignac 2; then Tous les médias, Presse 13, with cards for 20 Minuten and 24 heures showing Éditeur, Propriétaire, Au sommet and a fög badge|Lists under the graph}}
+</div>
+
+<div class="block">
+  <h2>Signaler une erreur (US-24)</h2>
+  <p class="note">Under the card of a medium, a person or a family: "Signaler une erreur ou demander un retrait" opens the address huni.victor@gmail.com, selectable and as a <span class="mono">mailto:</span> link with the name in the subject, and what to write: the medium or person, the error, a source if any. A named person can ask for removal; the request stays private and is handled within 30 days.</p>
+  {{FIGURE:ui-07-media-report-error|Card of La Liberté with the button Signaler une erreur ou demander un retrait open: Écrivez à huni.victor@gmail.com en indiquant le média ou la personne, l'erreur et si possible votre source; a named person can ask for removal, the request stays private and is handled within 30 days|Error report open on a card}}
+</div>
+
+<div class="block">
+  <h2>Decisions on this layer</h2>
+  <div class="decisions">
+    <section>
+      <span class="chip solid">Settled</span>
+      <ul>
+        <li>A "Transparence" menu group holds "Médias" and a disabled "Lobbies (bientôt)".<span class="refs"><span class="chip ref">PRD-0001 §8</span><span class="chip ref">Mockup v3</span></span></li>
+        <li>The media page shows every medium; the territory bar is hidden there and filters nothing.<span class="refs"><span class="chip ref">PRD-0001.US-21</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>Two views of the same data with a switch, Réseau and Soleil, and one card shared by the views and the lists.<span class="refs"><span class="chip ref">PRD-0001.US-21</span><span class="chip ref">Research-0003, ruling 5</span></span></li>
+        <li>Soleil: a thin unlabeled centre ring, labels on the outer rings only and above a size threshold.<span class="refs"><span class="chip ref">Mockup v3, owner review</span></span></li>
+        <li>Holder colours: media red, company grey, person or family violet, public body blue, association or foundation green, always with a legend.<span class="refs"><span class="chip ref">PRD-0001 §5</span></span></li>
+        <li>The fög value under its own label with the media average, never "gauche" or "droite".<span class="refs"><span class="chip ref">PRD-0001.US-22</span><span class="chip ref">Research-0003, ruling 1</span></span></li>
+        <li>"Signaler une erreur" uses the owner's address as selectable text and a <span class="mono">mailto:</span> link.<span class="refs"><span class="chip ref">PRD-0001.US-24</span><span class="chip ref">PRD-0001 §8</span></span></li>
+        <li>The lists carry every fact of the drawing, so the drawing can stay a labelled image for assistive technology.<span class="refs"><span class="chip ref">PRD-0001.US-21</span></span></li>
+      </ul>
+    </section>
+    <section class="open">
+      <span class="chip open">Left to the implementation</span>
+      <ul>
+        <li>The final wording of the hints, the empty card and the "nouveau" badge, and how long the badge stays.</li>
+        <li>The size thresholds under which a Soleil sector has no label.</li>
+        <li>The layout settings of the network (spacing, repulsion) and its first zoom.</li>
+        <li>Whether the cards of the list open the card in place or scroll to it on a phone.</li>
+      </ul>
+    </section>
+  </div>
+</div>

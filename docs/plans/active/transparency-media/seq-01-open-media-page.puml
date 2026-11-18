@@ -1,0 +1,43 @@
+@startuml
+!include _theme.puml
+title seq-01: Voter opens the media page and taps a medium (US-20, US-21, US-22)
+
+actor "Voter" as voter
+participant "app.ts" as app
+participant "media.ts" as media
+participant "media-model.ts" as model
+participant "js/media-graph.js" as graph
+
+voter -> app : taps Médias in the menu
+activate app
+app -> app : shows the media block,\nhides the territory bar,\nsets the address
+app -> media : render
+deactivate app
+activate media
+media -> model : lists by genre, bridges
+model --> media : Éditeur, Propriétaire, Au sommet\nper medium; people in 2 chains or more
+media --> voter : lists and the empty card
+alt first opening
+  media -> graph : adds the script to the page\n(classic script, works from file://)
+  graph --> media : ready
+end
+media -> graph : drawNetwork(data, show)
+deactivate media
+activate graph
+graph --> voter : Réseau in its box\n(pan and zoom inside)
+voter -> graph : taps a node
+graph -> media : show(id)
+deactivate graph
+activate media
+media -> model : cardLines(id)
+model --> media : publisher with legal form and seat,\nholders and shares, disputes,\nfög value or none
+media --> voter : card with sources and dates,\n"Tonalité des votations" or\n"Pas de mesure du fög pour ce média",\n"Signaler une erreur"
+deactivate media
+
+note over voter, graph
+  Soleil follows the same path: drawSun(data, show).
+  The lists reach the same card by keyboard.
+  Nothing is fetched: the data is in the main script.
+end note
+
+@enduml

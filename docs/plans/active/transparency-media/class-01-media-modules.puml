@@ -1,0 +1,98 @@
+@startuml
+!include _theme.puml
+' Dots in the package names are not namespaces.
+set separator none
+title class-01: Modules of the media slice (PRD-0001 US-20 to US-25)
+
+package "src/site, main script (dist/js/site.js)" {
+  class "main.ts" as main <<entry>> {
+    starts app, ballot, institutions, media
+  }
+  class "app.ts" as app {
+    +scope(), onRender(listener)
+    PAGES gains "media"
+    territory bar hidden on media
+    menu group Transparence
+  }
+  class "media.ts" as media <<new>> {
+    +start()
+    +show(id)
+    lists by genre, card, fög box,
+    error report, search, switch
+    loads js/media-graph.js once
+  }
+  class "media-model.ts" as model <<new>> {
+    +cardLines(id)
+    +mainHolder(id), chainTop(id)
+    +reach(id), bridges()
+    +rings()
+    pure, no DOM, no data import
+  }
+  class "referential.ts" as ref {
+    imports data/media.json
+    leaves out removed names
+  }
+}
+
+package "src/site, second script (dist/js/media-graph.js)" {
+  class "media-graph.ts" as graph <<entry, new>> {
+    +drawNetwork(data, onTap)
+    +drawSun(data, onTap)
+  }
+  class "sunburst.ts" as sun <<new>> {
+    +arcs(rings, size)
+    +labelled(arc)
+    pure geometry
+  }
+  class "cytoscape + cytoscape-fcose" as cy <<npm>>
+}
+
+package "tools (Node 26, maintainer)" {
+  class "cli.ts" as cli {
+    check: media rules
+    media-register
+  }
+  class "media.ts" as rules <<new>> {
+    +checkMedia(file) : errors
+    +staleMedia(file, today) : notices
+  }
+  class "media-register.ts" as reg <<new>> {
+    +query(uids)
+    +compare(file, answer) : report
+  }
+  class "build.ts" as build {
+    two esbuild entries
+  }
+}
+
+package "data" {
+  class "media.json" as mfile <<hand-kept>>
+  class "media-register.json" as rfile <<generated>>
+}
+class "src/types.ts" as types {
+  Medium, Company, Holder, Holding,
+  FogEdition, FogValue, Removal,
+  MediaRegister + schemas
+}
+
+main --> app
+main --> media
+media --> app : territory hook
+media --> ref
+media --> model
+media ..> graph : adds the script, hands it\nthe data and show(id),\nwhich a tap calls back
+graph --> cy : Réseau
+graph --> sun : Soleil
+graph --> model : rings
+ref --> mfile : build time
+ref --> types
+cli --> rules
+cli --> reg
+rules --> model
+rules --> types
+reg --> rfile : writes
+reg --> mfile : reads UIDs
+build ..> main
+build ..> graph
+
+@enduml
