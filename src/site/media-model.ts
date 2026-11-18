@@ -12,7 +12,7 @@
  * Pure functions, without DOM or data import, shared by the site and the tests.
  */
 import type { Company, Holder, Holding, MediaOwnership } from "../types.ts";
-import { normalize } from "./dom.ts";
+import { normalize } from "./text.ts";
 
 /** A page a line rests on, with the day it was read. */
 export interface SourceRef {

@@ -372,7 +372,7 @@ Done notes (2026-11-18):
 
 1. `rings()` groups persons and families in one centre ring ("people"), as the approved mockup's legend "Personne ou famille" does; the kinds come in a fixed order (people, public, association, company), empty ones left out. On the real file no public body tops a chain, so Soleil has three centre sectors: people 12 media, associations 12, companies 14.
 2. `bridges()` on the real file gives the six names of screen ui-06 with the same counts: Famille fondatrice de TX Group 5, Antoine de Raemy 3, then four people with 2.
-3. `search()` reuses `normalize` from `dom.ts` (side-effect free) and returns one id: an exact name first, else the first partial match (media, companies, holders, file order).
+3. `search()` reuses the site's `normalize`, moved from `dom.ts` to a DOM-free `text.ts` so that the tools' compile (no DOM library) accepts the model, and returns one id: an exact name first, else the first partial match (media, companies, holders, file order).
 
 ### Increment 13: The geometry of Soleil
 
