@@ -35,11 +35,17 @@
       "id": "vimentis",
       "name": "Vimentis",
       "description": "Explications neutres des grands sujets politiques.",
-      "url": "https://www.vimentis.ch",
+      "url": "https://vimentis.ch",
       "status": "verified",
-      "checked_on": "2026-11-16",
+      "checked_on": "2026-11-18",
       "evidence": "Titre de la page : Vimentis - Neutral über Schweizer Politik informieren",
-      "previous_urls": []
+      "previous_urls": [
+        {
+          "url": "https://www.vimentis.ch",
+          "seen_on": "2026-11-18",
+          "note": "redirige vers https://vimentis.ch"
+        }
+      ]
     },
     {
       "id": "easyvote",

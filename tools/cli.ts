@@ -234,8 +234,9 @@ const BACKOFF_MS = [1_000, 3_000];
 /**
  * blocked: 403/429, or a page that redirects to itself until the visitor holds a cookie (24heures.ch,
  * tdg.ch): the site refuses robots. unreachable: no answer in time after every attempt
- * (some Swiss sites do not answer servers abroad, such as CI runners). Both are listed for a manual
- * check and do not fail the run; a refused connection, a DNS error or a 404 do.
+ * (some Swiss sites do not answer servers abroad, such as CI runners), or a server error from a site listed in
+ * UNSTABLE_SERVERS. Both are listed for a manual check and do not fail the run; a refused connection, a DNS error,
+ * a 404 or another site's server error do.
  */
 type Verdict = "ok" | "redirected" | "elsewhere" | "blocked" | "unreachable" | "broken";
 interface LinkResult {
@@ -286,6 +287,15 @@ const ACCEPTED_CERT_ISSUES: Record<string, string> = {
 };
 
 /**
+ * Sites whose server often answers with an error (5xx) to the CI runners while visitors reach them: after every
+ * attempt, listed for a manual check instead of failing the run. Keyed by registered domain. Remove an entry as
+ * soon as the site answers again.
+ */
+const UNSTABLE_SERVERS: Record<string, string> = {
+  "vimentis.ch": "erreurs Cloudflare 502, 521 et 525 dans 9 contrôles du 2026-11-18, site joignable dans un navigateur, retenu par le mainteneur le 2026-11-18",
+};
+
+/**
  * Registered domains run by the same owner: a redirect between them is not "elsewhere".
  * GitHub serves release downloads from its storage domain.
  */
@@ -332,7 +342,11 @@ async function checkLink(url: string): Promise<LinkResult> {
         return { url, verdict: "blocked", status: res.status, note: "le site refuse les robots, à vérifier à la main" };
       }
       if (res.status >= 500) {
-        last = { url, verdict: "broken", status: res.status, note: `erreur du serveur ${res.status} ${res.statusText}`.trim() + `, après ${attempt + 1} essai(s)` };
+        const unstable = UNSTABLE_SERVERS[registeredDomain(new URL(url).hostname)];
+        const error = `erreur du serveur ${res.status} ${res.statusText}`.trim() + `, après ${attempt + 1} essai(s)`;
+        last = unstable
+          ? { url, verdict: "unreachable", status: res.status, note: `${error}, serveur instable connu (${unstable}), à vérifier à la main` }
+          : { url, verdict: "broken", status: res.status, note: error };
         continue;
       }
       if (!res.ok) return { url, verdict: "broken", status: res.status, note: `${res.status} ${res.statusText}`.trim() };
