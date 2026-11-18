@@ -27,8 +27,8 @@
       <tbody>
         <tr><td class="key"><span class="mono">media</span></td><td>Name, genre (presse, radio, télévision, en ligne), regions, publisher (a company, or an association or foundation that publishes itself) with the imprint page that names it, a fög value when measured</td><td>The lists, the card, the outer ring, the "Éditeur" line</td></tr>
         <tr><td class="key"><span class="mono">companies</span></td><td>Name, legal form, seat, UID when known, source</td><td>The "Éditeur" line (name, legal form, seat), the nodes</td></tr>
-        <tr><td class="key"><span class="mono">holders</span></td><td>People, families, public bodies, associations or foundations (these with legal form, seat and UID when known), with source; a removal record for a person who asked</td><td>The nodes, the "Propriétaire" line, "Ils relient plusieurs médias"</td></tr>
-        <tr><td class="key"><span class="mono">holdings</span></td><td>Holder (company or holder), held company, share or none, source, <span class="mono">checked_on</span>, a flag and a note when sources disagree</td><td>The arrows, the shares, the chain up to the top owner</td></tr>
+        <tr><td class="key"><span class="mono">holders</span></td><td>People, families, public bodies, associations or foundations (these with legal form, seat and UID when known), with source; a removal record for a person who asked, holding a fingerprint of the name, never the name</td><td>The nodes, the "Propriétaire" line, "Ils relient plusieurs médias"</td></tr>
+        <tr><td class="key"><span class="mono">holdings</span></td><td>Holder (company or holder), held company, share or none, source, <span class="mono">checked_on</span>, a dispute key shared by the holdings that disagree, with a note</td><td>The arrows, the shares, the chain up to the top owner</td></tr>
         <tr><td class="key"><span class="mono">fog</span></td><td>The edition: label, number of ballots, period, scale, media average, source, <span class="mono">checked_on</span></td><td>The "Tonalité des votations" box</td></tr>
       </tbody>
     </table>
@@ -64,16 +64,17 @@
       <tbody>
         <tr><td class="key">The file does not match its schema</td><td>Fails, naming the field</td><td>US-23</td></tr>
         <tr><td class="key">A holding names a holder or a company that does not exist</td><td>Fails</td><td>US-23</td></tr>
-        <tr><td class="key">Published shares in one company add up to more than 100 %</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">Published shares in one company add up to more than 100 %, a disputed share counting once</td><td>Fails</td><td>US-23</td></tr>
+        <tr><td class="key">A dispute key is on one holding only, or on holdings of different companies, or a disputed holding has no note</td><td>Fails</td><td>US-20, US-23</td></tr>
         <tr><td class="key">A medium, company, holder, holding or fög value has no source</td><td>Fails</td><td>US-23</td></tr>
         <tr><td class="key">A medium has no publisher, or its publisher is neither a company nor an association or foundation</td><td>Fails</td><td>US-23</td></tr>
-        <tr><td class="key">A removed person comes back under a name</td><td>Fails</td><td>US-24</td></tr>
+        <tr><td class="key">A named person matches the fingerprint of a removal</td><td>Fails</td><td>US-24</td></tr>
         <tr><td class="key">A holding or a fög value was checked more than 180 days ago</td><td>Warns, never fails</td><td>US-23</td></tr>
         <tr><td class="key">The generated register file disagrees with a company (name, legal form, seat, status)</td><td>Reported by <span class="mono">media-register</span>; the check does not fail on it</td><td>US-25</td></tr>
       </tbody>
     </table>
   </div>
-  <p class="note"><b>Raised with the owner (2026-11-18).</b> Léman Bleu, the case US-20 requires, gives the same 24,66 % to two holders. Summed as two holdings, TV Léman Bleu SA reaches 117,13 % and the more-than-100 % rule fails on it. The specification has to say how a disputed share counts in that sum before this table is final.</p>
+  <p class="note"><b>Settled by the owner (2026-11-18).</b> A disputed share counts once in the sum. Léman Bleu gives the same 24,66 % to two holders: counted once, TV Léman Bleu SA sums to 92,47 %; counted twice it would reach 117,13 % and fail the case US-20 requires.</p>
 </div>
 
 <div class="block">
@@ -109,7 +110,7 @@ a failed fetch writes nothing (exit 2)</pre>
         <li>Medienmonitor is read by hand; no script scrapes it, and the file says so.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">Research-0003</span></span></li>
         <li>The register is read by UID from Zefix linked data, without credentials, into a generated file; the command never edits the hand-kept file and a failed fetch writes nothing.<span class="refs"><span class="chip ref">PRD-0001.US-25</span></span></li>
         <li>Staleness after 180 days warns, never fails.<span class="refs"><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">PRD-0001.US-18</span></span></li>
-        <li>No "Propriétaire" line without a source; disputed holdings show both holders.<span class="refs"><span class="chip ref">PRD-0001.US-20</span><span class="chip ref">Research-0003, ruling 2</span></span></li>
+        <li>No "Propriétaire" line without a source; disputed holdings show both holders, and their share counts once in the 100 % rule.<span class="refs"><span class="chip ref">PRD-0001.US-20</span><span class="chip ref">PRD-0001.US-23</span><span class="chip ref">Research-0003, ruling 2</span></span></li>
         <li>Errors and removals go to the owner's address by e-mail, not to a public issue.<span class="refs"><span class="chip ref">PRD-0001 §8</span></span></li>
         <li>The page names Medienmonitor (Publicom for OFCOM), the register and the fög as its sources.<span class="refs"><span class="chip ref">PRD-0001.US-20</span><span class="chip ref">PRD-0001 §6</span></span></li>
       </ul>

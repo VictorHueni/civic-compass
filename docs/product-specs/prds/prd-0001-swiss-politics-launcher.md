@@ -7,7 +7,7 @@ tags: [civic-compass, static-site, referential, ballot, parties]
 timestamp: 2026-11-16T19:30:00Z
 status: draft
 owner: Victor Hueni
-last_reviewed: 2026-11-17
+last_reviewed: 2026-11-18
 review_interval: 30d
 ---
 
@@ -384,8 +384,8 @@ As a voter, I want to see how a media outlet covered federal ballots, as measure
 As a maintainer, I want the media, their publishers and their owners in one data file checked by `npm run check` so that adding or correcting an owner is data work only (goal 5).
 
 **Acceptance Criteria:**
-- [ ] One hand-kept file holds the media (name, genre, regions, publisher), the companies (name, legal form, seat, UID when known), the other holders (person, family, public body, association or foundation) and the holdings (holder, held, share or none, source URL, `checked_on`, a flag when sources disagree); its schema lives in `src/types.ts`.
-- [ ] `npm run check` fails when a holding names a missing holder, when published shares in one company add up to more than 100 %, when a fact has no source, or when a media has no publisher.
+- [ ] One hand-kept file holds the media (name, genre, regions, publisher), the companies (name, legal form, seat, UID when known), the other holders (person, family, public body, association or foundation) and the holdings (holder, held, share or none, source URL, `checked_on`, and, when sources disagree, a dispute key shared by the disagreeing holdings with a note naming the sources); its schema lives in `src/types.ts`.
+- [ ] `npm run check` fails when a holding names a missing holder, when published shares in one company add up to more than 100 %, when a fact has no source, or when a media has no publisher. In that sum a disputed share counts once, as one holding: Léman Bleu's 24.66 %, given to two holders, makes 92.47 %, not 117.13 % (owner, 2026-11-18).
 - [ ] `npm run check` warns, never fails, when a holding or a fög value was checked more than 180 days ago (as US-18).
 - [ ] Medienmonitor is read by hand (HTML only, no download); the file says so, and no script scrapes it into the site.
 
@@ -401,7 +401,7 @@ As a maintainer, I want every person named as a media owner to be shown fairly a
 **Acceptance Criteria:**
 - [ ] A person is shown with name and share only, as the source publishes them, with the source and the check date; no photo, age, address or contact.
 - [ ] The media page offers a way to report an error or ask for removal ("Signaler une erreur"): the address huni.victor@gmail.com, shown as selectable text with a `mailto:` link, and what to write (the media or person concerned, the error, the source if any).
-- [ ] A removal is recorded in the data (who, date, reason "demande de la personne") so that the next update does not bring the entry back; the page then shows the holding without the name ("actionnaire privé").
+- [ ] A removal is recorded in the data (a fingerprint of the person's name, date, reason "demande de la personne") so that the next update does not bring the entry back; the name itself is not kept, and `npm run check` fails when a named person matches a recorded fingerprint. The page then shows the holding without the name ("actionnaire privé") (owner, 2026-11-18).
 - [ ] A correction or removal request is handled within 30 days.
 
 ### PRD-0001.US-25 · Check publishers against the commercial register
@@ -459,7 +459,12 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-No question is left open on 2026-11-17.
+No question is left open on 2026-11-18.
+
+Settled on 2026-11-18 by the owner, raised while writing the media slice design sheet (`docs/plans/active/transparency-media/`):
+
+- **A disputed share counts once (US-23).** When sources give the same share to two holders, the disagreeing holdings carry one shared dispute key and a note naming the sources; both holders are still shown (US-20), but the more-than-100 % rule counts the share once. Without this, TV Léman Bleu SA sums to 117.13 % (50.75 + 24.66 + 24.66 + 17.06) and fails the check on the very case US-20 requires.
+- **A removal keeps no name (US-24).** The removal record holds a fingerprint of the person's name (SHA-256 of the name in lower case, without accents, spaces collapsed), the date and the reason, never the name, so the public repository does not keep it in `data/media.json`. The check compares each named person against the recorded fingerprints. Two limits stay: someone who already suspects a name can test it against the fingerprint, and the name remains in the git history of the versions before the removal.
 
 Settled on 2026-11-16 by the owner:
 
