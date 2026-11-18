@@ -1522,9 +1522,50 @@
         "scale_max": 100,
         "average": -4,
         "source": "https://www.foeg.uzh.ch/dam/jcr:33f99533-ff1a-4594-9d10-5fe0b3afb8f0/SRG_Rolle_2026_2.pdf",
-        "checked_on": "2026-11-17"
+        "checked_on": "2026-11-18"
       },
-      "values": []
+      "values": [
+        {
+          "medium": "m_matin_dimanche",
+          "measured_as": "Le Matin Dimanche",
+          "value": -11
+        },
+        {
+          "medium": "m_lematin",
+          "measured_as": "lematin.ch",
+          "value": -9
+        },
+        {
+          "medium": "m_tdg",
+          "measured_as": "tdg.ch",
+          "value": -7
+        },
+        {
+          "medium": "m_le_temps",
+          "measured_as": "letemps.ch",
+          "value": -6
+        },
+        {
+          "medium": "m_24heures",
+          "measured_as": "24heures.ch",
+          "value": -5
+        },
+        {
+          "medium": "m_20minutes",
+          "measured_as": "20minutes.ch",
+          "value": -3
+        },
+        {
+          "medium": "m_rts_1",
+          "measured_as": "RTS",
+          "value": -2
+        },
+        {
+          "medium": "m_rts_ch",
+          "measured_as": "RTS",
+          "value": -2
+        }
+      ]
     }
   }
 }
