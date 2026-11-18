@@ -37,9 +37,11 @@ A Swiss voter who wants to prepare a ballot has to assemble the picture from a d
 - **Cantons beyond GE, VD, VS, NE, JU, FR.** The other 20 cantons appear on the map as "bientôt"; adding them is data work under goal 5, not part of this slice.
 - **Ballot results.** Results per canton on the map after the vote are deferred: the data source (OFS) is identified but not integrated.
 - **Names of cantonal parliament members.** Cantonal parliaments show seats per party from the latest election only (US-14); listing their 60 to 150 members by name, or tracking changes since the election, is out of scope.
-- **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them. A media owner who is a person is shown with name and share only, as the source publishes them, under the conditions of US-24 (owner, 2026-11-17).
+- **Personal data beyond the function.** People are shown with name, party, canton and function only: no photo, address, date of birth or contact, even when a source provides them. A media owner who is a person is shown with name and share only, as the source publishes them, under the conditions of US-24 (owner, 2026-11-17). A campaign donor who is a person is shown with first name, name, amount and receiving committee, as the Federal Audit Office publishes them, without the commune, under the conditions of US-27 (owner, 2026-11-19).
 - **A measurement of media leaning of the site's own.** The site shows the fög index for the titles it covers and nothing for the others; rating articles itself, or collecting visitors' reports, needs its own method and a backend (Research-0003, ruling 1).
-- **Lobbies (phase 2 of the transparency area).** Links to Lobbywatch come in later stories of this PRD, after [Research-0004](../../architecture/research/0004-lobby-and-influence-sources.md) (draft, 2026-11-18).
+- **Cantonal lobby data.** The cantons' registers of interests and campaign financing are linked, not imported (US-31): none publishes them as data, and each reserves reproduction to written authorisation ([Research-0004](../../architecture/research/0004-lobby-and-influence-sources.md) §Q4).
+- **Lobbywatch's own ratings.** The effectiveness of a lobby group and the disclosure rating of a member are Lobbywatch's judgment, not facts with an official source; the site does not show them (Research-0004 §Q1).
+- **The Lobbies page by sector.** Its stories wait for the owner's decision on reusing Lobbywatch's sectors (§8).
 - **Any backend, account, tracking or personal data.** The site is static; the only stored state is the last territory chosen, in the visitor's own browser.
 
 ## 4. User Stories
@@ -418,10 +420,100 @@ As a maintainer, I want one command to check every publishing company against th
 - [x] It reports a company whose name, legal form or seat differs from the hand-kept file, or that is in liquidation or deleted; it never changes the hand-kept file.
 - [x] A failed fetch writes nothing; the register is named as the source ("OGD Open use. Must provide the source.").
 
+### PRD-0001.US-26 · Follow the money behind a ballot item
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to see who finances the yes and the no campaigns of the item I am about to vote on so that I know which interests stand behind each side (Research-0004 §Q3).
+
+**Acceptance Criteria:**
+- [ ] Each ballot item has a step "Suivre l'argent" between "Comparer" and "Décider" (owner, 2026-11-19).
+- [ ] It shows the budgets declared to the Federal Audit Office (CDF) by each committee spending more than CHF 50,000, grouped "Pour" and "Contre" with the total and the number of committees per side, each committee with its amount and a bar; the copy says they are declared budgets, not spending, and that only campaigns above CHF 50,000 must declare.
+- [ ] It shows the donations above CHF 15,000 grouped by the committee that receives them: one block per committee with its side, "Reçu par", its total and number of donations, then one line per donor starting with "de"; committees without such donations are named in one line (owner, 2026-11-19).
+- [ ] The source line names the CDF ("Contrôle fédéral des finances, financement de la politique") with the declaration date and the retrieval date, repeats its accuracy disclaimer, and links to its page.
+- [ ] An item with no declaration published says so with the retrieval date ("Aucune déclaration publiée par le CDF au 18.11.2026"), never an empty block.
+- [ ] Amounts are written in Swiss French ("889 590 CHF"), and the step works at 360 px without sideways scroll.
+
+### PRD-0001.US-27 · Respect the people named as donors
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want every person named as a campaign donor to be shown as the Federal Audit Office publishes them and to be able to have an error corrected or the name removed so that the site meets the data protection act, as for media owners (US-24).
+
+**Acceptance Criteria:**
+- [ ] A donor who is a person is shown with first name, name, amount and receiving committee only, as the CDF publishes them; not the commune, nor anything else the CDF publishes (owner, 2026-11-19).
+- [ ] The step offers "Signaler une erreur ou demander un retrait", with the same address and procedure as US-24.
+- [ ] A removal is recorded by fingerprint (as in US-24) and applied when the financing data is generated: the donation stays with its amount and committee and shows "une personne privée"; `npm run check` fails when a named donor matches a recorded fingerprint.
+- [ ] A ballot's financing leaves the site once the ballot is past, so no donor stays on the site longer than the CDF keeps the data (five years, OFipo art. 17).
+
+### PRD-0001.US-28 · Generate the campaign financing from the Federal Audit Office
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want one command to fetch the campaign financing of the next ballot's items from the Federal Audit Office so that the figures are never typed by hand.
+
+**Acceptance Criteria:**
+- [ ] `npm run campaign-financing` reads, for each item of `data/ballot.json`, the CDF's documented download (one XLSX per item, sheets "Recettes totales" and "Libéralités") and writes a generated file with the request, the CDF's declaration date and the retrieval date; the file is never edited by hand.
+- [ ] Each ballot item names its CDF financing by id in `data/ballot.json`; an item without one, or a CDF item without a ballot item, is reported.
+- [ ] A failed fetch, or a sheet whose columns are not the expected ones, writes nothing and exits with an error.
+- [ ] The command needs no key and reads the XLSX with the tool's own reader (US-17), no new dependency.
+
+### PRD-0001.US-29 · See the declared interests of a member of Parliament
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to see the ties a federal member of Parliament has declared, and whether each is paid, so that I know which interests may weigh on their votes (Research-0004 §Q2).
+
+**Acceptance Criteria:**
+- [ ] A member listed under a party (US-19) opens "Liens d'intérêts déclarés": the count, how many are paid, and one line per tie with the organisation, the function, the legal form and "rémunéré" or "bénévole".
+- [ ] The copy says the law requires saying whether a mandate is paid, not its amount (LParl art. 11), and the source line names "Services du Parlement de l'Assemblée fédérale, Berne" with the update and retrieval dates.
+- [ ] "Aller plus loin" links to the member's page on Lobbywatch (`daten.lobbywatch.ch/fr/parlamentarier/<id>`) with Lobbywatch's own count of ties, credited to Lobbywatch under CC BY-SA 4.0 (owner, 2026-11-19).
+- [ ] A member with no declared tie says so; the view works at 360 px.
+
+### PRD-0001.US-30 · Generate the declared interests from the Parliament
+
+**Persona:** maintainer
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a maintainer, I want the declared interests to come with the members from the Parliament's API so that they are never typed by hand and stay as fresh as the composition (US-16).
+
+**Acceptance Criteria:**
+- [ ] `npm run parliament` also requests each member's active interests (`activeInterests`, with `isPaid`) and writes them, unchanged, in the generated file with the members (owner, 2026-11-19).
+- [ ] The key stays on the maintainer's machine (§8); the public OData service is not used.
+- [ ] The Lobbywatch id and count of each member come from Lobbywatch's export, matched on the Parliament's member number, in a generated file credited to Lobbywatch (CC BY-SA 4.0).
+
+### PRD-0001.US-31 · Find my canton's interest registers and campaign financing
+
+**Persona:** voter
+**Status:** pending
+**Covers:** _TODO_
+
+**Description:**
+As a voter, I want to find where my canton publishes its members' interests and its campaign financing so that I can check them at the source (Research-0004 §Q4).
+
+**Acceptance Criteria:**
+- [ ] For each covered canton: a link to its members' register of interests and, where one exists, to its campaign financing page, each marked "en ligne"; otherwise "sur place" (consulted at the authority), "sur demande" (given on written request) or "bientôt" (law in force, no data yet).
+- [ ] The links live in the referential with status, date and evidence like every other link, and are checked by `npm run links`; a canton with no verified link shows the label only.
+
 ## 5. Design Considerations
 
 - **Institutions mockup.** Owner-approved on 2026-11-16: https://claude.ai/artifact/RZzydkbydCD9SCxurJdBBc (menu entry, Confederation page, canton page, party cards). Party colours: palette B2 (§8).
 - **Media ownership mockup.** Owner-approved on 2026-11-17: https://claude.ai/artifact/VbRVXNFMna9BdXTkiFgRnk (Réseau and Soleil views, card, region filter, search). Holder colours: media red, company grey, person or family violet, public body blue, association or foundation green.
+- **Lobbies and financing mockup.** Owner-approved on 2026-11-19: https://claude.ai/artifact/7KRYhRJiiwAGCxzKewia1g ("Suivre l'argent" on a ballot item, a member's declared interests, the Lobbies page by sector, the cantons by link).
 - **Mobile first.** The voter's device is a phone; the menu folds into a hamburger on a phone and is open on a computer.
 - **Look.** The Swiss Confederation design system (MIT licence), without its coat of arms or logos; the site states it is independent and not official.
 - **Editorial tone.** Airy layout, numbered lists, no coloured "AI-looking" cards; no long dash in any text.
@@ -438,6 +530,7 @@ As a maintainer, I want one command to check every publishing company against th
 - **OFS tables in xlsx.** Read by a small reader in the tool (zip and XML with Node's built-ins); a library only if needed (ruling 5).
 - **Rejected source:** OpenParlData, whose counts do not match the seats of the covered cantons (Research-0002).
 - **Media sources (Research-0003).** Medienmonitor Schweiz for owners (HTML only, reuse with attribution, accuracy disclaimed); the commercial register's linked open data for publishers (`lindas.admin.ch`, terms "OGD Open use. Must provide the source."); the fög factsheet of February 2026 for the index ("Copyright fög", cited, not reproduced).
+- **Lobby and financing sources (Research-0004).** The Federal Audit Office's political financing portal for campaign budgets and donations (documented XLSX download per ballot item, no key, accuracy disclaimed, no licence stated; official data published under LDP art. 76f); the Parliament's new API for declared interests (`activeInterests`, open-data terms as in Research-0002); Lobbywatch's export for its ids and counts (CC BY-SA 4.0).
 - **Graph libraries (§8).** Cytoscape.js and cytoscape-fcose bundled from npm into a separate script loaded by the media page; the sunburst in the site's own SVG. This lifts the "development dependencies only" rule for these two packages.
 - **Other public sources identified** (not yet integrated): Swissvotes (CC BY 4.0), the Federal Chancellery's ballot calendar.
 
@@ -459,7 +552,16 @@ There is no analytics on the site, so metrics come from the repository and its c
 
 ## 8. Open Questions
 
-No question is left open on 2026-11-18.
+Open on 2026-11-19:
+
+- **Lobbywatch's sectors on a Lobbies page.** Reuse Lobbywatch's 14 sectors and its counts of ties per sector, credited under CC BY-SA 4.0 (which then applies to that page), or link to Lobbywatch only (Research-0004, decision 3).
+
+Settled on 2026-11-19 by the owner, on the lobbies and financing mockup (Research-0004, owner rulings):
+
+- **Order of phase 2.** "Suivre l'argent" on each ballot item first (US-26 to US-28), then the members' declared interests (US-29, US-30), the Lobbies page, the cantons by link (US-31).
+- **Donors who are persons are named.** As the Federal Audit Office publishes them ("la donnée est publique"), with first name, name, amount and receiving committee, under the conditions of US-27.
+- **Declared interests from the Parliament's new API** through `npm run parliament`; Lobbywatch stays a link with its own count (US-29, US-30).
+- **"Suivre l'argent"** names the financing step, a verb like the other steps; donations are read by the committee that receives them (US-26).
 
 Settled on 2026-11-18 by the owner, raised while writing the media slice design sheet (`docs/plans/active/transparency-media/`):
 

@@ -263,7 +263,10 @@ Taken on mockups with real data ([canvas](https://claude.ai/artifact/7KRYhRJiiwA
 2. **The financing view is a step named with a verb.** The ballot item's new step is « Suivre l'argent », beside « Comprendre », « Comparer » and « Décider ».
 3. **Donations are read by the committee that receives them.** One block per receiving committee, with its side (pour or contre), « Reçu par », its total and number of donations, and one line per donor starting with « de »; committees with no donation above CHF 15,000 are named in one line.
 
-Decisions 1 (scope and order), 2 (private persons) and 3 (Lobbywatch's place, beyond decision 4) remain open.
+4. **Scope and order (decision 1): all four views, in the recommended order.** "Suivre l'argent" on each ballot item first, then the members' declared interests, the Lobbies page, the cantons by link.
+5. **Private persons (decision 2): donors are named.** "On peut les citer. La data est publique." Donors who are natural persons are shown as the CDF publishes them, with first name, name, amount and receiving committee, without the commune, under the conditions applied to media owners (error report, removal by fingerprint), the financing leaving the site once the ballot is past. The material shown: 29 donations above CHF 15,000 for the four items of 29.11.2026, 2 of them by natural persons. Badge holders are not concerned (counts only, Q2). Specified in PRD-0001 US-27.
+
+Decision 3 (reuse of Lobbywatch's sectors on the Lobbies page) remains open.
 
 ### Open items (to file once the ledger exists)
 
@@ -329,3 +332,4 @@ _(empty until Mode 4 Freeze)_
 |---|---|---|---|
 | 2026-11-18 | Victor Hueni (Claude) | Scaffold + Fill | Created and filled in one pass. Step 0 answers taken from the precedent of Research-0003: no ADR yet (1B), custom list of 5 questions (2D), deep on the load-bearing questions and quick on the rest (3C), load-bearing sources re-read directly (4B): the CDF export for the AVS / TVA item (XLSX, both sheets read), the Parliament's `PersonInterest` (count 2,015 in French), the Lobbywatch licence footer. Other rows were read by three research passes (Lobbywatch and prior art, federal sources, the six cantons) and say so. Not readable: opendata.swiss (403), parlement.vs.ch (JavaScript), lex.vs.ch, letemps.ch (WebFetch refused; read with curl). Corrections to the passes' briefs: the paid/unpaid rule dates from 2019, not 2023; the federal financing rules cover parties, not parliamentary groups. Status: Draft until the owner rules on the four decisions listed in the Recommendation. |
 | 2026-11-19 | Victor Hueni (Claude) | Fill | Owner rulings 1 to 3 recorded on the mockups: official ties from the new Parliament API through `npm run parliament`; the financing step named « Suivre l'argent »; donations grouped by receiving committee. |
+| 2026-11-19 | Victor Hueni (Claude) | Fill | Owner rulings 4 (order of phase 2) and 5 (donors who are persons are named) recorded; stories US-26 to US-31 written in PRD-0001. |
