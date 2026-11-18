@@ -31,7 +31,7 @@ The architectural view of one vertical slice, in four layers from the outside in
 | `views/`, `views/dark/` | The rendered figures, light and dark. Committed. |
 | `out/` | The built page and its verdict. Generated, ignored by git. |
 
-The screens are screenshots of the built site, with the checked data of `data/media.json`; they follow the owner-approved mockup v3, whose sources stay outside git. The fög box of ui-05 comes with US-22: capture again once it is built.
+The screens are screenshots of the built site, with the checked data of `data/media.json`; they follow the owner-approved mockup v3, whose sources stay outside git.
 
 ## Rebuild
 

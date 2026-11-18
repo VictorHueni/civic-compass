@@ -7,7 +7,7 @@
  * writes it. The drawings come from the second script, media-graph.ts, added on first opening of the page.
  */
 import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
-import { bridges, cardLines, formatShare, rings, search, type CardLine, type SourceRef, type TopKind } from "./media-model.ts";
+import { bridges, cardLines, fogBox, formatShare, rings, search, type CardLine, type SourceRef, type TopKind } from "./media-model.ts";
 import { onRender } from "./app.ts";
 import { mediaOwnership as m } from "./referential.ts";
 import type { Holding, MediaGenre } from "../types.ts";
@@ -94,6 +94,28 @@ function goButton(id: string, label: string): string {
   return '<button type="button" class="media-go" data-go="' + esc(id) + '">' + esc(label) + "</button>";
 }
 
+/** The fög box (US-22): the value on its scale, beside the media average, or "Pas de mesure du fög". */
+function fogHtml(id: string): string {
+  const box = fogBox(m, id);
+  const head = '<h4 class="media-card__h">' + esc(box.label) + "</h4>";
+  if (!box.measured) return '<section class="fog-box">' + head + '<p class="fog-box__text">' + esc(box.text) + "</p></section>";
+  const at = (v: number) => (((v - box.min) / (box.max - box.min)) * 100).toFixed(2) + "%";
+  const ticks = [box.min, box.min / 2, 0, box.max / 2, box.max]
+    .map((v) => '<span class="fog-scale__tick" style="left:' + at(v) + '">' + (v > 0 ? "+" + v : v < 0 ? "−" + -v : "0") + "</span>")
+    .join("");
+  return (
+    '<section class="fog-box">' + head +
+    '<p class="fog-box__edition">' + esc(box.edition) + "</p>" +
+    '<p class="fog-box__value">' + esc(box.shown) + "</p>" +
+    '<div class="fog-scale" aria-hidden="true"><span class="fog-scale__axis"></span>' + ticks +
+    '<span class="fog-scale__mark fog-scale__mark--average" style="left:' + at(box.average) + '"></span>' +
+    '<span class="fog-scale__mark" style="left:' + at(box.value) + '"></span></div>' +
+    '<p class="fog-box__text">' + esc(box.about + " " + box.scale + " " + box.averageText) + "</p>" +
+    '<p class="fog-box__text fog-box__disclaimer">' + esc(box.disclaimer) + "</p>" +
+    sourcesLine([box.source]) + "</section>"
+  );
+}
+
 function mediumCard(id: string): string {
   const x = m.media.find((y) => y.id === id);
   if (!x) return "";
@@ -102,6 +124,7 @@ function mediumCard(id: string): string {
     '<p class="media-card__kind">Média · ' + esc(genre) + '</p><h3 class="fact-sheet__name">' + esc(x.name) + "</h3>" +
     (x.note ? '<p class="media-line__note">' + esc(x.note) + "</p>" : "") +
     cardLines(m, id).map(lineHtml).join("") +
+    fogHtml(id) +
     '<p class="media-card__more">' + goButton(x.publisher, "Voir la fiche de l'éditeur") + "</p>" +
     reportHtml(x.name)
   );
@@ -152,7 +175,8 @@ function listEntry(id: string): string {
   const lines = cardLines(m, id)
     .map((l) => '<span class="media-entry__line"><b>' + esc(l.label) + "</b> " + esc(l.text) + "</span>")
     .join("");
-  return '<li><button type="button" class="media-entry" data-go="' + esc(id) + '"><span class="media-entry__name">' + esc(x.name) + "</span>" + lines + "</button></li>";
+  const badge = fogBox(m, id).measured ? ' <span class="media-entry__badge">fög</span>' : "";
+  return '<li><button type="button" class="media-entry" data-go="' + esc(id) + '"><span class="media-entry__name">' + esc(x.name) + badge + "</span>" + lines + "</button></li>";
 }
 
 function names(): { id: string; name: string }[] {
