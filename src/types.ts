@@ -437,6 +437,201 @@ export const CANTONAL_GOVERNMENT_SCHEMA: Schema<CantonalGovernment> = {
   members: { kind: "list", item: { kind: "object", schema: GOVERNMENT_MEMBER_SCHEMA } },
 };
 
+/* ---------- Media ownership (PRD-0001 US-20 to US-25, Research-0003) ---------- */
+
+/**
+ * Kept by hand in data/media.json: Medienmonitor Schweiz is read in the browser, never downloaded or scraped.
+ * Every fact carries the page it was read on and the date it was checked. Shapes and rules: the slice design
+ * sheet docs/plans/active/transparency-media/ (database and API tabs); the rules across entries are in tools/media.ts.
+ */
+export const MEDIA_GENRES = ["press", "radio", "television", "online"] as const;
+export type MediaGenre = (typeof MEDIA_GENRES)[number];
+
+/** person, family, public body, association or foundation. */
+export const HOLDER_KINDS = ["person", "family", "public", "association"] as const;
+export type HolderKind = (typeof HOLDER_KINDS)[number];
+
+/** The only reason a name is removed: the person asked for it (US-24). */
+export const REMOVAL_REASONS = ["person_request"] as const;
+
+/** A newspaper, radio, TV channel or news site. */
+export interface Medium {
+  id: string;
+  name: string;
+  genre: MediaGenre;
+  /** Codes of the cantons it covers, from territories.json. */
+  regions: string[];
+  /** id of the publishing company, or of the association or foundation that publishes it (a holder). */
+  publisher: string;
+  /** The medium's own page (imprint) that names the publisher. */
+  publisher_source: string;
+  source: string;
+  checked_on: string;
+  note?: string;
+}
+const MEDIUM_SCHEMA: Schema<Medium> = {
+  id: { kind: "string" },
+  name: { kind: "string" },
+  genre: { kind: "enum", values: MEDIA_GENRES },
+  regions: { kind: "list", item: { kind: "string" } },
+  publisher: { kind: "string" },
+  publisher_source: { kind: "url" },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+  note: { kind: "string", optional: true },
+};
+
+/** A company as the commercial register names it. */
+export interface Company {
+  id: string;
+  name: string;
+  /** SA, Sàrl, AG... as the register writes it. */
+  legal_form: string;
+  seat: string;
+  /** CHE-123.456.789 when known. */
+  uid: string | null;
+  source: string;
+  checked_on: string;
+  note?: string;
+}
+const COMPANY_SCHEMA: Schema<Company> = {
+  id: { kind: "string" },
+  name: { kind: "string" },
+  legal_form: { kind: "string" },
+  seat: { kind: "string" },
+  uid: { kind: "string", nullable: true },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+  note: { kind: "string", optional: true },
+};
+
+/** A removal asked by the person (US-24): the name is not kept, only its fingerprint (PRD-0001 §8, 2026-11-18). */
+export interface Removal {
+  /** SHA-256, in hexadecimal, of the name in lower case, without accents, spaces collapsed (tools/media.ts). */
+  fingerprint: string;
+  date: string;
+  reason: (typeof REMOVAL_REASONS)[number];
+}
+const REMOVAL_SCHEMA: Schema<Removal> = {
+  fingerprint: { kind: "string" },
+  date: { kind: "date" },
+  reason: { kind: "enum", values: REMOVAL_REASONS },
+};
+
+/**
+ * A holder that is not a company. A person is stored with name only, as the source publishes it:
+ * no photo, age, address or contact (US-24). After a removal, the name is gone and `removal` is set.
+ */
+export interface Holder {
+  id: string;
+  name?: string;
+  kind: HolderKind;
+  /** Association or foundation only, as the register names it. */
+  legal_form?: string;
+  seat?: string;
+  uid?: string | null;
+  source: string;
+  checked_on: string;
+  note?: string;
+  removal?: Removal;
+}
+const HOLDER_SCHEMA: Schema<Holder> = {
+  id: { kind: "string" },
+  name: { kind: "string", optional: true },
+  kind: { kind: "enum", values: HOLDER_KINDS },
+  legal_form: { kind: "string", optional: true },
+  seat: { kind: "string", optional: true },
+  uid: { kind: "string", nullable: true, optional: true },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+  note: { kind: "string", optional: true },
+  removal: { kind: "object", schema: REMOVAL_SCHEMA, optional: true },
+};
+
+/** Who holds a company, with the share when the source publishes it (null otherwise, never estimated). */
+export interface Holding {
+  /** id of a company or of a holder. */
+  holder: string;
+  /** id of a company. */
+  held: string;
+  /** Percentage as published, two decimals; null when the source gives none. */
+  share: number | null;
+  source: string;
+  checked_on: string;
+  /** When sources disagree: a key shared by the disagreeing holdings of one company; their share counts once in the 100 % rule. */
+  dispute?: string;
+  /** Names the sources that disagree; required with `dispute`. */
+  note?: string;
+}
+const HOLDING_SCHEMA: Schema<Holding> = {
+  holder: { kind: "string" },
+  held: { kind: "string" },
+  share: { kind: "number", nullable: true },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+  dispute: { kind: "string", optional: true },
+  note: { kind: "string", optional: true },
+};
+
+/** The fög edition the values come from: tone of the coverage of federal ballots (US-22). */
+export interface FogEdition {
+  label: string;
+  period: string;
+  ballots: number;
+  scale_min: number;
+  scale_max: number;
+  /** The average of the media studied. */
+  average: number;
+  source: string;
+  checked_on: string;
+}
+const FOG_EDITION_SCHEMA: Schema<FogEdition> = {
+  label: { kind: "string" },
+  period: { kind: "string" },
+  ballots: { kind: "integer" },
+  scale_min: { kind: "integer" },
+  scale_max: { kind: "integer" },
+  average: { kind: "number" },
+  source: { kind: "url" },
+  checked_on: { kind: "date" },
+};
+
+/** The value of one medium, under the name the fög measured it as ("24heures.ch"). */
+export interface FogValue {
+  medium: string;
+  measured_as: string;
+  value: number;
+}
+const FOG_VALUE_SCHEMA: Schema<FogValue> = {
+  medium: { kind: "string" },
+  measured_as: { kind: "string" },
+  value: { kind: "number" },
+};
+
+export interface Fog {
+  edition: FogEdition;
+  values: FogValue[];
+}
+const FOG_SCHEMA: Schema<Fog> = {
+  edition: { kind: "object", schema: FOG_EDITION_SCHEMA },
+  values: { kind: "list", item: { kind: "object", schema: FOG_VALUE_SCHEMA } },
+};
+
+export interface MediaOwnership {
+  media: Medium[];
+  companies: Company[];
+  holders: Holder[];
+  holdings: Holding[];
+  fog: Fog;
+}
+export const MEDIA_OWNERSHIP_SCHEMA: Schema<MediaOwnership> = {
+  media: { kind: "list", item: { kind: "object", schema: MEDIUM_SCHEMA } },
+  companies: { kind: "list", item: { kind: "object", schema: COMPANY_SCHEMA } },
+  holders: { kind: "list", item: { kind: "object", schema: HOLDER_SCHEMA } },
+  holdings: { kind: "list", item: { kind: "object", schema: HOLDING_SCHEMA } },
+  fog: { kind: "object", schema: FOG_SCHEMA },
+};
+
 /* ---------- Files in data/ ---------- */
 
 /** Every file wraps its content in one key, next to a free note for editors (`_readme`). */
@@ -472,8 +667,12 @@ export interface CantonalGovernmentsFile {
   _readme: string;
   cantonal_governments: CantonalGovernment[];
 }
+export interface MediaFile {
+  _readme: string;
+  media_ownership: MediaOwnership;
+}
 
-const list = (schema: AnySchema) => ({ kind: "list", item: { kind: "object", schema } }) as const;
+const list =(schema: AnySchema) => ({ kind: "list", item: { kind: "object", schema } }) as const;
 
 /** data/ file name, then the schema of its whole content. */
 export const DATA_FILES = {
@@ -512,6 +711,10 @@ export const DATA_FILES = {
     file: "cantonal-governments.json",
     schema: { _readme: { kind: "string" }, cantonal_governments: list(CANTONAL_GOVERNMENT_SCHEMA) } satisfies Schema<CantonalGovernmentsFile>,
   },
+  media_ownership: {
+    file: "media.json",
+    schema: { _readme: { kind: "string" }, media_ownership: { kind: "object", schema: MEDIA_OWNERSHIP_SCHEMA } } satisfies Schema<MediaFile>,
+  },
 } as const;
 
 /** The whole referential, once loaded. */
@@ -524,4 +727,5 @@ export interface Referential {
   parliament: Parliament;
   cantonal_parliaments: CantonalParliaments;
   cantonal_governments: CantonalGovernment[];
+  media_ownership: MediaOwnership;
 }

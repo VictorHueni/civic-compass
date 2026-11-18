@@ -16,13 +16,11 @@ import { parseArgs } from "node:util";
 import {
   DATA_FILES,
   PARLIAMENT_FUNCTIONS,
-  type AnySchema,
   type CantonalParliamentsFile,
   type Parliament,
   type ParliamentFile,
   type PartiesFile,
   type Referential,
-  type Rule,
   type TerritoriesFile,
 } from "../src/types.ts";
 import { TOOLS_PAGE_IDS, STATE_SITE_IDS, TOOL_IDS } from "../src/site/links.ts";
@@ -38,7 +36,9 @@ import {
 } from "./cantonal-parliaments.ts";
 import { checkCantonalGovernments, governmentsSummary, staleMembers, STALE_AFTER_DAYS } from "./cantonal-governments.ts";
 import { checkPresidencies, stalePresidencies } from "./party-presidencies.ts";
+import { checkMedia, mediaSummary, staleMedia } from "./media.ts";
 import { readWorkbook } from "./xlsx.ts";
+import { checkFile, entryLabel, isPlainObject, Report } from "./schema.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const USER_AGENT = "Mozilla/5.0 (compatible; civic-compass-link-checker)";
@@ -55,121 +55,6 @@ Options communes : --data DOSSIER (par défaut data/).`;
 /* ====================================================================== */
 /* check                                                                   */
 /* ====================================================================== */
-
-const DATE = /^\d{4}-\d{2}-\d{2}$/;
-const URL_PATTERN = /^https?:\/\/\S+$/;
-
-function isPlainObject(v: unknown): v is Record<string, unknown> {
-  return typeof v === "object" && v !== null && !Array.isArray(v);
-}
-function isRealDate(s: string): boolean {
-  if (!DATE.test(s)) return false;
-  const d = new Date(s + "T00:00:00Z");
-  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === s;
-}
-function show(v: unknown): string {
-  return typeof v === "string" ? v : JSON.stringify(v);
-}
-
-/** Label of a list entry: its position from 1, and its id or code when it has one. */
-function entryLabel(item: unknown, i: number): string {
-  const key = isPlainObject(item) ? (item.id ?? item.code) : undefined;
-  return `entrée ${i + 1}` + (typeof key === "string" ? ` (${key})` : "");
-}
-
-class Report {
-  readonly errors: string[] = [];
-  add(where: string[], message: string): void {
-    const line = `${where.join(", ")} : ${message}`;
-    if (!this.errors.includes(line)) this.errors.push(line);
-  }
-}
-
-/** Checks `value` (the content of field `name`) against `rule`. */
-function checkValue(value: unknown, rule: Rule, name: string, where: string[], report: Report): void {
-  if (value === null) {
-    if (!rule.nullable) report.add(where, `« ${name} » ne peut pas être null`);
-    return;
-  }
-  switch (rule.kind) {
-    case "string":
-      if (typeof value !== "string") report.add(where, `« ${name} » doit être un texte, trouvé ${show(value)}`);
-      return;
-    case "integer":
-      if (!Number.isInteger(value)) report.add(where, `« ${name} » doit être un nombre entier, trouvé ${show(value)}`);
-      return;
-    case "number":
-      if (typeof value !== "number" || !Number.isFinite(value)) report.add(where, `« ${name} » doit être un nombre, trouvé ${show(value)}`);
-      return;
-    case "date":
-      if (typeof value !== "string" || !isRealDate(value)) report.add(where, `« ${name} » doit être une date AAAA-MM-JJ, trouvé ${show(value)}`);
-      return;
-    case "url":
-      if (typeof value !== "string" || !URL_PATTERN.test(value)) report.add(where, `« ${name} » doit être une URL http(s), trouvé ${show(value)}`);
-      return;
-    case "enum":
-      if (typeof value !== "string" || !rule.values.includes(value)) {
-        report.add(where, `« ${name} » vaut ${show(value)} (attendu : ${rule.values.join(", ")})`);
-      }
-      return;
-    case "list":
-      if (!Array.isArray(value)) {
-        report.add(where, `« ${name} » doit être une liste`);
-        return;
-      }
-      value.forEach((item, i) => checkValue(item, rule.item, name, [...where, `${name} ${entryLabel(item, i)}`], report));
-      return;
-    case "object":
-      if (!isPlainObject(value)) {
-        report.add(where, `« ${name} » doit être un objet`);
-        return;
-      }
-      checkObject(value, rule.schema, where, report);
-      return;
-    case "record":
-      if (!isPlainObject(value)) {
-        report.add(where, `« ${name} » doit être un objet`);
-        return;
-      }
-      for (const [k, v] of Object.entries(value)) checkValue(v, rule.value, `${name}.${k}`, where, report);
-      return;
-  }
-}
-
-function checkObject(value: Record<string, unknown>, schema: AnySchema, where: string[], report: Report): void {
-  for (const [name, rule] of Object.entries(schema)) {
-    if (!(name in value)) {
-      if (!rule.optional) report.add(where, `champ « ${name} » manquant`);
-      continue;
-    }
-    checkValue(value[name], rule, name, where, report);
-  }
-  for (const name of Object.keys(value)) {
-    if (!(name in schema)) report.add(where, `champ « ${name} » inconnu (attendu : ${Object.keys(schema).join(", ")})`);
-  }
-}
-
-/** Checks one data file against its schema. List entries of the top-level key are named "entrée N (id)". */
-function checkFile(content: unknown, schema: AnySchema, file: string, report: Report): void {
-  if (!isPlainObject(content)) {
-    report.add([file], "le fichier doit contenir un objet JSON");
-    return;
-  }
-  const at = [file];
-  for (const [name, rule] of Object.entries(schema)) {
-    const value = content[name];
-    if (!(name in content)) {
-      if (!rule.optional) report.add(at, `champ « ${name} » manquant`);
-    } else if (rule.kind === "list" && Array.isArray(value)) {
-      value.forEach((item, i) => checkValue(item, rule.item, name, [file, entryLabel(item, i)], report));
-    } else {
-      checkValue(value, rule, name, at, report);
-    }
-  }
-  for (const name of Object.keys(content)) {
-    if (!(name in schema)) report.add(at, `champ « ${name} » inconnu (attendu : ${Object.keys(schema).join(", ")})`);
-  }
-}
 
 type LoadResult = { data: Referential | null; errors: string[] };
 
@@ -261,6 +146,7 @@ function checkConsistency(d: Referential): string[] {
     report.add([`data/${DATA_FILES.cantonal_governments.file}`], e);
   }
   for (const e of checkPresidencies(d.parties)) report.add(["data/parties.json"], e);
+  for (const e of checkMedia(d.media_ownership, d.territories)) report.add([`data/${DATA_FILES.media_ownership.file}`], e);
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -293,7 +179,8 @@ function cmdCheck(dataDir: string): number {
       `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}), ` +
       `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}), ` +
       `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}), ` +
-      `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}).`,
+      `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}), ` +
+      `médias (${mediaSummary(d.media_ownership)}).`,
   );
   const today = new Date().toISOString().slice(0, 10);
   const stale = staleMembers(d.cantonal_governments, today);
@@ -303,6 +190,10 @@ function cmdCheck(dataDir: string): number {
   const stalePresidents = stalePresidencies(d.parties, today);
   if (stalePresidents.length) {
     console.log(`\nAvis (ne bloque pas) : présidences de parti vérifiées il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier sur le site du parti :\n` + stalePresidents.join("\n"));
+  }
+  const staleMediaFacts = staleMedia(d.media_ownership, today);
+  if (staleMediaFacts.length) {
+    console.log(`\nAvis (ne bloque pas) : faits sur les médias vérifiés il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier à la source :\n` + staleMediaFacts.join("\n"));
   }
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));

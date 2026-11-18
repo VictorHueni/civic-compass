@@ -1,0 +1,22 @@
+{
+  "_readme": "Tenu à la main (PRD-0001 US-23). Les médias de Suisse romande, leurs éditeurs, leurs propriétaires et l'indice du fög. Le Medienmonitor Schweiz (Publicom pour l'OFCOM) est lu à la main dans le navigateur, en HTML seulement : aucun téléchargement, aucun script ne le lit ; réutilisation « nur unter Quellenangabe ». Les éditeurs sont relevés au registre du commerce (zefix.ch) et sur la page d'impressum du média. L'indice du fög est cité, pas reproduit (« Copyright fög »). Chaque fait porte sa source et sa date de vérification ; une part non publiée vaut null, jamais une estimation. Quand deux sources se contredisent, les participations concernées portent la même clé dispute et une note ; leur part ne compte qu'une fois dans la règle des 100 %. Une personne est nommée avec son nom et sa part seulement ; après une demande de retrait, le nom est supprimé et seule son empreinte reste (removal). npm run check contrôle ce fichier. Conception : docs/plans/active/transparency-media/.",
+  "media_ownership": {
+    "media": [],
+    "companies": [],
+    "holders": [],
+    "holdings": [],
+    "fog": {
+      "edition": {
+        "label": "Tonalité de la couverture des votations fédérales, fög / Université de Zurich",
+        "period": "2018 à 2025",
+        "ballots": 61,
+        "scale_min": -100,
+        "scale_max": 100,
+        "average": -4,
+        "source": "https://www.foeg.uzh.ch/dam/jcr:33f99533-ff1a-4594-9d10-5fe0b3afb8f0/SRG_Rolle_2026_2.pdf",
+        "checked_on": "2026-11-17"
+      },
+      "values": []
+    }
+  }
+}
