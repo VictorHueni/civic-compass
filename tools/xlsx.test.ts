@@ -134,7 +134,16 @@ test("readWorkbook fails clearly when a part is missing", () => {
     { name: "xl/worksheets/sheet1.xml", text: SHEET1 },
     { name: "xl/worksheets/sheet7.xml", text: SHEET7 },
   ]);
+  // Declared in the relationships but absent: the file is broken.
   assert.throws(() => readWorkbook(noShared), /sharedStrings/);
+  // Neither declared nor present: a cell that points at a shared string fails, naming the cell.
+  const undeclared = zip([
+    { name: "xl/workbook.xml", text: WORKBOOK },
+    { name: "xl/_rels/workbook.xml.rels", text: RELS.replace(/<Relationship Id="rId9"[^>]*>\n/, "") },
+    { name: "xl/worksheets/sheet1.xml", text: SHEET1 },
+    { name: "xl/worksheets/sheet7.xml", text: SHEET7 },
+  ]);
+  assert.throws(() => readWorkbook(undeclared), /texte partagé 0 absent \(A1\)/);
   const noSheet = zip([
     { name: "xl/workbook.xml", text: WORKBOOK },
     { name: "xl/_rels/workbook.xml.rels", text: RELS },
@@ -142,4 +151,22 @@ test("readWorkbook fails clearly when a part is missing", () => {
     { name: "xl/worksheets/sheet1.xml", text: SHEET1 },
   ]);
   assert.throws(() => readWorkbook(noSheet), /sheet7\.xml/);
+});
+
+test("readWorkbook reads a workbook whose texts are all inline, with no shared strings part", () => {
+  // As the Federal Audit Office exports it: no sharedStrings relationship, no sharedStrings.xml, every text t="inlineStr".
+  const rels = `<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Target="worksheets/sheet1.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Id="rId1"/><Relationship Target="styles.xml" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Id="rId3"/></Relationships>`;
+  const book = `<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Libéralités" sheetId="1" r:id="rId1"/></sheets></workbook>`;
+  const sheet = `<?xml version="1.0" encoding="UTF-8"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>
+<row r="1"><c r="A1" t="inlineStr"><is><t>Nom</t></is></c><c r="B1" t="inlineStr"><is><t>Valeur (en CHF)</t></is></c></row>
+<row r="2"><c r="A2" t="inlineStr"><is><t>Swiss Life AG</t></is></c><c r="B2" t="n"><v>50000</v></c></row>
+</sheetData></worksheet>`;
+  const sheets = readWorkbook(zip([
+    { name: "xl/workbook.xml", text: book },
+    { name: "xl/_rels/workbook.xml.rels", text: rels },
+    { name: "xl/worksheets/sheet1.xml", text: sheet },
+  ]));
+  assert.deepEqual(sheets.map((s) => s.name), ["Libéralités"]);
+  assert.deepEqual(Object.fromEntries(sheets[0].rows.get(1) ?? []), { A: "Nom", B: "Valeur (en CHF)" });
+  assert.deepEqual(Object.fromEntries(sheets[0].rows.get(2) ?? []), { A: "Swiss Life AG", B: "50000" });
 });
