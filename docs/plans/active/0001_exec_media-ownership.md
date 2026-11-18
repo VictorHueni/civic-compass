@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 14
+**Current Increment:** 15
 
 ## Increment Plan
 
@@ -405,7 +405,7 @@ Done notes (2026-11-18):
 
 ### Increment 14: Réseau, Soleil, the switch and the search
 
-**Status:** pending
+**Status:** done
 
 Sheet: screens tab (ui-02, ui-03, ui-06), PRD-0001 US-21.
 
@@ -431,6 +431,14 @@ Test gate:
 Exit criteria:
 
 1. Screens ui-02, ui-03 and ui-06 match the built site.
+
+Done notes (2026-11-18):
+
+1. The page now reads, from the top: the intro, the switch Réseau / Soleil, the hint of the view, the search (datalist of every name, "Voir"), the drawing with its legend, the card, "Ils relient plusieurs médias", then "Tous les médias" with the genres as sub-headings (ui-06).
+2. `media-graph.ts` registers `network` and `sun`, each returning a view with `focus(id)` and `destroy()`. Opening a card from a list, a chip or the search brings the same node (neighbourhood highlighted, the rest faded) or sector (Soleil zoomed on its owner) forward. Soleil: a tap on a kind or owner sector zooms in, on a medium zooms on its owner and opens its card; the white centre zooms out.
+3. The second script loads on the first showing of the media page (`onRender`, plus a check at start for a page opened at `#media`); a failed load leaves a note sending the visitor to the lists, and can be retried by switching view.
+4. Colours of the kinds are custom properties of `#page-media` in `css/site.css`, read by both drawings and the legends, so they cannot drift. `site.js` grows from 222 to 231 KB (the page and the model), `media-graph.js` from 564 to 570 KB.
+5. Checked from disk at 360 px with every http(s) request blocked: both views draw; a tap on a node (mouse and touch) and on a sector opens its card; Soleil zooms in and back out; "hersant" and "Leman" find Philippe Hersant and Léman Bleu in both views; a chip opens its card; no console error, no request, `scrollWidth` 360.
 
 ### Increment 15: Offline run and screens of the real site
 
