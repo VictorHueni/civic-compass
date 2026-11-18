@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 07
+**Current Increment:** 08
 
 ## Increment Plan
 
@@ -205,7 +205,7 @@ Prediction:
 
 ### Increment 07: The lines of a medium's card
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab, decision table "the lines of a medium's card and list entry" (Éditeur, Propriétaire, disputes, Au sommet); code tab (`media-model.ts`).
 
