@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 15
+**Current Increment:** 16
 
 ## Increment Plan
 
@@ -442,7 +442,7 @@ Done notes (2026-11-18):
 
 ### Increment 15: Offline run and screens of the real site
 
-**Status:** pending
+**Status:** done
 
 Sheet: README of the sheet ("Once US-20 and US-21 are built, capture the real site instead"), code tab (offline run).
 
@@ -471,6 +471,12 @@ Prediction:
 
 1. The 7 `views/ui-*.svg` and their dark copies change; no other figure changes.
 
+Done notes (2026-11-18):
+
+1. Offline run: `dist/index.html` from disk with every http(s) request blocked (Playwright, Chromium, 360 px): both views draw, the card opens from a node, a sector, a chip and the search, the rest of the site unchanged, no console error, no request.
+2. `capture-screens.ts` takes the site folder (default `dist/`), emulates reduced motion, waits for the drawing and reaches each state with the page's own controls (the switch, the search, the report box); it needs no network now. The prediction held: the 14 screen figures changed, no diagram.
+3. The sheet's intro, figure captions, header chip, footer and README now describe the built site; ui-05 shows the card of 24 heures without its fög box, which joins it with increment 16. Rendered with the kit repository's `com-artefact-viz` (the installed plugin copy lacks the `slice-design` kind): `PASS: no findings`; republished at https://claude.ai/artifact/KZs83Kw4soJazTrUPeZCXJ (version 3).
+
 ### Increment 16: The fög box
 
 **Status:** pending
@@ -481,6 +487,7 @@ Scope:
 
 1. **Write first, expect red:** extend `tools/media-model.test.ts`: `fogBox(id)` gives the value under the fög's label "Tonalité des votations", the scale, ballots and period, the media average (−4), "Ce n'est pas une position politique du média", source and date; a title without a value gives "Pas de mesure du fög pour ce média"; no output of `fogBox` or `cardLines` contains "gauche" or "droite".
 2. `fogBox` in `media-model.ts`; `media.ts` renders it on the card.
+3. Re-capture ui-05 with `capture-screens.ts`, re-render the sheet and republish it at its address (the fög box was not built when increment 15 captured the screens).
 
 Primary files:
 
@@ -678,7 +685,7 @@ Exit criteria:
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | M1: Checked data file (US-23) | 01-06 | done | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
-| M3: Réseau and Soleil (US-21) | 11-15 | pending | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
+| M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
 | M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
 | M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |
