@@ -1,13 +1,18 @@
 /*
- * The lines of a medium's card (PRD-0001 US-20, US-21): "Éditeur", the publisher as the register names it;
- * "Propriétaire", the holders of the publisher a source names, with their share; "Au sommet", the top of the
- * chain when it goes above those holders. Decision table: docs/plans/active/transparency-media/ (API tab).
+ * The reading of the media data (PRD-0001 US-20, US-21).
  *
- * A line appears only when a source supports it: no holder named, no "Propriétaire" line, never "inconnu".
+ * The lines of a medium's card: "Éditeur", the publisher as the register names it; "Propriétaire", the holders of
+ * the publisher a source names, with their share; "Au sommet", the top of the chain when it goes above those
+ * holders. Decision table: docs/plans/active/transparency-media/ (API tab). A line appears only when a source
+ * supports it: no holder named, no "Propriétaire" line, never "inconnu".
+ *
+ * The graph views: the media a holder reaches, the people and families that link several media ("Ils relient
+ * plusieurs médias"), the three rings of Soleil, the search by name without accents.
  *
  * Pure functions, without DOM or data import, shared by the site and the tests.
  */
 import type { Company, Holder, Holding, MediaOwnership } from "../types.ts";
+import { normalize } from "./text.ts";
 
 /** A page a line rests on, with the day it was read. */
 export interface SourceRef {
@@ -118,4 +123,88 @@ export function cardLines(m: MediaOwnership, mediumId: string): CardLine[] {
   }
   lines.push({ label: "Au sommet", text: nameOf(m, above[above.length - 1]), sources, notes: [] });
   return lines;
+}
+
+/** The media `id` reaches: itself if it is a medium, else every medium its holdings lead to, in file order. */
+export function reach(m: MediaOwnership, id: string): string[] {
+  if (m.media.some((x) => x.id === id)) return [id];
+  const met = new Set([id]);
+  for (const next of met) {
+    for (const h of m.holdings) if (h.holder === next) met.add(h.held);
+  }
+  return m.media.filter((x) => met.has(x.publisher)).map((x) => x.id);
+}
+
+/** A person or family in the chain of several media: "Ils relient plusieurs médias". */
+export interface Bridge {
+  id: string;
+  media: string[];
+}
+
+function byName(m: MediaOwnership, a: string, b: string): number {
+  return nameOf(m, a).localeCompare(nameOf(m, b), "fr");
+}
+
+/** The people and families that reach at least two media, the most media first, then by name. Never a company. */
+export function bridges(m: MediaOwnership): Bridge[] {
+  return m.holders
+    .filter((h) => h.kind === "person" || h.kind === "family")
+    .map((h) => ({ id: h.id, media: reach(m, h.id) }))
+    .filter((b) => b.media.length >= 2)
+    .sort((a, b) => b.media.length - a.media.length || byName(m, a.id, b.id));
+}
+
+/** The kind of the owner at the top of a chain, the centre ring of Soleil: persons and families share one colour. */
+export type TopKind = "people" | "public" | "association" | "company";
+const TOP_KINDS: TopKind[] = ["people", "public", "association", "company"];
+
+/** A top owner and the media under it: the middle and outer rings of Soleil. */
+export interface RingOwner {
+  id: string;
+  media: string[];
+}
+
+export interface Ring {
+  kind: TopKind;
+  owners: RingOwner[];
+}
+
+function topKind(m: MediaOwnership, id: string): TopKind {
+  const kind = m.holders.find((h) => h.id === id)?.kind;
+  if (kind === "person" || kind === "family") return "people";
+  return kind ?? "company";
+}
+
+/**
+ * The rings of Soleil: each medium goes under the top of the chain of main holders above its publisher (the holder
+ * of the largest published share at each step), grouped by the kind of that top. Kinds in a fixed order, empty
+ * ones left out; owners with the most media first, then by name; media in file order.
+ */
+export function rings(m: MediaOwnership): Ring[] {
+  const under = new Map<string, string[]>();
+  for (const x of m.media) {
+    const top = chainTop(m, x.publisher);
+    under.set(top, [...(under.get(top) ?? []), x.id]);
+  }
+  const owners = [...under].map(([id, media]) => ({ id, media }));
+  return TOP_KINDS.map((kind) => ({
+    kind,
+    owners: owners.filter((o) => topKind(m, o.id) === kind).sort((a, b) => b.media.length - a.media.length || byName(m, a.id, b.id)),
+  })).filter((r) => r.owners.length);
+}
+
+/** Lower case, without accents, spaces trimmed and collapsed. */
+function searchable(s: string): string {
+  return normalize(s).trim().replace(/\s+/g, " ");
+}
+
+/**
+ * The medium, company or holder whose name matches `query`, without accents or case: an exact name first, else the
+ * first name that contains it (media, then companies, then holders, in file order); null when none does.
+ */
+export function search(m: MediaOwnership, query: string): string | null {
+  const q = searchable(query);
+  if (!q) return null;
+  const named = [...m.media, ...m.companies, ...m.holders].filter((e) => e.name).map((e) => ({ id: e.id, name: searchable(e.name ?? "") }));
+  return (named.find((e) => e.name === q) ?? named.find((e) => e.name.includes(q)))?.id ?? null;
 }

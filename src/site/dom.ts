@@ -10,11 +10,6 @@ export function escapeHtml(s: unknown): string {
   return String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c] as string);
 }
 
-/** Lower case, without accents, for the search. */
-export function normalize(s: string): string {
-  return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-}
-
 /** "2026-11-17" -> "17.11.2026" */
 export function swissDate(iso: string): string {
   const [y, m, d] = iso.split("-");

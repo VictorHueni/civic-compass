@@ -303,3 +303,39 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .media-entry__name{font-family:Font-Bold,Hind,Fallback-font,sans-serif;color:var(--cc-accent)}
 .media-entry__line{font-size:.88rem;color:var(--cc-muted)}
 .media-entry__line b{color:var(--cc-text);font-weight:normal;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+/* Media page, Réseau and Soleil (PRD-0001 US-21): one colour per kind, shared by the drawings and their legends */
+#page-media{--media-media:#d8232a;--media-media-fill:#fff4f4;--media-company:#5f7587;--media-company-fill:#eef2f5;--media-person:#7b4fb0;--media-person-fill:#f3edfa;--media-public:#1d6fb8;--media-public-fill:#e8f1fa;--media-association:#2f8a57;--media-association-fill:#e8f5ee;--media-edge:#9aa9b5}
+.media-switch{display:inline-flex;margin:4px 0 10px;border:1px solid var(--cc-border);border-radius:6px;overflow:hidden}
+.media-switch button{min-height:44px;padding:0 18px;border:0;background:#fff;font:inherit;color:var(--cc-text);cursor:pointer}
+.media-switch button+button{border-left:1px solid var(--cc-border)}
+.media-switch button[aria-pressed="true"]{background:var(--cc-text);color:#fff;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.media-hint{margin:0 0 8px;font-size:.88rem;color:var(--cc-muted)}
+.media-search{display:flex;gap:8px;max-width:520px;margin:0 0 12px}
+.media-search input{flex:1;min-width:0;min-height:44px;padding:0 12px;border:1px solid var(--cc-border);border-radius:6px;font:inherit}
+.media-graph{margin:0 0 16px;border:1px solid var(--cc-border);border-radius:6px;background:var(--cc-surface);overflow:hidden}
+.media-pane{position:relative;width:100%;height:clamp(420px,72vh,640px)}
+#page-media .media-pane:has(.sun){height:auto;aspect-ratio:1/1;max-height:640px}
+.media-pane__note{margin:0;padding:16px;color:var(--cc-muted)}
+.media-legend{display:flex;flex-wrap:wrap;gap:4px 14px;padding:8px 12px;border-top:1px solid var(--cc-border);background:#fff;font-size:.82rem;color:var(--cc-muted)}
+.media-legend span{display:inline-flex;align-items:center;gap:6px}
+.media-key{display:inline-block;flex:none;width:13px;height:13px;border:2px solid}
+.media-key--media{border-color:var(--media-media);background:var(--media-media-fill);border-radius:3px}
+.media-key--company{border-color:var(--media-company);background:var(--media-company-fill)}
+.media-key--person{border-color:var(--media-person);background:var(--media-person-fill);border-radius:50%}
+.media-key--public{border-color:var(--media-public);background:var(--media-public-fill);transform:rotate(45deg) scale(.8)}
+.media-key--association{border-color:var(--media-association);background:var(--media-association-fill)}
+.media-key--disputed{width:20px;height:0;border:0;border-top:2px dashed var(--media-edge)}
+.media-dot{display:inline-block;flex:none;width:12px;height:12px;border-radius:3px}
+.media-dot--people{background:var(--media-person)}.media-dot--public{background:var(--media-public)}.media-dot--association{background:var(--media-association)}.media-dot--company{background:var(--media-company)}
+.sun{display:block;width:100%;height:100%;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.sun__sector{cursor:pointer}
+.sun__sector path{stroke:#fff;stroke-width:1.2}
+.sun__sector--people path{fill:var(--media-person)}.sun__sector--public path{fill:var(--media-public)}.sun__sector--association path{fill:var(--media-association)}.sun__sector--company path{fill:var(--media-company)}
+.sun__sector--l1 path{fill-opacity:.72}.sun__sector--l2 path{fill-opacity:.42}
+.sun__sector--focus path{fill-opacity:1;stroke:var(--cc-text);stroke-width:2}
+.sun__sector text{fill:var(--cc-text);pointer-events:none}
+.sun__centre{fill:#fff;cursor:pointer}
+.media-chips{display:flex;flex-wrap:wrap;gap:6px}
+.media-chip{min-height:44px;padding:0 14px;border:1px solid var(--cc-border);border-radius:999px;background:#fff;font:inherit;font-size:.92rem;color:var(--cc-text);cursor:pointer}
+.media-chip:hover{border-color:var(--cc-accent)}
+.media-genre{margin:20px 0 4px;font-size:1rem}

@@ -2,7 +2,8 @@
  * Routing, menu, territory picker (canton map), parties hemicycle, decision aids and official sites.
  * The ballot page (ballot.ts) and the institutions page (institutions.ts) re-render through onRender().
  */
-import { $, SVG_NS, escapeHtml as esc, host, normalize, swissDate } from "./dom.ts";
+import { $, SVG_NS, escapeHtml as esc, host, swissDate } from "./dom.ts";
+import { normalize } from "./text.ts";
 import { STATE_SITE_IDS, TOOLS_PAGE_IDS } from "./links.ts";
 import { allCantons, ballot, cantonalGovernments, cantonalParliaments, cantons, federal, parliament, stateSiteUrl, tools, type Level } from "./referential.ts";
 import { cantonRow } from "./cantonal-parliaments.ts";

@@ -15,11 +15,11 @@ Site statique écrit en TypeScript. Une fois construit, il tient en un dossier `
 Il faut Node 26 (il exécute directement les fichiers `.ts`, sans compilation).
 
 ```
-npm ci              # installe typescript, esbuild et @types/node (versions épinglées)
-npm run build       # construit dist/ : index.html, css/, js/site.js
+npm ci              # installe typescript, esbuild, @types/node, cytoscape et cytoscape-fcose (versions épinglées)
+npm run build       # construit dist/ : index.html, css/, js/site.js, js/media-graph.js, licenses/
 ```
 
-`dist/js/site.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement.
+`dist/js/site.js` est un script classique (pas un module, qu'un navigateur refuse en file://) qui contient aussi les données de `data/*.json` : le site ne télécharge rien au chargement. `dist/js/media-graph.js`, un second script classique minifié, contient Cytoscape.js et sa disposition fcose pour les vues du graphe des médias ; la page Médias l'ajoute la première fois qu'on ouvre une de ces vues, si bien que le reste du site garde son poids.
 
 ## Organisation
 
@@ -91,4 +91,4 @@ Le workflow `pages.yml` construit le site (`npm run build`) et publie `dist/` su
 
 ## Licence
 
-Code du site : MIT. Fichiers `css/designsystem.css` et `css/fonts` : voir la licence du Design System de la Confédération.
+Code du site : MIT. Fichiers `css/designsystem.css` et `css/fonts` : voir la licence du Design System de la Confédération. Bibliothèques incluses dans `js/media-graph.js` ([Cytoscape.js](https://github.com/cytoscape/cytoscape.js), [cytoscape-fcose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose) et ses dépendances cose-base et layout-base) : MIT, licences copiées dans `dist/licenses/`.

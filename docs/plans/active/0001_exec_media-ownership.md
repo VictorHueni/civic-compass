@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 11
+**Current Increment:** 16
 
 ## Increment Plan
 
@@ -311,7 +311,7 @@ Exit criteria:
 
 ### Increment 11: The graph libraries and the second script
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`tools/build.ts`, `package.json`), PRD-0001 §8 (graph libraries).
 
@@ -337,9 +337,16 @@ Exit criteria:
 
 1. `dist/js/site.js` does not contain Cytoscape; `dist/js/media-graph.js` does.
 
+Done notes (2026-11-18):
+
+1. `cytoscape` 3.35.0 and `cytoscape-fcose` 2.2.0 pinned; their MIT licences and those of `cose-base` and `layout-base` copied to `dist/licenses/`.
+2. `js/media-graph.js` is minified (1400 KB unminified, 564 KB minified; the libraries make most of it); `js/site.js` stays as it was, 222 KB.
+3. The global registers `network` now; Soleil's drawing joins it in increment 14, once the rings it draws exist (increment 12). Soleil's SVG code lives in this second script, as the code tab lists it ("the two drawings"), which settles that item "left to the implementation".
+4. `loadGraph()` in `media.ts` adds the script once and can retry after a failed load. Smoke load from disk with every http(s) request blocked: the script registers `civicMediaGraph`, fcose lays out three nodes, no console error.
+
 ### Increment 12: Reach, bridges and rings
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`media-model.ts`), screens tab (ui-03, ui-06).
 
@@ -361,9 +368,15 @@ Exit criteria:
 
 1. On the real file, every medium appears exactly once in the outer ring.
 
+Done notes (2026-11-18):
+
+1. `rings()` groups persons and families in one centre ring ("people"), as the approved mockup's legend "Personne ou famille" does; the kinds come in a fixed order (people, public, association, company), empty ones left out. On the real file no public body tops a chain, so Soleil has three centre sectors: people 12 media, associations 12, companies 14.
+2. `bridges()` on the real file gives the six names of screen ui-06 with the same counts: Famille fondatrice de TX Group 5, Antoine de Raemy 3, then four people with 2.
+3. `search()` reuses the site's `normalize`, moved from `dom.ts` to a DOM-free `text.ts` so that the tools' compile (no DOM library) accepts the model, and returns one id: an exact name first, else the first partial match (media, companies, holders, file order).
+
 ### Increment 13: The geometry of Soleil
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`sunburst.ts`).
 
@@ -385,9 +398,14 @@ Exit criteria:
 
 1. The geometry cases pass; the module has no DOM.
 
+Done notes (2026-11-18):
+
+1. `arcs(rings, size)` returns each sector with its SVG path, its parent and the kind of its top owner (for the colour); a lone sector is a full ring, drawn as one closed path. Ring radii and label thresholds follow the approved mockup: centre 6 to 13 % of the radius (no label), owners 13 to 40 % (label from 14°), media 40 to 97 % (label from 4°).
+2. `labelled(arc)` gives the position, rotation (within ±90°, so text never reads upside down), anchor and room of a radial label; the page shortens a name that does not fit.
+
 ### Increment 14: Réseau, Soleil, the switch and the search
 
-**Status:** pending
+**Status:** done
 
 Sheet: screens tab (ui-02, ui-03, ui-06), PRD-0001 US-21.
 
@@ -414,9 +432,17 @@ Exit criteria:
 
 1. Screens ui-02, ui-03 and ui-06 match the built site.
 
+Done notes (2026-11-18):
+
+1. The page now reads, from the top: the intro, the switch Réseau / Soleil, the hint of the view, the search (datalist of every name, "Voir"), the drawing with its legend, the card, "Ils relient plusieurs médias", then "Tous les médias" with the genres as sub-headings (ui-06).
+2. `media-graph.ts` registers `network` and `sun`, each returning a view with `focus(id)` and `destroy()`. Opening a card from a list, a chip or the search brings the same node (neighbourhood highlighted, the rest faded) or sector (Soleil zoomed on its owner) forward. Soleil: a tap on a kind or owner sector zooms in, on a medium zooms on its owner and opens its card; the white centre zooms out.
+3. The second script loads on the first showing of the media page (`onRender`, plus a check at start for a page opened at `#media`); a failed load leaves a note sending the visitor to the lists, and can be retried by switching view.
+4. Colours of the kinds are custom properties of `#page-media` in `css/site.css`, read by both drawings and the legends, so they cannot drift. `site.js` grows from 222 to 231 KB (the page and the model), `media-graph.js` from 564 to 570 KB.
+5. Checked from disk at 360 px with every http(s) request blocked: both views draw; a tap on a node (mouse and touch) and on a sector opens its card; Soleil zooms in and back out; "hersant" and "Leman" find Philippe Hersant and Léman Bleu in both views; a chip opens its card; no console error, no request, `scrollWidth` 360.
+
 ### Increment 15: Offline run and screens of the real site
 
-**Status:** pending
+**Status:** done
 
 Sheet: README of the sheet ("Once US-20 and US-21 are built, capture the real site instead"), code tab (offline run).
 
@@ -445,6 +471,12 @@ Prediction:
 
 1. The 7 `views/ui-*.svg` and their dark copies change; no other figure changes.
 
+Done notes (2026-11-18):
+
+1. Offline run: `dist/index.html` from disk with every http(s) request blocked (Playwright, Chromium, 360 px): both views draw, the card opens from a node, a sector, a chip and the search, the rest of the site unchanged, no console error, no request.
+2. `capture-screens.ts` takes the site folder (default `dist/`), emulates reduced motion, waits for the drawing and reaches each state with the page's own controls (the switch, the search, the report box); it needs no network now. The prediction held: the 14 screen figures changed, no diagram.
+3. The sheet's intro, figure captions, header chip, footer and README now describe the built site; ui-05 shows the card of 24 heures without its fög box, which joins it with increment 16. Rendered with the kit repository's `com-artefact-viz` (the installed plugin copy lacks the `slice-design` kind): `PASS: no findings`; republished at https://claude.ai/artifact/KZs83Kw4soJazTrUPeZCXJ (version 3).
+
 ### Increment 16: The fög box
 
 **Status:** pending
@@ -455,6 +487,7 @@ Scope:
 
 1. **Write first, expect red:** extend `tools/media-model.test.ts`: `fogBox(id)` gives the value under the fög's label "Tonalité des votations", the scale, ballots and period, the media average (−4), "Ce n'est pas une position politique du média", source and date; a title without a value gives "Pas de mesure du fög pour ce média"; no output of `fogBox` or `cardLines` contains "gauche" or "droite".
 2. `fogBox` in `media-model.ts`; `media.ts` renders it on the card.
+3. Re-capture ui-05 with `capture-screens.ts`, re-render the sheet and republish it at its address (the fög box was not built when increment 15 captured the screens).
 
 Primary files:
 
@@ -650,9 +683,9 @@ Exit criteria:
 
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| M1: Checked data file (US-23) | 01-06 | in-progress | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
+| M1: Checked data file (US-23) | 01-06 | done | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
-| M3: Réseau and Soleil (US-21) | 11-15 | pending | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
+| M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
 | M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
 | M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |

@@ -27,17 +27,18 @@ The architectural view of one vertical slice, in four layers from the outside in
 | `header.html`, `footer.html` | The labels under the lead, and the foot of the page. |
 | `screens.html`, `api.html`, `code.html`, `database.html` | The content of one tab each. |
 | `*.puml`, `_theme.puml`, `_palette.puml`, `render.sh` | The UML diagram sources and their PlantUML render pipeline (pinned `plantuml/plantuml:1.2026.2`, Docker), copied from `../swiss-politics-launcher/`. |
-| `capture-screens.ts` | Captures the screens at phone width into `views/ui-*.svg`, light and dark frame. Until the media page is built, it captures the owner-approved mockup (v3), whose sources are kept outside git. |
+| `capture-screens.ts` | Captures the screens of the built site (`dist/`, opened from disk) at phone width into `views/ui-*.svg`, light and dark frame. |
 | `views/`, `views/dark/` | The rendered figures, light and dark. Committed. |
 | `out/` | The built page and its verdict. Generated, ignored by git. |
 
-The screens are screenshots of the approved mockup, not of the site: the media page does not exist yet. The mockup draws Soleil with ECharts and loads its libraries from CDNs; the site will draw Soleil in its own SVG and bundle Cytoscape (PRD-0001 §8). The data shown is the mockup's, read on Medienmonitor on 2026-11-17 and not yet re-checked line by line. Once US-20 and US-21 are built, capture the real site instead.
+The screens are screenshots of the built site, with the checked data of `data/media.json`; they follow the owner-approved mockup v3, whose sources stay outside git. The fög box of ui-05 comes with US-22: capture again once it is built.
 
 ## Rebuild
 
 ```bash
-# 0. The screens (needs Chromium and network for the mockup's libraries), from the repository root
-node docs/plans/active/transparency-media/capture-screens.ts [<mockup folder>]
+# 0. The screens (needs Chromium, no network), from the repository root
+npm run build
+node docs/plans/active/transparency-media/capture-screens.ts [<site folder>]
 
 # 1. The UML diagrams, light and dark (needs Docker), from this folder
 ./render.sh
