@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 08
+**Current Increment:** 09
 
 ## Increment Plan
 
@@ -230,7 +230,7 @@ Exit criteria:
 
 ### Increment 08: The media data in the bundle
 
-**Status:** pending
+**Status:** done
 
 Sheet: code tab (`referential.ts`, `tools/build.ts`).
 

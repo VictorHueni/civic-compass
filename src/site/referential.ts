@@ -14,6 +14,7 @@ import ballotFile from "../../data/ballot.json";
 import parliamentFile from "../../data/parliament-current.json";
 import cantonalParliamentsFile from "../../data/cantonal-parliaments.json";
 import cantonalGovernmentsFile from "../../data/cantonal-governments.json";
+import mediaFile from "../../data/media.json";
 import type {
   Ballot,
   BallotFile,
@@ -22,6 +23,8 @@ import type {
   CantonalParliaments,
   CantonalParliamentsFile,
   LinkEntry,
+  MediaFile,
+  MediaOwnership,
   Parliament,
   ParliamentFile,
   PartiesFile,
@@ -57,6 +60,9 @@ export const cantonalParliaments: CantonalParliaments = checked<CantonalParliame
 
 /** Cantonal governments kept by hand, each member with its sources and check date (data/cantonal-governments.json). */
 export const cantonalGovernments: CantonalGovernment[] = checked<CantonalGovernmentsFile>(cantonalGovernmentsFile).cantonal_governments;
+
+/** The media, their publishers and owners, and the fög values, kept by hand (data/media.json, PRD-0001 US-20 to US-25). Removal fingerprints are left out of the bundle. */
+export const mediaOwnership: MediaOwnership = checked<MediaFile>(mediaFile).media_ownership;
 
 /** A verified entry always has a URL (`npm run check` enforces: url null exactly when not_found). */
 function isVerified<T extends LinkEntry>(x: T): x is Linked<T> {

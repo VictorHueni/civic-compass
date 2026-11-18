@@ -8,19 +8,19 @@ import { cpSync, readFileSync, rmSync, statSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { build, type Plugin } from "esbuild";
+import { parseForSite } from "./maintainer-fields.ts";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DIST = join(ROOT, "dist");
 
 rmSync(DIST, { recursive: true, force: true });
 
-/** Fields of data/*.json kept for the maintainers only: removed from the bundle, the site never reads them. */
-const MAINTAINER_ONLY = new Set(["_readme", "left_right", "request"]);
+/** Removes the maintainer-only fields of data/*.json from the bundle (tools/maintainer-fields.ts). */
 const stripMaintainerFields: Plugin = {
   name: "strip-maintainer-fields",
   setup(b) {
     b.onLoad({ filter: /[\\/]data[\\/][^\\/]+\.json$/ }, (args) => {
-      const json = JSON.parse(readFileSync(args.path, "utf8"), (key, value) => (MAINTAINER_ONLY.has(key) ? undefined : value));
+      const json = parseForSite(readFileSync(args.path, "utf8"));
       return { contents: JSON.stringify(json), loader: "json" };
     });
   },
