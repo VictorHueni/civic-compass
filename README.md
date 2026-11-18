@@ -102,9 +102,10 @@ La fiche d'un média, d'une personne ou d'une famille propose « Signaler une er
 2. Dans `holders`, supprimer `name` et ajouter `"removal": { "fingerprint": "<empreinte>", "date": "<AAAA-MM-JJ>", "reason": "person_request" }`.
 3. Remplacer son `id` par un id neutre, `removed_1`, `removed_2`... (un id comme `p_prenom_nom` garderait le nom), dans `holders` et dans chacune de ses participations. Retirer le nom de toute `note` qui le citerait.
 4. `npm run check`, `npm test`, `npm run build`, puis ouvrir la page Médias : le nom ne doit apparaître nulle part. Le contrôle échoue si une mise à jour remet ce nom, sous n'importe quel id, et ses messages ne l'affichent jamais.
-5. Ne pas écrire le nom dans le message de commit, la pull request ni une issue. Répondre à la personne une fois le site publié.
+5. Refaire les captures de la fiche de conception, qui montrent les noms des détenteurs et que le contrôle ne lit pas : `node docs/plans/active/transparency-media/capture-screens.ts` (après le `npm run build` de l'étape 4), vérifier dans `views/` que le nom a disparu, puis reconstruire et republier la fiche selon le README de ce dossier.
+6. Ne pas écrire le nom dans le message de commit, la pull request ni une issue. Répondre à la personne une fois le site publié.
 
-L'empreinte a deux limites (PRD-0001 §8), à dire à la personne dans la réponse : quelqu'un qui soupçonne déjà un nom peut le tester contre l'empreinte, et le nom reste dans l'historique git des versions publiées avant le retrait.
+L'empreinte a deux limites (PRD-0001 §8), à dire à la personne dans la réponse : quelqu'un qui soupçonne déjà un nom peut le tester contre l'empreinte, et le nom reste dans l'historique git des versions publiées avant le retrait, données comme captures de la fiche.
 
 ## Design
 
