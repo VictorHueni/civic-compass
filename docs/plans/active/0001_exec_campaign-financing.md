@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 04
+**Current Increment:** 05
 
 ## Increment Plan
 
@@ -122,7 +122,9 @@ Exit criteria:
 
 ### Increment 04: The `campaign-financing` command and its generated file
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the disclaimer is fetched with the exports, from the portal's texts (`/api/frontend/v1/translations`, key `FE|Information|Campaign financing`), never typed; a removal matches « Prénom Nom » or « Nom Prénom »; the first real run wrote 4 items, 17 committees, 29 donations (2 by persons).
 
 Scope:
 

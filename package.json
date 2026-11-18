@@ -15,6 +15,7 @@
     "parliament": "node tools/cli.ts parliament",
     "cantonal-parliaments": "node tools/cli.ts cantonal-parliaments",
     "media-register": "node tools/cli.ts media-register",
+    "campaign-financing": "node tools/cli.ts campaign-financing",
     "test": "node --test tools/*.test.ts"
   },
   "devDependencies": {
