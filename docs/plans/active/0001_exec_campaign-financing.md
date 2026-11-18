@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 03
+**Current Increment:** 04
 
 ## Increment Plan
 
@@ -96,7 +96,9 @@ Exit criteria:
 
 ### Increment 03: Reading one CDF workbook
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the export's sheet 2 headers are the CDF's full labels (« Nom de l'auteur/e de la libéralité », « Valeur (en CHF) », « Date d'octroi de la libéralité »…), checked column by column, extra columns refused; `readFinancing` returns `left_out` (the declarations it counted and left out) and `null` when the export holds no budget declaration; the fixtures were downloaded again on 2026-11-19, their sheets identical to the copies of 2026-11-18.
 
 Scope:
 
