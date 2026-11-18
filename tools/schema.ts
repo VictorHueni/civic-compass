@@ -83,6 +83,21 @@ export function checkValue(value: unknown, rule: Rule, name: string, where: stri
       }
       for (const [k, v] of Object.entries(value)) checkValue(v, rule.value, `${name}.${k}`, where, report);
       return;
+    case "variant": {
+      if (!isPlainObject(value)) {
+        report.add(where, `« ${name} » doit être un objet`);
+        return;
+      }
+      const tags = Object.keys(rule.schemas);
+      const tag = value[rule.key];
+      if (typeof tag !== "string" || !tags.includes(tag)) {
+        report.add(where, `« ${name}.${rule.key} » vaut ${show(tag)} (attendu : ${tags.join(", ")})`);
+        return;
+      }
+      const { [rule.key]: _, ...rest } = value;
+      checkObject(rest, rule.schemas[tag], [...where, `${name} ${tag}`], report);
+      return;
+    }
   }
 }
 

@@ -1,0 +1,4 @@
+{
+  "_readme": "Tenu à la main. Donateurs retirés à leur demande (PRD-0001 US-27) : seule l'empreinte du nom est gardée (node tools/cli.ts media-fingerprint, nom lu sur l'entrée standard), jamais le nom. npm run campaign-financing remplace le donateur correspondant par « une personne privée » ; npm run check refuse qu'il revienne. reason : person_request. Procédure : README, section « Financement des campagnes : corrections et retraits ».",
+  "donor_removals": []
+}

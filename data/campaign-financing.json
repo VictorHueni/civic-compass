@@ -1,0 +1,9 @@
+{
+  "_readme": "Généré par « npm run campaign-financing » depuis les exports du Contrôle fédéral des finances (CDF, politikfinanzierung.efk.admin.ch) : ne pas modifier à la main, relancer la commande. Pas encore généré.",
+  "campaign_financing": {
+    "source_page": "https://politikfinanzierung.efk.admin.ch/app/fr/",
+    "disclaimer": "",
+    "retrieved_on": "2026-11-19",
+    "items": []
+  }
+}

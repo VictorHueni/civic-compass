@@ -1,5 +1,5 @@
 {
-  "_readme": "Prochain scrutin. Ne jamais inventer un mot d'ordre : source obligatoire dans sources. Valeurs des partis : yes, no ou free (liberté de vote, seulement si la source du parti le dit). Clés de parties = abréviations (abbr) des partis CH de parties.json. Après modification : npm run check.",
+  "_readme": "Prochain scrutin. Ne jamais inventer un mot d'ordre : source obligatoire dans sources. Valeurs des partis : yes, no ou free (liberté de vote, seulement si la source du parti le dit). Clés de parties = abréviations (abbr) des partis CH de parties.json. Après modification : npm run check. financing_id : id de l'objet sur le portail du Contrôle fédéral des finances (politikfinanzierung.efk.admin.ch, arbre /api/frontend/v1/fr/campaign_financings), null s'il n'y en a pas ; npm run campaign-financing lit l'export de cet id.",
   "ballot": {
     "date": "2026-11-29",
     "label": "Votation populaire du 29 novembre 2026",
@@ -26,7 +26,8 @@
           "PEV": "yes",
           "PLR": "no",
           "UDC": "no"
-        }
+        },
+        "financing_id": 33
       },
       {
         "id": "feux",
@@ -46,7 +47,8 @@
           "PEV": "yes",
           "PLR": "no",
           "UDC": "no"
-        }
+        },
+        "financing_id": 34
       },
       {
         "id": "couples",
@@ -66,7 +68,8 @@
           "PEV": "yes",
           "PLR": "no",
           "UDC": "yes"
-        }
+        },
+        "financing_id": 35
       },
       {
         "id": "armes",
@@ -87,7 +90,8 @@
           "PEV": "no",
           "PLR": "yes",
           "UDC": "yes"
-        }
+        },
+        "financing_id": 36
       }
     ],
     "cantons": {

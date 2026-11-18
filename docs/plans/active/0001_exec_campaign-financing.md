@@ -37,14 +37,14 @@ Principles:
 5. **Keep only what is shown.** The generated file, public in the repository, keeps a person's first name and name, never the commune, the « Suisse de l'étranger » flag or anything else the CDF publishes about them (US-27, PRD-0001 §3).
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
-**Overall Status:** pending
-**Current Increment:** --
+**Overall Status:** in progress
+**Current Increment:** 03
 
 ## Increment Plan
 
 ### Increment 01: The XLSX reader accepts a workbook without shared strings
 
-**Status:** pending
+**Status:** done
 
 Scope:
 
@@ -68,7 +68,9 @@ Exit criteria:
 
 ### Increment 02: Types, schemas and the CDF id of each ballot item
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the donor is a tagged union on `type` (`{ type: "company", name }`, `{ type: "person", first_name, name }`, `{ type: "removed" }`), checked by a new `variant` schema rule (`tools/schema.ts`), so the schema itself refuses a person's commune or a donor that is both; a campaign keeps the CDF's six receipt columns (`total`, `money_donations`, `in_kind_donations`, `events`, `sales`, `own_funds`) instead of a derived `from_donations`; campaigns and donations carry the CDF's `actor_id` (a donation's receiver) and a donation its CDF `id`; `given_on` is required (every donation of the four exports has a date); the removals reuse `Removal` (`DonorRemovalsFile.donor_removals`).
 
 Scope:
 
