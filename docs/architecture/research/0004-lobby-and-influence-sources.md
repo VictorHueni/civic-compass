@@ -11,7 +11,7 @@ last_reviewed: 2026-11-18
 review_interval: 90d
 ---
 
-<!-- doc-version: 1.0 | created: 2026-11-18 | last-verified: 2026-11-18 -->
+<!-- doc-version: 1.1 | created: 2026-11-18 | last-verified: 2026-11-18 -->
 
 # Research-0004: Sources for lobbies, interest ties and political financing
 
@@ -255,6 +255,16 @@ To be presented one at a time, with the material above:
 3. **Lobbywatch's place:** link only (no licence duty), or reuse its branches and lobby groups with "Source : Lobbywatch.ch, CC BY-SA 4.0" on that content; and whether its own ratings (effectiveness, disclosure) are ever shown, which this note advises against.
 4. **Official ties source:** the new Parliament API through `npm run parliament` (needs the key, stays on the maintainer's machine, PRD-0001 §8), or the public OData service (no key, closes at the latest in 2028).
 
+### Owner rulings (2026-11-19)
+
+Taken on mockups with real data ([canvas](https://claude.ai/artifact/7KRYhRJiiwAGCxzKewia1g): campaign financing of the AVS / TVA item of 29.11.2026, the declared ties of one federal MP, the Lobbies page by sector, the six cantons by link).
+
+1. **Official ties source (decision 4): the new Parliament API.** The declared interest ties (`activeInterests`, with `isPaid`) are added to the request of `npm run parliament`, which already writes each member with the same id (`data/parliament-current.json`, Céline Amaudruz `id` 4090 = OData `PersonNumber`); the key stays on the maintainer's machine (PRD-0001 §8). The public OData service is not used, as it closes at the latest in 2028. Lobbywatch stays a link to the member's page, with its own count of ties shown as Lobbywatch's, under CC BY-SA.
+2. **The financing view is a step named with a verb.** The ballot item's new step is « Suivre l'argent », beside « Comprendre », « Comparer » and « Décider ».
+3. **Donations are read by the committee that receives them.** One block per receiving committee, with its side (pour or contre), « Reçu par », its total and number of donations, and one line per donor starting with « de »; committees with no donation above CHF 15,000 are named in one line.
+
+Decisions 1 (scope and order), 2 (private persons) and 3 (Lobbywatch's place, beyond decision 4) remain open.
+
 ### Open items (to file once the ledger exists)
 
 The repository has no central open-items ledger yet (PRD-0001 §9), so the gaps found here are listed for filing:
@@ -318,3 +328,4 @@ _(empty until Mode 4 Freeze)_
 | Date | Author | Mode | Change summary |
 |---|---|---|---|
 | 2026-11-18 | Victor Hueni (Claude) | Scaffold + Fill | Created and filled in one pass. Step 0 answers taken from the precedent of Research-0003: no ADR yet (1B), custom list of 5 questions (2D), deep on the load-bearing questions and quick on the rest (3C), load-bearing sources re-read directly (4B): the CDF export for the AVS / TVA item (XLSX, both sheets read), the Parliament's `PersonInterest` (count 2,015 in French), the Lobbywatch licence footer. Other rows were read by three research passes (Lobbywatch and prior art, federal sources, the six cantons) and say so. Not readable: opendata.swiss (403), parlement.vs.ch (JavaScript), lex.vs.ch, letemps.ch (WebFetch refused; read with curl). Corrections to the passes' briefs: the paid/unpaid rule dates from 2019, not 2023; the federal financing rules cover parties, not parliamentary groups. Status: Draft until the owner rules on the four decisions listed in the Recommendation. |
+| 2026-11-19 | Victor Hueni (Claude) | Fill | Owner rulings 1 to 3 recorded on the mockups: official ties from the new Parliament API through `npm run parliament`; the financing step named « Suivre l'argent »; donations grouped by receiving committee. |
