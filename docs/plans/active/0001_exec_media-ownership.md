@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 16
+**Current Increment:** 17
 
 ## Increment Plan
 
@@ -479,7 +479,7 @@ Done notes (2026-11-18):
 
 ### Increment 16: The fög box
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (fög rows of the card table), screens tab (ui-05), PRD-0001 US-22.
 
@@ -503,6 +503,13 @@ Test gate:
 Exit criteria:
 
 1. Every US-22 criterion holds on the seven measured titles and on one unmeasured title.
+
+Done notes (2026-11-18):
+
+1. Where this plan and the PRD differ, the PRD decides: US-22 requires the scale to be described as "−100 (support for centre-left proposals) to +100 (support for centre-right proposals)" and forbids "gauche" and "droite" as a badge of the outlet. So the test checks that the two words appear only in the description of the scale's ends, never in the value, the label, the "Pas de mesure" sentence or the card lines, rather than nowhere at all.
+2. `fogBox` takes every figure from the edition in the file (ballots, period, scale, average, source), none hard-coded; values print with a true minus sign. The box sits on the card under the lines, with a scale marking the value and the media average; the list entry of a measured title carries a "fög" badge, as the screens tab describes.
+3. On the real file: the seven measured titles and RTS's two outlets (RTS 1 and rts.ch, both measured as "RTS") show their value; La Liberté shows "Pas de mesure du fög pour ce média."
+4. ui-05 re-captured on the fög box; ui-06 (badges) and ui-07 (the "Pas de mesure" box on La Liberté) changed with it; ui-02, re-laid at random by fcose, was kept as it was. The sheet renders `PASS: no findings` and is republished (version 4).
 
 ### Increment 17: The name fingerprint and its check rule
 
@@ -686,6 +693,6 @@ Exit criteria:
 | M1: Checked data file (US-23) | 01-06 | done | `data/media.json` holds the 38 media, their publishers, owners and fög values, every fact sourced; `npm run check` enforces the rules | `npm test && npm run check && npm run links` | Check green on the real file; Léman Bleu at 92.47 %; no page yet | `feat(media): …` and `data(media): …`, PR "feat(media): hand-kept media file checked by npm run check" |
 | M2: List and card (US-20) | 07-10 | done | The Transparence menu and the Médias page with the lists by genre, the card and the error report | `npm test && npm run check && npm run build`, from disk | Screens ui-01, ui-04, ui-07 match | PR "feat(media): show who publishes and owns each medium" |
 | M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
-| M4: fög box (US-22) | 16 | pending | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
+| M4: fög box (US-22) | 16 | done | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
 | M5: Removal (US-24) | 17-19 | pending | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
 | M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |

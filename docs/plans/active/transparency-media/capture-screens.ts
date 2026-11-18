@@ -45,7 +45,7 @@ const SCREENS: Screen[] = [
     steps: ["document.querySelector('[data-view=\"sun\"]').click()", ...scrollTo(".media-switch", -110)],
   },
   { name: "ui-04-media-card-disputed", ready: NETWORK_DRAWN, steps: [find("TV LEMAN BLEU SA"), ...scrollTo("#media-card", -20)] },
-  { name: "ui-05-media-card-fog", ready: NETWORK_DRAWN, steps: [find("24 heures"), ...scrollTo("#media-card", -20)] },
+  { name: "ui-05-media-card-fog", ready: NETWORK_DRAWN, steps: [find("24 heures"), ...scrollTo("#media-card .fog-box", -300)] },
   { name: "ui-06-media-bridges-list", ready: NETWORK_DRAWN, steps: scrollTo(".media-chips", -110) },
   {
     name: "ui-07-media-report-error",

@@ -6,6 +6,9 @@
  * holders. Decision table: docs/plans/active/transparency-media/ (API tab). A line appears only when a source
  * supports it: no holder named, no "Propriétaire" line, never "inconnu".
  *
+ * The fög box of a medium's card (US-22): the tone of its coverage of federal ballots, under the fög's own label,
+ * or "Pas de mesure du fög". "Gauche" and "droite" only describe the ends of the scale, never the title.
+ *
  * The graph views: the media a holder reaches, the people and families that link several media ("Ils relient
  * plusieurs médias"), the three rings of Soleil, the search by name without accents.
  *
@@ -207,4 +210,52 @@ export function search(m: MediaOwnership, query: string): string | null {
   if (!q) return null;
   const named = [...m.media, ...m.companies, ...m.holders].filter((e) => e.name).map((e) => ({ id: e.id, name: searchable(e.name ?? "") }));
   return (named.find((e) => e.name === q) ?? named.find((e) => e.name.includes(q)))?.id ?? null;
+}
+
+/** "−5", "+3", "0": a number with a true minus sign, as the fög prints it. */
+function signed(n: number): string {
+  return n > 0 ? "+" + n : n < 0 ? "−" + -n : "0";
+}
+
+const FOG_LABEL = "Tonalité des votations";
+
+/** The fög box of a medium's card: the value when the fög measures the title, else a sentence saying it does not. */
+export type FogBox =
+  | { measured: false; label: string; text: string }
+  | {
+      measured: true;
+      label: string;
+      /** The fög's own name for what it measures. */
+      edition: string;
+      value: number;
+      shown: string;
+      min: number;
+      max: number;
+      average: number;
+      about: string;
+      scale: string;
+      averageText: string;
+      disclaimer: string;
+      source: SourceRef;
+    };
+
+export function fogBox(m: MediaOwnership, mediumId: string): FogBox {
+  const v = m.fog.values.find((x) => x.medium === mediumId);
+  if (!v) return { measured: false, label: FOG_LABEL, text: "Pas de mesure du fög pour ce média." };
+  const e = m.fog.edition;
+  return {
+    measured: true,
+    label: FOG_LABEL,
+    edition: e.label,
+    value: v.value,
+    shown: signed(v.value),
+    min: e.scale_min,
+    max: e.scale_max,
+    average: e.average,
+    about: `Tonalité de la couverture de ${e.ballots} votations fédérales (${e.period}) pour ${v.measured_as}.`,
+    scale: `Échelle de ${signed(e.scale_min)} (soutien aux projets de centre-gauche) à ${signed(e.scale_max)} (soutien aux projets de centre-droite).`,
+    averageText: `Moyenne des médias étudiés : ${signed(e.average)}.`,
+    disclaimer: "Ce n'est pas une position politique du média.",
+    source: { url: e.source, checked_on: e.checked_on },
+  };
 }

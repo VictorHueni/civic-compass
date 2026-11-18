@@ -339,3 +339,16 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .media-chip{min-height:44px;padding:0 14px;border:1px solid var(--cc-border);border-radius:999px;background:#fff;font:inherit;font-size:.92rem;color:var(--cc-text);cursor:pointer}
 .media-chip:hover{border-color:var(--cc-accent)}
 .media-genre{margin:20px 0 4px;font-size:1rem}
+/* The fög box of a medium's card (PRD-0001 US-22) */
+.fog-box{margin-top:12px;padding:12px 14px;border-radius:6px;background:var(--cc-surface)}
+.fog-box .media-card__h{margin-top:0}
+.fog-box__edition{margin:0;font-size:.82rem;color:var(--cc-muted)}
+.fog-box__value{margin:6px 0 0;font-size:1.6rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif;font-variant-numeric:tabular-nums}
+.fog-box__text{margin:8px 0 0;font-size:.9rem}
+.fog-box__disclaimer{font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.fog-scale{position:relative;height:30px;margin:4px 10px 0}
+.fog-scale__axis{position:absolute;left:0;right:0;top:12px;height:2px;background:var(--cc-border)}
+.fog-scale__tick{position:absolute;top:17px;font-size:.7rem;color:var(--cc-muted);transform:translateX(-50%)}
+.fog-scale__mark{position:absolute;top:5px;width:4px;height:16px;border-radius:2px;background:var(--cc-accent);transform:translateX(-50%)}
+.fog-scale__mark--average{top:8px;height:10px;width:3px;background:var(--cc-muted)}
+.media-entry__badge{display:inline-block;margin-left:8px;padding:0 8px;border-radius:999px;background:var(--cc-surface);font-family:Font-Regular,Hind,Fallback-font,sans-serif;font-size:.78rem;color:var(--cc-muted);vertical-align:middle}

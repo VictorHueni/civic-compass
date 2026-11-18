@@ -7,7 +7,7 @@
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { bridges, cardLines, chainTop, mainHolder, reach, rings, search } from "../src/site/media-model.ts";
+import { bridges, cardLines, chainTop, fogBox, mainHolder, reach, rings, search } from "../src/site/media-model.ts";
 import type { Company, Holder, Holding, MediaFile, MediaOwnership, Medium } from "../src/types.ts";
 
 const SRC = "https://example.org/mm";
@@ -246,4 +246,66 @@ test("on the real data/media.json, every medium is in the outer ring exactly onc
     assert.ok(b.media.length >= 2, b.id);
     assert.ok(m.holders.some((h) => h.id === b.id && (h.kind === "person" || h.kind === "family")), b.id);
   }
+});
+
+/** The fixture with the fög edition of February 2026 and one measured title. */
+function withFog(): MediaOwnership {
+  const m = fixture();
+  m.fog = {
+    edition: {
+      label: "Tonalité de la couverture des votations fédérales, fög / Université de Zurich",
+      period: "2018 à 2025",
+      ballots: 61,
+      scale_min: -100,
+      scale_max: 100,
+      average: -4,
+      source: "https://example.org/foeg.pdf",
+      checked_on: DAY,
+    },
+    values: [{ medium: "m_tx", measured_as: "tx.ch", value: -5 }],
+  };
+  return m;
+}
+
+test("fogBox gives a measured title its value under the fög's label, the scale, the ballots, the average and the source", () => {
+  const box = fogBox(withFog(), "m_tx");
+  assert.ok(box.measured);
+  assert.equal(box.label, "Tonalité des votations");
+  assert.equal(box.edition, "Tonalité de la couverture des votations fédérales, fög / Université de Zurich");
+  assert.equal(box.value, -5);
+  assert.equal(box.shown, "−5", "a true minus sign, as the fög prints it");
+  assert.equal(box.about, "Tonalité de la couverture de 61 votations fédérales (2018 à 2025) pour tx.ch.");
+  assert.equal(box.scale, "Échelle de −100 (soutien aux projets de centre-gauche) à +100 (soutien aux projets de centre-droite).");
+  assert.deepEqual([box.min, box.max, box.average], [-100, 100, -4]);
+  assert.equal(box.averageText, "Moyenne des médias étudiés : −4.");
+  assert.equal(box.disclaimer, "Ce n'est pas une position politique du média.");
+  assert.deepEqual(box.source, { url: "https://example.org/foeg.pdf", checked_on: DAY });
+});
+
+test("fogBox says « Pas de mesure du fög pour ce média » for a title the fög does not measure, never a guess", () => {
+  const box = fogBox(withFog(), "m_alone");
+  assert.deepEqual(box, { measured: false, label: "Tonalité des votations", text: "Pas de mesure du fög pour ce média." });
+});
+
+test("« gauche » and « droite » only describe the ends of the scale, never the title: not in its value, label or card lines", () => {
+  const m = withFog();
+  const box = fogBox(m, "m_tx");
+  assert.ok(box.measured);
+  const { scale, ...rest } = box;
+  assert.match(scale, /gauche.*droite/);
+  for (const text of [JSON.stringify(rest), JSON.stringify(fogBox(m, "m_alone")), JSON.stringify(cardLines(m, "m_tx"))]) {
+    assert.doesNotMatch(text, /gauche|droite/i);
+  }
+});
+
+test("on the real data/media.json, the seven measured titles and RTS's two outlets show a value, and La Liberté shows none", () => {
+  const file = JSON.parse(readFileSync(new URL("../data/media.json", import.meta.url), "utf8")) as MediaFile;
+  const m = file.media_ownership;
+  const shown: Record<string, string> = {};
+  for (const x of m.media) {
+    const box = fogBox(m, x.id);
+    if (box.measured) shown[x.id] = box.shown;
+  }
+  assert.deepEqual(shown, { m_matin_dimanche: "−11", m_lematin: "−9", m_tdg: "−7", m_le_temps: "−6", m_24heures: "−5", m_20minutes: "−3", m_rts_1: "−2", m_rts_ch: "−2" });
+  assert.equal(fogBox(m, "m_la_liberte").measured, false);
 });
