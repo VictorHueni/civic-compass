@@ -72,6 +72,7 @@ npm run links                    # teste les URL actuelles de data/*.json (--all
 npm run parliament               # écrit data/parliament-current.json (clé de l'API du Parlement requise)
 npm run cantonal-parliaments     # écrit data/cantonal-parliaments.json (tableau OFS des élections cantonales)
 node tools/cli.ts media-fingerprint   # lit un nom sur l'entrée standard et affiche son empreinte (retrait d'un nom)
+npm run media-register           # écrit data/media-register.json (registre du commerce) et liste les différences avec data/media.json
 npm test                         # tests de l'outil (lecteur xlsx, parlements cantonaux)
 ```
 
@@ -90,6 +91,10 @@ La fiche d'un média, d'une personne ou d'une famille propose « Signaler une er
 **Répondre.** Accuser réception à l'expéditeur, sans recopier la demande dans une issue publique.
 
 **Une erreur.** Vérifier la source donnée (ou en trouver une), corriger l'entrée de `data/media.json` avec sa `source` et la date du jour dans `checked_on`, puis `npm run check`. Sans source, ne rien changer et le dire à l'expéditeur.
+
+**Le registre du commerce.** `npm run media-register` demande au registre (données liées de Zefix sur lindas.admin.ch, sans clé) le nom, la forme juridique et le siège de chaque société ou détenteur qui a un IDE dans `data/media.json`, écrit sa réponse dans `data/media-register.json` (généré, ne jamais le modifier à la main) et liste les différences : nom, forme ou siège différents, société en liquidation, IDE absent du registre (radiée ou erroné). Elle ne modifie jamais `data/media.json` : corriger à la main, source à l'appui. Code de sortie 0 sans différence, 1 avec des différences, 2 si le registre ne répond pas (rien n'est alors écrit).
+
+**Les valeurs du fög.** Quand le fög publie une nouvelle édition, remplacer l'édition et les valeurs de `fog` dans `data/media.json`, avec la source et la date ; `npm run check` avertit quand l'édition a été vérifiée il y a plus de 180 jours.
 
 **Le retrait d'un nom.** Une personne nommée comme détentrice (personne ou famille) peut demander que son nom soit retiré. La participation reste, avec sa part : le site affiche « actionnaire privé », sans fiche, sans nom.
 

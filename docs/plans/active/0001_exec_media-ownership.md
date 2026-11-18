@@ -4,7 +4,7 @@ title: "Implementation Plan: Media ownership (Transparence)"
 description: "Builds the Médias page of the Transparence area, PRD-0001 US-20 to US-25, in 22 increments and 6 milestones, one pull request per story: the checked data file first, then the list and card, the two graph views, the fög box, the removal mechanics and the register command."
 tags: [implementation-plan, civic-compass, media, transparency]
 timestamp: 2026-11-18T12:00:00Z
-status: draft
+status: done
 owner: Victor Hueni
 last_reviewed: 2026-11-18
 review_interval: 30d
@@ -27,8 +27,8 @@ Principles:
 4. **Data is read by hand and sourced.** Medienmonitor is read in the browser, never scraped; every fact carries its source URL and `checked_on`; nothing is guessed (`CLAUDE.md`, US-23).
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
-**Overall Status:** in-progress
-**Current Increment:** 22
+**Overall Status:** done
+**Current Increment:** none (all 22 done)
 
 ## Increment Plan
 
@@ -684,7 +684,7 @@ Done notes (2026-11-18):
 
 ### Increment 22: Close the slice
 
-**Status:** pending
+**Status:** done
 
 Sheet: all tabs.
 
@@ -707,6 +707,12 @@ Exit criteria:
 
 1. Every criterion of US-20 to US-25 is ticked or has a written reason.
 
+Done notes (2026-11-18):
+
+1. The 28 criteria of US-20 to US-25 are ticked and the six stories set to done in PRD-0001. Two criteria are commitments of the maintainer rather than behaviour of the code, and carry their reason: US-22's update when the fög publishes new figures (prompted by the 180-day warning on the edition; the README now says how) and US-24's 30 days (the README procedure; no check can enforce a delay).
+2. Each "left to the implementation" item of the sheet's four tabs now says what the build settled; two stay open: the offline run is run by hand, not in CI (it needs a browser there), and splitting `media.json` is not needed for six cantons.
+3. README: `npm run media-register` and the fög update join the section "Médias : corrections et retraits". The sheet re-renders `PASS: no findings` and is republished (version 6).
+
 ## Delivery Rules
 
 1. One increment per commit.
@@ -727,4 +733,4 @@ Exit criteria:
 | M3: Réseau and Soleil (US-21) | 11-15 | done | Both graph views from a second script, search, bridges list; screens of the real site in the sheet | Same, plus the offline run | Works from disk with no network; sheet republished | PR "feat(media): explore the ownership graph" |
 | M4: fög box (US-22) | 16 | done | The fög value under its own label, or "Pas de mesure du fög" | `npm test && npm run build` | No "gauche" or "droite" badge | PR "feat(media): show the fög index of a medium" |
 | M5: Removal (US-24) | 17-19 | done | Removal by fingerprint, enforced by the check; "actionnaire privé" on the page; the 30-day procedure written | `npm test && npm run check` | A removed name cannot come back | PR "feat(media): remove a named owner on request" |
-| M6: Register check (US-25) | 20-22 | pending | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |
+| M6: Register check (US-25) | 20-22 | done | `npm run media-register` compares the publishers with the commercial register; the slice is closed in the PRD | `npm test && npm run media-register && npm run check` | Differences reported, hand-kept file untouched; criteria ticked | PR "feat(media): check publishers against the commercial register" |

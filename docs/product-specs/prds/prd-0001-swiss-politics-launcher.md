@@ -327,96 +327,96 @@ As a voter, I want to tap a party on the Confederation page to see who sits for 
 ### PRD-0001.US-20 · See who publishes and who owns a media outlet
 
 **Persona:** voter
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a voter, I want to see, for a newspaper, radio, TV channel or news site of my region, which company publishes it and who owns that company so that I know whose interests stand behind what I read.
 
 **Acceptance Criteria:**
-- [ ] A new page, under a "Transparence" menu group, lists the media of the six covered cantons that Medienmonitor Schweiz covers, plus any title whose publisher is sourced (Research-0003, ruling 2), grouped by genre (presse, radio, télévision, en ligne).
-- [ ] Each title has an "Éditeur" line: the publishing company as the commercial register names it, with its legal form and seat, sourced to the register and to the title's own imprint for the link between them.
-- [ ] Each title has a "Propriétaire" line only when a source names the owner (Medienmonitor, the company's annual report, the partners of a Sàrl in the register), with each holder's share when published; otherwise the line is absent, never guessed.
-- [ ] When two sources disagree (Léman Bleu: the same 24.66 % share given to ESH Médias on one Medienmonitor page and to Philippe Hersant on another), both are shown and the line says the sources disagree.
-- [ ] Every line names its source with a link and its check date; the page names Medienmonitor (Publicom for OFCOM) as required by its terms ("nur unter Quellenangabe").
+- [x] A new page, under a "Transparence" menu group, lists the media of the six covered cantons that Medienmonitor Schweiz covers, plus any title whose publisher is sourced (Research-0003, ruling 2), grouped by genre (presse, radio, télévision, en ligne).
+- [x] Each title has an "Éditeur" line: the publishing company as the commercial register names it, with its legal form and seat, sourced to the register and to the title's own imprint for the link between them.
+- [x] Each title has a "Propriétaire" line only when a source names the owner (Medienmonitor, the company's annual report, the partners of a Sàrl in the register), with each holder's share when published; otherwise the line is absent, never guessed.
+- [x] When two sources disagree (Léman Bleu: the same 24.66 % share given to ESH Médias on one Medienmonitor page and to Philippe Hersant on another), both are shown and the line says the sources disagree.
+- [x] Every line names its source with a link and its check date; the page names Medienmonitor (Publicom for OFCOM) as required by its terms ("nur unter Quellenangabe").
 
 ### PRD-0001.US-21 · Explore the ownership graph
 
 **Persona:** voter
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a voter, I want to see the media and their owners as one picture so that I notice who holds several media and how far up the chains go.
 
 **Acceptance Criteria:**
-- [ ] Two views of the same data with a switch (Research-0003, ruling 5): **Réseau**, every owner including minority holders, an arrow from owner to owned with the share; **Soleil**, three rings (kind of top owner, top owner, media), each media under the holder of the largest published share, the centre ring in colour only.
-- [ ] Tapping a node or a sector opens the same card as US-20 (holders, holdings, sources, dates); a search by name (media, company or person) works in both views.
-- [ ] The page always shows every medium of French-speaking Switzerland: the site's "Territoire" selector is hidden on this page and filters nothing (owner, 2026-11-17).
-- [ ] A list "Ils relient plusieurs médias" names the people and families present in the chain of at least two media.
-- [ ] Readable at 360 px width without sideways scroll of the page; the graph pans and zooms by touch inside its own box.
-- [ ] Keyboard and screen-reader users reach the same facts through the list of US-20; the drawing has a text label and does not trap focus.
-- [ ] The built site still works from `dist/index.html` with no network (goal 4).
+- [x] Two views of the same data with a switch (Research-0003, ruling 5): **Réseau**, every owner including minority holders, an arrow from owner to owned with the share; **Soleil**, three rings (kind of top owner, top owner, media), each media under the holder of the largest published share, the centre ring in colour only.
+- [x] Tapping a node or a sector opens the same card as US-20 (holders, holdings, sources, dates); a search by name (media, company or person) works in both views.
+- [x] The page always shows every medium of French-speaking Switzerland: the site's "Territoire" selector is hidden on this page and filters nothing (owner, 2026-11-17).
+- [x] A list "Ils relient plusieurs médias" names the people and families present in the chain of at least two media.
+- [x] Readable at 360 px width without sideways scroll of the page; the graph pans and zooms by touch inside its own box.
+- [x] Keyboard and screen-reader users reach the same facts through the list of US-20; the drawing has a text label and does not trap focus.
+- [x] The built site still works from `dist/index.html` with no network (goal 4).
 
 ### PRD-0001.US-22 · See the fög index of a media outlet
 
 **Persona:** voter
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a voter, I want to see how a media outlet covered federal ballots, as measured by researchers, so that I can weigh its coverage without being told it is "left" or "right".
 
 **Acceptance Criteria:**
-- [ ] For the titles the fög measures (Le Matin Dimanche, lematin.ch, tdg.ch, letemps.ch, 24heures.ch, 20minutes.ch, RTS), the card shows the value under the fög's own label: tone of the coverage of federal ballots, number of ballots and period (61 ballots, 2018 to 2025), on a scale from −100 (support for centre-left proposals) to +100 (support for centre-right proposals).
-- [ ] The media average (−4) is shown beside the value, and the card says this is not the outlet's political position.
-- [ ] The words "gauche" and "droite" are never used as a badge of the outlet.
-- [ ] A title the fög does not measure shows "Pas de mesure du fög pour ce média", never a guess.
-- [ ] The value is stored as a sourced fact (value, edition, source URL, check date) and updated when the fög publishes new figures.
+- [x] For the titles the fög measures (Le Matin Dimanche, lematin.ch, tdg.ch, letemps.ch, 24heures.ch, 20minutes.ch, RTS), the card shows the value under the fög's own label: tone of the coverage of federal ballots, number of ballots and period (61 ballots, 2018 to 2025), on a scale from −100 (support for centre-left proposals) to +100 (support for centre-right proposals).
+- [x] The media average (−4) is shown beside the value, and the card says this is not the outlet's political position.
+- [x] The words "gauche" and "droite" are never used as a badge of the outlet.
+- [x] A title the fög does not measure shows "Pas de mesure du fög pour ce média", never a guess.
+- [x] The value is stored as a sourced fact (value, edition, source URL, check date) and updated when the fög publishes new figures. The update is the maintainer's: `npm run check` warns when the edition was checked more than 180 days ago (US-23), which prompts a look for a newer edition.
 
 ### PRD-0001.US-23 · Keep the media data by hand, checked
 
 **Persona:** maintainer
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a maintainer, I want the media, their publishers and their owners in one data file checked by `npm run check` so that adding or correcting an owner is data work only (goal 5).
 
 **Acceptance Criteria:**
-- [ ] One hand-kept file holds the media (name, genre, regions, publisher), the companies (name, legal form, seat, UID when known), the other holders (person, family, public body, association or foundation) and the holdings (holder, held, share or none, source URL, `checked_on`, and, when sources disagree, a dispute key shared by the disagreeing holdings with a note naming the sources); its schema lives in `src/types.ts`.
-- [ ] `npm run check` fails when a holding names a missing holder, when published shares in one company add up to more than 100 %, when a fact has no source, or when a media has no publisher. In that sum a disputed share counts once, as one holding: Léman Bleu's 24.66 %, given to two holders, makes 92.47 %, not 117.13 % (owner, 2026-11-18).
-- [ ] `npm run check` warns, never fails, when a holding or a fög value was checked more than 180 days ago (as US-18).
-- [ ] Medienmonitor is read by hand (HTML only, no download); the file says so, and no script scrapes it into the site.
+- [x] One hand-kept file holds the media (name, genre, regions, publisher), the companies (name, legal form, seat, UID when known), the other holders (person, family, public body, association or foundation) and the holdings (holder, held, share or none, source URL, `checked_on`, and, when sources disagree, a dispute key shared by the disagreeing holdings with a note naming the sources); its schema lives in `src/types.ts`.
+- [x] `npm run check` fails when a holding names a missing holder, when published shares in one company add up to more than 100 %, when a fact has no source, or when a media has no publisher. In that sum a disputed share counts once, as one holding: Léman Bleu's 24.66 %, given to two holders, makes 92.47 %, not 117.13 % (owner, 2026-11-18).
+- [x] `npm run check` warns, never fails, when a holding or a fög value was checked more than 180 days ago (as US-18).
+- [x] Medienmonitor is read by hand (HTML only, no download); the file says so, and no script scrapes it into the site.
 
 ### PRD-0001.US-24 · Respect the people named as owners
 
 **Persona:** maintainer
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a maintainer, I want every person named as a media owner to be shown fairly and to be able to have an error corrected or the entry removed so that the site meets the data protection act (Research-0003, ruling 3).
 
 **Acceptance Criteria:**
-- [ ] A person is shown with name and share only, as the source publishes them, with the source and the check date; no photo, age, address or contact.
-- [ ] The media page offers a way to report an error or ask for removal ("Signaler une erreur"): the address huni.victor@gmail.com, shown as selectable text with a `mailto:` link, and what to write (the media or person concerned, the error, the source if any).
-- [ ] A removal is recorded in the data (a fingerprint of the person's name, date, reason "demande de la personne") so that the next update does not bring the entry back; the name itself is not kept, and `npm run check` fails when a named person matches a recorded fingerprint. The page then shows the holding without the name ("actionnaire privé") (owner, 2026-11-18).
-- [ ] A correction or removal request is handled within 30 days.
+- [x] A person is shown with name and share only, as the source publishes them, with the source and the check date; no photo, age, address or contact.
+- [x] The media page offers a way to report an error or ask for removal ("Signaler une erreur"): the address huni.victor@gmail.com, shown as selectable text with a `mailto:` link, and what to write (the media or person concerned, the error, the source if any).
+- [x] A removal is recorded in the data (a fingerprint of the person's name, date, reason "demande de la personne") so that the next update does not bring the entry back; the name itself is not kept, and `npm run check` fails when a named person matches a recorded fingerprint. The page then shows the holding without the name ("actionnaire privé") (owner, 2026-11-18).
+- [x] A correction or removal request is handled within 30 days. The procedure is written in the README ("Médias : corrections et retraits"); keeping the 30 days is the maintainer's commitment, which no check can enforce.
 
 ### PRD-0001.US-25 · Check publishers against the commercial register
 
 **Persona:** maintainer
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a maintainer, I want one command to check every publishing company against the commercial register so that a renamed, merged or deleted company is noticed.
 
 **Acceptance Criteria:**
-- [ ] The command reads the register's linked open data (Zefix on `lindas.admin.ch`, no credentials) by UID and writes the result to a generated file with the download date.
-- [ ] It reports a company whose name, legal form or seat differs from the hand-kept file, or that is in liquidation or deleted; it never changes the hand-kept file.
-- [ ] A failed fetch writes nothing; the register is named as the source ("OGD Open use. Must provide the source.").
+- [x] The command reads the register's linked open data (Zefix on `lindas.admin.ch`, no credentials) by UID and writes the result to a generated file with the download date.
+- [x] It reports a company whose name, legal form or seat differs from the hand-kept file, or that is in liquidation or deleted; it never changes the hand-kept file.
+- [x] A failed fetch writes nothing; the register is named as the source ("OGD Open use. Must provide the source.").
 
 ## 5. Design Considerations
 

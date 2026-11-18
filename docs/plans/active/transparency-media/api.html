@@ -117,12 +117,12 @@ a failed fetch writes nothing (exit 2)</pre>
       </ul>
     </section>
     <section class="open">
-      <span class="chip open">Left to the implementation</span>
+      <span class="chip open">Left to the implementation, answered by the build</span>
       <ul>
-        <li>The names of the file, the command and the second script: the sheet's are working names.</li>
-        <li>The SPARQL query itself and how many UIDs it asks for at once.</li>
-        <li>Whether the address of the media page keeps a territory segment.</li>
-        <li>Whether the check also reads the generated register file once it exists.</li>
+        <li>The names of the file, the command and the second script: the sheet's are working names. <b>Built:</b> kept as named, plus <span class="mono">media-fingerprint</span>.</li>
+        <li>The SPARQL query itself and how many UIDs it asks for at once. <b>Built:</b> all 42 UIDs in one query joined on the UID's value (about 120 ms), reading the legal name, the French legal form and the seat (<span class="mono">tools/media-register.ts</span>).</li>
+        <li>Whether the address of the media page keeps a territory segment. <b>Built:</b> it does (<span class="mono">#media/ch</span>), as every page's address; the media page ignores it.</li>
+        <li>Whether the check also reads the generated register file once it exists. <b>Built:</b> it checks its form against its schema; the comparison stays in <span class="mono">media-register</span>, so the check never fails on the register.</li>
       </ul>
     </section>
   </div>
