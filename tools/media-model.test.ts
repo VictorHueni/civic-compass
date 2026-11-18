@@ -1,11 +1,13 @@
 /*
- * Tests of the lines of a medium's card (src/site/media-model.ts, PRD-0001 US-20 and US-21): the decision table
- * "the lines of a medium's card and list entry" of docs/plans/active/transparency-media/ (API tab). Run: npm test.
+ * Tests of src/site/media-model.ts (PRD-0001 US-20 and US-21): the lines of a medium's card, per the decision table
+ * "the lines of a medium's card and list entry" of docs/plans/active/transparency-media/ (API tab); the media a
+ * holder reaches, the people and families that link several media, the rings of Soleil and the search by name.
+ * Run: npm test.
  */
 import { strict as assert } from "node:assert";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { cardLines, chainTop, mainHolder } from "../src/site/media-model.ts";
+import { bridges, cardLines, chainTop, mainHolder, reach, rings, search } from "../src/site/media-model.ts";
 import type { Company, Holder, Holding, MediaFile, MediaOwnership, Medium } from "../src/types.ts";
 
 const SRC = "https://example.org/mm";
@@ -43,7 +45,7 @@ const holding = (holder: string, held: string, share: number | null, extra: Part
 });
 
 /**
- * A group with a top (TX-like: family > group > publisher > title), a title with no named owner,
+ * A group with a top (TX-like: family > group > publisher > two titles), a title with no named owner,
  * a disputed share (Léman Bleu), an association that publishes itself, and a loop the data should never hold.
  */
 function fixture(): MediaOwnership {
@@ -51,6 +53,7 @@ function fixture(): MediaOwnership {
   return {
     media: [
       medium("m_tx", "pub"),
+      medium("m_tx2", "pub"),
       medium("m_alone", "lonely"),
       medium("m_lb", "tvlb"),
       medium("m_assoc", "assoc"),
@@ -168,4 +171,79 @@ test("on the real data/media.json, every medium has an Éditeur line, and 24 heu
   for (const x of m.media) assert.ok(line(m, x.id, "Éditeur")?.text, x.id);
   assert.equal(line(m, "m_24heures", "Au sommet")?.text, "Famille fondatrice de TX Group");
   assert.match(line(m, "m_leman_bleu", "Propriétaire")?.text ?? "", /Philippe Hersant \(24,66 %, sources en désaccord\)/);
+});
+
+test("reach lists the media a holder reaches through any chain, in file order, and stops on a loop", () => {
+  const m = fixture();
+  assert.deepEqual(reach(m, "family"), ["m_tx", "m_tx2"]);
+  assert.deepEqual(reach(m, "pub"), ["m_tx", "m_tx2"]);
+  assert.deepEqual(reach(m, "hersant"), ["m_lb"]);
+  assert.deepEqual(reach(m, "assoc"), ["m_assoc"]);
+  assert.deepEqual(reach(m, "m_lb"), ["m_lb"]);
+  assert.deepEqual(reach(m, "loop_b"), ["m_loop"]);
+  assert.deepEqual(reach(m, "unknown"), []);
+});
+
+test("bridges names the people and families in the chain of at least two media, and no company", () => {
+  const m = fixture();
+  assert.deepEqual(bridges(m), [{ id: "family", media: ["m_tx", "m_tx2"] }]);
+  m.holdings.push(holding("barbier", "pub", null));
+  assert.deepEqual(
+    bridges(m).map((b) => b.id),
+    ["barbier", "family"],
+    "three media before two; Group AG and Publications SA reach two media but are companies",
+  );
+});
+
+test("rings gives the kind of top owner, the top owner and its media; each medium under its main holder's chain", () => {
+  assert.deepEqual(rings(fixture()), [
+    {
+      kind: "people",
+      owners: [
+        { id: "family", media: ["m_tx", "m_tx2"] },
+        { id: "barbier", media: ["m_lb"] },
+      ],
+    },
+    { kind: "association", owners: [{ id: "assoc", media: ["m_assoc"] }] },
+    {
+      kind: "company",
+      owners: [
+        { id: "loop_b", media: ["m_loop"] },
+        { id: "lonely", media: ["m_alone"] },
+      ],
+    },
+  ]);
+});
+
+test("rings puts a public body in its own ring, between people and associations", () => {
+  const m = fixture();
+  m.holdings.push(holding("ville", "lonely", 100));
+  assert.deepEqual(
+    rings(m).map((r) => r.kind),
+    ["people", "public", "association", "company"],
+  );
+});
+
+test("search finds a name without accents or case, an exact name before a partial one, else null", () => {
+  const m = fixture();
+  assert.equal(search(m, "stephane"), "barbier");
+  assert.equal(search(m, "  TV BLEU sa "), "tvlb");
+  m.companies.unshift(company("gh", "Group AG Holding"));
+  assert.equal(search(m, "group ag"), "group", "the exact name wins over an earlier partial one");
+  assert.equal(search(m, "group"), "gh", "else the first partial match in file order");
+  assert.equal(search(m, "ville de geneve"), "ville");
+  assert.equal(search(m, "nothing like it"), null);
+  assert.equal(search(m, "   "), null);
+});
+
+test("on the real data/media.json, every medium is in the outer ring exactly once, and « Leman » finds Léman Bleu", () => {
+  const file = JSON.parse(readFileSync(new URL("../data/media.json", import.meta.url), "utf8")) as MediaFile;
+  const m = file.media_ownership;
+  const outer = rings(m).flatMap((r) => r.owners.flatMap((o) => o.media));
+  assert.deepEqual([...outer].sort(), m.media.map((x) => x.id).sort());
+  assert.equal(search(m, "Leman"), "m_leman_bleu");
+  for (const b of bridges(m)) {
+    assert.ok(b.media.length >= 2, b.id);
+    assert.ok(m.holders.some((h) => h.id === b.id && (h.kind === "person" || h.kind === "family")), b.id);
+  }
 });
