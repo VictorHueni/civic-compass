@@ -27,22 +27,22 @@ Principles:
 4. **Data is read by hand and sourced.** Medienmonitor is read in the browser, never scraped; every fact carries its source URL and `checked_on`; nothing is guessed (`CLAUDE.md`, US-23).
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
-**Overall Status:** pending
-**Current Increment:** --
+**Overall Status:** in-progress
+**Current Increment:** 02
 
 ## Increment Plan
 
 ### Increment 01: Media types, schemas and an empty data file
 
-**Status:** pending
+**Status:** done
 
 Sheet: database tab (entities, field conventions), code tab (`src/types.ts`).
 
 Scope:
 
-1. **Write first, expect red:** new `tools/media.test.ts` (no test reads a media file yet): a minimal valid media file passes the schema of `DATA_FILES.media`; a file whose holding has an unknown key, a share outside 0 to 100, or a `checked_on` that is not a real date fails, naming the field. The test reuses the existing schema walker rather than writing a second one: `checkValue`, `checkObject`, `checkFile` and `Report` move unchanged from `tools/cli.ts` to a new `tools/schema.ts`, because `tools/cli.ts` runs its command as soon as it is imported.
+1. **Write first, expect red:** new `tools/media.test.ts` (no test reads a media file yet): a minimal valid media file passes the schema of `DATA_FILES.media`; a file whose holding has an unknown key, a share given as text, a `checked_on` that is not a real date, or a genre outside the four fails, naming the field (the schema has no ranges: the 0 to 100 range of a share is a rule of increment 02). The test reuses the existing schema walker rather than writing a second one: `checkValue`, `checkObject`, `checkFile` and `Report` move unchanged from `tools/cli.ts` to a new `tools/schema.ts`, because `tools/cli.ts` runs its command as soon as it is imported.
 2. In `src/types.ts`: the interfaces and schemas `Medium`, `Company`, `Holder`, `Holding` (with `dispute` as an optional string key and `note`), `Removal` (`fingerprint`, `date`, `reason`), `FogEdition`, `FogValue`, and `MediaFile`; `Holder.name` optional (absent after a removal); `DATA_FILES.media` pointing at `media.json`.
-3. `data/media.json` with the `_readme` (Medienmonitor read by hand, HTML only, no download; the sources and their terms), the fög edition (label, 61 ballots, 2018 to 2025, scale −100 to +100, average −4, source, `checked_on`) and empty lists, so that `npm run check` keeps passing.
+3. `DATA_FILES.media_ownership` (file `media.json`, content under `media_ownership`) and `data/media.json` with the `_readme` (Medienmonitor read by hand, HTML only, no download; the sources and their terms), the fög edition (label, 61 ballots, 2018 to 2025, scale −100 to +100, average −4, source, `checked_on`) and empty lists, so that `npm run check` keeps passing.
 
 Primary files:
 
@@ -70,7 +70,7 @@ Sheet: api tab, decision table "what `npm run check` says about the media" (all 
 
 Scope:
 
-1. **Write first, expect red:** extend `tools/media.test.ts`, one case per row of the decision table, on small fixtures built by one shared builder: a holding names a missing holder or company; shares in one company sum above 100 %; Léman Bleu's case (50.75, 24.66 and 24.66 under one dispute key, 17.06) sums to 92.47 % and passes, the same shares without the key fail at 117.13 %; a dispute key on one holding only, or on holdings of two companies, or a disputed holding without a note; a medium, company, holder, holding or fög value without a source; a medium without a publisher, or whose publisher is a person, family or public body; an id used twice across media, companies and holders.
+1. **Write first, expect red:** extend `tools/media.test.ts`, one case per row of the decision table, on small fixtures built by one shared builder: a holding names a missing holder or company; shares in one company sum above 100 %; Léman Bleu's case (50.75, 24.66 and 24.66 under one dispute key, 17.06) sums to 92.47 % and passes, the same shares without the key fail at 117.13 %; a dispute key on one holding only, or on holdings of two companies, or a disputed holding without a note; a medium, company, holder, holding or fög value without a source; a medium without a publisher, or whose publisher is a person, family or public body; a share below 0 or above 100; a region that is not a code of `territories.json`; an id used twice across media, companies and holders.
 2. New `tools/media.ts`: `checkMedia(file): string[]` with those rules, French messages naming the entry, as `checkCantonalGovernments` does.
 
 Primary files:
@@ -185,7 +185,7 @@ Sheet: database tab (FogValue), PRD-0001 US-22.
 Scope:
 
 1. Exempt from red-first: data entry; the rules of increments 02 and 03 are the tests.
-2. One fög value per title the fög measures (Le Matin Dimanche, lematin.ch, tdg.ch, letemps.ch, 24heures.ch, 20minutes.ch, RTS), with the name it is measured as, read on the fög factsheet of February 2026 and cited, not reproduced ("Copyright fög").
+2. One fög value per medium the fög measures (Le Matin Dimanche, lematin.ch, tdg.ch, letemps.ch, 24heures.ch, 20minutes.ch, and RTS, whose value covers both RTS 1 and rts.ch: 8 media), with the name it is measured as, read on the fög factsheet of February 2026 and cited, not reproduced ("Copyright fög").
 
 Primary files:
 
@@ -197,7 +197,7 @@ Test gate:
 
 Exit criteria:
 
-1. Seven measured titles carry a value; no other title carries one.
+1. The 8 measured media carry a value; no other medium carries one.
 
 Prediction:
 
@@ -640,7 +640,7 @@ Exit criteria:
 1. One increment per commit.
 2. **Commit scope:** `media`, the capability this slice delivers (the repository has no capability map; the sheet and the PRD rulings already use it). The increment goes in a `Refs: Plan-0001-media increment NN` trailer, never in the scope.
 3. Each increment must be independently runnable and reversible.
-4. Tests named in Scope are written or extended first and observed failing before the implementation lands; `progress.txt` records the red run (failing test names) and the green run. A write-first test that already passes is wrong or redundant: fix it, or log why. An increment whose tests were written after its code is not done. Exempt increments say `Exempt from red-first: <reason>` in Scope.
+4. Tests named in Scope are written or extended first and observed failing before the implementation lands; the commit message records the red run (failing test names) and the green run. A write-first test that already passes is wrong or redundant: fix it, or log why. An increment whose tests were written after its code is not done. Exempt increments say `Exempt from red-first: <reason>` in Scope.
 5. One pull request per milestone, merged on a green CI (`npm test`, `npm run check`, `npm run links`); the branch says what the story does (`feat/media-data-file`, not `feat/us-23`).
 6. Code, file names, keys and enum values in English; everything shown on the site, the check's messages and the data values in French; no long dash in any text (`CLAUDE.md`).
 7. No fact without a source and a check date; no script reads Medienmonitor; the mockup's data is never committed as it stands.
