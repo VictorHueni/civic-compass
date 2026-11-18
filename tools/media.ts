@@ -4,6 +4,7 @@
  * Messages are in French: the maintainers read them in French.
  */
 import type { Holding, MediaOwnership, Territory } from "../src/types.ts";
+import { isStale } from "./cantonal-governments.ts";
 
 /** Rounds a sum of percentages to two decimals, as the shares are published. */
 const percent = (n: number): number => Math.round(n * 100) / 100;
@@ -78,4 +79,27 @@ export function publishedTotal(holdings: Holding[]): number {
   }
   for (const share of disputed.values()) total += share;
   return percent(total);
+}
+
+/**
+ * Facts checked more than 180 days before `today` (AAAA-MM-JJ), for a warning that never fails (US-23, as US-18).
+ * A holder is named by id only after a removal: its name is gone.
+ */
+export function staleMedia(m: MediaOwnership, today: string): string[] {
+  const named = (id: string, name: string | undefined) => (name ? `${id} (${name})` : id);
+  return [
+    ...m.media.filter((x) => isStale(x.checked_on, today)).map((x) => `${named(x.id, x.name)}, vérifié le ${x.checked_on}`),
+    ...m.companies.filter((x) => isStale(x.checked_on, today)).map((x) => `${named(x.id, x.name)}, vérifié le ${x.checked_on}`),
+    ...m.holders.filter((x) => isStale(x.checked_on, today)).map((x) => `${named(x.id, x.name)}, vérifié le ${x.checked_on}`),
+    ...m.holdings.filter((h) => isStale(h.checked_on, today)).map((h) => `holding ${h.holder} → ${h.held}, vérifié le ${h.checked_on}`),
+    ...(isStale(m.fog.edition.checked_on, today) ? [`fög : édition ${m.fog.edition.period}, vérifiée le ${m.fog.edition.checked_on}`] : []),
+  ];
+}
+
+/** "38 médias, 40 sociétés, ...": the part of the line of npm run check that counts the media file. */
+export function mediaSummary(m: MediaOwnership): string {
+  return (
+    `${m.media.length} médias, ${m.companies.length} sociétés, ${m.holders.length} autres détenteurs, ` +
+    `${m.holdings.length} participations, ${m.fog.values.length} valeurs du fög`
+  );
 }

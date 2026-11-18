@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 03
+**Current Increment:** 04
 
 ## Increment Plan
 
@@ -89,13 +89,13 @@ Exit criteria:
 
 ### Increment 03: The rules and the staleness notice in `npm run check`
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab (check contract), code tab (`tools/cli.ts`).
 
 Scope:
 
-1. **Write first, expect red:** extend `tools/media.test.ts`: `staleMedia(file, today)` lists a holding and a fög value checked 181 days before `today` and not one checked 180 days before, reusing `isStale` from `tools/cantonal-governments.ts`.
+1. **Write first, expect red:** extend `tools/media.test.ts`: `staleMedia(file, today)` lists every medium, company, holder, holding and the fög edition checked 181 days before `today` and not one checked 180 days before (the sheet's database tab, "Proof"), reusing `isStale` from `tools/cantonal-governments.ts`; `mediaSummary` counts the lists for the line of the check.
 2. `staleMedia` in `tools/media.ts`; `cmdCheck` runs `checkMedia` with the other cross-file rules and prints the stale facts as a notice that never fails, after the existing notices; the summary line gains the media counts.
 
 Primary files:

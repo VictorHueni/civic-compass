@@ -36,6 +36,7 @@ import {
 } from "./cantonal-parliaments.ts";
 import { checkCantonalGovernments, governmentsSummary, staleMembers, STALE_AFTER_DAYS } from "./cantonal-governments.ts";
 import { checkPresidencies, stalePresidencies } from "./party-presidencies.ts";
+import { checkMedia, mediaSummary, staleMedia } from "./media.ts";
 import { readWorkbook } from "./xlsx.ts";
 import { checkFile, entryLabel, isPlainObject, Report } from "./schema.ts";
 
@@ -145,6 +146,7 @@ function checkConsistency(d: Referential): string[] {
     report.add([`data/${DATA_FILES.cantonal_governments.file}`], e);
   }
   for (const e of checkPresidencies(d.parties)) report.add(["data/parties.json"], e);
+  for (const e of checkMedia(d.media_ownership, d.territories)) report.add([`data/${DATA_FILES.media_ownership.file}`], e);
 
   // Entries the site links to by id (src/site/links.ts).
   // The site shows only verified links, so an entry it links to directly must be verified.
@@ -177,7 +179,8 @@ function cmdCheck(dataDir: string): number {
       `Parlement au ${d.parliament.retrieved_on} (${parliamentSummary(d.parliament)}), ` +
       `parlements cantonaux au ${d.cantonal_parliaments.retrieved_on} (${cantonalSummary(d.cantonal_parliaments, d.territories, d.parties)}), ` +
       `gouvernements cantonaux (${governmentsSummary(d.cantonal_governments)}), ` +
-      `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}).`,
+      `présidences de parti (${d.parties.filter((p) => p.facts?.presidency).length}), ` +
+      `médias (${mediaSummary(d.media_ownership)}).`,
   );
   const today = new Date().toISOString().slice(0, 10);
   const stale = staleMembers(d.cantonal_governments, today);
@@ -187,6 +190,10 @@ function cmdCheck(dataDir: string): number {
   const stalePresidents = stalePresidencies(d.parties, today);
   if (stalePresidents.length) {
     console.log(`\nAvis (ne bloque pas) : présidences de parti vérifiées il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier sur le site du parti :\n` + stalePresidents.join("\n"));
+  }
+  const staleMediaFacts = staleMedia(d.media_ownership, today);
+  if (staleMediaFacts.length) {
+    console.log(`\nAvis (ne bloque pas) : faits sur les médias vérifiés il y a plus de ${STALE_AFTER_DAYS} jours, à revérifier à la source :\n` + staleMediaFacts.join("\n"));
   }
   const notes = orderNotes(d);
   if (notes.length) console.log("\nAvis (ne bloque pas, le classement reste indicatif) :\n" + notes.join("\n"));

@@ -5,7 +5,7 @@
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import { DATA_FILES, type Holder, type Holding, type MediaFile, type Territory } from "../src/types.ts";
-import { checkMedia } from "./media.ts";
+import { checkMedia, mediaSummary, staleMedia } from "./media.ts";
 import { checkFile, Report } from "./schema.ts";
 
 const SRC = "https://example.org/source";
@@ -196,4 +196,26 @@ test("the schema refuses a fact without a source", () => {
   const errors = schemaErrors(f).join("\n");
   assert.match(errors, /champ « source » manquant/);
   assert.match(errors, /« source » ne peut pas être null/);
+});
+
+test("staleMedia lists every fact checked more than 180 days before today, and only those", () => {
+  const f = mediaFile();
+  const o = f.media_ownership;
+  const old = "2026-05-21"; // 181 days before 2026-11-18
+  o.holdings[0].checked_on = old;
+  o.fog.edition.checked_on = old;
+  o.companies[0].checked_on = "2026-05-22"; // 180 days: not yet stale
+  assert.deepEqual(staleMedia(o, DAY), ["holding p_a → co_a, vérifié le 2026-05-21", "fög : édition 2018 à 2025, vérifiée le 2026-05-21"]);
+  o.media[0].checked_on = old;
+  o.holders[0].checked_on = old;
+  assert.deepEqual(staleMedia(o, DAY), [
+    "m_a (A), vérifié le 2026-05-21",
+    "p_a (Anne A), vérifié le 2026-05-21",
+    "holding p_a → co_a, vérifié le 2026-05-21",
+    "fög : édition 2018 à 2025, vérifiée le 2026-05-21",
+  ]);
+});
+
+test("mediaSummary counts the entries of each list for the line of npm run check", () => {
+  assert.equal(mediaSummary(mediaFile().media_ownership), "1 médias, 1 sociétés, 1 autres détenteurs, 1 participations, 1 valeurs du fög");
 });
