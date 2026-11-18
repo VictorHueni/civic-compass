@@ -28,7 +28,7 @@ Principles:
 5. **The site keeps working from disk.** Both scripts stay classic scripts; `dist/index.html` must work opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in-progress
-**Current Increment:** 02
+**Current Increment:** 03
 
 ## Increment Plan
 
@@ -64,7 +64,7 @@ Exit criteria:
 
 ### Increment 02: The media rules of the check
 
-**Status:** pending
+**Status:** done
 
 Sheet: api tab, decision table "what `npm run check` says about the media" (all rows but the fingerprint and the register rows).
 

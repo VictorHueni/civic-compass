@@ -4,7 +4,8 @@
  */
 import { strict as assert } from "node:assert";
 import { test } from "node:test";
-import { DATA_FILES, type MediaFile } from "../src/types.ts";
+import { DATA_FILES, type Holder, type Holding, type MediaFile, type Territory } from "../src/types.ts";
+import { checkMedia } from "./media.ts";
 import { checkFile, Report } from "./schema.ts";
 
 const SRC = "https://example.org/source";
@@ -76,4 +77,123 @@ test("the media schema names a genre outside the four genres", () => {
   const f = mediaFile() as unknown as { media_ownership: { media: Record<string, unknown>[] } };
   f.media_ownership.media[0].genre = "Presse";
   assert.match(schemaErrors(f).join("\n"), /« genre » vaut Presse/);
+});
+
+/* ---------- Rules across entries (tools/media.ts), the decision table of the sheet's API tab ---------- */
+
+const TERRITORIES = [{ code: "GE", name: "Genève" }, { code: "VD", name: "Vaud" }] as Territory[];
+const rules = (f: MediaFile) => checkMedia(f.media_ownership, TERRITORIES);
+const holding = (holder: string, held: string, share: number | null, extra: Partial<Holding> = {}): Holding => ({
+  holder,
+  held,
+  share,
+  source: SRC,
+  checked_on: DAY,
+  ...extra,
+});
+const person = (id: string, name: string): Holder => ({ id, name, kind: "person", source: SRC, checked_on: DAY });
+
+/** TV Léman Bleu SA as Medienmonitor gives it: the same 24.66 % to ESH Médias on one page, to Philippe Hersant on another. */
+function lemanBleu(disputed: boolean): MediaFile {
+  const f = mediaFile();
+  const o = f.media_ownership;
+  o.holders.push(person("p_hersant", "Philippe Hersant"), person("p_barbier", "Stéphane Barbier-Mueller"), {
+    id: "ge",
+    name: "Ville de Genève",
+    kind: "public",
+    source: SRC,
+    checked_on: DAY,
+  });
+  o.companies.push({ id: "esh", name: "ESH Médias SA", legal_form: "SA", seat: "Neuchâtel", uid: null, source: SRC, checked_on: DAY });
+  const dispute = disputed ? { dispute: "tvlb-24.66", note: "Deux pages du Medienmonitor attribuent cette part à deux détenteurs." } : {};
+  o.holdings = [
+    holding("esh", "co_a", 24.66, dispute),
+    holding("p_hersant", "co_a", 24.66, dispute),
+    holding("p_barbier", "co_a", 50.75),
+    holding("ge", "co_a", 17.06),
+  ];
+  return f;
+}
+
+test("checkMedia accepts the valid file", () => {
+  assert.deepEqual(rules(mediaFile()), []);
+});
+
+test("checkMedia names a holding whose holder or held company does not exist, or whose held entry is not a company", () => {
+  const f = mediaFile();
+  f.media_ownership.holdings.push(holding("p_x", "co_a", 10), holding("p_a", "co_x", 10), holding("p_a", "p_a", 10));
+  assert.deepEqual(rules(f), [
+    "holding p_x → co_a : détenteur « p_x » introuvable",
+    "holding p_a → co_x : « co_x » n'est pas une société de companies",
+    "holding p_a → p_a : « p_a » n'est pas une société de companies",
+  ]);
+});
+
+test("checkMedia counts a disputed share once: TV Léman Bleu SA makes 92.47 %, and 117.13 % without the dispute key", () => {
+  assert.deepEqual(rules(lemanBleu(true)), []);
+  assert.deepEqual(rules(lemanBleu(false)), ["co_a : les parts publiées font 117.13 % (plus de 100 %)"]);
+});
+
+test("checkMedia names a share below 0 or above 100", () => {
+  const f = mediaFile();
+  f.media_ownership.holdings = [holding("p_a", "co_a", -1)];
+  f.media_ownership.holders.push(person("p_b", "Bea B"));
+  f.media_ownership.holdings.push(holding("p_b", "co_a", 100.5));
+  const errors = rules(f);
+  assert.ok(errors.includes("holding p_a → co_a : part -1 hors de 0 à 100"), errors.join("\n"));
+  assert.ok(errors.includes("holding p_b → co_a : part 100.5 hors de 0 à 100"), errors.join("\n"));
+});
+
+test("checkMedia names a dispute key on one holding only, across two companies, or without a note", () => {
+  const f = lemanBleu(true);
+  const o = f.media_ownership;
+  o.companies.push({ id: "co_b", name: "B SA", legal_form: "SA", seat: "Vevey", uid: null, source: SRC, checked_on: DAY });
+  o.holdings[1] = holding("p_hersant", "co_b", 24.66, { dispute: "tvlb-24.66", note: "n" });
+  o.holdings.push(holding("p_barbier", "co_b", 1, { dispute: "seule" }));
+  assert.deepEqual(rules(f), [
+    "dispute « tvlb-24.66 » : porte sur plusieurs sociétés (co_a, co_b)",
+    "dispute « seule » : une seule participation (il en faut au moins deux)",
+    "holding p_barbier → co_b : dispute sans note qui nomme les sources",
+  ]);
+});
+
+test("checkMedia names a medium without a publisher, or published by a person, family or public body", () => {
+  const f = mediaFile();
+  const o = f.media_ownership;
+  o.media.push({ ...o.media[0], id: "m_b", publisher: "" }, { ...o.media[0], id: "m_c", publisher: "p_a" }, { ...o.media[0], id: "m_d", publisher: "x" });
+  o.holders.push({ id: "assoc", name: "Fondation A", kind: "association", source: SRC, checked_on: DAY });
+  o.media.push({ ...o.media[0], id: "m_e", publisher: "assoc" });
+  assert.deepEqual(rules(f), [
+    "m_b : pas d'éditeur",
+    "m_c : l'éditeur « p_a » n'est ni une société ni une association ou fondation",
+    "m_d : éditeur « x » introuvable",
+  ]);
+});
+
+test("checkMedia names a region that is not a territory code, and a medium without region", () => {
+  const f = mediaFile();
+  f.media_ownership.media[0].regions = ["GE", "geneve"];
+  f.media_ownership.media.push({ ...f.media_ownership.media[0], id: "m_b", regions: [] });
+  assert.deepEqual(rules(f), ["m_a : région « geneve » inconnue de territories.json", "m_b : aucune région"]);
+});
+
+test("checkMedia names an id used twice across media, companies and holders", () => {
+  const f = mediaFile();
+  f.media_ownership.holders.push(person("co_a", "Homonyme"));
+  assert.ok(rules(f).includes("id « co_a » en double (media, companies, holders)"));
+});
+
+test("checkMedia names a fög value of an unknown medium or a second value for one medium", () => {
+  const f = mediaFile();
+  f.media_ownership.fog.values.push({ medium: "m_x", measured_as: "x", value: 1 }, { medium: "m_a", measured_as: "a2", value: 2 });
+  assert.deepEqual(rules(f), ["fög : média « m_x » introuvable", "fög : deux valeurs pour « m_a »"]);
+});
+
+test("the schema refuses a fact without a source", () => {
+  const f = mediaFile() as unknown as { media_ownership: { holdings: Record<string, unknown>[]; companies: Record<string, unknown>[] } };
+  delete f.media_ownership.holdings[0].source;
+  f.media_ownership.companies[0].source = null;
+  const errors = schemaErrors(f).join("\n");
+  assert.match(errors, /champ « source » manquant/);
+  assert.match(errors, /« source » ne peut pas être null/);
 });
