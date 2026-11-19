@@ -195,6 +195,8 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .step{flex:none;min-height:48px;padding:0;border:0;border-bottom:3px solid transparent;background:transparent;font:inherit;font-size:1rem;color:var(--cc-muted);cursor:pointer}
 .step.is-on{color:var(--cc-text);border-bottom-color:var(--cc-accent);font-family:Font-Bold,Hind,Fallback-font,sans-serif}
 .step__body{padding-top:32px}
+/* Four steps since « Suivre l'argent » (US-26): on a phone they share the width; below about 340 px the bar scrolls by itself rather than clip a step. */
+@media (max-width:480px){.steps{gap:8px;justify-content:space-between;overflow-x:auto;scrollbar-width:none}.step{font-size:.85rem;white-space:nowrap}}
 .outcomes{display:grid;gap:32px;margin-bottom:32px}
 .outcome{padding:0;background:transparent;border:0;border-top:3px solid var(--cc-border);padding-top:14px}
 .outcome--yes{border-top-color:var(--cc-yes)}.outcome--no{border-top-color:var(--cc-no)}
@@ -211,6 +213,29 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .item-nav{display:flex;justify-content:space-between;gap:12px;margin-top:56px;padding-top:20px;border-top:1px solid var(--cc-border)}
 .item-nav button{min-height:48px;padding:0;border:0;background:transparent;font:inherit;color:var(--cc-accent);cursor:pointer}
 @media (min-width:700px){.outcomes{grid-template-columns:1fr 1fr;gap:40px}.h-page{font-size:2.3rem}}
+/* « Suivre l'argent » (US-26): side boxes, committee bars, donations by receiving committee; the site's tokens only. */
+.money{display:flex;flex-direction:column;gap:12px}
+.money p{margin:0}
+.money-title{margin:0;font-size:1.2rem}
+.money-sides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.money-side{display:flex;flex-direction:column;gap:2px;padding:12px;background:var(--cc-surface);border-top:4px solid var(--cc-border);border-radius:4px;min-width:0}
+.money-side--yes{border-top-color:var(--cc-yes)}.money-side--no{border-top-color:var(--cc-no)}
+.money-side__label{font-size:.8rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.money-side--yes .money-side__label{color:var(--cc-yes)}.money-side--no .money-side__label{color:var(--cc-no)}
+.money-side__total{font-size:1.3rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.money-side__count,.money-muted{font-size:.85rem;color:var(--cc-muted)}
+.money-h{margin:8px 0 0;font-size:1rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.money-h--yes{color:var(--cc-yes)}.money-h--no{color:var(--cc-no)}
+.money-rows,.money-gifts{list-style:none;margin:0;padding:0}
+.money-row{display:flex;flex-direction:column;gap:4px;padding:8px 0;border-bottom:1px solid var(--cc-border)}
+.money-row__top,.money-gift{display:flex;justify-content:space-between;gap:8px;font-size:.9rem}
+.money-row__top b,.money-gift b{white-space:nowrap}
+.money-row__top span,.money-gift>span{min-width:0;overflow-wrap:anywhere}
+.money-bar{display:block;height:8px;background:var(--cc-surface);border-radius:4px;overflow:hidden}
+.money-bar__fill{display:block;height:8px;border-radius:4px}
+.money-bar__fill--yes{background:var(--cc-yes)}.money-bar__fill--no{background:var(--cc-no)}
+.money-gift{padding:6px 0;border-bottom:1px solid var(--cc-border);font-size:.85rem}
+.money-receiver{margin-top:4px}
 
 /* ---- Menu: two clearly separated groups ---- */
 .menu .menu__title{margin:0 0 4px;padding:0;border:0;font-size:.78rem;font-family:Font-Bold,Hind,Fallback-font,sans-serif;text-transform:uppercase;letter-spacing:.08em;color:var(--cc-text)}
@@ -295,9 +320,9 @@ footer.site-footer p{margin:0 0 8px;max-width:75ch}
 .media-holdings{list-style:none;margin:0;padding:0}
 .media-holdings li{padding:8px 0;border-top:1px solid var(--cc-border)}
 .media-share{margin-left:8px;color:var(--cc-muted)}
-.media-report{margin-top:16px;padding:10px 0;border-top:1px solid var(--cc-border)}
-.media-report summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--cc-accent);font-family:Font-Bold,Hind,Fallback-font,sans-serif}
-.media-report__address{user-select:all;font-family:Font-Bold,Hind,Fallback-font,sans-serif;word-break:break-all}
+.report{margin-top:16px;padding:10px 0;border-top:1px solid var(--cc-border)}
+.report summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--cc-accent);font-family:Font-Bold,Hind,Fallback-font,sans-serif}
+.report__address{user-select:all;font-family:Font-Bold,Hind,Fallback-font,sans-serif;word-break:break-all}
 .media-list{list-style:none;margin:0;padding:0}
 .media-entry{display:flex;flex-direction:column;gap:2px;width:100%;min-height:48px;padding:10px 0;border:0;border-top:1px solid var(--cc-border);background:none;font:inherit;color:var(--cc-text);text-align:left;cursor:pointer}
 .media-entry__name{font-family:Font-Bold,Hind,Fallback-font,sans-serif;color:var(--cc-accent)}

@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 08
+**Current Increment:** 09 (M1, M2 done)
 
 ## Increment Plan
 
@@ -228,7 +228,9 @@ Exit criteria:
 
 ### Increment 08: The step « Suivre l'argent » and its error report
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the step's markup is in `src/site/financing.ts` (`ballot.ts` only adds the step); the error report moved to `src/site/report.ts`, its class renamed `report` (media page and its capture script updated); the source line quotes the CDF's own disclaimer in full, where the mockup paraphrased it; below 480 px the four tabs share the width at 0.85rem (at 360 px they fit, 328 of 328 px), and the bar scrolls by itself on narrower screens rather than clip a step. Checked from disk with the network cut at 360 px in headless Chromium: 4 items × 4 steps, no sideways scroll, the report on every « Suivre l'argent » step, the media page's report still opens.
 
 Scope:
 
@@ -334,5 +336,5 @@ Exit criteria:
 | Milestone | Increments | Status | Coherent Outcome | Standalone Test Gate | Exit Criteria | Commit Guidance |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | M1: Generated data (US-28) | 01-05 | done | `npm run campaign-financing` writes the budgets and donations of the four items of 29.11.2026 from the CDF; `npm run check` enforces their rules; no page yet | `npm test && npm run campaign-financing && npm run check && npm run links` | 4 items, 29 donations; a failed fetch writes nothing; a stale file fails the check | `feat(financing): …`, PR "feat(financing): generate campaign financing from the Federal Audit Office" |
-| M2: The step (US-26) | 06-08 | pending | « Suivre l'argent » on each ballot item, with the error report | `npm test && npm run check && npm run build`, from disk at 360 px | Item 33 matches the mockup; works offline | PR "feat(financing): follow the money behind each ballot item" |
+| M2: The step (US-26) | 06-08 | done | « Suivre l'argent » on each ballot item, with the error report | `npm test && npm run check && npm run build`, from disk at 360 px | Item 33 matches the mockup; works offline | PR "feat(financing): follow the money behind each ballot item" |
 | M3: Donors' rights (US-27) | 09-11 | pending | Removal by fingerprint applied and enforced; the procedure written; the slice closed in the PRD | `npm test && npm run check` | A removed donor cannot come back; criteria ticked | PR "feat(financing): remove a named donor on request" |
