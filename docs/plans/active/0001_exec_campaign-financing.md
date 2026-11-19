@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 10
+**Current Increment:** 11
 
 ## Increment Plan
 
@@ -280,7 +280,9 @@ Exit criteria:
 
 ### Increment 10: The procedure for the maintainer
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the procedure also covers the test exports (`tools/fixtures/cdf-financing-33.xlsx`, `-35.xlsx`), which hold the two private donors' names: a removed person's name is replaced there too; and it says how an error is handled (the figures are the committees' declarations, never corrected by hand).
 
 Scope:
 
