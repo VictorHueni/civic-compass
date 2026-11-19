@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 07
+**Current Increment:** 08
 
 ## Increment Plan
 
@@ -204,7 +204,9 @@ Exit criteria:
 
 ### Increment 07: The CDF portal in the referential
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): checked in headless Chromium (the Chrome extension was not connected), the portal being a single-page app whose served title is « PofWork »; the entry follows the federal sites in `data/state-sites.json`, so it also appears among the official sites of CH.
 
 Scope:
 

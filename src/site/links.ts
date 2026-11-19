@@ -11,6 +11,7 @@ export const STATE_SITE_IDS = {
   chancellery: "chancellerie-federale-ch",
   statistics: "office-federal-de-la-statistique-ch",
   portal: "ch-ch-ch",
+  financing: "cdf-financement-politique",
 } as const;
 
 /** Entries of data/tools.json linked directly. */
