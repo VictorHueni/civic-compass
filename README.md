@@ -46,6 +46,8 @@ Les données sont des fichiers JSON dans `data/`, pas du code :
 - `data/ballot.json` : le prochain scrutin, ses objets (`items`) et les mots d'ordre sourcés (`parties`, valeurs `yes` ou `no`, clés = `abbr` des partis CH).
 - `data/cantonal-governments.json` : le gouvernement de chaque canton couvert, tenu à la main. Pour chaque membre : nom, parti (`id` d'un parti du canton), département et présidence comme la page officielle les écrit, la page officielle (`source`), la page qui nomme son parti (`party_source` : page officielle, résultat d'élection ou page du parti) et la date `checked_on`. Un canton absent n'affiche pas de gouvernement (Fribourg jusqu'à la publication du Conseil d'État élu au second tour du 29.11.2026). `npm run check` exige le bon nombre de membres et des partis du canton, et avertit sans échouer pour toute fiche vérifiée il y a plus de 180 jours.
 - `data/media.json` : les médias de Suisse romande, leur éditeur, les sociétés et autres détenteurs, les participations et les valeurs du fög, tenus à la main. Chaque fait porte sa source et sa date `checked_on` ; le Medienmonitor se lit dans le navigateur, aucun script ne le lit. `npm run check` contrôle les références, la somme des parts (une part disputée comptée une fois), les éditeurs et les retraits. Voir « Médias : corrections et retraits » ci-dessous.
+- `data/campaign-financing.json` : budgets des campagnes et dons de plus de 15 000 francs de chaque objet de `data/ballot.json`, générés par `npm run campaign-financing` depuis le Contrôle fédéral des finances (CDF) ; ne jamais le modifier à la main. Chaque objet du scrutin nomme son id du CDF (`financing_id`, `null` s'il n'en a pas).
+- `data/donor-removals.json` : les empreintes des donateurs retirés à leur demande, tenues à la main, jamais leur nom. Voir « Financement des campagnes : corrections et retraits » ci-dessous.
 
 Chaque lien porte un `status` (`verified`, `to_confirm`, `not_found` avec `url: null`), une date `checked_on`, une preuve `evidence` (par exemple le titre de la page) et la liste `previous_urls` des adresses abandonnées (`url`, `seen_on`, `note`), gardées pour mémoire. La forme exacte de chaque fichier est décrite par `src/types.ts`.
 
@@ -73,6 +75,7 @@ npm run parliament               # écrit data/parliament-current.json (clé de 
 npm run cantonal-parliaments     # écrit data/cantonal-parliaments.json (tableau OFS des élections cantonales)
 node tools/cli.ts media-fingerprint   # lit un nom sur l'entrée standard et affiche son empreinte (retrait d'un nom)
 npm run media-register           # écrit data/media-register.json (registre du commerce) et liste les différences avec data/media.json
+npm run campaign-financing       # écrit data/campaign-financing.json (Contrôle fédéral des finances), retraits de data/donor-removals.json appliqués
 npm test                         # tests de l'outil (lecteur xlsx, parlements cantonaux)
 ```
 
@@ -106,6 +109,25 @@ La fiche d'un média, d'une personne ou d'une famille propose « Signaler une er
 6. Ne pas écrire le nom dans le message de commit, la pull request ni une issue. Répondre à la personne une fois le site publié.
 
 L'empreinte a deux limites (PRD-0001 §8), à dire à la personne dans la réponse : quelqu'un qui soupçonne déjà un nom peut le tester contre l'empreinte, et le nom reste dans l'historique git des versions publiées avant le retrait, données comme captures de la fiche.
+
+## Financement des campagnes : corrections et retraits
+
+L'étape « Suivre l'argent » de chaque objet montre les budgets que les comités ont déclarés au CDF avant le vote et les dons de plus de 15 000 francs, avec « Signaler une erreur ou demander un retrait », qui écrit à l'adresse du mainteneur. Chaque demande est traitée dans les 30 jours, sans recopier la demande dans une issue publique.
+
+**Quand lancer la commande.** Le CDF publie les budgets au plus tard une trentaine de jours avant le vote (Research-0004, §Q3). Lancer `npm run campaign-financing` une fois qu'ils sont publiés, puis à nouveau avant de publier le site. Elle télécharge l'export XLSX de chaque objet qui a un `financing_id`, applique les retraits et écrit `data/campaign-financing.json` avec l'adresse de chaque export, la date et l'avertissement du CDF tel quel. Code de sortie 0 : écrit ; 1 : écrit, mais un objet n'a pas de `financing_id` ; 2 : un téléchargement ou un export a échoué, rien n'est écrit. Un objet du CDF à la date du scrutin qu'aucun objet ne nomme est signalé sans faire échouer la commande. Au scrutin suivant, `npm run check` échoue tant que la commande n'a pas été relancée : les donateurs d'un scrutin passé quittent le site avec lui.
+
+**Une erreur.** Les chiffres sont ceux que les comités ont déclarés ; le CDF ne garantit pas leur exactitude et le site ne les corrige jamais à la main. Relancer la commande : si le CDF a corrigé sa publication, le site suit. Sinon, répondre à l'expéditeur que la correction passe par le comité qui a déclaré, ou par le CDF. Une erreur du site lui-même (un regroupement, un total) se corrige dans `src/site/financing-model.ts`, avec un test.
+
+**Le retrait d'un nom.** Une personne qui a donné peut demander que son nom soit retiré. Le don reste, avec son montant et le comité qui l'a reçu : le site affiche « une personne privée ».
+
+1. Calculer l'empreinte du nom, tapé sur l'entrée standard pour qu'il ne reste pas dans l'historique du shell : `node tools/cli.ts media-fingerprint`, taper « Prénom Nom » tel que le CDF l'écrit, puis Entrée et Ctrl+D (l'ordre « Nom Prénom » est reconnu aussi).
+2. Ajouter à `donor_removals` dans `data/donor-removals.json` : `{ "fingerprint": "<empreinte>", "date": "<AAAA-MM-JJ>", "reason": "person_request" }`.
+3. `npm run campaign-financing` : le donateur devient « removed » dans `data/campaign-financing.json`, et la commande compte les donateurs retirés sans les nommer.
+4. `npm run check`, `npm test`, `npm run build`, puis ouvrir l'étape « Suivre l'argent » de l'objet : le nom ne doit apparaître nulle part. Le contrôle échoue si le nom revient, comme personne ou comme société, et ses messages ne l'affichent jamais.
+5. Si la personne figure dans un export enregistré pour les tests (`tools/fixtures/cdf-financing-33.xlsx`, `tools/fixtures/cdf-financing-35.xlsx`), y remplacer son nom et son prénom (colonnes L et M de la feuille « Libéralités », texte de `xl/worksheets/sheet2.xml` dans le classeur, qui est un zip) par « Exemple » et « Anne », puis `npm test`.
+6. Ne pas écrire le nom dans le message de commit, la pull request ni une issue. Répondre à la personne une fois le site publié.
+
+L'empreinte a les mêmes limites que pour les médias (PRD-0001 §8), à dire à la personne dans la réponse : quelqu'un qui soupçonne déjà un nom peut le tester contre l'empreinte, et le nom reste dans l'historique git des versions publiées avant le retrait, fichier de données et exports de test compris. Le nom reste aussi publié par le CDF, qui le publie en vertu de la loi : le retrait ne vaut que pour ce site.
 
 ## Design
 

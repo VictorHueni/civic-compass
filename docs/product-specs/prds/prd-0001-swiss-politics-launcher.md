@@ -423,49 +423,49 @@ As a maintainer, I want one command to check every publishing company against th
 ### PRD-0001.US-26 · Follow the money behind a ballot item
 
 **Persona:** voter
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a voter, I want to see who finances the yes and the no campaigns of the item I am about to vote on so that I know which interests stand behind each side (Research-0004 §Q3).
 
 **Acceptance Criteria:**
-- [ ] Each ballot item has a step "Suivre l'argent" between "Comparer" and "Décider" (owner, 2026-11-19).
-- [ ] It shows the budgets declared to the Federal Audit Office (CDF) by each committee spending more than CHF 50,000, grouped "Pour" and "Contre" with the total and the number of committees per side, each committee with its amount and a bar; the copy says they are declared budgets, not spending, and that only campaigns above CHF 50,000 must declare.
-- [ ] It shows the donations above CHF 15,000 grouped by the committee that receives them: one block per committee with its side, "Reçu par", its total and number of donations, then one line per donor starting with "de"; committees without such donations are named in one line (owner, 2026-11-19).
-- [ ] The source line names the CDF ("Contrôle fédéral des finances, financement de la politique") with the declaration date and the retrieval date, repeats its accuracy disclaimer, and links to its page.
-- [ ] An item with no declaration published says so with the retrieval date ("Aucune déclaration publiée par le CDF au 18.11.2026"), never an empty block.
-- [ ] Amounts are written in Swiss French ("889 590 CHF"), and the step works at 360 px without sideways scroll.
+- [x] Each ballot item has a step "Suivre l'argent" between "Comparer" and "Décider" (owner, 2026-11-19).
+- [x] It shows the budgets declared to the Federal Audit Office (CDF) by each committee spending more than CHF 50,000, grouped "Pour" and "Contre" with the total and the number of committees per side, each committee with its amount and a bar; the copy says they are declared budgets, not spending, and that only campaigns above CHF 50,000 must declare.
+- [x] It shows the donations above CHF 15,000 grouped by the committee that receives them: one block per committee with its side, "Reçu par", its total and number of donations, then one line per donor starting with "de"; committees without such donations are named in one line (owner, 2026-11-19).
+- [x] The source line names the CDF ("Contrôle fédéral des finances, financement de la politique") with the declaration date and the retrieval date, repeats its accuracy disclaimer, and links to its page.
+- [x] An item with no declaration published says so with the retrieval date ("Aucune déclaration publiée par le CDF au 18.11.2026"), never an empty block. As built: « Aucune déclaration publiée par le CDF pour cet objet (consulté le 18.11.2026) », with the CHF 50,000 threshold and the link to the CDF; tested in the model (`tools/financing-model.test.ts`), not visible on the site while all four items of 29.11.2026 have declarations.
+- [x] Amounts are written in Swiss French ("889 590 CHF"), and the step works at 360 px without sideways scroll.
 
 ### PRD-0001.US-27 · Respect the people named as donors
 
 **Persona:** maintainer
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a maintainer, I want every person named as a campaign donor to be shown as the Federal Audit Office publishes them and to be able to have an error corrected or the name removed so that the site meets the data protection act, as for media owners (US-24).
 
 **Acceptance Criteria:**
-- [ ] A donor who is a person is shown with first name, name, amount and receiving committee only, as the CDF publishes them; not the commune, nor anything else the CDF publishes (owner, 2026-11-19).
-- [ ] The step offers "Signaler une erreur ou demander un retrait", with the same address and procedure as US-24.
-- [ ] A removal is recorded by fingerprint (as in US-24) and applied when the financing data is generated: the donation stays with its amount and committee and shows "une personne privée"; `npm run check` fails when a named donor matches a recorded fingerprint.
-- [ ] A ballot's financing leaves the site once the ballot is past, so no donor stays on the site longer than the CDF keeps the data (five years, OFipo art. 17).
+- [x] A donor who is a person is shown with first name, name, amount and receiving committee only, as the CDF publishes them; not the commune, nor anything else the CDF publishes (owner, 2026-11-19).
+- [x] The step offers "Signaler une erreur ou demander un retrait", with the same address and procedure as US-24.
+- [x] A removal is recorded by fingerprint (as in US-24) and applied when the financing data is generated: the donation stays with its amount and committee and shows "une personne privée"; `npm run check` fails when a named donor matches a recorded fingerprint.
+- [x] A ballot's financing leaves the site once the ballot is past, so no donor stays on the site longer than the CDF keeps the data (five years, OFipo art. 17). As built: `npm run check` fails as soon as `data/ballot.json` holds the next ballot and the command has not been rerun, so the past ballot's donors leave with the update to the next ballot, not on a date; the maintainer's update of the ballot is what keeps this well within five years.
 
 ### PRD-0001.US-28 · Generate the campaign financing from the Federal Audit Office
 
 **Persona:** maintainer
-**Status:** pending
+**Status:** done
 **Covers:** _TODO_
 
 **Description:**
 As a maintainer, I want one command to fetch the campaign financing of the next ballot's items from the Federal Audit Office so that the figures are never typed by hand.
 
 **Acceptance Criteria:**
-- [ ] `npm run campaign-financing` reads, for each item of `data/ballot.json`, the CDF's documented download (one XLSX per item, sheets "Recettes totales" and "Libéralités") and writes a generated file with the request, the CDF's declaration date and the retrieval date; the file is never edited by hand.
-- [ ] Each ballot item names its CDF financing by id in `data/ballot.json`; an item without one, or a CDF item without a ballot item, is reported.
-- [ ] A failed fetch, or a sheet whose columns are not the expected ones, writes nothing and exits with an error.
-- [ ] The command needs no key and reads the XLSX with the tool's own reader (US-17), no new dependency.
+- [x] `npm run campaign-financing` reads, for each item of `data/ballot.json`, the CDF's documented download (one XLSX per item, sheets "Recettes totales" and "Libéralités") and writes a generated file with the request, the CDF's declaration date and the retrieval date; the file is never edited by hand.
+- [x] Each ballot item names its CDF financing by id in `data/ballot.json`; an item without one, or a CDF item without a ballot item, is reported.
+- [x] A failed fetch, or a sheet whose columns are not the expected ones, writes nothing and exits with an error.
+- [x] The command needs no key and reads the XLSX with the tool's own reader (US-17), no new dependency.
 
 ### PRD-0001.US-29 · See the declared interests of a member of Parliament
 

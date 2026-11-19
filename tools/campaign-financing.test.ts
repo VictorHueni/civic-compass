@@ -3,11 +3,13 @@
  * and 35 recorded on 2026-11-19 (tools/fixtures/). The network and the disk are replaced. Run: npm test.
  */
 import { strict as assert } from "node:assert";
+import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
+import { fileURLToPath } from "node:url";
 import { DATA_FILES, type Ballot, type BallotItem, type CampaignFinancingFile, type Removal } from "../src/types.ts";
 import { DISCLAIMER_KEY, exportUrl, runCampaignFinancing, SOURCE_PAGE, TRANSLATIONS, TREE } from "./campaign-financing.ts";
-import { readFinancing } from "./financing.ts";
+import { checkFinancing, readFinancing, removalOf } from "./financing.ts";
 import { fingerprint } from "./media.ts";
 import { checkFile, Report } from "./schema.ts";
 import { readWorkbook } from "./xlsx.ts";
@@ -140,4 +142,55 @@ test("a removal turns the donor into « removed », keeping the value and the re
     assert.ok(lines.some((l) => /1 donateur retiré/.test(l)), lines.join("\n"));
     for (const l of lines) assert.ok(!l.includes(person.name), "no printed line holds the name");
   }
+});
+
+/* ---------- Removal on request, end to end (increment 09) ---------- */
+
+/** The fingerprint as the maintainer computes it: the name on the standard input of `node tools/cli.ts media-fingerprint`. */
+function maintainerFingerprint(name: string): string {
+  const r = spawnSync(process.execPath, [fileURLToPath(new URL("./cli.ts", import.meta.url)), "media-fingerprint"], { input: name, encoding: "utf8" });
+  assert.equal(r.status, 0, r.stderr);
+  return r.stdout.trim();
+}
+
+test("a removal recorded with media-fingerprint is applied by the command, and the check passes on the result", async () => {
+  const person = personOf35();
+  const removal: Removal = { fingerprint: maintainerFingerprint(`${person.first_name} ${person.name}`), date: "2026-11-19", reason: "person_request" };
+  const { code, writes } = await run(BALLOT, [removal]);
+  assert.equal(code, 0);
+  const f = (JSON.parse(writes[0].content) as CampaignFinancingFile).campaign_financing;
+  assert.ok(!writes[0].content.includes(person.name));
+  assert.deepEqual(checkFinancing(f, BALLOT, [removal]), []);
+});
+
+test("a removed donor cannot come back by hand, as a person or as a company, and the check never prints the name", async () => {
+  const person = personOf35();
+  const written = `${person.first_name} ${person.name}`;
+  const removal: Removal = { fingerprint: fingerprint(written), date: "2026-11-19", reason: "person_request" };
+  const f = (JSON.parse((await run(BALLOT, [removal])).writes[0].content) as CampaignFinancingFile).campaign_financing;
+  const removed = f.items[1].donations.find((d) => d.donor.type === "removed");
+  assert.ok(removed);
+  for (const donor of [{ type: "person" as const, first_name: person.first_name, name: person.name }, { type: "company" as const, name: written }]) {
+    removed.donor = donor;
+    const errors = checkFinancing(f, BALLOT, [removal]);
+    assert.equal(errors.length, 1, `${donor.type} : ${errors.length} erreur(s)`);
+    assert.ok(errors[0].includes(removal.fingerprint.slice(0, 12)));
+    assert.ok(!errors[0].includes(person.name), "the check does not print the name");
+  }
+});
+
+test("a removed name the CDF lists as a company is removed by the command too", async () => {
+  const person = personOf35();
+  const sheets = readWorkbook(EXPORTS[35]);
+  const row = [...sheets[1].rows.entries()].find(([r, cells]) => r > 1 && cells.get("L"))?.[1];
+  assert.ok(row);
+  row.set("P", `${person.first_name} ${person.name}`);
+  row.delete("L");
+  row.delete("M");
+  const item = readFinancing(sheets);
+  assert.ok(item);
+  const removal: Removal = { fingerprint: fingerprint(`${person.first_name} ${person.name}`), date: "2026-11-19", reason: "person_request" };
+  const donor = item.donations.find((d) => d.donor.type === "company" && d.donor.name.includes(person.name))?.donor;
+  assert.ok(donor);
+  assert.ok(removalOf(donor, new Set([removal.fingerprint])), "a company named after a removed person matches the removal");
 });

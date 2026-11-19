@@ -4,7 +4,7 @@ title: "Implementation Plan: Campaign financing (Suivre l'argent)"
 description: "Builds the first slice of phase 2 of the Transparence area, PRD-0001 US-26 to US-28: the campaign budgets and donations of each ballot item, generated from the Federal Audit Office by npm run campaign-financing, shown in a step « Suivre l'argent », donors who are persons named with an error report and removal by fingerprint. 11 increments, 3 milestones."
 tags: [implementation-plan, civic-compass, lobbies, campaign-financing, transparency]
 timestamp: 2026-11-19T10:00:00Z
-status: draft
+status: done
 owner: Victor Hueni
 last_reviewed: 2026-11-19
 review_interval: 30d
@@ -37,8 +37,8 @@ Principles:
 5. **Keep only what is shown.** The generated file, public in the repository, keeps a person's first name and name, never the commune, the « Suisse de l'étranger » flag or anything else the CDF publishes about them (US-27, PRD-0001 §3).
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
-**Overall Status:** in progress
-**Current Increment:** 09 (M1, M2 done)
+**Overall Status:** done
+**Current Increment:** none (all 11 done)
 
 ## Increment Plan
 
@@ -256,7 +256,9 @@ Exit criteria:
 
 ### Increment 09: Removal on request, end to end
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the end-to-end case through `media-fingerprint` passed at once, the mechanism being built in increments 04 and 05 (logged, kept as the end-to-end proof); the gap the tests found is a removed name coming back as a company, by hand or because the CDF lists a person in its company column: `removalOf` now tries a company's name too.
 
 Scope:
 
@@ -278,7 +280,9 @@ Exit criteria:
 
 ### Increment 10: The procedure for the maintainer
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the procedure also covers the test exports (`tools/fixtures/cdf-financing-33.xlsx`, `-35.xlsx`), which hold the two private donors' names: a removed person's name is replaced there too; and it says how an error is handled (the figures are the committees' declarations, never corrected by hand).
 
 Scope:
 
@@ -299,7 +303,7 @@ Exit criteria:
 
 ### Increment 11: Close the slice
 
-**Status:** pending
+**Status:** done
 
 Scope:
 
@@ -337,4 +341,4 @@ Exit criteria:
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
 | M1: Generated data (US-28) | 01-05 | done | `npm run campaign-financing` writes the budgets and donations of the four items of 29.11.2026 from the CDF; `npm run check` enforces their rules; no page yet | `npm test && npm run campaign-financing && npm run check && npm run links` | 4 items, 29 donations; a failed fetch writes nothing; a stale file fails the check | `feat(financing): …`, PR "feat(financing): generate campaign financing from the Federal Audit Office" |
 | M2: The step (US-26) | 06-08 | done | « Suivre l'argent » on each ballot item, with the error report | `npm test && npm run check && npm run build`, from disk at 360 px | Item 33 matches the mockup; works offline | PR "feat(financing): follow the money behind each ballot item" |
-| M3: Donors' rights (US-27) | 09-11 | pending | Removal by fingerprint applied and enforced; the procedure written; the slice closed in the PRD | `npm test && npm run check` | A removed donor cannot come back; criteria ticked | PR "feat(financing): remove a named donor on request" |
+| M3: Donors' rights (US-27) | 09-11 | done | Removal by fingerprint applied and enforced; the procedure written; the slice closed in the PRD | `npm test && npm run check` | A removed donor cannot come back; criteria ticked | PR "feat(financing): remove a named donor on request" |
