@@ -175,12 +175,14 @@ export function readFinancing(sheets: Sheet[]): ReadFinancing | null {
 }
 
 /**
- * The removal a named person matches, if any. Both orders of the names are tried (« Prénom Nom », « Nom Prénom »):
- * the request may write either.
+ * The removal a donor matches, if any. For a person both orders of the names are tried (« Prénom Nom », « Nom
+ * Prénom »): the request may write either. A company's name is tried too, so that a removed name cannot come back
+ * as a company, whether the CDF lists it so (a sole proprietorship) or someone writes it back by hand.
  */
 export function removalOf(donor: Donor, removed: Set<string>): string | undefined {
-  if (donor.type !== "person") return undefined;
-  return [fingerprint(`${donor.first_name} ${donor.name}`), fingerprint(`${donor.name} ${donor.first_name}`)].find((f) => removed.has(f));
+  const names =
+    donor.type === "person" ? [`${donor.first_name} ${donor.name}`, `${donor.name} ${donor.first_name}`] : donor.type === "company" ? [donor.name] : [];
+  return names.map(fingerprint).find((f) => removed.has(f));
 }
 
 /**

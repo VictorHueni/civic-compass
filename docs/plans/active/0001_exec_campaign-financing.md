@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 09 (M1, M2 done)
+**Current Increment:** 10
 
 ## Increment Plan
 
@@ -256,7 +256,9 @@ Exit criteria:
 
 ### Increment 09: Removal on request, end to end
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): the end-to-end case through `media-fingerprint` passed at once, the mechanism being built in increments 04 and 05 (logged, kept as the end-to-end proof); the gap the tests found is a removed name coming back as a company, by hand or because the CDF lists a person in its company column: `removalOf` now tries a company's name too.
 
 Scope:
 
