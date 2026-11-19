@@ -38,7 +38,7 @@ Principles:
 6. **The site keeps working from disk.** The data is bundled at build time; `dist/index.html` works opened from disk with the network cut after every milestone (goal 4).
 
 **Overall Status:** in progress
-**Current Increment:** 06 (M1 done)
+**Current Increment:** 07
 
 ## Increment Plan
 
@@ -179,7 +179,9 @@ Exit criteria:
 
 ### Increment 06: What the step shows
 
-**Status:** pending
+**Status:** done
+
+As built (2026-11-19): `financingView(file, ballotItemId)` takes the whole file (the « none » state needs its retrieval date); a named person is shown « Prénom Nom » (owner ruling 4; the mockup's « 1 personne privée » predates it), a removed donor « une personne privée », each removed gift on its own line; `amount` and `chf` round to whole francs, as the mockup does; the no-break space comes from `src/site/cantonal-standing.ts`.
 
 Scope:
 
