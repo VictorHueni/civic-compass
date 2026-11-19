@@ -1,17 +1,18 @@
 /*
- * Ballot page: list of the items, then one page per item with three steps
- * (Comprendre, Comparer, Décider).
+ * Ballot page: list of the items, then one page per item with four steps
+ * (Comprendre, Comparer, Suivre l'argent, Décider). « Suivre l'argent » is written by financing.ts.
  */
 import { $, escapeHtml as esc, host } from "./dom.ts";
 import { cantonName, onRender, scope } from "./app.ts";
 import { STATE_SITE_IDS, TOOL_IDS } from "./links.ts";
 import { ballot, federal, stateSiteUrl, toolUrl } from "./referential.ts";
+import { financingHtml } from "./financing.ts";
 import type { CantonBallot, PartyRecommendation } from "../types.ts";
 
 let item = -1; // -1: the list of items
 let step = 0;
 let partyIndex = -1;
-const STEPS = ["Comprendre", "Comparer", "Décider"];
+const STEPS = ["Comprendre", "Comparer", "Suivre l'argent", "Décider"];
 const LABEL: Record<PartyRecommendation, string> = { yes: "Oui", no: "Non", free: "Liberté de vote" };
 
 function days(): number {
@@ -84,6 +85,8 @@ function renderStep(): void {
     h = '<p class="mini">Mots d\'ordre des partis nationaux. Seuls ceux retrouvés dans une source sont indiqués, les autres sont à confirmer sur le site du parti.</p>' +
       '<div id="mini-hemi" class="hemicycle hemicycle--mini"></div><div id="mini-detail" class="mini-detail" aria-live="polite"></div>' +
       link(toolUrl(TOOL_IDS.smartvote), "smartvote", "Comparer avec vos propres opinions") + link(toolUrl(TOOL_IDS.smartmonitor), "smartmonitor", "Comment les élus ont réellement voté") + link(toolUrl(TOOL_IDS.swissvotes), "Swissvotes", "Mots d'ordre et historique des votations");
+  } else if (step === 2) {
+    h = financingHtml(o.id, o.short);
   } else {
     h = '<ol class="decide-steps"><li>Vérifiez que vous avez reçu le matériel de vote (' + esc(ballot.voting_material.replace("Le matériel de vote est reçu", "reçu")) + ").</li>" +
       "<li>Votez par correspondance, ou dans votre commune le dimanche 29 novembre.</li><li>En cas de doute, contactez la chancellerie de votre commune ou de votre canton.</li></ol>" +

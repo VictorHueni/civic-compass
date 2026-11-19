@@ -68,6 +68,17 @@
       "previous_urls": []
     },
     {
+      "id": "cdf-financement-politique",
+      "territory": "CH",
+      "name": "Contrôle fédéral des finances : financement de la politique",
+      "description": "Budgets des campagnes et dons de plus de 15 000 francs déclarés pour chaque votation fédérale.",
+      "url": "https://politikfinanzierung.efk.admin.ch/app/fr/",
+      "status": "verified",
+      "checked_on": "2026-11-19",
+      "evidence": "Page rendue dans un navigateur sans interface : titre « Financement de la vie politique », rubrique « Financement des campagnes » avec les objets du 29.11.2026",
+      "previous_urls": []
+    },
+    {
       "id": "republique-et-canton-de-geneve-ge",
       "territory": "GE",
       "name": "République et canton de Genève",

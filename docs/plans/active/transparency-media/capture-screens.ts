@@ -50,7 +50,7 @@ const SCREENS: Screen[] = [
   {
     name: "ui-07-media-report-error",
     ready: NETWORK_DRAWN,
-    steps: [find("La Liberté"), "document.querySelector('#media-card .media-report').open = true", ...scrollTo("#media-card .media-report", -300)],
+    steps: [find("La Liberté"), "document.querySelector('#media-card .report').open = true", ...scrollTo("#media-card .report", -300)],
   },
 ];
 

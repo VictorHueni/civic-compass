@@ -9,12 +9,10 @@
 import { $, escapeHtml as esc, host, swissDate } from "./dom.ts";
 import { bridges, cardLines, fogBox, formatShare, hasCard, rings, search, type CardLine, type SourceRef, type TopKind } from "./media-model.ts";
 import { onRender } from "./app.ts";
+import { reportHtml as report } from "./report.ts";
 import { mediaOwnership as m } from "./referential.ts";
 import type { Holding, MediaGenre } from "../types.ts";
 import type { GraphEdge, GraphNode, GraphView, MediaGraph } from "./media-graph.ts";
-
-/** The error and removal address of the owner (PRD-0001 §8): an e-mail keeps a removal request private. */
-const REPORT_ADDRESS = "huni.victor@gmail.com";
 
 const GENRES: [MediaGenre, string][] = [
   ["press", "Presse"],
@@ -81,13 +79,7 @@ function lineHtml(l: CardLine): string {
 }
 
 function reportHtml(name: string): string {
-  const mailto = "mailto:" + REPORT_ADDRESS + "?subject=" + encodeURIComponent("Médias : " + name);
-  return (
-    '<details class="media-report"><summary>Signaler une erreur ou demander un retrait</summary>' +
-    "<p>Écrivez à <span class=\"media-report__address\">" + esc(REPORT_ADDRESS) + "</span> en indiquant le média ou la personne, l'erreur et si possible votre source.</p>" +
-    "<p>Une personne nommée ici peut demander que son nom soit retiré : la demande reste privée et elle est traitée dans les 30 jours.</p>" +
-    '<p><a class="btn btn--outline btn--sm" href="' + esc(mailto) + '"><span class="btn__text">Écrire un e-mail</span></a></p></details>'
-  );
+  return report("Médias : " + name, "le média ou la personne");
 }
 
 function goButton(id: string, label: string): string {
